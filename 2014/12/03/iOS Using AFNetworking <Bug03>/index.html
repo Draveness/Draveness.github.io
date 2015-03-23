@@ -91,13 +91,6 @@
 </header>
 	<div class="article-content">
 		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
-		
-			
-		
-		</div>
-		
 		<p>During these days development, when I connect our iOS App to Python <code>back-end</code> using <code>AFNetworking</code>, I met an error. It is my first time to use the <code>AFNetworking</code> framework, I am used to use <code>MKNetworking</code> instead, but with some reasons. I planned to use <code>AFNetworking</code> instead. And then, as you see, I met a few problems. </p>
 <pre><code>Error: Error Domain=NSCocoaErrorDomain Code=3840 <span class="string">"The operation couldn’t be completed. (Cocoa error 3840.)"</span><span class="function"> (</span>JSON text did<span class="instruction"> not </span>start with<span class="instruction"> array </span>or object<span class="instruction"> and </span>option to allow fragments<span class="instruction"> not </span>set.<span class="function">)</span> UserInfo=0x17697430 {NSDebugDescription=JSON text did<span class="instruction"> not </span>start with<span class="instruction"> array </span>or object<span class="instruction"> and </span>option to allow fragments<span class="instruction"> not </span>set., NSUnderlyingError=0x176f9ec0 
 </code></pre><p>At first, I do not know, what it’s mean, but I ask my partner, he tells me, in order to beautify the <code>JSON</code> he use some method, to make them like this, I do not know exactly what he did, but <code>JSON</code> looks like this.</p>
@@ -180,13 +173,6 @@
 
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
- 
- 
- 
-  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -413,8 +399,6 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
         
     }
   });

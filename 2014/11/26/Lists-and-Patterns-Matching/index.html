@@ -97,13 +97,6 @@ List列表是在函数式编程中是很有趣的, 也是很强大的, 大多数
 </header>
 	<div class="article-content">
 		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
-		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Recursive_computations"><span class="toc-number">1.</span> <span class="toc-text">Recursive computations</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#List"><span class="toc-number">1.1.</span> <span class="toc-text">List</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Haskell"><span class="toc-number">1.1.1.</span> <span class="toc-text">Haskell</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Scheme"><span class="toc-number">1.1.2.</span> <span class="toc-text">Scheme</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Oz"><span class="toc-number">1.1.3.</span> <span class="toc-text">Oz</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Programming_with_Lists"><span class="toc-number">2.</span> <span class="toc-text">Programming with Lists</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Pattern_Matching"><span class="toc-number">2.1.</span> <span class="toc-text">Pattern Matching</span></a></li></ol></li></ol>
-		
-		</div>
-		
 		<h2 id="Recursive_computations">Recursive computations</h2><p>递归的计算模型是声明式编程的核心, 有些人可能并不知道, 类型也是可以递归的. 比如说列表.</p>
 <h3 id="List">List</h3><p>列表是在函数式编程中是很有趣的, 也是很强大的, 大多数函数式编程语言都支持列表, 比如<code>Haskell</code>, <code>ML</code>, <code>Scheme</code>. 列表. 列表与<code>C</code>, <code>Java</code>, <code>Objective-C</code> 语言中的<code>array</code>非常的相似, 但是却有着很大的不同. </p>
 <p>列表是一种递归的数据类型:</p>
@@ -232,13 +225,6 @@ case <span class="keyword">L</span> of <span class="keyword">H</span>|T then {<s
 
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
- 
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Recursive_computations"><span class="toc-number">1.</span> <span class="toc-text">Recursive computations</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#List"><span class="toc-number">1.1.</span> <span class="toc-text">List</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Haskell"><span class="toc-number">1.1.1.</span> <span class="toc-text">Haskell</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Scheme"><span class="toc-number">1.1.2.</span> <span class="toc-text">Scheme</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Oz"><span class="toc-number">1.1.3.</span> <span class="toc-text">Oz</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Programming_with_Lists"><span class="toc-number">2.</span> <span class="toc-text">Programming with Lists</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Pattern_Matching"><span class="toc-number">2.1.</span> <span class="toc-text">Pattern Matching</span></a></li></ol></li></ol>
- 
-  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -465,8 +451,6 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
         
     }
   });

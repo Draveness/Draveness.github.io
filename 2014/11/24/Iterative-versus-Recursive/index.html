@@ -100,13 +100,6 @@ S0 -&amp;gt; S1 -&amp;gt; ... -&amp;gt;">
 </header>
 	<div class="article-content">
 		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
-		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Iteraive_computation"><span class="toc-number">1.</span> <span class="toc-text">Iteraive computation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Control_abstraction"><span class="toc-number">1.1.</span> <span class="toc-text">Control abstraction</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Recursive_computation"><span class="toc-number">2.</span> <span class="toc-text">Recursive computation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Converting_a_recursive_to_an_iterative_computation"><span class="toc-number">2.1.</span> <span class="toc-text">Converting a recursive to an iterative computation</span></a></li></ol></li></ol>
-		
-		</div>
-		
 		<p><code>Iteration</code> 和 <code>Recursion</code> 在我们所有的编程语言中都是非常重要的概念, 尤其是在声明式的编程模型中.</p>
 <h2 id="Iteraive_computation">Iteraive computation</h2><p>迭代的计算模型是一个<code>stack</code>大小为<code>constant</code>并且大小保持不变的循环.</p>
 <p>非常重要的地方就是, 迭代的计算模型拥有一个初始的状态<code>S 0</code>, 在经过多次的转换最后会得到<code>S final</code>:</p>
@@ -246,13 +239,6 @@ S0 -&amp;gt; S1 -&amp;gt; ... -&amp;gt;">
 
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
- 
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Iteraive_computation"><span class="toc-number">1.</span> <span class="toc-text">Iteraive computation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Control_abstraction"><span class="toc-number">1.1.</span> <span class="toc-text">Control abstraction</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Recursive_computation"><span class="toc-number">2.</span> <span class="toc-text">Recursive computation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Converting_a_recursive_to_an_iterative_computation"><span class="toc-number">2.1.</span> <span class="toc-text">Converting a recursive to an iterative computation</span></a></li></ol></li></ol>
- 
-  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -479,8 +465,6 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
         
     }
   });

@@ -115,13 +115,6 @@
 </header>
 	<div class="article-content">
 		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
-		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#快速排序的实现"><span class="toc-number">1.</span> <span class="toc-text">快速排序的实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组的划分(partition)"><span class="toc-number">2.</span> <span class="toc-text">数组的划分(partition)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#性能"><span class="toc-number">3.</span> <span class="toc-text">性能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#最坏情况下的性能"><span class="toc-number">3.1.</span> <span class="toc-text">最坏情况下的性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最好情况下性能"><span class="toc-number">3.2.</span> <span class="toc-text">最好情况下性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#平衡的划分"><span class="toc-number">3.3.</span> <span class="toc-text">平衡的划分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#随机版本的快速排序"><span class="toc-number">3.4.</span> <span class="toc-text">随机版本的快速排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hoare版本的快速排序"><span class="toc-number">3.5.</span> <span class="toc-text">Hoare版本的快速排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#针对相同元素的快速排序"><span class="toc-number">3.6.</span> <span class="toc-text">针对相同元素的快速排序</span></a></li></ol></li></ol>
-		
-		</div>
-		
 		<p><a href="http://zh.wikipedia.org/wiki/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F" target="_blank" rel="external">快速排序</a>使用分治法策略把一个数组分成两个子数组, 并对两个子数组递归排序.</p>
 <p>快速排序的分治过程有三步:</p>
 <ul>
@@ -320,13 +313,6 @@ pivot_t partition(<span class="type">int</span> A[], <span class="type">int</spa
 
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
- 
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#快速排序的实现"><span class="toc-number">1.</span> <span class="toc-text">快速排序的实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组的划分(partition)"><span class="toc-number">2.</span> <span class="toc-text">数组的划分(partition)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#性能"><span class="toc-number">3.</span> <span class="toc-text">性能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#最坏情况下的性能"><span class="toc-number">3.1.</span> <span class="toc-text">最坏情况下的性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最好情况下性能"><span class="toc-number">3.2.</span> <span class="toc-text">最好情况下性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#平衡的划分"><span class="toc-number">3.3.</span> <span class="toc-text">平衡的划分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#随机版本的快速排序"><span class="toc-number">3.4.</span> <span class="toc-text">随机版本的快速排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hoare版本的快速排序"><span class="toc-number">3.5.</span> <span class="toc-text">Hoare版本的快速排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#针对相同元素的快速排序"><span class="toc-number">3.6.</span> <span class="toc-text">针对相同元素的快速排序</span></a></li></ol></li></ol>
- 
-  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -553,8 +539,6 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
         
     }
   });

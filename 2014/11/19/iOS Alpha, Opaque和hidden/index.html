@@ -100,13 +100,6 @@ hidden属性我们首先来解释一下hidden属性, 如果将一个控件设置
 </header>
 	<div class="article-content">
 		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
-		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#hidden属性"><span class="toc-number">1.</span> <span class="toc-text">hidden属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#alpha属性"><span class="toc-number">2.</span> <span class="toc-text">alpha属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#opaque属性"><span class="toc-number">3.</span> <span class="toc-text">opaque属性</span></a></li></ol>
-		
-		</div>
-		
 		<p>在<code>iOS</code>的视图中, 有三个非常相似的属性, <code>alpha</code>, <code>opaque</code> <code>hidden</code>. 这三个属性实际上没有什么太多的关系.</p>
 <hr>
 <h2 id="hidden属性">hidden属性</h2><p>我们首先来解释一下<code>hidden</code>属性, 如果将一个控件设置的<code>view</code>属性设置为<code>YES</code>, 那么这个<code>view</code>根本不会被绘制, 它通常等于<code>alpha</code>值被设置为<code>0</code>, 但是设置<code>hidden</code>属性并不会产生动画, 如果你需要动画完成过渡就需要修改<code>alpha</code>的值.</p>
@@ -186,13 +179,6 @@ hidden属性我们首先来解释一下hidden属性, 如果将一个控件设置
 
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
- 
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#hidden属性"><span class="toc-number">1.</span> <span class="toc-text">hidden属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#alpha属性"><span class="toc-number">2.</span> <span class="toc-text">alpha属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#opaque属性"><span class="toc-number">3.</span> <span class="toc-text">opaque属性</span></a></li></ol>
- 
-  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -419,8 +405,6 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
