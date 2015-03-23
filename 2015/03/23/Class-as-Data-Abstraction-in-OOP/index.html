@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Class as Data Abstraction in OOP | DeltaX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="The heart of the object concept is controlled access to encapsulated data. The behaviour of an object is specified by a class which is an incremental definition of a data abstraction.
+
+Complete data a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Class as Data Abstraction in OOP">
+<meta property="og:url" content="http://deltax.me/2015/03/23/Class-as-Data-Abstraction-in-OOP/index.html">
+<meta property="og:site_name" content="DeltaX">
+<meta property="og:description" content="The heart of the object concept is controlled access to encapsulated data. The behaviour of an object is specified by a class which is an incremental definition of a data abstraction.
+
+Complete data a">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Class as Data Abstraction in OOP">
+<meta name="twitter:description" content="The heart of the object concept is controlled access to encapsulated data. The behaviour of an object is specified by a class which is an incremental definition of a data abstraction.
+
+Complete data a">
+  
+    <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">DeltaX</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">为了成为牛逼闪闪的工程师</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="q" value="site:http://deltax.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Class-as-Data-Abstraction-in-OOP" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/03/23/Class-as-Data-Abstraction-in-OOP/" class="article-date">
+  <time datetime="2015-03-23T02:28:07.000Z" itemprop="datePublished">2015-03-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming-Paradigm/">Programming Paradigm</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Class as Data Abstraction in OOP
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>The heart of the object concept is controlled access to encapsulated data. The behaviour of an object is specified by a <strong>class</strong> which is an incremental definition of a data abstraction.</p>
+<ul>
+<li>Complete data abstraction<ul>
+<li>Defining the various elements that make up a class.</li>
+<li>Taking advantage of dynamic typing.</li>
+</ul>
+</li>
+<li>Incremental data abstraction<ul>
+<li>Related to inheritance.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Defining_Classes_and_Objects">Defining Classes and Objects</h2><p>A class is data structure that defines an object’s internal state (attributes), its behavior (methods), the classes it inherits several properties and operations.</p>
+<p>A class is a data abstraction that give its partial and total implementation.</p>
+<p>Objects of a given class is called <strong>instances</strong>. These object have differenty identities but can have differnet values for their interval state. And instance is initialized with the operation <code>New</code>.</p>
+<pre><code>Obj={<span class="keyword">New</span> <span class="class"><span class="keyword">Class</span> <span class="title">Init</span>}</span>
+</code></pre><p>This code creates an new object <code>Obj</code> of class <code>Class</code> and invokes with the message <code>Init</code>. And after the initialize, we can use the syntax <code>{Obj Message}</code> to call a message on instance <code>Obj</code>.</p>
+<h2 id="Class_members">Class members</h2><p>A class defines the constituent parts part each of its object will have. There are three kinds of members in class:</p>
+<ul>
+<li><strong>Attributes</strong><blockquote>
+<p>An attribute is a cell that contains part of the instance’s state which is always called <strong>instance variable</strong> in an instance. And this just visible in the class definition. Every instance have seperate set of attributes.</p>
+</blockquote>
+</li>
+<li><p><strong>Methods</strong></p>
+<blockquote>
+<p>A method is a kind of procedure that is called in the context of a particular object and that access the object’s attribute. </p>
+</blockquote>
+<ul>
+<li>The method consists of a head and body. </li>
+<li>The head consists of a label, which must be an atom or a name, and a set of arguments.</li>
+<li>The arguments must be distinct variables.</li>
+</ul>
+</li>
+<li><strong>Properties</strong><blockquote>
+<p>A property modifies how an object behaves.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Initializing_Attributes">Initializing Attributes</h2><p>Attributes can be initialized in two ways: per instance or per class.</p>
+<ul>
+<li><p>Per instance</p>
+<ul>
+<li><p>An attribute can be given a different initial value per instance.</p>
+<pre><code><span class="class"><span class="keyword">class</span> <span class="title">OneApt</span></span>
+    attr streetName
+    meth init(X) @streetName=X <span class="keyword">end</span>
+<span class="keyword">end</span>
+Apt1={<span class="keyword">New</span> OneApt init(drottninggatan)}
+Apt2={<span class="keyword">New</span> OneApt init(runNeuve)}
+</code></pre></li>
+</ul>
+</li>
+<li><p>Per class</p>
+<ul>
+<li><p>An attribute can be given a value that is the same for all instances of a class. This is done by initilizing it with “:” in the class definition.</p>
+<pre><code><span class="class"><span class="keyword">class</span> <span class="title">YorkApt</span></span>
+    attr
+        streetName:york
+        streetNumber:<span class="number">100</span>
+        wallColor:_
+        floorSurface:wood
+    meth init skip <span class="keyword">end</span>
+<span class="keyword">end</span>
+Apt3={<span class="keyword">New</span> OneApt init}
+Apt4={<span class="keyword">New</span> OneApt init}
+</code></pre></li>
+</ul>
+</li>
+<li><p>Per brand</p>
+<ul>
+<li><p>This is another way to use the per-class initialization. A brand is a set of classes that related in some way.</p>
+<pre><code><span class="keyword">L</span>=linux
+<span class="keyword">class</span> RedHat attr ostype:<span class="keyword">L</span> end
+<span class="keyword">class</span> SuSE attr ostype:<span class="keyword">L</span> end
+<span class="keyword">class</span> Debian attr ostype:<span class="keyword">L</span> end
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<h2 id="First-class_Messages">First-class Messages</h2><p>Messages are records and method heads are patterns that match a record. We can use different type of records to pass to a method.</p>
+<ol>
+<li>Static record as message. In this case, message is known at <strong>compile time</strong>.</li>
+<li>Dynamic record as message. In this case, message is a variable that references a record that calculated at <strong>run time</strong>.</li>
+</ol>
+<p>In the method definition, the following approach is possible:</p>
+<ol>
+<li><p>Fixed argument list</p>
+<pre><code>meth <span class="keyword">add</span>(x:X y:Y)
+    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+<span class="title">end</span></span>
+</code></pre></li>
+<li><p>Flexible argument list</p>
+<pre><code>meth <span class="keyword">add</span>(x:X y:Y ...)
+    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+<span class="title">end</span></span>
+</code></pre><p> The “…” in the method head means that any message is accepted if has least the listed argument.</p>
+</li>
+<li><p>Variable reference to method head</p>
+<p> The whole method head is referenced by a variable.</p>
+<pre><code>meth <span class="keyword">add</span>(x:X y:Y ...)=M
+    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+<span class="title">end</span></span>
+</code></pre><p> The variable <code>M</code> references the full message as a record.</p>
+</li>
+<li><p>Optional argument</p>
+<pre><code>meth <span class="keyword">add</span>(x:X y:Y z:Z&lt;=V)
+    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+<span class="title">end</span></span>
+</code></pre><p> The <code>&lt;=V</code> in the method head means that field <code>z</code> is optional. You can either called the method with <code>add(x:1 y:2)</code> or <code>add(x:1 y:2 z:3)</code>.</p>
+</li>
+<li><p>Private method label</p>
+<p> Method label can be names. This is denoted by using a variable identifier</p>
+<pre><code>meth A(bar:X)
+    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+<span class="title">end</span></span>
+</code></pre><p> The method <code>A</code> is bound to a fresh name whtn the class is defined. If this method must be used elsewhere in the program, we should pass it explicitly.</p>
+</li>
+<li><p>Dynamic method label</p>
+<pre><code>meth !A(bar:X)
+    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+<span class="title">end</span></span>
+</code></pre><p> The method label has to be known when the class definitions is executed. The variable must be bound to an atom or a name. This technique can make method secure.</p>
+</li>
+<li><p>The <code>otherwise</code> method</p>
+<p> The method head with label <code>otherwise</code> is a catchall that accepts any message for message for which no other method exists.</p>
+<pre><code>meth otherwise(M)
+    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+<span class="title">end</span></span>
+</code></pre><p> A class has only one method with <code>otherwise</code>, if this method exists, it accepts any message.</p>
+</li>
+</ol>
+<h2 id="First-class_Attributes">First-class Attributes</h2><p>Attribute names can be calculated at tun time. It is possible to write methods to access and assign any attributes.</p>
+<pre><code>class Inspector
+    meth <span class="built_in">get</span>(A ?X)
+        X=@A
+    <span class="function"><span class="keyword">end</span></span>
+    meth <span class="built_in">set</span>(A X)
+        A:=X
+    <span class="function"><span class="keyword">end</span></span>
+<span class="function"><span class="keyword">end</span></span>
+</code></pre><p>The <code>get</code> method can get any attribute, and the <code>set</code> method can assign any attribute.</p>
+<h2 id="Programming_Techniques">Programming Techniques</h2><p>The class concept we have introduced so far gives a convenient syntax for defining data abstractions with excapsulated state and multiple operations.</p>
+<ul>
+<li>The class statement defines a class value, which can be instantiated to give objects.</li>
+<li>Classes can have external references.</li>
+<li>Classes are cmpositional, they can be nested within classes.</li>
+<li>Classes are compatible with procedure values, they can be nested within procedures and vice versa.</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://deltax.me/2015/03/23/Class-as-Data-Abstraction-in-OOP/" data-id="ci7lyw0bj0000q4fyp536qx6l" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OOP/">OOP</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/03/22/快速排序/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">快速排序</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/FP/">FP</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/FP/Scheme/">Scheme</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Haskell/">Haskell</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Haskell/ML/">ML</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming-Paradigm/">Programming Paradigm</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法导论/">算法导论</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/算法导论/算法/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法导论/算法/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法导论/算法/">算法</a><span class="category-list-count">1</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Abstraction/">Abstraction</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Concurrency/">Concurrency</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FP/">FP</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Haskell/">Haskell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Inheritance/">Inheritance</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Iteration/">Iteration</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/List/">List</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ML/">ML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Message-Passing/">Message Passing</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OOP/">OOP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pattern-Match/">Pattern Match</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Polymorphism/">Polymorphism</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Recursion/">Recursion</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Runtime/">Runtime</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SICP/">SICP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scheme/">Scheme</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State/">State</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/generic/">generic</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/segue/">segue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/subtype/">subtype</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堆/">堆</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Abstraction/" style="font-size: 10px;">Abstraction</a><a href="/tags/Concurrency/" style="font-size: 10px;">Concurrency</a><a href="/tags/FP/" style="font-size: 16.67px;">FP</a><a href="/tags/HTTP/" style="font-size: 13.33px;">HTTP</a><a href="/tags/Haskell/" style="font-size: 10px;">Haskell</a><a href="/tags/Inheritance/" style="font-size: 10px;">Inheritance</a><a href="/tags/Iteration/" style="font-size: 10px;">Iteration</a><a href="/tags/List/" style="font-size: 10px;">List</a><a href="/tags/ML/" style="font-size: 10px;">ML</a><a href="/tags/Message-Passing/" style="font-size: 10px;">Message Passing</a><a href="/tags/OOP/" style="font-size: 13.33px;">OOP</a><a href="/tags/Pattern-Match/" style="font-size: 10px;">Pattern Match</a><a href="/tags/Polymorphism/" style="font-size: 10px;">Polymorphism</a><a href="/tags/Recursion/" style="font-size: 10px;">Recursion</a><a href="/tags/Runtime/" style="font-size: 10px;">Runtime</a><a href="/tags/SICP/" style="font-size: 10px;">SICP</a><a href="/tags/Scheme/" style="font-size: 16.67px;">Scheme</a><a href="/tags/State/" style="font-size: 10px;">State</a><a href="/tags/generic/" style="font-size: 10px;">generic</a><a href="/tags/iOS/" style="font-size: 20px;">iOS</a><a href="/tags/segue/" style="font-size: 10px;">segue</a><a href="/tags/subtype/" style="font-size: 10px;">subtype</a><a href="/tags/堆/" style="font-size: 10px;">堆</a><a href="/tags/算法/" style="font-size: 16.67px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a><span class="archive-list-count">10</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/03/23/Class-as-Data-Abstraction-in-OOP/">Class as Data Abstraction in OOP</a>
+          </li>
+        
+          <li>
+            <a href="/2015/03/22/快速排序/">快速排序</a>
+          </li>
+        
+          <li>
+            <a href="/2015/03/20/Stateful-Collections/">Stateful Collections</a>
+          </li>
+        
+          <li>
+            <a href="/2015/03/20/Incredible Functional Programming/">Incredible Functional Programming</a>
+          </li>
+        
+          <li>
+            <a href="/2015/03/19/堆排序/">堆排序</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 Draven<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

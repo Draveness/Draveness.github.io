@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>SICP 1.1 The Elements of Programming | DeltaX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="SummaryThis blog just a summary of what I learned from SICP and the solution I made for exercises.
+There are three tips on how our mind works and how we build abstractions.
+
+Combining several simple i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SICP 1.1 The Elements of Programming">
+<meta property="og:url" content="http://deltax.me/2015/01/19/SICP-1-1/index.html">
+<meta property="og:site_name" content="DeltaX">
+<meta property="og:description" content="SummaryThis blog just a summary of what I learned from SICP and the solution I made for exercises.
+There are three tips on how our mind works and how we build abstractions.
+
+Combining several simple i">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SICP 1.1 The Elements of Programming">
+<meta name="twitter:description" content="SummaryThis blog just a summary of what I learned from SICP and the solution I made for exercises.
+There are three tips on how our mind works and how we build abstractions.
+
+Combining several simple i">
+  
+    <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">DeltaX</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">为了成为牛逼闪闪的工程师</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="q" value="site:http://deltax.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-SICP-1-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/01/19/SICP-1-1/" class="article-date">
+  <time datetime="2015-01-19T02:06:27.000Z" itemprop="datePublished">2015-01-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SICP 1.1 The Elements of Programming
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Summary">Summary</h1><p>This blog just a summary of what I learned from SICP and the solution I made for exercises.</p>
+<p>There are three tips on how our mind works and how we build abstractions.</p>
+<ol>
+<li>Combining several simple ideas into one compound one, one thus all complex idea are made.</li>
+<li>The second is bringing two ideas, whether simple or complex, together, and setting them by one another so as to take a view of them at once, without untiling them into one, by which it gets all its ideas of relations.</li>
+<li>Thr third is separating them from all other ideas that accompany them in their existence.</li>
+</ol>
+<p>Every powerful language has three mechanisms for accomplishing this</p>
+<ol>
+<li><strong>primitive expressions</strong>, which represent the simplest entities the language is concerned with.</li>
+<li><strong>means of combination</strong>, by which compound elements are built from simpler ones, and</li>
+<li><strong>means of abstraction</strong>, by which compound elements can be named and manipulated as units.</li>
+</ol>
+<p>In programming, we just deal with two kinds of elements: <code>procedures</code> and <code>data</code>. Data is ‘stuff’ we manipulated and procedures are descriptions of the rules for manipulating the data. When we learn a new programming language, the first three thing we should learn is what is the primitive expressions in this language, how to combinate those primitive elements, and how to abstract them to make many complex system.</p>
+<p>In <code>Scheme</code> and many other languages <code>define</code> is means of abstraction. We can use <code>define</code> to add a tuple to the global environment, such as <code>(define a 3)</code> is to associate <code>a</code> with a value 3.</p>
+<p>And then, what are the important things in LISP, the most powerful programming language</p>
+<ul>
+<li>Numbers and arithmetic operations are primitive data and procedures.</li>
+<li>Nesting of combination provides a means of combing operations.</li>
+<li>Definitions that associate names with values provide a limited means of abstraction.</li>
+</ul>
+<p>Substitution model for procedure application is not to provide a description of how the interpreter really works. It just helps us how to think about how procedure application works.</p>
+<p>Application order versus nornal order</p>
+<ul>
+<li>Application order is to evalute the argument and then apply.</li>
+<li>Normal order is to fully expand and then reduce.</li>
+</ul>
+<p>The most important thing I learned from this chapter is to build abstraction to suppress details, and the interface user should not know how it is happened, he just needs to know how it should be used and what result does this occured. We use <code>black box abstraction</code> to suppress details and make a big problem into a number of subproblems. For a human beings, when we meet problem in building extremely complex system, we can abstract, abstract and abstract, make new language such as domain specific language to solve complex problem.</p>
+<p>In Lisp, the syntax is very concise and beautiful, use parentheses to build tree-like programs, and the interpreter can interpret it easily.</p>
+<h2 id="Exercise_1-1">Exercise 1.1</h2><pre><code>&gt; <span class="number">10</span>
+<span class="number">10</span>
+&gt; <span class="comment">(+ 5 3 4)</span>
+<span class="number">12</span>
+&gt; <span class="comment">(- 9 1)</span>
+<span class="number">8</span>
+&gt; <span class="comment">(/ 6 2)</span>
+<span class="number">3</span>
+&gt; <span class="comment">(+ (* 2 4)</span> <span class="comment">(- 4 6)</span>)
+<span class="number">6</span>
+&gt; <span class="comment">(define a 3)</span>
+&gt; <span class="comment">(define b (+ a 1)</span>)
+&gt; <span class="comment">(+ a b (* a b)</span>)
+<span class="number">19</span>
+&gt; <span class="comment">(= a b)</span>
+<span class="title">#f
+&gt; (if (and (&gt; b a) (&lt; b (* a b)))
+      b
+      a)
+4</span>
+&gt; <span class="comment">(cond ((= a 4)</span> <span class="number">6</span>)
+        <span class="comment">((= b 4)</span> <span class="comment">(+ 6 7 a)</span>)
+        <span class="comment">(else 25)</span>)
+<span class="number">16</span>
+&gt; <span class="comment">(+ 2 (if (&gt; b a)</span> b a))
+<span class="number">6</span>
+&gt; <span class="comment">(* (cond ((&gt; a b)</span> a)
+           <span class="comment">((&lt; a b)</span> b)
+           <span class="comment">(else -1)</span>)
+     <span class="comment">(+ a 1)</span>)
+<span class="number">16</span>
+</code></pre><h2 id="Exercise_1-2">Exercise 1.2</h2><pre><code><span class="list">(<span class="keyword"><span class="built_in">/</span></span> <span class="list">(<span class="keyword"><span class="built_in">+</span></span> <span class="number">5</span> <span class="number">4</span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> <span class="number">2</span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> <span class="number">3</span> <span class="list">(<span class="keyword"><span class="built_in">+</span></span> <span class="number">6</span> <span class="list">(<span class="keyword"><span class="built_in">/</span></span> <span class="number">4</span> <span class="number">5</span>)</span>)</span>)</span>)</span>)</span>
+   <span class="list">(<span class="keyword"><span class="built_in">*</span></span> <span class="number">3</span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> <span class="number">6</span> <span class="number">2</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> <span class="number">2</span> <span class="number">7</span>)</span>)</span>)</span>
+</code></pre><h2 id="Exercise_1-3">Exercise 1.3</h2><pre><code><span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">square</span> x)</span> <span class="list">(<span class="keyword"><span class="built_in">*</span></span> x x)</span>)</span>
+<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">sum-of-square</span> a b)</span>
+  <span class="list">(<span class="keyword"><span class="built_in">+</span></span> <span class="list">(<span class="keyword">square</span> a)</span> <span class="list">(<span class="keyword">square</span> b)</span>)</span>)</span>
+<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">two-larger-sum-of-square</span> a b c)</span>
+  <span class="list">(<span class="keyword"><span class="built_in">cond</span></span> <span class="list">(<span class="list">(<span class="keyword"><span class="built_in">and</span></span> <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> a b)</span> <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> a c)</span>)</span> <span class="list">(<span class="keyword">sum-of-square</span> b c)</span>)</span>
+        <span class="list">(<span class="list">(<span class="keyword"><span class="built_in">and</span></span> <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> b a)</span> <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> b c)</span>)</span> <span class="list">(<span class="keyword">sum-of-square</span> a c)</span>)</span>
+        <span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword">sum-of-square</span> a b)</span>)</span>)</span>)</span>
+</code></pre><h2 id="Exercise_1-4">Exercise 1.4</h2><p>if parameter <code>b</code> is greater than zero, then the <code>if</code> clouse will return operator <code>+</code>, otherwise it will return <code>-</code>.</p>
+<h2 id="Exercise_1-5">Exercise 1.5</h2><p>if the interpreter uses <code>applicative-order</code> evaluation, every parameters pass to the function are evaluated immediately. So the <code>p</code> function call it self and never terminate. The interpreter falls into infinite loop.</p>
+<p>However, if the intepreter uses <code>normal-order</code> evaluation, the interpreter does not evaluate <code>(test 0 (p))</code> immediately, when the <code>if</code> clouse is sent to the interpreter, the <code>(p)</code> branch will never evaluate.</p>
+<h2 id="Exercise_1-6">Exercise 1.6</h2><p><code>if</code> clouse is a different syntax, it is different from <code>new-if</code> function, in this function every branch will be evaluated when passed into the function. So the <code>sqrt-iter</code> branch will never terminate and fall into infinite recursion.</p>
+<h2 id="Exercise_1-7">Exercise 1.7</h2><p>The constant in function <code>good-enough?</code> determines this strategy not works well when evaluate a square root of a small number. When the number is very large, the strategy becomes very inefficient, and the procedure works very slow.</p>
+<h2 id="Exercise_1-8">Exercise 1.8</h2><pre><code><span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">square</span> x)</span> <span class="list">(<span class="keyword"><span class="built_in">*</span></span> x x)</span>)</span>
+<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">cube</span> x)</span> <span class="list">(<span class="keyword"><span class="built_in">*</span></span> x x x)</span>)</span>
+<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">cube-iter</span> guess x)</span>
+  <span class="list">(<span class="keyword"><span class="built_in">if</span></span> <span class="list">(<span class="keyword">good-enough?</span> guess x)</span>
+      guess
+      <span class="list">(<span class="keyword">cube-iter</span> <span class="list">(<span class="keyword">improve</span> guess x)</span>
+                 x)</span>)</span>)</span>
+<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">improve</span> guess x)</span>
+  <span class="list">(<span class="keyword">average</span> guess <span class="list">(<span class="keyword"><span class="built_in">/</span></span> <span class="list">(<span class="keyword"><span class="built_in">+</span></span> <span class="list">(<span class="keyword"><span class="built_in">/</span></span> x <span class="list">(<span class="keyword">square</span> guess)</span>)</span> 
+                       <span class="list">(<span class="keyword"><span class="built_in">*</span></span> <span class="number">2</span> guess)</span>)</span>
+                    <span class="number">3</span>)</span>)</span>)</span>
+<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">average</span> x y)</span>
+  <span class="list">(<span class="keyword"><span class="built_in">/</span></span> <span class="list">(<span class="keyword"><span class="built_in">+</span></span> x y)</span> <span class="number">2</span>)</span>)</span>
+<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">good-enough?</span> guess x)</span>
+  <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> <span class="list">(<span class="keyword"><span class="built_in">abs</span></span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> <span class="list">(<span class="keyword">cube</span> guess)</span> x)</span>)</span> <span class="number">0.001</span>)</span>)</span>
+<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">cube-root</span> x)</span>
+  <span class="list">(<span class="keyword">cube-iter</span> <span class="number">1.0</span> x)</span>)</span> 
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://deltax.me/2015/01/19/SICP-1-1/" data-id="ci7lyw0dd001tq4fydiuyxgqa" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FP/">FP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SICP/">SICP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scheme/">Scheme</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/01/24/简单的HTTP协议/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          简单的HTTP协议
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/12/11/Persistent-Storage-with-levelDB/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Persistent Storage with levelDB</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/FP/">FP</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/FP/Scheme/">Scheme</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Haskell/">Haskell</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Haskell/ML/">ML</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming-Paradigm/">Programming Paradigm</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法导论/">算法导论</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/算法导论/算法/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法导论/算法/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法导论/算法/">算法</a><span class="category-list-count">1</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Abstraction/">Abstraction</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Concurrency/">Concurrency</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FP/">FP</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Haskell/">Haskell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Inheritance/">Inheritance</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Iteration/">Iteration</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/List/">List</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ML/">ML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Message-Passing/">Message Passing</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OOP/">OOP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pattern-Match/">Pattern Match</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Polymorphism/">Polymorphism</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Recursion/">Recursion</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Runtime/">Runtime</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SICP/">SICP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scheme/">Scheme</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State/">State</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/generic/">generic</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/segue/">segue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/subtype/">subtype</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堆/">堆</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Abstraction/" style="font-size: 10px;">Abstraction</a><a href="/tags/Concurrency/" style="font-size: 10px;">Concurrency</a><a href="/tags/FP/" style="font-size: 16.67px;">FP</a><a href="/tags/HTTP/" style="font-size: 13.33px;">HTTP</a><a href="/tags/Haskell/" style="font-size: 10px;">Haskell</a><a href="/tags/Inheritance/" style="font-size: 10px;">Inheritance</a><a href="/tags/Iteration/" style="font-size: 10px;">Iteration</a><a href="/tags/List/" style="font-size: 10px;">List</a><a href="/tags/ML/" style="font-size: 10px;">ML</a><a href="/tags/Message-Passing/" style="font-size: 10px;">Message Passing</a><a href="/tags/OOP/" style="font-size: 13.33px;">OOP</a><a href="/tags/Pattern-Match/" style="font-size: 10px;">Pattern Match</a><a href="/tags/Polymorphism/" style="font-size: 10px;">Polymorphism</a><a href="/tags/Recursion/" style="font-size: 10px;">Recursion</a><a href="/tags/Runtime/" style="font-size: 10px;">Runtime</a><a href="/tags/SICP/" style="font-size: 10px;">SICP</a><a href="/tags/Scheme/" style="font-size: 16.67px;">Scheme</a><a href="/tags/State/" style="font-size: 10px;">State</a><a href="/tags/generic/" style="font-size: 10px;">generic</a><a href="/tags/iOS/" style="font-size: 20px;">iOS</a><a href="/tags/segue/" style="font-size: 10px;">segue</a><a href="/tags/subtype/" style="font-size: 10px;">subtype</a><a href="/tags/堆/" style="font-size: 10px;">堆</a><a href="/tags/算法/" style="font-size: 16.67px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a><span class="archive-list-count">10</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/03/23/Class-as-Data-Abstraction-in-OOP/">Class as Data Abstraction in OOP</a>
+          </li>
+        
+          <li>
+            <a href="/2015/03/22/快速排序/">快速排序</a>
+          </li>
+        
+          <li>
+            <a href="/2015/03/20/Stateful-Collections/">Stateful Collections</a>
+          </li>
+        
+          <li>
+            <a href="/2015/03/20/Incredible Functional Programming/">Incredible Functional Programming</a>
+          </li>
+        
+          <li>
+            <a href="/2015/03/19/堆排序/">堆排序</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 Draven<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

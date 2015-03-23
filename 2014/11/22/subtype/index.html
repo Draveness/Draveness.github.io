@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Subtype | DeltaX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Subtyping
+While languages like Java and C# have generics these days, the source of type-system expressiveness most fundamental to object-oriented style is subtype polymorphism, also known as subtyping">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Subtype">
+<meta property="og:url" content="http://deltax.me/2014/11/22/subtype/index.html">
+<meta property="og:site_name" content="DeltaX">
+<meta property="og:description" content="Subtyping
+While languages like Java and C# have generics these days, the source of type-system expressiveness most fundamental to object-oriented style is subtype polymorphism, also known as subtyping">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Subtype">
+<meta name="twitter:description" content="Subtyping
+While languages like Java and C# have generics these days, the source of type-system expressiveness most fundamental to object-oriented style is subtype polymorphism, also known as subtyping">
+  
+    <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">DeltaX</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">为了成为牛逼闪闪的工程师</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="q" value="site:http://deltax.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-subtype" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/11/22/subtype/" class="article-date">
+  <time datetime="2014-11-22T12:26:08.000Z" itemprop="datePublished">2014-11-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming-Paradigm/">Programming Paradigm</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Subtype
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Subtyping">Subtyping</h2><ul>
+<li>While languages like <code>Java</code> and <code>C#</code> have generics these days, the source of type-system expressiveness most fundamental to object-oriented style is <em>subtype polymorphism</em>, also known as <em>subtyping</em>.</li>
+</ul>
+<p>We need a type system, with a form of types for records and typing rules for each of our expressions.</p>
+<ul>
+<li>If <code>e1</code> has type <code>t1</code>, <code>e2</code> has type <code>t2</code>, …, <code>en</code> has type <code>tn</code>, then <code>{f1=e1, f2=e2, ..., fn=en}</code> has type <code>{f1:t1, f2:t2, ..., fn:tn}</code>.</li>
+<li>If <code>e</code> has a record type containing <code>f : t</code>, then <code>e.f</code> has type <code>t</code> (else <code>e.f</code> does not type-check).</li>
+<li>If <code>e1</code> has a record type containing <code>f : t</code> and <code>e2</code> has type <code>t</code>,then <code>e1.f = e2</code> has type <code>t</code> (else <code>e1.f = e2</code> does not type-check).</li>
+<li>“Width” subtyping: A supertype can have a subset of fields with the same types, i.e., a subtype can have <strong>“extra”</strong> fields</li>
+<li>“Permutation” subtyping: A supertype can have the same set of fields with the same types in a different order.</li>
+<li>Transitivity: If <code>t1 &lt;: t2</code> and <code>t2 &lt;: t3</code>, then <code>t1 &lt;: t3</code>.</li>
+<li>Reflexivity: Every type is a subtype of itself: <code>t &lt;: t</code>.</li>
+</ul>
+<hr>
+<h2 id="Depth_Subtyping">Depth Subtyping</h2><ul>
+<li>“Depth” subtyping: If <code>ta &lt;: tb</code>, then <code>{f1:t1,...,f:ta,...,fn:tn} &lt;: {f1:t1,...,f:tb,...,fn:tn}</code>.</li>
+</ul>
+<p>This rule breaks out type system, allowing programs that we do not want to allow to type-check!</p>
+<p>Another way to look at the issue is that given the three features of (1) setting a field, (2) letting depth subtyping change the type of a field, and (3) having a type system actually prevent field-missing errors, you can have any two of the three.</p>
+<hr>
+<h2 id="Function_Subtyping">Function Subtyping</h2><p> The rules for when one function tyoe is a subtype of another function type are even less intuitive than the issue of depth subtyping for records, but we should understand them to safely override methods in <code>OOP</code> languages.</p>
+<pre><code><span class="comment">// (({x:real,y:real}-&gt;{x:real,y:real}) * {x:real,y:real}) -&gt; real</span>
+
+fun distMoved (<span class="string">f :</span> {<span class="string">x:</span>real,<span class="string">y:</span>real}-&gt;{<span class="string">x:</span>real,<span class="string">y:</span>real},
+           <span class="string">p :</span> {<span class="string">x:</span>real,<span class="string">y:</span>real}) =
+   let val <span class="string">p2 :</span> {<span class="string">x:</span>real,<span class="string">y:</span>real} = f p
+       val <span class="string">dx :</span> real = p2.x - p.x
+       val <span class="string">dy :</span> real = p2.y - p.y
+   <span class="keyword">in</span> Math.sqrt(dx*dx + dy*dy) end
+
+fun flip p = {x=~p.x, y=~p.y}
+val d = distMoved(flip, {x=<span class="number">3.0</span>, y=<span class="number">4.0</span>})
+</code></pre><p>It is safe to pass in a function with a return type that promises more, such as return a <code>subtype</code> of the needed reuturn type.</p>
+<pre><code>// {x:real,y:real} -&gt; {x:real,y:real,color:string}
+
+fun flipGreen <span class="variable">p =</span> {<span class="variable">x=</span>~p.x, <span class="variable">y=</span>~p.y, <span class="variable">color=</span><span class="string">"green"</span>}
+val <span class="variable">d =</span> distMoved(flipGreen, {<span class="variable">x=</span><span class="number">3.0</span>, <span class="variable">y=</span><span class="number">4.0</span>})
+</code></pre><blockquote>
+<p>In general, the rule is that if <code>ta &lt;: tb</code>, then t -&gt;ta &lt;: t -&gt; tb</p>
+</blockquote>
+<p>But it turns out it works just fine to use a function that “need less of its argument” in place of that “need more of its argument”.</p>
+<pre><code>// {x:real} -&gt; {x:real,y:real}
+
+fun flipX_Y0 <span class="variable">p =</span> {<span class="variable">x=</span>~p.x, <span class="variable">y=</span><span class="number">0.0</span>}
+val <span class="variable">d =</span> distMoved(flipX_Y0, {<span class="variable">x=</span><span class="number">3.0</span>, <span class="variable">y=</span><span class="number">4.0</span>})
+</code></pre><blockquote>
+<p> In general, the rule is that if <code>tb &lt;: ta</code>, then ta -&gt; t &lt;: tb -&gt; t</p>
+</blockquote>
+<p>The technical jargon for “backwords” is <em>contravariance</em>, meaning the subtyping for argument is the reverse of the subtyping for the types overall.</p>
+<p>Function subtyping also allow contravariance of arguments and convariance of results.</p>
+<pre><code>// {x:real} -&gt; {x:real,y:real,color:string}
+
+fun flipXMakeGreen <span class="variable">p =</span> {<span class="variable">x=</span>~p.x, <span class="variable">y=</span><span class="number">0.0</span>, <span class="variable">color=</span><span class="string">"green"</span>}
+val <span class="variable">d =</span> distMoved(flipXMakeGreen, {<span class="variable">x=</span><span class="number">3.0</span>, <span class="variable">y=</span><span class="number">4.0</span>})
+</code></pre><p><code>{x:real} -&gt; {x:real,y:real,color:string}</code> is a subtype of <code>{x:real, y:real} -&gt; {x:real, y:real}</code>, because <code>{x:real,y:real} &lt;: {x:real}</code> (contravariance on arguments) and <code>{x:real,y:real,color:string} &lt;: {x:real,y:real}</code> (covariance on results).</p>
+<blockquote>
+<p>The general rule for this subtype is If <code>t3 &lt;: t1</code> and <code>t2 &lt;: t4</code>, then <code>t1-&gt;t2 &lt;: t3-&gt;t4</code>.</p>
+</blockquote>
+<hr>
+<h2 id="Subtype_for_OOP">Subtype for OOP</h2><p>An object is a record holding mutable fields methods. We assume methods are immutable. With this perspective, sound subtyping for objects follows sound subtyping for records and functions.</p>
+<ul>
+<li>A subtype can have extra fields</li>
+<li>a subtype cannot have a different type for a field because it is mutable.</li>
+<li>A subtype can have extra methods.</li>
+<li>Because methods are immutable, a subtype can have a subtype for a method, which means the method in the subtype can have contravariant argument types and a covariant result type.</li>
+</ul>
+<p>In particular, the <code>object-oriented</code> implement is more restrictive than subtyping requires.</p>
+<ul>
+<li>A subclass can add fields but not remove them.</li>
+<li>A subclass can add methods but not remove them.</li>
+<li>A subclass can override a method with a covariant return type.</li>
+<li>A class can implement more methods than an interface requires or implement a required method with covariant return type.</li>
+</ul>
+<p><code>Classes</code> and <code>types</code> and different things,</p>
+<hr>
+<h2 id="Generics_Versus_Subtyping">Generics Versus Subtyping</h2><p>There are functions that combine other functions as compse:</p>
+<pre><code>val compose : <span class="function"><span class="params">(’b -&gt; ’c)</span> * <span class="params">(’a -&gt; ’b)</span> -&gt;</span> (’a<span class="function"> -&gt;</span> ’c)
+</code></pre><p>Generic types are much more useful and precise than just saying that some argument can be<br>“anything” </p>
+<h3 id="Subtyping_is_a_Bad_Substitute_for_Generics">Subtyping is a Bad Substitute for Generics</h3><p>Consider Java code example:</p>
+<pre><code><span class="class"><span class="keyword">class</span> <span class="title">LamePair</span> </span>{
+  <span class="built_in">Object</span> x;
+  <span class="built_in">Object</span> y;
+  LamePair(<span class="built_in">Object</span> _x, <span class="built_in">Object</span> _y){ x=_x; y=_y; }
+  LamePair swap() { <span class="keyword">return</span> <span class="keyword">new</span> LamePair(y,x); }
+  ...
+}
+
+<span class="built_in">String</span> s = (<span class="built_in">String</span>)(<span class="keyword">new</span> LamePair(<span class="string">"hi"</span>,<span class="number">4</span>).y); <span class="comment">// error caught only at run-time</span>
+</code></pre><p>Subtyping does not work that way, the type-checker only knows that the field holds an <code>Object</code>. So we have to use a <code>downcast</code>, cast the <code>Object</code> type to <code>String</code>. Such <code>downcast</code> costs in terms of performance, but may cause a failure.</p>
+<h3 id="What_is_Subtyping_Good_For?">What is Subtyping Good For?</h3><p>A generally agreed upon example where subtyping works well is graphical user interfaces. Much of the code for graphics libraries works fine for any sort of graphical element (“paint it on the screen,” “change the background color,” “report if the mouse is clicked on it,” etc.) where different elements such as buttons, slider bars, or text boxes can then be subtypes.</p>
+<h3 id="Generics_are_a_Bad_Substitute_for_Subtyping">Generics are a Bad Substitute for Subtyping</h3><p>In a language with generics instead of subtyping, you can code up your own code reuse with higher-order functions, but it can be quite a bit of trouble for a simple idea.</p>
+<pre><code><span class="keyword">fun</span> distToOrigin2(getx,gety,v) =
+<span class="keyword">let</span>
+    <span class="keyword">val</span> x = getx v
+    <span class="keyword">val</span> y = gety v
+<span class="keyword">in</span>
+    <span class="type">Math</span>.sqrt (x*x + y*y)
+<span class="keyword">end</span>
+<span class="keyword">fun</span> distToOriginPt (p : {x:<span class="built_in">real</span>,y:<span class="built_in">real</span>}) =
+    distToOrigin2(<span class="keyword">fn</span> v =&gt; #x v,
+                  <span class="keyword">fn</span> v =&gt; #y v, p)
+<span class="keyword">fun</span> distToOriginColorPt (p : {x:<span class="built_in">real</span>,y:<span class="built_in">real</span>,color:<span class="built_in">string</span>}) =
+    distToOrigin2(<span class="keyword">fn</span> v =&gt; #x v,
+                   <span class="keyword">fn</span> v =&gt; #y v, 
+                   p)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://deltax.me/2014/11/22/subtype/" data-id="ci7lyw0cm000rq4fyqb5icqfu" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/generic/">generic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/subtype/">subtype</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/11/23/iOS Combine View and TableView<Bug01>/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          iOS Combine View and TableView &lt;Bug01&gt;
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/11/22/Multiple Inheritence/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Multiple Inheritance</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/FP/">FP</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/FP/Scheme/">Scheme</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Haskell/">Haskell</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Haskell/ML/">ML</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming-Paradigm/">Programming Paradigm</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法导论/">算法导论</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/算法导论/算法/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法导论/算法/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法导论/算法/">算法</a><span class="category-list-count">1</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Abstraction/">Abstraction</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Concurrency/">Concurrency</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FP/">FP</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Haskell/">Haskell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Inheritance/">Inheritance</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Iteration/">Iteration</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/List/">List</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ML/">ML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Message-Passing/">Message Passing</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OOP/">OOP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pattern-Match/">Pattern Match</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Polymorphism/">Polymorphism</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Recursion/">Recursion</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Runtime/">Runtime</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SICP/">SICP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scheme/">Scheme</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State/">State</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/generic/">generic</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/segue/">segue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/subtype/">subtype</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堆/">堆</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Abstraction/" style="font-size: 10px;">Abstraction</a><a href="/tags/Concurrency/" style="font-size: 10px;">Concurrency</a><a href="/tags/FP/" style="font-size: 16.67px;">FP</a><a href="/tags/HTTP/" style="font-size: 13.33px;">HTTP</a><a href="/tags/Haskell/" style="font-size: 10px;">Haskell</a><a href="/tags/Inheritance/" style="font-size: 10px;">Inheritance</a><a href="/tags/Iteration/" style="font-size: 10px;">Iteration</a><a href="/tags/List/" style="font-size: 10px;">List</a><a href="/tags/ML/" style="font-size: 10px;">ML</a><a href="/tags/Message-Passing/" style="font-size: 10px;">Message Passing</a><a href="/tags/OOP/" style="font-size: 13.33px;">OOP</a><a href="/tags/Pattern-Match/" style="font-size: 10px;">Pattern Match</a><a href="/tags/Polymorphism/" style="font-size: 10px;">Polymorphism</a><a href="/tags/Recursion/" style="font-size: 10px;">Recursion</a><a href="/tags/Runtime/" style="font-size: 10px;">Runtime</a><a href="/tags/SICP/" style="font-size: 10px;">SICP</a><a href="/tags/Scheme/" style="font-size: 16.67px;">Scheme</a><a href="/tags/State/" style="font-size: 10px;">State</a><a href="/tags/generic/" style="font-size: 10px;">generic</a><a href="/tags/iOS/" style="font-size: 20px;">iOS</a><a href="/tags/segue/" style="font-size: 10px;">segue</a><a href="/tags/subtype/" style="font-size: 10px;">subtype</a><a href="/tags/堆/" style="font-size: 10px;">堆</a><a href="/tags/算法/" style="font-size: 16.67px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a><span class="archive-list-count">10</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/03/23/Class-as-Data-Abstraction-in-OOP/">Class as Data Abstraction in OOP</a>
+          </li>
+        
+          <li>
+            <a href="/2015/03/22/快速排序/">快速排序</a>
+          </li>
+        
+          <li>
+            <a href="/2015/03/20/Stateful-Collections/">Stateful Collections</a>
+          </li>
+        
+          <li>
+            <a href="/2015/03/20/Incredible Functional Programming/">Incredible Functional Programming</a>
+          </li>
+        
+          <li>
+            <a href="/2015/03/19/堆排序/">堆排序</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 Draven<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

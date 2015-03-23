@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Explicit State | DeltaX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="StateA state is a sequence of values in time that contains the intermediate results of a desired computation.
+There are different ways that state can be used in a program.
+
+Implicit or declarative sta">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Explicit State">
+<meta property="og:url" content="http://deltax.me/2015/03/18/Explicit-State/index.html">
+<meta property="og:site_name" content="DeltaX">
+<meta property="og:description" content="StateA state is a sequence of values in time that contains the intermediate results of a desired computation.
+There are different ways that state can be used in a program.
+
+Implicit or declarative sta">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Explicit State">
+<meta name="twitter:description" content="StateA state is a sequence of values in time that contains the intermediate results of a desired computation.
+There are different ways that state can be used in a program.
+
+Implicit or declarative sta">
+  
+    <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">DeltaX</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">为了成为牛逼闪闪的工程师</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="q" value="site:http://deltax.me"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Explicit-State" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/03/18/Explicit-State/" class="article-date">
+  <time datetime="2015-03-18T06:34:39.000Z" itemprop="datePublished">2015-03-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming-Paradigm/">Programming Paradigm</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Explicit State
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="State">State</h2><p>A <code>state</code> is a sequence of values in time that contains the intermediate results of a desired computation.</p>
+<p>There are different ways that state can be used in a program.</p>
+<ul>
+<li>Implicit or declarative state<ul>
+<li>The state need only exist in the mind of the programmer. It does not need any support at all from the computation model.</li>
+</ul>
+</li>
+<li><p>Explicit state</p>
+<ul>
+<li><p>A procedure is a state whose lifetime extends over more than one procedure call without being present in the procedure’s arguments.</p>
+<pre><code>local
+    C=<span class="comment">{NewCell 0}</span>
+<span class="keyword">in</span>
+    fun <span class="comment">{SumList Xs S}</span>
+        C:=@C+<span class="number">1</span>
+        <span class="keyword">case</span> Xs
+        <span class="keyword">of</span> <span class="keyword">nil</span> <span class="keyword">then</span> S
+        [] X|Xr <span class="keyword">then</span> <span class="comment">{SumList Xr X+S}</span>
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+    fun <span class="comment">{SumCount}</span> @C <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+% <span class="keyword">In</span> this <span class="function"><span class="keyword">procedure</span>, <span class="title">C</span> <span class="title">is</span> <span class="title">not</span> <span class="title">an</span> <span class="title">arugment</span> <span class="title">for</span> <span class="title">the</span> <span class="title">function</span> <span class="title">SumList</span> <span class="title">and</span> <span class="title">we</span> <span class="title">can</span> <span class="title">use</span> <span class="title">another</span> <span class="title">helper</span> <span class="title">function</span> <span class="title">SumCount</span> <span class="title">to</span> <span class="title">get</span> <span class="title">its</span> <span class="title">value</span>.</span>
+</code></pre></li>
+<li><p>With explicit state, data abstraction gain tremendously in modularity since is is possible to <strong>encapsulate an explicit state inside a data abstraction</strong>. And the access to state is limited according to the operations of the data abstraction.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Data_Abstraction">Data Abstraction</h2><p><strong>Data abstraction</strong> is a way of using data in abstract fashion, we can use the data without having to deal with its implementation. It contains a set of instances that can be used according to certain rules called interface.</p>
+<h3 id="Organize_Data_Abstraction">Organize Data Abstraction</h3><ul>
+<li><code>Openness and Security</code><ul>
+<li>A data abstraction is <code>secure</code> if its encapsulation is enforced by the language. Otherwise it is open. If the data abstraction is open, the encapsulation should be <strong>enforced by programmer discipline</strong>.</li>
+</ul>
+</li>
+<li><code>Bundling</code><ul>
+<li>A data abstraction is <code>unbundled</code> if it defines two kinds of entities, called <strong>value and operation</strong>.</li>
+<li>A data abstraction is <code>bundled</code> if it defines just one kind of entity, called <strong>object</strong>, that combines the notion of value and operation. (Which is sometimes called a precedural data abstraction, <code>PDA</code>)</li>
+</ul>
+</li>
+<li><code>Explicit</code><ul>
+<li>A data is stateful if it uses <strong>explicit state</strong>. Otherwise it is known as stateless or declarative.</li>
+</ul>
+</li>
+</ul>
+<p>We use these three axes, secure, bundling and explit state to organize data abstraction is <code>8</code> ways.</p>
+<h3 id="Open_Declarative_Stack">Open Declarative Stack</h3><pre><code>% This <span class="built_in">version</span> is <span class="built_in">open</span>, declarative <span class="operator">and</span> unbundled.
+
+declare    
+<span class="built_in">local</span>
+     fun {NewStack} nil <span class="function"><span class="keyword">end</span></span>
+     fun {Push S E} E|S <span class="function"><span class="keyword">end</span></span>
+     fun {Pop S ?E} <span class="keyword">case</span> S <span class="operator">of</span> X|S1 <span class="keyword">then</span> E=X S1 <span class="function"><span class="keyword">end</span> <span class="title">end</span></span>
+     fun {IsEmpty S} S==nil <span class="function"><span class="keyword">end</span></span>
+<span class="operator">in</span>
+     Stack=stack(<span class="built_in">new</span>:NewStack push:Push pop:Pop isEmpty:IsEmpty)
+<span class="function"><span class="keyword">end</span></span>
+</code></pre><h3 id="Secure_Declarative_Unbundled_Stack">Secure Declarative Unbundled Stack</h3><pre><code>% This <span class="built_in">version</span> is secure, declarative <span class="operator">and</span> unbundled. 
+
+declare
+<span class="built_in">local</span> Wrap Unwrap
+     {NewWrapper Wrap Unwrap}
+     fun {NewStack} {Wrap nil} <span class="function"><span class="keyword">end</span></span>
+     fun {Push S E} {Wrap E|{Unwrap S}} <span class="function"><span class="keyword">end</span></span>
+     fun {Pop S ?E} <span class="keyword">case</span> {Unwrap S} <span class="operator">of</span> X|S1 <span class="keyword">then</span> E=X {Wrap S1} <span class="function"><span class="keyword">end</span> <span class="title">end</span></span>
+     fun {IsEmpty S} {Unwrap S}==nil <span class="function"><span class="keyword">end</span></span>
+<span class="operator">in</span>
+     Stack=stack(<span class="built_in">new</span>:NewStack push:Push pop:Pop isEmpty:IsEmpty)
+<span class="function"><span class="keyword">end</span></span>
+</code></pre><p>The stack is unwrapped when entering an ADT and wrapped when the operation exits.</p>
+<h3 id="Secure_Declarative_Bundled_Stack">Secure Declarative Bundled Stack</h3><pre><code>% <span class="type">This</span> version is secure, declarative <span class="keyword">and</span> bundled.
+
+<span class="keyword">local</span>
+     <span class="keyword">fun</span> {<span class="type">StackObject</span> <span class="type">S</span>}
+          <span class="keyword">fun</span> {<span class="type">Push</span> <span class="type">E</span>} {<span class="type">StackObject</span> <span class="type">E</span>|<span class="type">S</span>} <span class="keyword">end</span>
+          <span class="keyword">fun</span> {<span class="type">Pop</span> ?<span class="type">E</span>}
+               <span class="keyword">case</span> <span class="type">S</span> <span class="keyword">of</span> <span class="type">X</span>|<span class="type">S1</span> <span class="keyword">then</span> <span class="type">E</span>=<span class="type">X</span> {<span class="type">StackObject</span> <span class="type">S1</span>} <span class="keyword">end</span> <span class="keyword">end</span>
+          <span class="keyword">fun</span> {<span class="type">IsEmpty</span>} <span class="type">S</span>==<span class="literal">nil</span> <span class="keyword">end</span>
+     <span class="keyword">in</span> stack(push:<span class="type">Push</span> pop:<span class="type">Pop</span> isEmpty:<span class="type">IsEmpty</span>) <span class="keyword">end</span>
+<span class="keyword">in</span>
+     <span class="keyword">fun</span> {<span class="type">NewStack</span>} {<span class="type">StackObject</span> <span class="literal">nil</span>} <span class="keyword">end</span>
+<span class="keyword">end</span>
+</code></pre><p>We can make a data abstraction secure only use <code>higher-order</code> programming instead of using explicit state and name.</p>
+<p>Because this version is both secure and bundled, we cansider it as a declarative form of <code>object-oriented programming</code>.</p>
+<h3 id="Secure_Stateful_Bundled_Stack">Secure Stateful Bundled Stack</h3><pre><code>% <span class="type">This</span> version <span class="keyword">is</span> secure, stateful <span class="keyword">and</span> bundled.
+
+declare
+fun {<span class="type">NewStack</span>}
+     C={<span class="type">NewCell</span> <span class="keyword">nil</span>}
+     <span class="keyword">proc</span> {<span class="type">Push</span> E} C:=E|@C <span class="keyword">end</span>
+     fun {<span class="type">Pop</span>} <span class="keyword">case</span> @C <span class="keyword">of</span> X|<span class="type">S1</span> then C:=<span class="type">S1</span> X <span class="keyword">end</span> <span class="keyword">end</span>
+     fun {<span class="type">IsEmpty</span>} @C=<span class="keyword">nil</span> <span class="keyword">end</span>
+<span class="keyword">in</span>
+     stack(push:<span class="type">Push</span> pop:<span class="type">Pop</span> isEmpty:<span class="type">IsEmpty</span>)
+<span class="keyword">end</span>
+</code></pre><p>In this version the objectis represented by a recored of procedure values. This version provides the basic functionality of object-oriented programming, namely a group of operations <code>methods</code> with a hidden internal state.</p>
+<h3 id="Secure_Stateful_Bundled_Stack_With_Procedure_Dispatching">Secure Stateful Bundled Stack With Procedure Dispatching</h3><pre><code>% <span class="type">This</span> version <span class="keyword">is</span> secure, stateful <span class="keyword">and</span> bundled.
+
+declare
+fun {<span class="type">NewStack</span>}
+     C={<span class="type">NewCell</span> <span class="keyword">nil</span>}
+     <span class="keyword">proc</span> {<span class="type">Push</span> E} C:=E|@C <span class="keyword">end</span>
+     fun {<span class="type">Pop</span>} <span class="keyword">case</span> @C <span class="keyword">of</span> X|<span class="type">S1</span> then C:=<span class="type">S1</span> X <span class="keyword">end</span> <span class="keyword">end</span>
+     fun {<span class="type">IsEmpty</span>} @C=<span class="keyword">nil</span> <span class="keyword">end</span>
+<span class="keyword">in</span>
+     <span class="keyword">proc</span> {$ <span class="type">Msg</span>}
+          <span class="keyword">case</span> <span class="type">Msg</span>
+          <span class="keyword">of</span> push(X) then {<span class="type">Push</span> X}
+          [] pop(?E) then E={<span class="type">Pop</span>}
+          [] isEmpty(?B) then B={<span class="type">IsEmpty</span>}
+     <span class="keyword">end</span>
+<span class="keyword">end</span>
+</code></pre><p>This is called procedure dispatching as opposed to the previous version which uses record dispatching. It is another way to implement secure, stateful bundled stack. With this approach, we use <code>{S.push X}</code> to invocate method <code>push</code>.</p>
+<h3 id="Secure_Stateful_Unbundled_Stack">Secure Stateful Unbundled Stack</h3><pre><code>% This <span class="built_in">version</span> is secure, stateful <span class="operator">and</span> unbundled.
+
+declare
+<span class="built_in">local</span> Wrap Unwrap
+     {NewWrapper Wrap Unwrap}
+     fun {NewStack} {Wrap {NewCell nil}} <span class="function"><span class="keyword">end</span></span>
+     proc {Push S E} C={Unwrap S} <span class="operator">in</span> C:=E|@C <span class="function"><span class="keyword">end</span></span>
+     fun {Pop S}
+          C={Unwrap S} <span class="operator">in</span> <span class="keyword">case</span> @C <span class="operator">of</span> X|S1 <span class="keyword">then</span> C:=S1 X <span class="function"><span class="keyword">end</span> <span class="title">end</span></span>
+     fun {IsEmpty S} @{Unwrap S}==nil <span class="function"><span class="keyword">end</span></span>
+<span class="operator">in</span>
+     Stack=stack(<span class="built_in">new</span>:NewStack push:Push pop:Pop isEmpty:IsEmpty)
+<span class="function"><span class="keyword">end</span></span>
+</code></pre><p>This style is little used in object-oriented programming, but deserves to be more widely known. In this version, we group four operations in a module.</p>
+<h2 id="Polymorphism">Polymorphism</h2><p><code>Polymorphism</code> is the ability of an entity to take om many forms. In the context of data abstraction, we say an operation is polymorphic if it works correct for arguments of different types.</p>
+<ul>
+<li>The <code>object</code> stype has an advantage over the <code>ADT</code> style in that polymorphism is particularly easy to express.</li>
+<li>The <code>ADT</code> style gives more freedom to make efficient implementation.</li>
+</ul>
+<h3 id="An_Example:_Collection_Type">An Example: Collection Type</h3><p>We implement a collection type in both <code>object</code> and <code>ADT</code> style which with three operations.</p>
+<p>First, we use <code>ADT</code> to implement the stateful unbundled collection:</p>
+<pre><code><span class="built_in">local</span> Wrap Unwrap
+    {NewWrapper Wrap Unwrap}
+    fun {NewCollection} {Wrap {Stack.<span class="built_in">new</span>}} <span class="function"><span class="keyword">end</span></span>
+    proc {Put C X} S={Unwrap C} <span class="operator">in</span> {Stack.push S X} <span class="function"><span class="keyword">end</span></span>
+    fun {Get C} S={Unwrap C} <span class="operator">in</span> {Stack.pop S} <span class="function"><span class="keyword">end</span></span>
+    fun {IsEmpty C} {Stack.isEmpty {Unwrap C}} <span class="function"><span class="keyword">end</span></span>
+<span class="operator">in</span>
+    Collection=collection(<span class="built_in">new</span>:NewCollection <span class="built_in">put</span>:Put <span class="built_in">get</span>:Get
+                          isEmpty:IsEmpty)
+<span class="function"><span class="keyword">end</span></span>
+</code></pre><p>Then, implement this with object style:</p>
+<pre><code>fun {NewCollection}
+    S={NewStack}
+    proc {Put X} {S.<span class="built_in">put</span> X} <span class="function"><span class="keyword">end</span></span>
+    fun {Get X} {S.pop} <span class="function"><span class="keyword">end</span></span>
+    fun {IsEmpty} {S.isEmpty} <span class="function"><span class="keyword">end</span></span>
+<span class="operator">in</span>
+    collection(<span class="built_in">put</span>:Put <span class="built_in">get</span>:Pop isEmpty:IsEmpty)
+<span class="function"><span class="keyword">end</span></span>
+</code></pre><p>Now we have out colletion type with both styles, in order to compare the difference between them, let us add an operation <code>union</code> to this collection type.</p>
+<h3 id="Adding_a_union_Operation_in_the_ADT_case">Adding a <code>union</code> Operation in the ADT case</h3><p>To implement <code>union</code>, let us introduce a control abstraction:</p>
+<pre><code><span class="keyword">proc</span> {<span class="type">DoUntil</span> <span class="type">BF</span> S}
+    <span class="keyword">if</span> {<span class="type">BF</span>} then skip <span class="keyword">else</span> {S} {<span class="type">DoUntil</span> <span class="type">BF</span> S} <span class="keyword">end</span>
+<span class="keyword">end</span>
+</code></pre><p>With <code>DoUntil</code>, we can implement the new <code>Collection</code> type as follows.</p>
+<pre><code>% <span class="type">Use</span> <span class="type">Internal</span> representations
+
+local <span class="type">Wrap</span> <span class="type">Unwrap</span>
+    ...
+    <span class="keyword">proc</span> {<span class="type">Union</span> <span class="type">C1</span> <span class="type">C2</span>}
+    <span class="type">S1</span>={<span class="type">Unwrap</span> <span class="type">C1</span>} <span class="type">S2</span>={<span class="type">Unwrap</span> <span class="type">C2</span>} <span class="keyword">in</span>
+        {<span class="type">DoUntil</span> fun {$} {<span class="type">Stack</span>.isEmpty <span class="type">S2</span>} <span class="keyword">end</span>
+        <span class="keyword">proc</span> {$} {<span class="type">Stack</span>.push <span class="type">S1</span> {<span class="type">Stack</span>.pop <span class="type">S2</span>}} <span class="keyword">end</span>}
+    <span class="keyword">end</span>
+<span class="keyword">in</span>
+    <span class="type">Collection</span>=collection(... union:<span class="type">Union</span>)
+<span class="keyword">end</span>
+
+% <span class="type">Use</span> external interfaces
+
+local <span class="type">Wrap</span> <span class="type">Unwrap</span>
+    ...
+    <span class="keyword">proc</span> {<span class="type">Union</span> <span class="type">C1</span> <span class="type">C2</span>}
+    <span class="type">S1</span>={<span class="type">Unwrap</span> <span class="type">C1</span>} <span class="type">S2</span>={<span class="type">Unwrap</span> <span class="type">C2</span>} <span class="keyword">in</span>
+        {<span class="type">DoUntil</span> fun {$} {<span class="type">Collection</span>.isEmpty <span class="type">S2</span>} <span class="keyword">end</span>
+        <span class="keyword">proc</span> {$} {<span class="type">Collection</span>.put <span class="type">S1</span> {<span class="type">Collection</span>.get <span class="type">S2</span>}} <span class="keyword">end</span>}
+    <span class="keyword">end</span>
+<span class="keyword">in</span>
+    <span class="type">Collection</span>=collection(... union:<span class="type">Union</span>)
+<span class="keyword">end</span>    
+</code></pre><p>We have choice of whether or not to use the internal representation of each collection argument. This gives us the freedom to make a <strong>more efficient implementation</strong>.</p>
+<h3 id="Adding_a_union_Operation_in_the_Object_case">Adding a <code>union</code> Operation in the Object case</h3><p>Let us implement <code>union</code> operation in object stype. This is called as <code>{C1 union(C2)}</code>.</p>
+<pre><code>% <span class="type">Use</span> internal representation <span class="keyword">of</span> <span class="type">C1</span> but external <span class="keyword">interface</span> <span class="keyword">of</span> <span class="type">C2</span>
+
+fun {<span class="type">NewCollection</span>}
+    <span class="type">S1</span>={<span class="type">NewStack</span>}
+    ...
+    <span class="keyword">proc</span> {<span class="type">Union</span> <span class="type">C2</span>}
+        {<span class="type">DoUntil</span> <span class="type">C2</span>.isEmpty
+        <span class="keyword">proc</span> {$} {<span class="type">S1</span>.push {<span class="type">C2</span>.get}} <span class="keyword">end</span>}
+    <span class="keyword">end</span>
+<span class="keyword">in</span>
+    collection(... union:<span class="type">Union</span>)
+<span class="keyword">end</span>
+</code></pre><p>The implementation uses the <strong>internal representation</strong> of <code>C1</code> but the external interface of <code>C2</code>. This is a crucial difference with the <code>ADT</code> stype. We can also use both <strong>external interfaces</strong> to implement this operation again.</p>
+<pre><code>% <span class="type">Use</span> external interfaces
+
+fun {<span class="type">NewCollection</span>}
+    <span class="type">S1</span>={<span class="type">NewStack</span>}
+    ...
+    <span class="keyword">proc</span> {<span class="type">Union</span> <span class="type">C2</span>}
+        {<span class="type">DoUntil</span> <span class="type">C2</span>.isEmpty
+        <span class="keyword">proc</span> {$} {<span class="type">This</span>.push {<span class="type">C2</span>.get}} <span class="keyword">end</span>}
+    <span class="keyword">end</span>
+    <span class="type">This</span>=collection(... union:<span class="type">Union</span>)
+<span class="keyword">in</span>
+    <span class="type">This</span>
+<span class="keyword">end</span>
+</code></pre><p>The object <code>C1</code> refers to itself through the variable <code>This</code>.</p>
+<h3 id="Decision_between_ADT_and_Object_styles">Decision between ADT and Object styles</h3><ul>
+<li>The <code>ADT</code> style can be more efficient because it allows accessing both internal representations.</li>
+<li>Sometimes the <code>ADT</code> style is the only one that works. Especially when we deal with addtion between integer.</li>
+<li>The <code>object</code> style provides polyphism “for free”.</li>
+<li>The <code>object</code> style is not limited to sequential objects.</li>
+<li>The ‘ADT` style provides polymorohism if the language has first-class modules.</li>
+<li>If we use the <code>ADT</code> style without first-class modules, then we must write new code to get types to interoperate.</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://deltax.me/2015/03/18/Explicit-State/" data-id="ci7lyw0e70036q4fyj81xok16" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Abstraction/">Abstraction</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Polymorphism/">Polymorphism</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/State/">State</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/03/18/Parameter-Passing-Mechanisms/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Parameter Passing Mechanisms
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/03/16/Message-Passing-Concurrency/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Message-Passing Concurrency</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/FP/">FP</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/FP/Scheme/">Scheme</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Haskell/">Haskell</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Haskell/ML/">ML</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming-Paradigm/">Programming Paradigm</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法导论/">算法导论</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/算法导论/算法/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法导论/算法/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法导论/算法/">算法</a><span class="category-list-count">1</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Abstraction/">Abstraction</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Concurrency/">Concurrency</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FP/">FP</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Haskell/">Haskell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Inheritance/">Inheritance</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Iteration/">Iteration</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/List/">List</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ML/">ML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Message-Passing/">Message Passing</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OOP/">OOP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pattern-Match/">Pattern Match</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Polymorphism/">Polymorphism</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Recursion/">Recursion</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Runtime/">Runtime</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SICP/">SICP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scheme/">Scheme</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State/">State</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/generic/">generic</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/segue/">segue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/subtype/">subtype</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堆/">堆</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Abstraction/" style="font-size: 10px;">Abstraction</a><a href="/tags/Concurrency/" style="font-size: 10px;">Concurrency</a><a href="/tags/FP/" style="font-size: 16.67px;">FP</a><a href="/tags/HTTP/" style="font-size: 13.33px;">HTTP</a><a href="/tags/Haskell/" style="font-size: 10px;">Haskell</a><a href="/tags/Inheritance/" style="font-size: 10px;">Inheritance</a><a href="/tags/Iteration/" style="font-size: 10px;">Iteration</a><a href="/tags/List/" style="font-size: 10px;">List</a><a href="/tags/ML/" style="font-size: 10px;">ML</a><a href="/tags/Message-Passing/" style="font-size: 10px;">Message Passing</a><a href="/tags/OOP/" style="font-size: 13.33px;">OOP</a><a href="/tags/Pattern-Match/" style="font-size: 10px;">Pattern Match</a><a href="/tags/Polymorphism/" style="font-size: 10px;">Polymorphism</a><a href="/tags/Recursion/" style="font-size: 10px;">Recursion</a><a href="/tags/Runtime/" style="font-size: 10px;">Runtime</a><a href="/tags/SICP/" style="font-size: 10px;">SICP</a><a href="/tags/Scheme/" style="font-size: 16.67px;">Scheme</a><a href="/tags/State/" style="font-size: 10px;">State</a><a href="/tags/generic/" style="font-size: 10px;">generic</a><a href="/tags/iOS/" style="font-size: 20px;">iOS</a><a href="/tags/segue/" style="font-size: 10px;">segue</a><a href="/tags/subtype/" style="font-size: 10px;">subtype</a><a href="/tags/堆/" style="font-size: 10px;">堆</a><a href="/tags/算法/" style="font-size: 16.67px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a><span class="archive-list-count">10</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/03/23/Class-as-Data-Abstraction-in-OOP/">Class as Data Abstraction in OOP</a>
+          </li>
+        
+          <li>
+            <a href="/2015/03/22/快速排序/">快速排序</a>
+          </li>
+        
+          <li>
+            <a href="/2015/03/20/Stateful-Collections/">Stateful Collections</a>
+          </li>
+        
+          <li>
+            <a href="/2015/03/20/Incredible Functional Programming/">Incredible Functional Programming</a>
+          </li>
+        
+          <li>
+            <a href="/2015/03/19/堆排序/">堆排序</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 Draven<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
