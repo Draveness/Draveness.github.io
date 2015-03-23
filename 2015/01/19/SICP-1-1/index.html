@@ -100,6 +100,13 @@ Combining several simple i">
 </header>
 	<div class="article-content">
 		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Summary"><span class="toc-number">1.</span> <span class="toc-text">Summary</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Exercise_1-1"><span class="toc-number">1.1.</span> <span class="toc-text">Exercise 1.1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exercise_1-2"><span class="toc-number">1.2.</span> <span class="toc-text">Exercise 1.2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exercise_1-3"><span class="toc-number">1.3.</span> <span class="toc-text">Exercise 1.3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exercise_1-4"><span class="toc-number">1.4.</span> <span class="toc-text">Exercise 1.4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exercise_1-5"><span class="toc-number">1.5.</span> <span class="toc-text">Exercise 1.5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exercise_1-6"><span class="toc-number">1.6.</span> <span class="toc-text">Exercise 1.6</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exercise_1-7"><span class="toc-number">1.7.</span> <span class="toc-text">Exercise 1.7</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exercise_1-8"><span class="toc-number">1.8.</span> <span class="toc-text">Exercise 1.8</span></a></li></ol></li></ol>
+		
+		</div>
+		
 		<h1 id="Summary">Summary</h1><p>This blog just a summary of what I learned from SICP and the solution I made for exercises.</p>
 <p>There are three tips on how our mind works and how we build abstractions.</p>
 <ol>
@@ -248,6 +255,13 @@ Combining several simple i">
 
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Summary"><span class="toc-number">1.</span> <span class="toc-text">Summary</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Exercise_1-1"><span class="toc-number">1.1.</span> <span class="toc-text">Exercise 1.1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exercise_1-2"><span class="toc-number">1.2.</span> <span class="toc-text">Exercise 1.2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exercise_1-3"><span class="toc-number">1.3.</span> <span class="toc-text">Exercise 1.3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exercise_1-4"><span class="toc-number">1.4.</span> <span class="toc-text">Exercise 1.4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exercise_1-5"><span class="toc-number">1.5.</span> <span class="toc-text">Exercise 1.5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exercise_1-6"><span class="toc-number">1.6.</span> <span class="toc-text">Exercise 1.6</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exercise_1-7"><span class="toc-number">1.7.</span> <span class="toc-text">Exercise 1.7</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exercise_1-8"><span class="toc-number">1.8.</span> <span class="toc-text">Exercise 1.8</span></a></li></ol></li></ol>
+ 
+  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -474,6 +488,8 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
@@ -516,6 +532,8 @@ $(document).ready(function(){
   $(window).scroll(function(){
     ta.css("top",Math.max(140,320-$(this).scrollTop()));
   });
+  
+    c.click();
     
 });
 </script>

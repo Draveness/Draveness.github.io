@@ -97,6 +97,13 @@ Complete data a">
 </header>
 	<div class="article-content">
 		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Defining_Classes_and_Objects"><span class="toc-number">1.</span> <span class="toc-text">Defining Classes and Objects</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Class_members"><span class="toc-number">2.</span> <span class="toc-text">Class members</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Initializing_Attributes"><span class="toc-number">3.</span> <span class="toc-text">Initializing Attributes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#First-class_Messages"><span class="toc-number">4.</span> <span class="toc-text">First-class Messages</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#First-class_Attributes"><span class="toc-number">5.</span> <span class="toc-text">First-class Attributes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Programming_Techniques"><span class="toc-number">6.</span> <span class="toc-text">Programming Techniques</span></a></li></ol>
+		
+		</div>
+		
 		<p>The heart of the object concept is controlled access to encapsulated data. The behaviour of an object is specified by a <strong>class</strong> which is an incremental definition of a data abstraction.</p>
 <ul>
 <li>Complete data abstraction<ul>
@@ -299,6 +306,13 @@ Apt4={<span class="keyword">New</span> OneApt init}
 
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Defining_Classes_and_Objects"><span class="toc-number">1.</span> <span class="toc-text">Defining Classes and Objects</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Class_members"><span class="toc-number">2.</span> <span class="toc-text">Class members</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Initializing_Attributes"><span class="toc-number">3.</span> <span class="toc-text">Initializing Attributes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#First-class_Messages"><span class="toc-number">4.</span> <span class="toc-text">First-class Messages</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#First-class_Attributes"><span class="toc-number">5.</span> <span class="toc-text">First-class Attributes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Programming_Techniques"><span class="toc-number">6.</span> <span class="toc-text">Programming Techniques</span></a></li></ol>
+ 
+  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -525,6 +539,8 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
@@ -567,6 +583,8 @@ $(document).ready(function(){
   $(window).scroll(function(){
     ta.css("top",Math.max(140,320-$(this).scrollTop()));
   });
+  
+    c.click();
     
 });
 </script>

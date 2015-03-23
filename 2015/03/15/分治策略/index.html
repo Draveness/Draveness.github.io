@@ -112,6 +112,13 @@
 </header>
 	<div class="article-content">
 		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#分治法的步骤"><span class="toc-number">1.</span> <span class="toc-text">分治法的步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#求解递归式的方法"><span class="toc-number">2.</span> <span class="toc-text">求解递归式的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#主方法"><span class="toc-number">2.1.</span> <span class="toc-text">主方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用"><span class="toc-number">2.1.1.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#总结"><span class="toc-number">2.1.2.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
 		<blockquote>
 <p>在计算机科学中, <a href="http://zh.wikipedia.org/wiki/%E5%88%86%E6%B2%BB%E6%B3%95" target="_blank" rel="external">分治法</a>是基于多项分支递归的一种很重要的算法范式. 字面上的解释是”分而治之”, 就是把一个复杂的问题分成两个或更多的相同或相似的子问题, 知道最后子问题可以简单的直接求解, 原问题的解就是子问题的解的合并.</p>
 </blockquote>
@@ -204,6 +211,13 @@
 
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#分治法的步骤"><span class="toc-number">1.</span> <span class="toc-text">分治法的步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#求解递归式的方法"><span class="toc-number">2.</span> <span class="toc-text">求解递归式的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#主方法"><span class="toc-number">2.1.</span> <span class="toc-text">主方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用"><span class="toc-number">2.1.1.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#总结"><span class="toc-number">2.1.2.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -430,6 +444,8 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
@@ -472,6 +488,8 @@ $(document).ready(function(){
   $(window).scroll(function(){
     ta.css("top",Math.max(140,320-$(this).scrollTop()));
   });
+  
+    c.click();
     
 });
 </script>

@@ -112,6 +112,13 @@
 </header>
 	<div class="article-content">
 		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#iOS关联引用为分类添加属性"><span class="toc-number">1.</span> <span class="toc-text">iOS关联引用为分类添加属性</span></a></li></ol>
+		
+		</div>
+		
 		<h1 id="iOS关联引用为分类添加属性">iOS关联引用为分类添加属性</h1><p>开发者可以使用关联引用为任何对象附着键值数据.</p>
 <p>使用关联引用为分类添加属性, 首先, 我们新建一个<code>Person</code>类, <code>Person.h</code>的文件如下</p>
 <pre><code><span class="comment">//Person.h</span>
@@ -222,6 +229,13 @@
 
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#iOS关联引用为分类添加属性"><span class="toc-number">1.</span> <span class="toc-text">iOS关联引用为分类添加属性</span></a></li></ol>
+ 
+  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -448,6 +462,8 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
@@ -490,6 +506,8 @@ $(document).ready(function(){
   $(window).scroll(function(){
     ta.css("top",Math.max(140,320-$(this).scrollTop()));
   });
+  
+    c.click();
     
 });
 </script>

@@ -111,6 +111,13 @@
 </header>
 	<div class="article-content">
 		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			
+		
+		</div>
+		
 		<p>我在开发我的第一个项目<code>SportJoin</code>的过程中遇到过这样一个问题, 需要写出一个同时有<code>UIView</code>和<code>UITablView</code>的界面, 这个为什么很困难呢. </p>
 <ol>
 <li>需要写出易于维护的结构.</li>
@@ -259,6 +266,13 @@ headerView.frame = CGRectMake <span class="comment">(0, -HEADER_HEIGHT, WIDTH_SC
 
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ 
+ 
+  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -485,6 +499,8 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
@@ -527,6 +543,8 @@ $(document).ready(function(){
   $(window).scroll(function(){
     ta.css("top",Math.max(140,320-$(this).scrollTop()));
   });
+  
+    c.click();
     
 });
 </script>

@@ -91,6 +91,13 @@
 </header>
 	<div class="article-content">
 		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#TabbarController_and_NavigationController"><span class="toc-number">1.</span> <span class="toc-text">TabbarController and NavigationController</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Use_them_Programatically"><span class="toc-number">2.</span> <span class="toc-text">Use them Programatically</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why_combine_TabBarController_and_NavigationController"><span class="toc-number">3.</span> <span class="toc-text">Why combine TabBarController and NavigationController</span></a></li></ol>
+		
+		</div>
+		
 		<h2 id="TabbarController_and_NavigationController">TabbarController and NavigationController</h2><p><code>UINavigationController</code> and <code>UITabBarController</code> are two kinds of container classes in Cocoa. The two controllers are tremendous important in iOS development, we deal with them every day. Even if you are not a developer, just an iOS device user. Almost every thing you see in an iOS App have some relationship with them.</p>
 <p>Why are they so important, because of they are container classes, they handle many view controllers in an App. And <code>MVC</code> is the basic design patterns in <code>Cocoa</code> and <code>Cocoa touch</code>.</p>
 <p>Personally, I prefer to initialize everything programmingly, not in a storyboard or a nib file. Because I think it is easy to deal with. Sometimes using storyboard or a nib is too simple, but they may cause undetectable crash.</p>
@@ -251,6 +258,13 @@ tabBarController<span class="variable">.viewControllers</span> = controllers;
 
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#TabbarController_and_NavigationController"><span class="toc-number">1.</span> <span class="toc-text">TabbarController and NavigationController</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Use_them_Programatically"><span class="toc-number">2.</span> <span class="toc-text">Use them Programatically</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why_combine_TabBarController_and_NavigationController"><span class="toc-number">3.</span> <span class="toc-text">Why combine TabBarController and NavigationController</span></a></li></ol>
+ 
+  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -477,6 +491,8 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
@@ -519,6 +535,8 @@ $(document).ready(function(){
   $(window).scroll(function(){
     ta.css("top",Math.max(140,320-$(this).scrollTop()));
   });
+  
+    c.click();
     
 });
 </script>
