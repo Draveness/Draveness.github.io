@@ -74,1310 +74,225 @@
     <div id="container">
       <div id="main">
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/01/24/简单的HTTP协议/" title="简单的HTTP协议" itemprop="url">简单的HTTP协议</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
-		
-  <p class="article-time">
-    <time datetime="2015-01-24T13:59:11.000Z" itemprop="datePublished"> 发表于 2015-01-24</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="HTTP协议">HTTP协议</h2><p><code>HTTP</code>协议主要用于客户端和服务端之间的通信, 应用HTTP协议时必须是一端担任客户端角色, 一端担任服务端角色</p>
-<ul>
-<li>客户端发送HTTP请求</li>
-<li>服务端进行响应回复</li>
-</ul>
-<h2 id="请求报文">请求报文</h2><pre><code>请求报文 = 请求方法 + URI + 协议版本 + (请求首部) + (内容实体)
-
-GET <span class="regexp">/index.htm HTTP/</span><span class="number">1.1</span>
-<span class="string">HOST:</span> DeltaX.me
-</code></pre><ul>
-<li><code>GET</code>表示访问服务器的类型, 也就是<code>Method</code></li>
-<li><code>/index.htm</code>指明请求的资源对象, 也叫<code>URI</code></li>
-<li><code>HTTP/1.1</code>为<code>HTTP</code>的版本号</li>
-<li>这段请求的意思是访问HTTP服务器上的<code>/index.htm</code>资源</li>
-</ul>
-<h2 id="响应报文">响应报文</h2><pre><code>请求报文 = 协议版本 + 状态码 + 原因短语 + (响应首部字段) + 实体主体
-
-HTTP/<span class="number">1.1</span> <span class="number">200</span> OK
-<span class="string">Date:</span> Sat, <span class="number">23</span> January <span class="number">2014</span> <span class="number">22</span>:<span class="number">07</span>:<span class="number">00</span> GMT
-Content-<span class="string">Length:</span> <span class="number">500</span>
-Content-<span class="string">Type:</span> text/html
-
-&lt;html&gt;.....
-</code></pre><ul>
-<li>状态码表示请求的处理结果</li>
-<li>原因短语用于解释状态码</li>
-</ul>
-<h2 id="无状态协议和Cookie">无状态协议和Cookie</h2><p><code>HTTP</code>协议自身不对请求和响应之间的通信状态进行保存, 对于发送过的请求和响应<strong>不做持久化处理</strong>. 由于不必保存状态, 自然可以减轻服务器的CPU以及内存资源的销号, 但是要解决状态的问题, 引入了<code>Cookie</code>技术.</p>
-<p>Cookie会根据从服务器端发送的响应豹纹的<code>Set-Cookie</code>的首部字段信息, 通知客户端保存<code>Cookie</code>. 当下次客户端向服务器发送通信时, 客户端后自动在请求报文中加入<code>Cookie</code>值后发送出去, 服务端接收<code>Cookie</code>值之后, 会对比服务器上的记录, 得到之前的状态信息.</p>
-<h2 id="持久连接和管线化">持久连接和管线化</h2><p>为了解决<code>TCP</code>连接的问题, <code>HTTP/1.1</code>和一部分<code>HTTP/1.0</code>实现了<em>持久连接</em>(HTTP keep-alive)方法</p>
-<ul>
-<li>只要任意一端没有明确提出断开连接, 则保持<code>TCP</code>连接状态</li>
-<li><code>HTTP/1.1</code>中所有的连接默认都是持久连接, 这样可以减轻服务器负担, 减少了<code>TCP</code>连接的重复建立和断开造成的额外开销.</li>
-</ul>
-<p><em>管线化</em>及同时并行发送多个请求, 不需要依次等待相应.</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
   
-  <span></span> <a href="/tags/HTTP/">HTTP</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/01/19/SICP-1-1/" title="SICP 1.1 The Elements of Programming" itemprop="url">SICP 1.1 The Elements of Programming</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
-		
-  <p class="article-time">
-    <time datetime="2015-01-19T02:06:27.000Z" itemprop="datePublished"> 发表于 2015-01-19</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="Summary">Summary</h1><p>This blog just a summary of what I learned from SICP and the solution I made for exercises.</p>
-<p>There are three tips on how our mind works and how we build abstractions.</p>
-<ol>
-<li>Combining several simple ideas into one compound one, one thus all complex idea are made.</li>
-<li>The second is bringing two ideas, whether simple or complex, together, and setting them by one another so as to take a view of them at once, without untiling them into one, by which it gets all its ideas of relations.</li>
-<li>Thr third is separating them from all other ideas that accompany them in their existence.</li>
-</ol>
-<p>Every powerful language has three mechanisms for accomplishing this</p>
-<ol>
-<li><strong>primitive expressions</strong>, which represent the simplest entities the language is concerned with.</li>
-<li><strong>means of combination</strong>, by which compound elements are built from simpler ones, and</li>
-<li><strong>means of abstraction</strong>, by which compound elements can be named and manipulated as units.</li>
-</ol>
-<p>In programming, we just deal with two kinds of elements: <code>procedures</code> and <code>data</code>. Data is ‘stuff’ we manipulated and procedures are descriptions of the rules for manipulating the data. When we learn a new programming language, the first three thing we should learn is what is the primitive expressions in this language, how to combinate those primitive elements, and how to abstract them to make many complex system.</p>
-<p>In <code>Scheme</code> and many other languages <code>define</code> is means of abstraction. We can use <code>define</code> to add a tuple to the global environment, such as <code>(define a 3)</code> is to associate <code>a</code> with a value 3.</p>
-<p>And then, what are the important things in LISP, the most powerful programming language</p>
-<ul>
-<li>Numbers and arithmetic operations are primitive data and procedures.</li>
-<li>Nesting of combination provides a means of combing operations.</li>
-<li>Definitions that associate names with values provide a limited means of abstraction.</li>
-</ul>
-<p>Substitution model for procedure application is not to provide a description of how the interpreter really works. It just helps us how to think about how procedure application works.</p>
-<p>Application order versus nornal order</p>
-<ul>
-<li>Application order is to evalute the argument and then apply.</li>
-<li>Normal order is to fully expand and then reduce.</li>
-</ul>
-<p>The most important thing I learned from this chapter is to build abstraction to suppress details, and the interface user should not know how it is happened, he just needs to know how it should be used and what result does this occured. We use <code>black box abstraction</code> to suppress details and make a big problem into a number of subproblems. For a human beings, when we meet problem in building extremely complex system, we can abstract, abstract and abstract, make new language such as domain specific language to solve complex problem.</p>
-<p>In Lisp, the syntax is very concise and beautiful, use parentheses to build tree-like programs, and the interpreter can interpret it easily.</p>
-<h2 id="Exercise_1-1">Exercise 1.1</h2><pre><code>&gt; <span class="number">10</span>
-<span class="number">10</span>
-&gt; <span class="comment">(+ 5 3 4)</span>
-<span class="number">12</span>
-&gt; <span class="comment">(- 9 1)</span>
-<span class="number">8</span>
-&gt; <span class="comment">(/ 6 2)</span>
-<span class="number">3</span>
-&gt; <span class="comment">(+ (* 2 4)</span> <span class="comment">(- 4 6)</span>)
-<span class="number">6</span>
-&gt; <span class="comment">(define a 3)</span>
-&gt; <span class="comment">(define b (+ a 1)</span>)
-&gt; <span class="comment">(+ a b (* a b)</span>)
-<span class="number">19</span>
-&gt; <span class="comment">(= a b)</span>
-<span class="title">#f
-&gt; (if (and (&gt; b a) (&lt; b (* a b)))
-      b
-      a)
-4</span>
-&gt; <span class="comment">(cond ((= a 4)</span> <span class="number">6</span>)
-        <span class="comment">((= b 4)</span> <span class="comment">(+ 6 7 a)</span>)
-        <span class="comment">(else 25)</span>)
-<span class="number">16</span>
-&gt; <span class="comment">(+ 2 (if (&gt; b a)</span> b a))
-<span class="number">6</span>
-&gt; <span class="comment">(* (cond ((&gt; a b)</span> a)
-           <span class="comment">((&lt; a b)</span> b)
-           <span class="comment">(else -1)</span>)
-     <span class="comment">(+ a 1)</span>)
-<span class="number">16</span>
-</code></pre><h2 id="Exercise_1-2">Exercise 1.2</h2><pre><code><span class="list">(<span class="keyword"><span class="built_in">/</span></span> <span class="list">(<span class="keyword"><span class="built_in">+</span></span> <span class="number">5</span> <span class="number">4</span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> <span class="number">2</span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> <span class="number">3</span> <span class="list">(<span class="keyword"><span class="built_in">+</span></span> <span class="number">6</span> <span class="list">(<span class="keyword"><span class="built_in">/</span></span> <span class="number">4</span> <span class="number">5</span>)</span>)</span>)</span>)</span>)</span>
-   <span class="list">(<span class="keyword"><span class="built_in">*</span></span> <span class="number">3</span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> <span class="number">6</span> <span class="number">2</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> <span class="number">2</span> <span class="number">7</span>)</span>)</span>)</span>
-</code></pre><h2 id="Exercise_1-3">Exercise 1.3</h2><pre><code><span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">square</span> x)</span> <span class="list">(<span class="keyword"><span class="built_in">*</span></span> x x)</span>)</span>
-<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">sum-of-square</span> a b)</span>
-  <span class="list">(<span class="keyword"><span class="built_in">+</span></span> <span class="list">(<span class="keyword">square</span> a)</span> <span class="list">(<span class="keyword">square</span> b)</span>)</span>)</span>
-<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">two-larger-sum-of-square</span> a b c)</span>
-  <span class="list">(<span class="keyword"><span class="built_in">cond</span></span> <span class="list">(<span class="list">(<span class="keyword"><span class="built_in">and</span></span> <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> a b)</span> <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> a c)</span>)</span> <span class="list">(<span class="keyword">sum-of-square</span> b c)</span>)</span>
-        <span class="list">(<span class="list">(<span class="keyword"><span class="built_in">and</span></span> <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> b a)</span> <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> b c)</span>)</span> <span class="list">(<span class="keyword">sum-of-square</span> a c)</span>)</span>
-        <span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword">sum-of-square</span> a b)</span>)</span>)</span>)</span>
-</code></pre><h2 id="Exercise_1-4">Exercise 1.4</h2><p>if parameter <code>b</code> is greater than zero, then the <code>if</code> clouse will return operator <code>+</code>, otherwise it will return <code>-</code>.</p>
-<h2 id="Exercise_1-5">Exercise 1.5</h2><p>if the interpreter uses <code>applicative-order</code> evaluation, every parameters pass to the function are evaluated immediately. So the <code>p</code> function call it self and never terminate. The interpreter falls into infinite loop.</p>
-<p>However, if the intepreter uses <code>normal-order</code> evaluation, the interpreter does not evaluate <code>(test 0 (p))</code> immediately, when the <code>if</code> clouse is sent to the interpreter, the <code>(p)</code> branch will never evaluate.</p>
-<h2 id="Exercise_1-6">Exercise 1.6</h2><p><code>if</code> clouse is a different syntax, it is different from <code>new-if</code> function, in this function every branch will be evaluated when passed into the function. So the <code>sqrt-iter</code> branch will never terminate and fall into infinite recursion.</p>
-<h2 id="Exercise_1-7">Exercise 1.7</h2><p>The constant in function <code>good-enough?</code> determines this strategy not works well when evaluate a square root of a small number. When the number is very large, the strategy becomes very inefficient, and the procedure works very slow.</p>
-<h2 id="Exercise_1-8">Exercise 1.8</h2><pre><code><span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">square</span> x)</span> <span class="list">(<span class="keyword"><span class="built_in">*</span></span> x x)</span>)</span>
-<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">cube</span> x)</span> <span class="list">(<span class="keyword"><span class="built_in">*</span></span> x x x)</span>)</span>
-<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">cube-iter</span> guess x)</span>
-  <span class="list">(<span class="keyword"><span class="built_in">if</span></span> <span class="list">(<span class="keyword">good-enough?</span> guess x)</span>
-      guess
-      <span class="list">(<span class="keyword">cube-iter</span> <span class="list">(<span class="keyword">improve</span> guess x)</span>
-                 x)</span>)</span>)</span>
-<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">improve</span> guess x)</span>
-  <span class="list">(<span class="keyword">average</span> guess <span class="list">(<span class="keyword"><span class="built_in">/</span></span> <span class="list">(<span class="keyword"><span class="built_in">+</span></span> <span class="list">(<span class="keyword"><span class="built_in">/</span></span> x <span class="list">(<span class="keyword">square</span> guess)</span>)</span> 
-                       <span class="list">(<span class="keyword"><span class="built_in">*</span></span> <span class="number">2</span> guess)</span>)</span>
-                    <span class="number">3</span>)</span>)</span>)</span>
-<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">average</span> x y)</span>
-  <span class="list">(<span class="keyword"><span class="built_in">/</span></span> <span class="list">(<span class="keyword"><span class="built_in">+</span></span> x y)</span> <span class="number">2</span>)</span>)</span>
-<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">good-enough?</span> guess x)</span>
-  <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> <span class="list">(<span class="keyword"><span class="built_in">abs</span></span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> <span class="list">(<span class="keyword">cube</span> guess)</span> x)</span>)</span> <span class="number">0.001</span>)</span>)</span>
-<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">cube-root</span> x)</span>
-  <span class="list">(<span class="keyword">cube-iter</span> <span class="number">1.0</span> x)</span>)</span> 
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+<section class="post" itemscope itemprop="blogitem">
   
-  <span></span> <a href="/tags/FP/">FP</a><a href="/tags/SICP/">SICP</a><a href="/tags/Scheme/">Scheme</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2014/12/11/Persistent-Storage-with-levelDB/" title="Persistent Storage with levelDB" itemprop="url">Persistent Storage with levelDB</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
-		
-  <p class="article-time">
-    <time datetime="2014-12-11T11:18:56.000Z" itemprop="datePublished"> 发表于 2014-12-11</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p><code>LevelDB</code> is a key-value pair database developing by google. Why I use this instead of <code>Core Data</code> which is so widely used.</p>
-<p><code>Core Data</code> is a framework deals with data in <code>Cocoa</code>. It is extremly important but compliated. There are many concepts and problems in it. And every time I use <code>Core Data</code> to fetch some datas, I have to write couple lines code.</p>
-<pre><code><span class="title">UIAppdelegate</span> *appDelegate = [UIApplication sharedApplication].delegate;
-<span class="title">NSManagedObjectContext</span> *appDelegate = ApplicationDelegate.managedObjectContext;
-<span class="title">NSError</span> *<span class="built_in">error</span> = nil;
-<span class="title">NSFetchRequest</span> *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Item class])];
-<span class="title">NSArray</span> *items  = [manageContext executeFetchRequest:request <span class="built_in">error</span>:&amp;<span class="built_in">error</span>];
-</code></pre><p>This is so complicated and not elegant. I prefer to use <code>key-value</code> storage instead of it in some situations. When data are not compliated and the relation between models are simple.</p>
-<p>I use <code>levelDB</code> this way:</p>
-<pre><code>UIAppdelegate *appDelegate = [UIApplication sharedApplication].delegate<span class="comment">;</span>
-[]appDelegate<span class="preprocessor">.db</span> objectForKey:@<span class="string">"key"</span>]<span class="comment">;</span>
-</code></pre><p>Just like dictionary and incredible simple to deal with.</p>
-<p>Before using <code>LevelDB</code>, the first thing you need to do is downlod repo on github <a href="https://github.com/google/leveldb" target="_blank" rel="external"><code>google/LevelDB</code></a> or type this in terminal</p>
-<pre><code>git clone <span class="string">https:</span><span class="comment">//github.com/google/leveldb.git</span>
-</code></pre><p>And then you need to compile it.</p>
-<pre><code><span class="variable">CXXFLAGS=</span><span class="variable">-stdlib=</span>libstdc++ make <span class="variable">PLATFORM=</span>IOS
-</code></pre><p>Download the wrapper on this <a href="http://www.tanhao.me/pieces/1397.html" target="_blank" rel="external">tanhao</a> Just drag this all in your project.</p>
-<p>The prepare work are all done.</p>
-<p>But when I you this <code>levelDB</code> to store data, I met some problems, if you want to store some data which is an object, you should make the <code>class</code> of that <code>object</code> to confirm <code>NSCoding</code> protocol.</p>
-<pre><code>- (id)<span class="string">initWithCoder:</span>(NSCoder *)decoder {
-    self = [<span class="keyword">super</span> init];
-    <span class="keyword">if</span> (!self) {
-        <span class="keyword">return</span> nil;
-    }
-
-    self.avatar = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"avatar"</span>];
-    self.nickName = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"nickName"</span>];
-    self.userID = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"userID"</span>];
-    self.comments = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"comments"</span>];
-
-    <span class="keyword">return</span> self;
-}
-
-- (<span class="typename">void</span>)<span class="string">encodeWithCoder:</span>(NSCoder *)encoder {
-    [encoder <span class="string">encodeObject:</span>self.avatar <span class="string">forKey:</span>@<span class="string">"avatar"</span>];
-    [encoder <span class="string">encodeObject:</span>self.nickName <span class="string">forKey:</span>@<span class="string">"nickName"</span>];
-    [encoder <span class="string">encodeObject:</span>self.userID <span class="string">forKey:</span>@<span class="string">"userID"</span>];
-    [encoder <span class="string">encodeObject:</span>self.comments <span class="string">forKey:</span>@<span class="string">"comments"</span>];
-}
-</code></pre><p>You need to implement this two methods, if not when you fetch the object from the data base, the compiler do not know what in it and what is it. So you should <code>encode</code> the object propety before store them. And <code>decode</code> the object when you fetch them. Work similar as <code>NSKeyedArchiver</code>, if we have dozens of property, we have to write code for every property, after I find that I have to solve this problem in this approach. I think I want to write a <code>Meta Propgram</code> in <code>Ruby</code> to deal with this.</p>
-<p>And I will do it after my second App on line.</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/iOS/">iOS</a>
-</div>
-
-
-  <div class="article-tags">
+    <a href="/2015/01/24/简单的HTTP协议/" title="简单的HTTP协议" itemprop="url">
   
-  <span></span> <a href="/tags/iOS/">iOS</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
+    <h1 itemprop="name">简单的HTTP协议</h1>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+     
+           <p itemprop="description" >HTTP协议HTTP协议主要用于客户端和服务端之间的通信, 应用HTTP协议时必须是一端担任客户端角色, 一端担任服务端角色
+
+客户端发送HTTP请求
+服务端进行响应回复
+
+请求报文请求报文 = 请求方法 + URI + 协议版本 + (请求首部) + (内容实体)
+
+GET /</p>
+        
     
-      <a href="/2014/12/03/iOS Using AFNetworking <Bug03>/" title="iOS Using AFNetworking &lt;Bug03&gt;" itemprop="url">iOS Using AFNetworking &lt;Bug03&gt;</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
-		
-  <p class="article-time">
-    <time datetime="2014-12-02T16:56:49.000Z" itemprop="datePublished"> 发表于 2014-12-03</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>During these days development, when I connect our iOS App to Python <code>back-end</code> using <code>AFNetworking</code>, I met an error. It is my first time to use the <code>AFNetworking</code> framework, I am used to use <code>MKNetworking</code> instead, but with some reasons. I planned to use <code>AFNetworking</code> instead. And then, as you see, I met a few problems. </p>
-<pre><code>Error: Error Domain=NSCocoaErrorDomain Code=3840 <span class="string">"The operation couldn’t be completed. (Cocoa error 3840.)"</span><span class="function"> (</span>JSON text did<span class="instruction"> not </span>start with<span class="instruction"> array </span>or object<span class="instruction"> and </span>option to allow fragments<span class="instruction"> not </span>set.<span class="function">)</span> UserInfo=0x17697430 {NSDebugDescription=JSON text did<span class="instruction"> not </span>start with<span class="instruction"> array </span>or object<span class="instruction"> and </span>option to allow fragments<span class="instruction"> not </span>set., NSUnderlyingError=0x176f9ec0 
-</code></pre><p>At first, I do not know, what it’s mean, but I ask my partner, he tells me, in order to beautify the <code>JSON</code> he use some method, to make them like this, I do not know exactly what he did, but <code>JSON</code> looks like this.</p>
-<pre><code>{
-  "<span class="attribute">message</span>": <span class="value"><span class="string">"success"</span></span>, 
-  "<span class="attribute">posts</span>": <span class="value">[]</span>, 
-  "<span class="attribute">status</span>": <span class="value"><span class="number">0</span>
-</span>}
-</code></pre><p>It is not like the <code>JSON</code> I used to deal with before, I think they should be this shape:</p>
-<pre><code>{ "<span class="attribute">message</span>": <span class="value"><span class="string">"success"</span></span>, "<span class="attribute">posts</span>": <span class="value">[]</span>,  "<span class="attribute">status</span>": <span class="value"><span class="number">0</span></span>}
-</code></pre><p>But it’s not, at that time, he explains that if I could not deal with this, he could modify them back. For he can not change this immediately, so I tried to fix this problem.</p>
-<p>And then, I find this problem is cuz but my mistakes, I add one more <code>/</code> in the <code>URL</code>. After I fix this. I confidently run my App, and there is also an different error:</p>
-<pre><code><span class="setting">NSUnderlyingError=<span class="value"><span class="number">0</span>x156a3e80 <span class="string">"Request failed: unacceptable content-type: text/html"</span></span></span>
-</code></pre><p>I search this on google and stackoverflow, someone says add a <code>acceptableContentType</code> to <code>responseSerialzer</code>, someone says to <code>initialize</code> a <code>responseSerailize</code> and change it option to <code>AllowFragment</code>. When I tries them, I find the first solution is right.</p>
-<p>I add a <code>acceptableContentType</code> to the <code>responseSerializer</code>, and I fix this. But I think this quiet messy, everytime I use this framework, I had to add an <code>acceptableContentType</code>. I am too naive to realize this as a mistake. So I open an <code>issue</code> on <code>AFNetworking</code> and add this <code>type</code> <code>text/html</code> to the source code.</p>
-<pre><code>self.acceptableContentTypes = [NSSet setWithObjects:<span class="variable">@"</span>application/json<span class="string">", @"</span><span class="keyword">text</span>/json<span class="string">", @"</span><span class="keyword">text</span>/javascript<span class="string">", @"</span><span class="keyword">text</span>/html<span class="string">", nil];</span>
-</code></pre><p>And soon, the author of <code>AFNetworking</code> reply me as follows:</p>
-<pre><code>The solution <span class="keyword">is</span> already built <span class="keyword">into</span> <span class="keyword">the</span> design <span class="keyword">of</span> <span class="keyword">the</span> framework. Patching <span class="keyword">it</span> <span class="keyword">is</span> unnecessary.
-</code></pre><p>A little disappointed, but I add this type to my source code, in order to not add this everytime initialize the <code>manager</code>.</p>
-<p>Hope this helps. </p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/iOS/">iOS</a>
-</div>
+    <time datetime="2015-01-24T13:59:11.000Z" itemprop="datePublished">2015-01-24</time>
+  </a>
+</section>
 
 
-  <div class="article-tags">
+
+
+
+
   
-  <span></span> <a href="/tags/iOS/">iOS</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2014/11/28/iOS组合TabbarController和NavigationController <Bug02>/" title="iOS Combine TabbarController and NavigationController&lt;Bug02&gt;" itemprop="url">iOS Combine TabbarController and NavigationController&lt;Bug02&gt;</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
-		
-  <p class="article-time">
-    <time datetime="2014-11-28T12:36:59.000Z" itemprop="datePublished"> 发表于 2014-11-28</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="TabbarController_and_NavigationController">TabbarController and NavigationController</h2><p><code>UINavigationController</code> and <code>UITabBarController</code> are two kinds of container classes in Cocoa. The two controllers are tremendous important in iOS development, we deal with them every day. Even if you are not a developer, just an iOS device user. Almost every thing you see in an iOS App have some relationship with them.</p>
-<p>Why are they so important, because of they are container classes, they handle many view controllers in an App. And <code>MVC</code> is the basic design patterns in <code>Cocoa</code> and <code>Cocoa touch</code>.</p>
-<p>Personally, I prefer to initialize everything programmingly, not in a storyboard or a nib file. Because I think it is easy to deal with. Sometimes using storyboard or a nib is too simple, but they may cause undetectable crash.</p>
-<h2 id="Use_them_Programatically">Use them Programatically</h2><p>The first thing we start an App is set up the project, and I am used to delete the <code>Main.storyboard</code> file first. And add some code to configure the <code>AppDelegate</code>.</p>
-<p>The common code you add may be this:</p>
-<pre><code>- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions {
-    <span class="comment">// Override point for customization after application launch.</span>
-    <span class="keyword">self</span><span class="variable">.window</span> = [[<span class="built_in">UIWindow</span> alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    <span class="keyword">self</span><span class="variable">.window</span><span class="variable">.rootViewController</span> = [[<span class="built_in">UIViewController</span> alloc] init];
-    [<span class="keyword">self</span><span class="variable">.window</span> makeKeyAndVisible];
-    [[<span class="built_in">UIApplication</span> sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    <span class="keyword">return</span> <span class="literal">YES</span>;
-}
-</code></pre><p>Every project without a <code>storyboard</code> needs to initialize like this. How should we do then?</p>
-<p>What should we do, if we want to set up with a <code>navigationController</code>:</p>
-<pre><code>- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions {
-    <span class="comment">// Override point for customization after application launch.</span>
-    <span class="keyword">self</span><span class="variable">.window</span> = [[<span class="built_in">UIWindow</span> alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    <span class="built_in">UINavigationController</span> *navigationController = [[<span class="built_in">UINavigationController</span> alloc] initWithRootViewController:[[<span class="built_in">UIViewController</span> alloc] init]];
-    <span class="keyword">self</span><span class="variable">.window</span><span class="variable">.rootViewController</span> = navigationController;
-    [<span class="keyword">self</span><span class="variable">.window</span> makeKeyAndVisible];
-    [[<span class="built_in">UIApplication</span> sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    <span class="keyword">return</span> <span class="literal">YES</span>;
-}
-</code></pre><p>It’s quiet simple and easy to understand, what about <code>tabBarController</code>:</p>
-<pre><code>- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions {
-    <span class="comment">// Override point for customization after application launch.</span>
-    <span class="keyword">self</span><span class="variable">.window</span> = [[<span class="built_in">UIWindow</span> alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
-    <span class="built_in">UIViewController</span> *firstViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-    <span class="built_in">UIViewController</span> *secondViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-    <span class="built_in">UIViewController</span> *thirdViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-
-    <span class="built_in">UITabBarController</span> *tabBarController = [[<span class="built_in">UITabBarController</span> alloc] init];        
-    tabBarController<span class="variable">.viewControllers</span> = @[firstViewController, secondViewController, thirdViewController];
-    <span class="keyword">self</span><span class="variable">.window</span><span class="variable">.rootViewController</span> = tabBarController;
-    [<span class="keyword">self</span><span class="variable">.window</span> makeKeyAndVisible];
-    [[<span class="built_in">UIApplication</span> sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    <span class="keyword">return</span> <span class="literal">YES</span>;
-}
-</code></pre><p>Just set <code>tabBarController</code>‘s property <code>viewControllers</code> to proper <code>viewController</code>.</p>
-<h2 id="Why_combine_TabBarController_and_NavigationController">Why combine TabBarController and NavigationController</h2><p>If you want to switch to another view from one of <code>tabBarController</code>, you can not do it with a single <code>tabBarController</code>. Because you need a stack to manage all of your controllers. If you not have one, the system do not know which view controller will display after this view pop from the window.</p>
-<p>So we need to combine them, in my first project, I do this in this way:</p>
-<pre><code>- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions {
-    <span class="comment">// Override point for customization after application launch.</span>
-    <span class="keyword">self</span><span class="variable">.window</span> = [[<span class="built_in">UIWindow</span> alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
-    <span class="built_in">UIViewController</span> *firstViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-    <span class="built_in">UIViewController</span> *secondViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-    <span class="built_in">UIViewController</span> *thirdViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-
-    <span class="built_in">UITabBarController</span> *tabBarController = [[<span class="built_in">UITabBarController</span> alloc] init];        
-    tabBarController<span class="variable">.viewControllers</span> = @[firstViewController, secondViewController, thirdViewController];
-    <span class="built_in">UINavigationController</span> *navigationController = [[UINavigationControlle alloc] initWithRootViewController:tabBarController];
-    <span class="keyword">self</span><span class="variable">.window</span><span class="variable">.rootViewController</span> = tabBarController;
-    [<span class="keyword">self</span><span class="variable">.window</span> makeKeyAndVisible];
-    [[<span class="built_in">UIApplication</span> sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    <span class="keyword">return</span> <span class="literal">YES</span>;
-}
-</code></pre><p>When I did this, I do not consider about other thing, because the apple developer document use this approach: </p>
-<pre><code><span class="built_in">UIViewController</span> *firstViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-<span class="built_in">UIViewController</span> *secondViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-<span class="built_in">UIViewController</span> *thirdViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-<span class="built_in">UIViewController</span> *rootViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-<span class="built_in">UINavigationController</span>* navController = [[<span class="built_in">UINavigationController</span> alloc]
-                        initWithRootViewController:rootViewController];
-
-<span class="built_in">NSArray</span>* controllers = [<span class="built_in">NSArray</span> arrayWithObjects:firstViewController, secondViewController, thirdViewController, navController, <span class="literal">nil</span>];
-
-<span class="built_in">UITabBarController</span> *tabBarController = [[<span class="built_in">UITabBarController</span> alloc] init];
-tabBarController<span class="variable">.viewControllers</span> = controllers;
-
-<span class="keyword">self</span><span class="variable">.window</span><span class="variable">.rootViewController</span> = tabBarController;
-</code></pre><p>I just think this is a silly way. if I imitate this, <strong>Do I need to initialize five navigation controllers each with a view controller?</strong></p>
-<p>The answer is right. I need to do so. Why? After I imitate this approach, my previous approach has some side effects.</p>
-<ol>
-<li>Sometimes you reference <code>navigationController</code> with <code>self</code>, you may get a null. Because the five viewController are bot pushed on the stack.</li>
-<li>If you change <code>navigationBar</code> in one tab, as you swich to another, all the <code>navigationBar</code> are changed. Because they are just one <code>navigationController</code> and it just have only one <code>navigatonBar</code>.</li>
-<li>If you <code>pushViewController</code> from one of <code>tabBarController</code>‘s <code>viewControllers</code>, tab bar will disapper, you will not see it, because <code>tabBarController</code> is not the <code>rootViewController</code>, it just in the stack with its <code>tabBar</code>.</li>
-</ol>
-<p>So the verbose but correct approach is this:</p>
-<pre><code><span class="built_in">UIViewController</span> *firstViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-<span class="built_in">UIViewController</span> *secondViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-<span class="built_in">UIViewController</span> *thirdViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-<span class="built_in">UINavigationController</span> *firstNavigationController = [[<span class="built_in">UINavigationController</span> alloc]
-                        initWithRootViewController:rootViewController];
-<span class="built_in">UINavigationController</span> *secondNavigationController = [[<span class="built_in">UINavigationController</span> alloc]
-                        initWithRootViewController:rootViewController];
-<span class="built_in">UINavigationController</span> *thirdNavigationController = [[<span class="built_in">UINavigationController</span> alloc]
-                        initWithRootViewController:rootViewController];
-
-<span class="built_in">NSArray</span>* controllers = [<span class="built_in">NSArray</span> arrayWithObjects:firstNavigationController, secondNavigationController, thirdNavigationController, <span class="literal">nil</span>];
-
-<span class="built_in">UITabBarController</span> *tabBarController = [[<span class="built_in">UITabBarController</span> alloc] init];
-tabBarController<span class="variable">.viewControllers</span> = controllers;
-
-<span class="keyword">self</span><span class="variable">.window</span><span class="variable">.rootViewController</span> = tabBarController;
-</code></pre><p>PS: <code>navigationBar</code> is damn difficult to use. Hope this help.</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/iOS/">iOS</a>
-</div>
-
-
-  <div class="article-tags">
+<section class="post" itemscope itemprop="blogitem">
   
-  <span></span> <a href="/tags/iOS/">iOS</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2014/11/26/Lists-and-Patterns-Matching/" title="Lists and Patterns Matching" itemprop="url">Lists and Patterns Matching</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
-		
-  <p class="article-time">
-    <time datetime="2014-11-26T07:57:59.000Z" itemprop="datePublished"> 发表于 2014-11-26</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="Recursive_computations">Recursive computations</h2><p>递归的计算模型是声明式编程的核心, 有些人可能并不知道, 类型也是可以递归的. 比如说列表.</p>
-<h3 id="List">List</h3><p>列表是在函数式编程中是很有趣的, 也是很强大的, 大多数函数式编程语言都支持列表, 比如<code>Haskell</code>, <code>ML</code>, <code>Scheme</code>. 列表. 列表与<code>C</code>, <code>Java</code>, <code>Objective-C</code> 语言中的<code>array</code>非常的相似, 但是却有着很大的不同. </p>
-<p>列表是一种递归的数据类型:</p>
-<pre><code>% <span class="type">Xs</span> <span class="type">Xr</span> 是列表
-<span class="type">Xs</span> =&gt; <span class="literal">nil</span>
-<span class="type">Xr</span> =&gt; <span class="type">X</span>|<span class="type">Xr</span>
-</code></pre><p>我们使用上下文无关文案表示列表在核心语言中的语法的表示.</p>
-<pre><code><span class="tag">&lt;<span class="title">List</span>&gt;</span> ::=  nil
-         |   <span class="tag">&lt;<span class="title">T</span>&gt;</span> `|` <span class="tag">&lt;<span class="title">List</span> <span class="attribute">T</span>&gt;</span>
-</code></pre><p>列表可以由<code>nil</code>开始, 不挺的重复自己, 直到列表结束<code>&lt;List&gt; =&gt; nil</code>.</p>
-<p>我们也可以使用这种方式表示其他更复杂的数据类型, 比如说<code>binary tree</code></p>
-<pre><code><span class="tag">&lt;<span class="title">BTree</span> <span class="attribute">T</span>&gt;</span>  ::= leaf
-            |  tree(key: <span class="tag">&lt;<span class="title">Literal</span>&gt;</span> value: T
-                    left: <span class="tag">&lt;<span class="title">BTree</span> <span class="attribute">T</span>&gt;</span> right: <span class="tag">&lt;<span class="title">BTree</span> <span class="attribute">T</span>&gt;</span>)
-</code></pre><h4 id="Haskell">Haskell</h4><p>在<code>Haskell</code>中, 列表是一种单类型的数据结构, 可以用来存储多个类型的东西, 同时它还可以嵌套. 简单展示一下<code>Haskell</code>中的列表吧:</p>
-<pre><code><span class="attr_selector">[1,2,3,4,5]</span>
-
-<span class="comment">//嵌套列表</span>
-<span class="attr_selector">[[1,2,3,4]</span>,<span class="attr_selector">[5,6,7,8]</span>,<span class="attr_selector">[9,10,11,12]</span>]
-</code></pre><p>访问列表中的元素, 有两种基本的方法, 在<code>Haskell</code>中一种是<code>head</code>访问数组的头部, 一种的<code>tail</code>返回列表的尾部.</p>
-<pre><code>head [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]  =&gt; <span class="number">1</span>
-tail [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]  =&gt; [<span class="number">2</span>,<span class="number">3</span>]
-
-head [<span class="number">1</span>,<span class="number">2</span>] =&gt; <span class="number">1</span>
-tail [<span class="number">1</span>,<span class="number">2</span>] =&gt; [<span class="number">2</span>]
-
-head [<span class="number">2</span>] =&gt; <span class="number">2</span>
-tail [<span class="number">2</span>] =&gt; <span class="literal">[]</span>
-</code></pre><p>有几点注意的是, 这两个函数都只能对列表进行操作, <code>head</code>返回的是列表中的一个元素, 而<code>tail</code>返回的是一个<strong>列表</strong>. 尤其注意后面的两种情况.</p>
-<p>在<code>Haskell</code>中呢, 有一种更强大过滤组合列表的方式, 叫做<code>list comprehension</code>列表推导, 我们可以使用列表推导轻松的完成快速排序的实现.</p>
-<pre><code><span class="label">quicksort ::</span> (Ord <span class="literal">a</span>) =&gt; [<span class="literal">a</span>] -&gt; [<span class="literal">a</span>]  
-quicksort [] = []  
-<span class="label">quicksort (x:</span>xs) =   
-    let smallerSorted = quicksort [<span class="literal">a</span> | <span class="literal">a</span> &lt;- xs, <span class="literal">a</span> &lt;= x]  
-        biggerSorted = quicksort [<span class="literal">a</span> | <span class="literal">a</span> &lt;- xs, <span class="literal">a</span> &gt; x]  
-    in  smallerSorted ++ [x] ++ biggerSorted  
-</code></pre><p>这段代码就是用列表推导完成了使用其他语言需要几倍代码量才能完成的快速排序.</p>
-<h4 id="Scheme">Scheme</h4><p><code>Scheme</code>是<code>Lisp</code>主要的两种方言之一. 它与<code>lambda</code>演算的关系相当的密切, <code>Scheme</code>中的有两种方式构造一个列表.</p>
-<pre><code><span class="list">(<span class="keyword">list</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span>)</span>
-
-<span class="comment">; This is just a syntax sugar</span>
-<span class="quoted">'(<span class="number">1</span> <span class="number">2</span> <span class="number">3</span>)</span>
-</code></pre><p><code>Scheme</code>中对列表的操作, 使用<code>car</code>和<code>cdr</code>, 用法基本与<code>Haskell</code>中的<code>head</code>和<code>tail</code>一样.</p>
-<h4 id="Oz">Oz</h4><p><code>Oz</code>是在<code>CTMCP</code>一书中提到的用于研究的语言, 我们使用它来展示列表是如何工作和使用的.</p>
-<pre><code><span class="comment">% 列表的声明</span>
-<span class="variable">L</span> = [<span class="number">5</span> <span class="number">6</span> <span class="number">7</span> <span class="number">8</span>]
-
-<span class="comment">% car 方法</span>
-<span class="variable">L</span>.<span class="number">1</span> = <span class="number">5</span>
-
-<span class="comment">% cdr 方法</span>
-<span class="variable">L</span>.<span class="number">2</span> = [<span class="number">6</span> <span class="number">7</span> <span class="number">8</span>]
-</code></pre><p>我们也可以使用<code>|</code>操作符创建列表</p>
-<pre><code>L = <span class="number">5</span><span class="string">|6|7|8|nil</span>
-</code></pre><h2 id="Programming_with_Lists">Programming with Lists</h2><p>因为列表简单的结构, 使用它们进行声明式编程是非常简单和强大的.</p>
-<ul>
-<li>递归式的思考, 解决问题的更小一部分.</li>
-<li>将递归式的计算模型转化为迭代式的计算模型.</li>
-<li>校正迭代式的计算模型.</li>
-<li>遵循类型来构建程序.</li>
-</ul>
-<h3 id="Pattern_Matching">Pattern Matching</h3><p>模式匹配同样是<code>FP</code>中强大的特性, 我们可以使用它来代替<code>car</code>和<code>cdr</code>方法同时获取列表的头部和尾部, 避免使用<code>if</code>条件.</p>
-<pre><code>% <span class="keyword">display</span> 5 and [6 7 8]
-declare
-<span class="keyword">L</span>=[5 6 7 8]
-case <span class="keyword">L</span> of <span class="keyword">H</span>|T then {<span class="keyword">Browse</span> <span class="keyword">H</span>} {<span class="keyword">Browse</span> T} end
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Haskell/">Haskell</a>►<a class="article-category-link" href="/categories/Haskell/ML/">ML</a>
-</div>
-
-
-  <div class="article-tags">
+    <a href="/2015/01/19/SICP-1-1/" title="SICP 1.1 The Elements of Programming" itemprop="url">
   
-  <span></span> <a href="/tags/Haskell/">Haskell</a><a href="/tags/List/">List</a><a href="/tags/ML/">ML</a><a href="/tags/Pattern-Match/">Pattern Match</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
+    <h1 itemprop="name">SICP 1.1 The Elements of Programming</h1>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+     
+           <p itemprop="description" >SummaryThis blog just a summary of what I learned from SICP and the solution I made for exercises.
+There are three tips on how our mind work</p>
+        
     
-      <a href="/2014/11/24/Iterative-versus-Recursive/" title="Iteration versus Recursion" itemprop="url">Iteration versus Recursion</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
-		
-  <p class="article-time">
-    <time datetime="2014-11-24T13:25:57.000Z" itemprop="datePublished"> 发表于 2014-11-24</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p><code>Iteration</code> 和 <code>Recursion</code> 在我们所有的编程语言中都是非常重要的概念, 尤其是在声明式的编程模型中.</p>
-<h2 id="Iteraive_computation">Iteraive computation</h2><p>迭代的计算模型是一个<code>stack</code>大小为<code>constant</code>并且大小保持不变的循环.</p>
-<p>非常重要的地方就是, 迭代的计算模型拥有一个初始的状态<code>S 0</code>, 在经过多次的转换最后会得到<code>S final</code>:</p>
-<pre><code>S0 -&gt; S1 -&gt; <span class="keyword">...</span> -&gt; Sfinal
-</code></pre><p>这种思想的通用的表示可以被总结为如下的形式:</p>
-<pre><code><span class="list">(<span class="keyword">define</span> <span class="list">(<span class="keyword">iter</span> state)</span>
-    <span class="list">(<span class="keyword"><span class="built_in">if</span></span> <span class="list">(<span class="keyword">good-enough?</span> state)</span>
-        state
-        <span class="list">(<span class="keyword">iter</span> <span class="list">(<span class="keyword"><span class="built_in">next</span></span> state)</span>)</span>)</span>)</span>
-</code></pre><p>在这个模式中, 函数<code>good-enough?</code>和<code>next</code>依赖于相应的问题. 我们使用<code>Newton&#39;s method</code>求平方根来验证这个迭代的计算模型.</p>
-<pre><code><span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword"><span class="built_in">sqrt</span></span> x)</span>
-    <span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">iter</span> guess x)</span>
-        <span class="list">(<span class="keyword"><span class="built_in">if</span></span> <span class="list">(<span class="keyword">good-enough?</span> guess x)</span>
-            guess
-            <span class="list">(<span class="keyword">iter</span> <span class="list">(<span class="keyword">improve</span> guess x)</span> x)</span>)</span>)</span>
-    <span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">improve</span> guess x)</span>
-        <span class="list">(<span class="keyword"><span class="built_in">/</span></span> <span class="list">(<span class="keyword"><span class="built_in">+</span></span> guess <span class="list">(<span class="keyword"><span class="built_in">/</span></span> x guess)</span>)</span> <span class="number">2</span>)</span>)</span>
-    <span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">good-enough?</span> guess x)</span>
-        <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> <span class="list">(<span class="keyword"><span class="built_in">abs</span></span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> x <span class="list">(<span class="keyword"><span class="built_in">*</span></span> guess guess)</span>)</span>)</span> <span class="number">0.00001</span>)</span>)</span>
-    <span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword"><span class="built_in">abs</span></span> x)</span> <span class="list">(<span class="keyword"><span class="built_in">if</span></span> <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> x <span class="number">0</span>)</span> <span class="list">(<span class="keyword">-x</span>)</span> x)</span>)</span>
-    <span class="list">(<span class="keyword">iter</span> <span class="number">1.0</span> x)</span>)</span>
-</code></pre><p>这就是我们使用迭代式的计算模型使用<code>Newton&#39;s method</code>求平方根的方法.</p>
-<h3 id="Control_abstraction">Control abstraction</h3><p>上面所提到的帮助我们设计高效的程序, 但是它并不是一种计算模型, 我们接下来提供一种通用的表示作为其他程序组成的一部分, 通过将其中的两部分提取出来, 然后作为函数的参数, 把这种通用的模式转化成一种控制的抽象.</p>
-<pre><code><span class="list">(<span class="keyword">define</span> <span class="list">(<span class="keyword">iter</span> state good-enough? next)</span>
-    <span class="list">(<span class="keyword"><span class="built_in">if</span></span> <span class="list">(<span class="keyword">good-enough?</span> state)</span>
-        state
-        <span class="list">(<span class="keyword">iter</span> <span class="list">(<span class="keyword"><span class="built_in">next</span></span> state)</span>)</span>)</span>)</span>
-</code></pre><p>当我们使用这种控制抽象的时候, 需要为他提供<code>good-enough?</code>和<code>next</code>这两个函数, 每个函数带有一个参数. 将函数像参数一样传递给其他函数的技术叫做<code>higher-order programming</code>.</p>
-<pre><code><span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword"><span class="built_in">sqrt</span></span> x)</span>
-    <span class="list">(<span class="keyword">iter</span> <span class="number">1.0</span> 
-          <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">guess</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> <span class="list">(<span class="keyword"><span class="built_in">/</span></span> <span class="list">(<span class="keyword"><span class="built_in">abs</span></span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> x <span class="list">(<span class="keyword"><span class="built_in">*</span></span> guess guess)</span>)</span>)</span> x)</span> <span class="number">0.00001</span>)</span>)</span>
-          <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">guess</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">/</span></span> <span class="list">(<span class="keyword"><span class="built_in">+</span></span> guess <span class="list">(<span class="keyword"><span class="built_in">/</span></span> x guess)</span>)</span> <span class="number">2</span>)</span>)</span>)</span>)</span>
-</code></pre><p>使用两个匿名函数作为参数传给<code>iter</code>. 这是一种非常强大的组织程序的方式, 因为它把通用的控制流和特殊用法分离. 如果一种抽象经常使用, 我们可以将它更近一步, 将它转化为语言抽象.</p>
-<hr>
-<h2 id="Recursive_computation">Recursive computation</h2><p>迭代式的计算模型实际上是特殊的递归抽象模型. 递归函数可以在自己的函数体内部的任何地方多次调用自己. 在编程中, 递归多出现在函数以及数据类型中.</p>
-<p>递归函数在调用时, 本身的<code>stack</code>大小会越来越大, 然后随着达到临界条件, <code>stack</code>的大小才会缩小, 直至返回结果. 我们使用最经典的例子<code>factorical</code>来演示递归函数<code>stack</code>的大小是如何改变的.</p>
-<pre><code>// 当计算(factorical 4)时
-(factorical 4)
-(<span class="keyword">*</span> 4 (factorical 3))
-(<span class="keyword">*</span> 4 (<span class="keyword">*</span> 3 (factorical 2)))
-(<span class="keyword">*</span> 4 (<span class="keyword">*</span> 3 (<span class="keyword">*</span> 2 (factorical 1))))
-(<span class="keyword">*</span> 4 (<span class="keyword">*</span> 3 (<span class="keyword">*</span> 2 (<span class="keyword">*</span> 1 (factorical 0)))))
-(<span class="keyword">*</span> 4 (<span class="keyword">*</span> 3 (<span class="keyword">*</span> 2 (<span class="keyword">*</span> 1 1))))
-(<span class="keyword">*</span> 4 (<span class="keyword">*</span> 3 (<span class="keyword">*</span> 2 1)))
-(<span class="keyword">*</span> 4 (<span class="keyword">*</span> 3 2))
-(<span class="keyword">*</span> 4 6)
-(24)
-</code></pre><p>我们可以从代码所占的大小中就可以轻易的看出当调用递归函数时<code>stack</code>大小的变化. 当我们使用迭代式的<code>factorical</code>时:</p>
-<pre><code><span class="comment">// 当计算(factorical 4 1)时</span>
-<span class="comment">(factorical 4 1)</span>
-<span class="comment">(factorical 3 4)</span>
-<span class="comment">(factorical 2 12)</span>
-<span class="comment">(factorical 1 24)</span>
-<span class="comment">(factorical 0 24)</span>
-<span class="comment">(24)</span>
-</code></pre><p>迭代式的函数的调用所占用的空间是<strong>线性</strong>的. 但是迭代函数的定义相对递归函数表达的意思并不清楚, 需要理解, 递归函数的定义非常清楚.</p>
-<pre><code><span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">factorical</span> n)</span>
-    <span class="list">(<span class="keyword"><span class="built_in">if</span></span> <span class="list">(<span class="keyword"><span class="built_in">=</span></span> n <span class="number">0</span>)</span>
-        <span class="number">1</span>
-        <span class="list">(<span class="keyword"><span class="built_in">*</span></span> n <span class="list">(<span class="keyword">factorical</span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> n <span class="number">1</span>)</span>)</span>)</span>)</span>)</span>
-</code></pre><p>与数学上的定义是完全相同的.</p>
-<pre><code><span class="keyword">fact</span> 0 = 1
-<span class="keyword">fact</span> <span class="keyword">n</span> = <span class="keyword">n</span> * <span class="keyword">fact</span> <span class="keyword">n</span>-1
-</code></pre><h3 id="Converting_a_recursive_to_an_iterative_computation">Converting a recursive to an iterative computation</h3><p>虽然递归有着更好的表达能力, 但是当有性能(时间和空间)上的需求时, 我们通常使用迭代式的计算模型代替递归式的计算模型. 其实就是做如下的转换:</p>
-<pre><code>R = (5<span class="keyword">*</span>(4<span class="keyword">*</span>(3<span class="keyword">*</span>(2<span class="keyword">*</span>(1<span class="keyword">*</span>1))))) =&gt; R = (((((1<span class="keyword">*</span>5)<span class="keyword">*</span>4)<span class="keyword">*</span>3)<span class="keyword">*</span>2)<span class="keyword">*</span>1)
-
-(define (factorical n)
-    (define (iter n acc)
-        (if (= n 0)
-            acc
-            (iter (- n 1) (<span class="keyword">*</span> acc n)))))
-    (iter n 1))
-</code></pre><p>以上重构的函数就是使用迭代的思想, 通常将递归转化为迭代遵循以下的规律:</p>
-<ol>
-<li>需要一个辅助函数, 这里就是<code>iter</code>.</li>
-<li>需要一个或多个<code>accumulator</code>来保存函数调用过程中需要保存的状态, 在这里就是<code>acc</code>保存了每次调用<code>*</code>之后的值.</li>
-</ol>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/FP/">FP</a>
-</div>
+    <time datetime="2015-01-19T02:06:27.000Z" itemprop="datePublished">2015-01-19</time>
+  </a>
+</section>
 
 
-  <div class="article-tags">
+
+
+
+
   
-  <span></span> <a href="/tags/Iteration/">Iteration</a><a href="/tags/Recursion/">Recursion</a><a href="/tags/Scheme/">Scheme</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2014/11/23/iOS Combine View and TableView<Bug01>/" title="iOS Combine View and TableView &lt;Bug01&gt;" itemprop="url">iOS Combine View and TableView &lt;Bug01&gt;</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
-		
-  <p class="article-time">
-    <time datetime="2014-11-23T15:26:11.000Z" itemprop="datePublished"> 发表于 2014-11-23</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>我在开发我的第一个项目<code>SportJoin</code>的过程中遇到过这样一个问题, 需要写出一个同时有<code>UIView</code>和<code>UITablView</code>的界面, 这个为什么很困难呢. </p>
-<ol>
-<li>需要写出易于维护的结构.</li>
-<li>需要在<code>tableView</code>滚动的时候滚动.</li>
-<li>需要在<code>headerView</code>到达顶部的时候<code>segmentControl</code>停在视图的顶部.</li>
-</ol>
-<p>我在第一次遇到这种问题的时候, 想到的第一种解决办法就是在第一个<code>UITableViewCell</code>里面加入<code>headerView</code>, 但是这样却导致了另一个问题, 所有在<code>dataSource</code>方法和一些<code>delegate</code>方法中的一些<code>count</code>都需要<code>+1</code>, 我认为这一点相当的不优雅, 而随着需求的更改, 这种结构也被抛弃了, 所以我开始选择另一种方式解决这个问题. 经过了无数的实验与摸索, 选择了下图的这种方式达到我想要的效果.</p>
-<p><img src="http://deltax.qiniudn.com/iOSIMG_0297.PNG?attname=&amp;e=1416844521&amp;token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:_bferGdE5a6TstVFFQim9BFG1m8" alt=""></p>
-<p>但是…经过我们团队成员多次测试, 竟然发现了这样的<code>bug</code>… <code>tableView</code>和<code>headerView</code>之间有<code>20 offset</code>. 而且当下拉刷新动画被打断的时候, 比如点击其他的<code>tabBarItem</code>. <code>offset</code>会越来越大.</p>
-<p><img src="http://deltax.qiniudn.com/iOSIMG_0296.PNG?attname=&amp;e=1416844521&amp;token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:kvaxSMZaJNTjNqusD04lA827jJ8" alt=""></p>
-<p>设计师第一次发现这个<code>bug</code>告诉我之后, 我立刻感觉到这个高度<code>20</code>应该跟<code>status bar</code>有关, 找了所有与<code>status bar</code>以及这个视图有关的代码, 并且上<code>google</code>搜索了无数次, 都没有发现这是因为什么. </p>
-<p>后来由于团队缺少运营, 参加完比赛, 项目不了了之, 这个<code>bug</code>我也没有再去改了. 不过这个<code>bug</code>一直我都记得非常的清楚, 实在是让我头痛不已.</p>
-<p>现在先解释一下这个界面是如何完成的, 简单说一下这个界面的根控制器是一个<code>UIViewController</code>, 它的<code>view</code>上面只有一个子视图<code>tableView</code>, 注意只有<strong>一个</strong>子视图, 而这个子视图包含了我们在这个界面中看到的<code>headerView</code>, 也就是顶部的个人信息.</p>
-<p>界面的层级如下:</p>
-<pre><code><span class="code">-----------------
-|      view     |
------------------</span>
-<span class="code">        ^</span>
-<span class="code">        |</span>
-<span class="header">        |
------------------</span>
-<span class="header">|   tableView   |
------------------</span>
-<span class="code">        ^</span>
-<span class="code">        |</span>
-<span class="header">        |
------------------</span>
-<span class="header">|   headerView  |
------------------</span>
-</code></pre><p><code>headerView</code> 是 <code>tableView</code>的子视图, 但是为什么会这么显示呢, 有这么几个原因.</p>
-<ol>
-<li><p>在视图加载时, 我通过调整<code>tableView</code>的<code>contentInset</code>使<code>tableView</code>在初始化时向下偏移<code>headerView</code>的高度, 目的呢, 就是将<code>cell</code>开始显示的位置设置到目标的区域.</p>
-<pre><code><span class="attribute">tableView.contentInset </span>=<span class="string"> UIEdgeInsetsMake(HEADER_HEIGHT, 0, 0, 0);</span>
-</code></pre></li>
-<li><p>然后呢, 将<code>headerView</code>初始化, 并添加到<code>tableView</code>上面, 这里呢, 有一点需要注意的就是<code>headerView.frame.origin.y</code>是小于<code>0</code>的. 这是为什么呢, 是因为我们上一步将<code>tableView</code>内容开是显示的<code>height</code>设置为<code>295</code>, 那么我们需要将<code>headerView</code>初始化到<code>tableView</code>的”外面”</p>
-<pre><code><span class="comment">// 使用CGRect的情况下, 使用AutoLayout可以类比一下</span>
-headerView.frame = CGRectMake <span class="comment">(0, -HEADER_HEIGHT, WIDTH_SCREEN, HEADER_HEIGHT)</span>;
-</code></pre></li>
-<li><p>这样我们就完成了这个界面的显示, 但是, 当我们向这个<code>headerView</code>中添加按钮的时候, 却发现, 这个按钮的<code>action</code>没有触发, 因为<code>headerView</code>是<code>tableView</code>的<code>subview</code>并且在它的外部, 所以, 我们需要设置<code>clipsToBound</code>属性, 防止<code>tableView</code>拦截这个实践.</p>
-<pre><code><span class="attribute">tableView.clipsToBound </span>=<span class="string"> NO;</span>
-</code></pre></li>
-<li><p>接下来我们要实现让界面的一部分停在屏幕上, 只需要调用<code>UIScrollView</code>的<code>delegate</code>方法, 注意设置适当的条件就可以.</p>
-<pre><code>- (<span class="keyword">void</span>)scrollViewDidScroll:(<span class="built_in">UIScrollView</span> *)scrollView
-{
-    <span class="keyword">static</span> <span class="built_in">CGFloat</span> headerHeight = <span class="number">60</span>;
-    <span class="keyword">if</span> (scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span> &gt;= -<span class="number">60</span>)
-        [<span class="keyword">self</span><span class="variable">.headerView</span> setFrame:CGRectMake(<span class="number">0</span>, scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span> - (HEADER_HEIGHT - headerHeight), WIDTH_SCREEN, HEADER_HEIGHT)];
-    <span class="keyword">if</span> (scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span> &lt;= -HEADER_HEIGHT)
-        [<span class="keyword">self</span><span class="variable">.headerView</span> setFrame:CGRectMake(<span class="number">0</span>, scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span>, WIDTH_SCREEN, HEADER_HEIGHT)];
-}
-</code></pre></li>
-</ol>
-<p>卧槽, 终于搞定了, 我特么太爽了, 然而………就是上面的<code>bug</code>让我头疼了好久…</p>
-<p>直到今天, 我在新项目中又遇到了这个问题, 无论我怎么更改布局, 使用<code>CGRect</code>, <code>AutoLayout</code>都没能解决, 因为代码量较小, 经过多次调试, 认为这次绝对另有原因, 我机智的上<code>Google</code>搜索了如下关键字<code>contentInset</code> <code>20</code> <code>iOS</code>, 结果, 这回果然发现了问题所在, 在<code>stackoverflow</code>上面找到了这个问题的答案, 原来<code>automaticallyAdjustsScrollViewInsets</code>才是导致问题的罪魁祸首, 而之前我完全没有接触过这个属性. 在苹果官方文档中是这样描述的.</p>
-<blockquote>
-<p> If you don’t want a scroll view’s content insets to be automatically adjusted, set automaticallyAdjustsScrollViewInsets to NO. (The default value of automaticallyAdjustsScrollViewInsets is YES.)</p>
-</blockquote>
-<p>在设置了<code>tableViewController</code>之后, 仍然没有起到任何作用.</p>
-<pre><code><span class="keyword">self</span><span class="variable">.automaticallyAdjustsScrollViewInsets</span> = <span class="literal">NO</span>;
-</code></pre><p>经过仔细寻找其他答案后, 找到了这样一条答案</p>
-<blockquote>
-<p>Your view controller must be directly on a <code>UINavigaitonController</code>‘s stack for <code>automaticallyAdjustsScrollViewInsets</code> to work (i.e. not a child view controller)</p>
-<p>If it is a child view controller of another view controller which is on the navigation stack, you can instead set <code>automaticallyAdjustsScrollViewInsets = NO</code> on the parent. Alternatively you can do this:</p>
-<pre><code><span class="keyword">self</span><span class="variable">.parentViewController</span><span class="variable">.automaticallyAdjustsScrollViewInsets</span> = <span class="literal">NO</span>;
-</code></pre></blockquote>
-<p>意思就是, 如果你的<code>viewController</code>直接在<code>UINavigationController</code>那么, 直接设置这个<code>viewController</code>的<code>automaticallyAdjustsScrollViewInsets</code>属性, 如果<code>viewController</code>是另一个<code>viewController</code>比如说<code>tabBarViewController</code>, 那么需要设置这个<code>viewController</code>的<code>parentViewController</code>的属性.</p>
-<p>最后, 我在3个月后的今天, <code>fix</code>了这个<code>bug</code>, 实在是太难忘了.</p>
-<p>5 . self.parentViewController.automaticallyAdjustsScrollViewInsets = NO;</p>
-<hr>
-<p>最后总结一下:</p>
-<ol>
-<li><p><code>tableView.contentInset = UIEdgeInsetsMake(HEADER_HEIGHT, 0, 0, 0);</code></p>
-</li>
-<li><p><code>headerView.frame = CGRectMake (0, -HEADER_HEIGHT, WIDTH_SCREEN, HEADER_HEIGHT);</code></p>
-</li>
-<li><p><code>tableView.clipsToBound = NO;</code></p>
-</li>
-<li><p><code>scrollViewDidScroll</code></p>
-</li>
-<li><p><code>self.parentViewController.automaticallyAdjustsScrollViewInsets = NO;</code></p>
-</li>
-</ol>
-<hr>
-<p>后来的后来…我发现了<code>tableView</code>的的另一个属性<code>tableHeaderView</code>, 只需要设置这个属性, 就可以把视图放在<code>tableView</code>的前面…真是蛋都碎了…</p>
-<pre><code><span class="keyword">self</span>.tableView.tableHeaderView = headerView;
-</code></pre><p>……</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/iOS/">iOS</a>
-</div>
-
-
-  <div class="article-tags">
+<section class="post" itemscope itemprop="blogitem">
   
-  <span></span> <a href="/tags/iOS/">iOS</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2014/11/22/subtype/" title="Subtype" itemprop="url">Subtype</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
-		
-  <p class="article-time">
-    <time datetime="2014-11-22T12:26:08.000Z" itemprop="datePublished"> 发表于 2014-11-22</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="Subtyping">Subtyping</h2><ul>
-<li>While languages like <code>Java</code> and <code>C#</code> have generics these days, the source of type-system expressiveness most fundamental to object-oriented style is <em>subtype polymorphism</em>, also known as <em>subtyping</em>.</li>
-</ul>
-<p>We need a type system, with a form of types for records and typing rules for each of our expressions.</p>
-<ul>
-<li>If <code>e1</code> has type <code>t1</code>, <code>e2</code> has type <code>t2</code>, …, <code>en</code> has type <code>tn</code>, then <code>{f1=e1, f2=e2, ..., fn=en}</code> has type <code>{f1:t1, f2:t2, ..., fn:tn}</code>.</li>
-<li>If <code>e</code> has a record type containing <code>f : t</code>, then <code>e.f</code> has type <code>t</code> (else <code>e.f</code> does not type-check).</li>
-<li>If <code>e1</code> has a record type containing <code>f : t</code> and <code>e2</code> has type <code>t</code>,then <code>e1.f = e2</code> has type <code>t</code> (else <code>e1.f = e2</code> does not type-check).</li>
-<li>“Width” subtyping: A supertype can have a subset of fields with the same types, i.e., a subtype can have <strong>“extra”</strong> fields</li>
-<li>“Permutation” subtyping: A supertype can have the same set of fields with the same types in a different order.</li>
-<li>Transitivity: If <code>t1 &lt;: t2</code> and <code>t2 &lt;: t3</code>, then <code>t1 &lt;: t3</code>.</li>
-<li>Reflexivity: Every type is a subtype of itself: <code>t &lt;: t</code>.</li>
-</ul>
-<hr>
-<h2 id="Depth_Subtyping">Depth Subtyping</h2><ul>
-<li>“Depth” subtyping: If <code>ta &lt;: tb</code>, then <code>{f1:t1,...,f:ta,...,fn:tn} &lt;: {f1:t1,...,f:tb,...,fn:tn}</code>.</li>
-</ul>
-<p>This rule breaks out type system, allowing programs that we do not want to allow to type-check!</p>
-<p>Another way to look at the issue is that given the three features of (1) setting a field, (2) letting depth subtyping change the type of a field, and (3) having a type system actually prevent field-missing errors, you can have any two of the three.</p>
-<hr>
-<h2 id="Function_Subtyping">Function Subtyping</h2><p> The rules for when one function tyoe is a subtype of another function type are even less intuitive than the issue of depth subtyping for records, but we should understand them to safely override methods in <code>OOP</code> languages.</p>
-<pre><code><span class="comment">// (({x:real,y:real}-&gt;{x:real,y:real}) * {x:real,y:real}) -&gt; real</span>
-
-fun distMoved (<span class="string">f :</span> {<span class="string">x:</span>real,<span class="string">y:</span>real}-&gt;{<span class="string">x:</span>real,<span class="string">y:</span>real},
-           <span class="string">p :</span> {<span class="string">x:</span>real,<span class="string">y:</span>real}) =
-   let val <span class="string">p2 :</span> {<span class="string">x:</span>real,<span class="string">y:</span>real} = f p
-       val <span class="string">dx :</span> real = p2.x - p.x
-       val <span class="string">dy :</span> real = p2.y - p.y
-   <span class="keyword">in</span> Math.sqrt(dx*dx + dy*dy) end
-
-fun flip p = {x=~p.x, y=~p.y}
-val d = distMoved(flip, {x=<span class="number">3.0</span>, y=<span class="number">4.0</span>})
-</code></pre><p>It is safe to pass in a function with a return type that promises more, such as return a <code>subtype</code> of the needed reuturn type.</p>
-<pre><code>// {x:real,y:real} -&gt; {x:real,y:real,color:string}
-
-fun flipGreen <span class="variable">p =</span> {<span class="variable">x=</span>~p.x, <span class="variable">y=</span>~p.y, <span class="variable">color=</span><span class="string">"green"</span>}
-val <span class="variable">d =</span> distMoved(flipGreen, {<span class="variable">x=</span><span class="number">3.0</span>, <span class="variable">y=</span><span class="number">4.0</span>})
-</code></pre><blockquote>
-<p>In general, the rule is that if <code>ta &lt;: tb</code>, then t -&gt;ta &lt;: t -&gt; tb</p>
-</blockquote>
-<p>But it turns out it works just fine to use a function that “need less of its argument” in place of that “need more of its argument”.</p>
-<pre><code>// {x:real} -&gt; {x:real,y:real}
-
-fun flipX_Y0 <span class="variable">p =</span> {<span class="variable">x=</span>~p.x, <span class="variable">y=</span><span class="number">0.0</span>}
-val <span class="variable">d =</span> distMoved(flipX_Y0, {<span class="variable">x=</span><span class="number">3.0</span>, <span class="variable">y=</span><span class="number">4.0</span>})
-</code></pre><blockquote>
-<p> In general, the rule is that if <code>tb &lt;: ta</code>, then ta -&gt; t &lt;: tb -&gt; t</p>
-</blockquote>
-<p>The technical jargon for “backwords” is <em>contravariance</em>, meaning the subtyping for argument is the reverse of the subtyping for the types overall.</p>
-<p>Function subtyping also allow contravariance of arguments and convariance of results.</p>
-<pre><code>// {x:real} -&gt; {x:real,y:real,color:string}
-
-fun flipXMakeGreen <span class="variable">p =</span> {<span class="variable">x=</span>~p.x, <span class="variable">y=</span><span class="number">0.0</span>, <span class="variable">color=</span><span class="string">"green"</span>}
-val <span class="variable">d =</span> distMoved(flipXMakeGreen, {<span class="variable">x=</span><span class="number">3.0</span>, <span class="variable">y=</span><span class="number">4.0</span>})
-</code></pre><p><code>{x:real} -&gt; {x:real,y:real,color:string}</code> is a subtype of <code>{x:real, y:real} -&gt; {x:real, y:real}</code>, because <code>{x:real,y:real} &lt;: {x:real}</code> (contravariance on arguments) and <code>{x:real,y:real,color:string} &lt;: {x:real,y:real}</code> (covariance on results).</p>
-<blockquote>
-<p>The general rule for this subtype is If <code>t3 &lt;: t1</code> and <code>t2 &lt;: t4</code>, then <code>t1-&gt;t2 &lt;: t3-&gt;t4</code>.</p>
-</blockquote>
-<hr>
-<h2 id="Subtype_for_OOP">Subtype for OOP</h2><p>An object is a record holding mutable fields methods. We assume methods are immutable. With this perspective, sound subtyping for objects follows sound subtyping for records and functions.</p>
-<ul>
-<li>A subtype can have extra fields</li>
-<li>a subtype cannot have a different type for a field because it is mutable.</li>
-<li>A subtype can have extra methods.</li>
-<li>Because methods are immutable, a subtype can have a subtype for a method, which means the method in the subtype can have contravariant argument types and a covariant result type.</li>
-</ul>
-<p>In particular, the <code>object-oriented</code> implement is more restrictive than subtyping requires.</p>
-<ul>
-<li>A subclass can add fields but not remove them.</li>
-<li>A subclass can add methods but not remove them.</li>
-<li>A subclass can override a method with a covariant return type.</li>
-<li>A class can implement more methods than an interface requires or implement a required method with covariant return type.</li>
-</ul>
-<p><code>Classes</code> and <code>types</code> and different things,</p>
-<hr>
-<h2 id="Generics_Versus_Subtyping">Generics Versus Subtyping</h2><p>There are functions that combine other functions as compse:</p>
-<pre><code>val compose : <span class="function"><span class="params">(’b -&gt; ’c)</span> * <span class="params">(’a -&gt; ’b)</span> -&gt;</span> (’a<span class="function"> -&gt;</span> ’c)
-</code></pre><p>Generic types are much more useful and precise than just saying that some argument can be<br>“anything” </p>
-<h3 id="Subtyping_is_a_Bad_Substitute_for_Generics">Subtyping is a Bad Substitute for Generics</h3><p>Consider Java code example:</p>
-<pre><code><span class="class"><span class="keyword">class</span> <span class="title">LamePair</span> </span>{
-  <span class="built_in">Object</span> x;
-  <span class="built_in">Object</span> y;
-  LamePair(<span class="built_in">Object</span> _x, <span class="built_in">Object</span> _y){ x=_x; y=_y; }
-  LamePair swap() { <span class="keyword">return</span> <span class="keyword">new</span> LamePair(y,x); }
-  ...
-}
-
-<span class="built_in">String</span> s = (<span class="built_in">String</span>)(<span class="keyword">new</span> LamePair(<span class="string">"hi"</span>,<span class="number">4</span>).y); <span class="comment">// error caught only at run-time</span>
-</code></pre><p>Subtyping does not work that way, the type-checker only knows that the field holds an <code>Object</code>. So we have to use a <code>downcast</code>, cast the <code>Object</code> type to <code>String</code>. Such <code>downcast</code> costs in terms of performance, but may cause a failure.</p>
-<h3 id="What_is_Subtyping_Good_For?">What is Subtyping Good For?</h3><p>A generally agreed upon example where subtyping works well is graphical user interfaces. Much of the code for graphics libraries works fine for any sort of graphical element (“paint it on the screen,” “change the background color,” “report if the mouse is clicked on it,” etc.) where different elements such as buttons, slider bars, or text boxes can then be subtypes.</p>
-<h3 id="Generics_are_a_Bad_Substitute_for_Subtyping">Generics are a Bad Substitute for Subtyping</h3><p>In a language with generics instead of subtyping, you can code up your own code reuse with higher-order functions, but it can be quite a bit of trouble for a simple idea.</p>
-<pre><code><span class="keyword">fun</span> distToOrigin2(getx,gety,v) =
-<span class="keyword">let</span>
-    <span class="keyword">val</span> x = getx v
-    <span class="keyword">val</span> y = gety v
-<span class="keyword">in</span>
-    <span class="type">Math</span>.sqrt (x*x + y*y)
-<span class="keyword">end</span>
-<span class="keyword">fun</span> distToOriginPt (p : {x:<span class="built_in">real</span>,y:<span class="built_in">real</span>}) =
-    distToOrigin2(<span class="keyword">fn</span> v =&gt; #x v,
-                  <span class="keyword">fn</span> v =&gt; #y v, p)
-<span class="keyword">fun</span> distToOriginColorPt (p : {x:<span class="built_in">real</span>,y:<span class="built_in">real</span>,color:<span class="built_in">string</span>}) =
-    distToOrigin2(<span class="keyword">fn</span> v =&gt; #x v,
-                   <span class="keyword">fn</span> v =&gt; #y v, 
-                   p)
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming-Paradigm/">Programming Paradigm</a>
-</div>
-
-
-  <div class="article-tags">
+    <a href="/2014/12/11/Persistent-Storage-with-levelDB/" title="Persistent Storage with levelDB" itemprop="url">
   
-  <span></span> <a href="/tags/generic/">generic</a><a href="/tags/subtype/">subtype</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
+    <h1 itemprop="name">Persistent Storage with levelDB</h1>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+     
+           <p itemprop="description" >LevelDB is a key-value pair database developing by google. Why I use this instead of Core Data which is so widely used.
+Core Data is a frame</p>
+        
     
-      <a href="/2014/11/22/Multiple Inheritence/" title="Multiple Inheritance" itemprop="url">Multiple Inheritance</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
-		
-  <p class="article-time">
-    <time datetime="2014-11-22T07:51:39.000Z" itemprop="datePublished"> 发表于 2014-11-22</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>The essence of <code>Object-Oriented Programming</code> is inheritance, overriding, and dynamic dispatch. Because the inheritance is so powerful in programming, what about using it to do some more powerful thinds.</p>
-<ul>
-<li>Multiple inheritance</li>
-<li>Mixins</li>
-<li>Interfaces</li>
-</ul>
-<h1 id="Multiple_inheritance">Multiple inheritance</h1><ul>
-<li>Languages with <code>multiple inheritance</code> let one class extend multiple other classes. It is the most powerful idea among those three.</li>
-</ul>
-<p>Let us give you one example to show why <code>mutiple inheritance</code> is very powerful.</p>
-<h2 id="Point_Example">Point Example</h2><pre><code>      -<span class="ruby">----------
-</span>      | Point2D |
-      -<span class="ruby">----------
-</span>           ^
-<span class="comment">          / \</span>
-<span class="comment">         /   \</span>
-<span class="comment">        /     \</span>
-<span class="comment">       /       \</span>
--<span class="ruby">----------    --------------
-</span>| Point3D |    | ColorPoint |
--<span class="ruby">----------    --------------
-</span>    ^              ^
-     \            /
-      \          /
-       \        /
-        \      /
-         \    /
-          \  /
-    -<span class="ruby">---------------
-</span>    | ColorPoint3D |
-    -<span class="ruby">---------------</span>
-</code></pre><p>Without <code>multiple inheritance</code>, you may copy the code from <code>Point3D</code> and <code>ColorPoint</code>, but if we have <code>multiple inheritance</code>, we might say that the new class has all the methods od all the superclasses. </p>
-<p>But <code>multiple inheritance</code> has some serius problem, if two of the supclasses have the same property or methods, what does that mean? This is diamond problem.</p>
-<p>With single <code>inheritance</code>, the class hierarchy is a tree. With <code>multiple inheritance</code>, class hierarchy may not be a tree, like the class hierarchy above.</p>
-<pre><code>   -<span class="ruby">------
-</span>   |  A  |
-   -<span class="ruby">------
-</span>      ^
-      |
-      |
-   -<span class="ruby">------
-</span>   |  B  |
-   -<span class="ruby">------
-</span>      ^
-<span class="comment">     / \</span>
-<span class="comment">    /   \</span>
-<span class="comment">   /     \</span>
--<span class="ruby">------ -------
-</span>|  C  | |  D  |
--<span class="ruby">------ -------</span>
-</code></pre><h1 id="Mixins">Mixins</h1><ul>
-<li>Ruby has mixins, which is a very elegant feature and a wise approach to solve <code>multiple inheritance</code> problem. It is between <code>multiple inheritance</code> and <code>interfaces</code>.</li>
-</ul>
-<p>Mixins provide actual code to classes that include them, but <strong>they are not class</strong>, we cannot create a instance of it.</p>
-<p>We can define Ruby <code>mixin</code> with keyword <code>module</code> instead of <code>class</code>.</p>
-<pre><code>// This mixins defines <span class="constant">three</span> methods, color, color=, <span class="operator">and</span> darken
-module Color
-  attr_accessor :color
-  def darken
-    self.color = <span class="string">"dark "</span> + self.color
-  <span class="function"><span class="keyword">end</span></span>
-<span class="function"><span class="keyword">end</span></span>
-</code></pre><p>Use <code>include</code> keyword to include the <code>mixin</code>, like this.</p>
-<pre><code><span class="class"><span class="keyword">class</span> <span class="title">ColorPt</span> <span class="inheritance">&lt; <span class="parent">Pt</span></span></span>
-  <span class="keyword">include</span> <span class="constant">Color</span>
-<span class="keyword">end</span>
-</code></pre><p>Mixins are just a bunch of methods, not instance variables, <code>attr_accessor</code> just create two method.</p>
-<p>Now it’s time to reconsider our method lookup rules. We have to choose something and this is what Ruby chooses: If <code>obj</code> is an instance of class <code>C</code> and we send message <code>m</code> to <code>obj</code>.</p>
-<pre><code>C -&gt; C<span class="class">.mixins</span> -&gt; C<span class="class">.superclass</span> -&gt; C<span class="class">.superclass</span><span class="class">.mixins</span> -&gt; C<span class="class">.supersuperclass</span> -&gt; Etc
-</code></pre><p>Many of the elegant uses of <code>mixins</code> do this things, call other methods on <code>self</code> that are not defined by the <code>mixin</code>. For example, the below code needs the class include this module implements <code>+</code> method.</p>
-<pre><code><span class="keyword">module</span> Doubler
-  def double
-    <span class="keyword">self</span> + <span class="keyword">self</span> # <span class="keyword">uses</span> <span class="keyword">self</span>’s + message, <span class="keyword">not</span> defined <span class="keyword">in</span> Doubler
-  <span class="keyword">end</span>
-<span class="keyword">end</span>
-</code></pre><p>if we want to include this <code>mixin</code>, we should implement <code>+</code> method:</p>
-<pre><code>class <span class="type">Point</span>
-    attr_accessor :x, :y
-    <span class="keyword">include</span> <span class="type">Doubler</span>
-    def + other
-        <span class="literal">result</span> = <span class="type">Point</span>.new
-        <span class="literal">result</span>.x = self.x + other.x
-        <span class="literal">result</span>.y = self.y + other.y
-    <span class="keyword">end</span>
-<span class="keyword">end</span>
-
-class <span class="type">String</span>
-    <span class="keyword">include</span> <span class="type">Doubler</span>
-<span class="keyword">end</span>
-</code></pre><p>The same idea in Ruby with two mixins named <code>Enumerable</code> and <code>Comparable</code>.</p>
-<ul>
-<li>Enumerable <code>each</code> method.</li>
-<li>Comparable <code>&lt;=&gt;</code> method.</li>
-</ul>
-<h1 id="Interfaces">Interfaces</h1><ul>
-<li>In Java/C#, a class can only have one immediate superclass but it can implement any number of interfaces. An <code>interface</code> is <strong>just a list of methods</strong> and each method’s argument types and return type. An <code>interface</code> is a type, so class <code>C</code> implements interface <code>I</code>, means that class <code>C</code> should implement all the methods define in interface <code>I</code>, and it can implements a bunch of interface.</li>
-</ul>
-<p>Because interface only provide methods types, none of the problem discusses in multiple inheritance arise. But they can not use like mixin in <code>Ruby</code>.</p>
-<p>Implementing interfaces does not inherit code, It makes the type checker systems in these languages more flexiable.</p>
-<hr>
-<ul>
-<li><code>Multiple inheritance</code> is powerful but harmful in <code>OOP</code>, many modern programming languages implement this in another way, such as <code>mixin</code> in Ruby, <code>interface</code> in Java/C#, <code>delegate</code> in Objective-C and so on.</li>
-</ul>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming-Paradigm/">Programming Paradigm</a>
-</div>
+    <time datetime="2014-12-11T11:18:56.000Z" itemprop="datePublished">2014-12-11</time>
+  </a>
+</section>
 
 
-  <div class="article-tags">
+
+
+
+
   
-  <span></span> <a href="/tags/Inheritance/">Inheritance</a><a href="/tags/OOP/">OOP</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2014/12/03/iOS Using AFNetworking <Bug03>/" title="iOS Using AFNetworking &lt;Bug03&gt;" itemprop="url">
+  
+    <h1 itemprop="name">iOS Using AFNetworking &lt;Bug03&gt;</h1>
+    
+     
+           <p itemprop="description" >During these days development, when I connect our iOS App to Python back-end using AFNetworking, I met an error. It is my first time to use </p>
+        
+    
+    <time datetime="2014-12-02T16:56:49.000Z" itemprop="datePublished">2014-12-03</time>
+  </a>
+</section>
 
 
 
 
 
 
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2014/11/28/iOS组合TabbarController和NavigationController <Bug02>/" title="iOS Combine TabbarController and NavigationController&lt;Bug02&gt;" itemprop="url">
+  
+    <h1 itemprop="name">iOS Combine TabbarController and NavigationController&lt;Bug02&gt;</h1>
+    
+     
+           <p itemprop="description" >TabbarController and NavigationControllerUINavigationController and UITabBarController are two kinds of container classes in Cocoa. The two </p>
+        
+    
+    <time datetime="2014-11-28T12:36:59.000Z" itemprop="datePublished">2014-11-28</time>
+  </a>
+</section>
 
-  <nav id="page-nav" class="clearfix">
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2014/11/26/Lists-and-Patterns-Matching/" title="Lists and Patterns Matching" itemprop="url">
+  
+    <h1 itemprop="name">Lists and Patterns Matching</h1>
+    
+     
+           <p itemprop="description" >Recursive computations递归的计算模型是声明式编程的核心, 有些人可能并不知道, 类型也是可以递归的. 比如说列表.
+List列表是在函数式编程中是很有趣的, 也是很强大的, 大多数函数式编程语言都支持列表, 比如Haskell, ML, Scheme. 列表</p>
+        
+    
+    <time datetime="2014-11-26T07:57:59.000Z" itemprop="datePublished">2014-11-26</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2014/11/24/Iterative-versus-Recursive/" title="Iteration versus Recursion" itemprop="url">
+  
+    <h1 itemprop="name">Iteration versus Recursion</h1>
+    
+     
+           <p itemprop="description" >Iteration 和 Recursion 在我们所有的编程语言中都是非常重要的概念, 尤其是在声明式的编程模型中.
+Iteraive computation迭代的计算模型是一个stack大小为constant并且大小保持不变的循环.
+非常重要的地方就是, 迭代的计算模型拥有一个</p>
+        
+    
+    <time datetime="2014-11-24T13:25:57.000Z" itemprop="datePublished">2014-11-24</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2014/11/23/iOS Combine View and TableView<Bug01>/" title="iOS Combine View and TableView &lt;Bug01&gt;" itemprop="url">
+  
+    <h1 itemprop="name">iOS Combine View and TableView &lt;Bug01&gt;</h1>
+    
+     
+           <p itemprop="description" >我在开发我的第一个项目SportJoin的过程中遇到过这样一个问题, 需要写出一个同时有UIView和UITablView的界面, 这个为什么很困难呢. 
+
+需要写出易于维护的结构.
+需要在tableView滚动的时候滚动.
+需要在headerView到达顶部的时候segment</p>
+        
+    
+    <time datetime="2014-11-23T15:26:11.000Z" itemprop="datePublished">2014-11-23</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2014/11/22/subtype/" title="Subtype" itemprop="url">
+  
+    <h1 itemprop="name">Subtype</h1>
+    
+     
+           <p itemprop="description" >Subtyping
+While languages like Java and C# have generics these days, the source of type-system expressiveness most fundamental to object-ori</p>
+        
+    
+    <time datetime="2014-11-22T12:26:08.000Z" itemprop="datePublished">2014-11-22</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2014/11/22/Multiple Inheritence/" title="Multiple Inheritance" itemprop="url">
+  
+    <h1 itemprop="name">Multiple Inheritance</h1>
+    
+     
+           <p itemprop="description" >The essence of Object-Oriented Programming is inheritance, overriding, and dynamic dispatch. Because the inheritance is so powerful in progr</p>
+        
+    
+    <time datetime="2014-11-22T07:51:39.000Z" itemprop="datePublished">2014-11-22</time>
+  </a>
+</section>
+
+
+
+
+
+
+
+  <nav id="page-nav" class="clearfix unexpand">
     <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
   </nav>
 

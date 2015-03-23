@@ -74,359 +74,98 @@
     <div id="container">
       <div id="main">
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2014/11/19/iOS Alpha, Opaque和hidden/" title="iOS Alpha Opaque Hidden" itemprop="url">iOS Alpha Opaque Hidden</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
-		
-  <p class="article-time">
-    <time datetime="2014-11-19T09:36:49.000Z" itemprop="datePublished"> 发表于 2014-11-19</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>在<code>iOS</code>的视图中, 有三个非常相似的属性, <code>alpha</code>, <code>opaque</code> <code>hidden</code>. 这三个属性实际上没有什么太多的关系.</p>
-<hr>
-<h2 id="hidden属性">hidden属性</h2><p>我们首先来解释一下<code>hidden</code>属性, 如果将一个控件设置的<code>view</code>属性设置为<code>YES</code>, 那么这个<code>view</code>根本不会被绘制, 它通常等于<code>alpha</code>值被设置为<code>0</code>, 但是设置<code>hidden</code>属性并不会产生动画, 如果你需要动画完成过渡就需要修改<code>alpha</code>的值.</p>
-<pre><code><span class="comment">//without animation</span>
-(view<span class="class">.alpha</span> = <span class="number">0</span>) == (view<span class="class">.hidden</span> = YES)
-<span class="comment">//with animation</span>
-(view<span class="class">.alpha</span> = <span class="number">0</span>) != (view<span class="class">.hideen</span> = YES)
-</code></pre><hr>
-<h2 id="alpha属性">alpha属性</h2><p><code>alpha</code>属性决定了视图会通过像素显示多少信息. <code>alpha</code>值设为<code>1</code>意味着所有的视图信息都在像素上表现出来. 而<code>alpha</code>值设为<code>0</code>意味着没有视图信息能在像素上显示出来. 在iOS中, 屏幕上的任何真正透明的东西, 改变<code>alpha</code>值其实就是改变视图以及子视图的显示程度.</p>
-<p>当<code>alpha</code>值被设置为<code>0</code>之后, 当前<code>UIView</code>和<code>subviews</code>会被隐藏, 而且当前<code>UIView</code>会从响应链删除.</p>
-<hr>
-<h2 id="opaque属性">opaque属性</h2><p>是否将视图标记为<code>opaque</code>并不会升高或降低一个<code>UIView</code>的透明度. 它实际的坐拥实际上是为<code>GPU</code>节省工作量, 设置它的值并不影响视图是否绘制的最终结果.</p>
-<hr>
-<p>我们可以通过设置以下的属性, 创建一个透明的视图接收事件.</p>
-<pre><code><span class="keyword">view</span>.<span class="keyword">alpha</span> = 1;
-<span class="keyword">view</span>.opaque = <span class="keyword">NO</span>;
-<span class="keyword">view</span>.backgroundColor = [UIColor clearColor];
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/iOS/">iOS</a>
-</div>
-
-
-  <div class="article-tags">
   
-  <span></span> <a href="/tags/iOS/">iOS</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2014/11/19/iOS管理图形上下文Context/" title="iOS管理图形上下文context" itemprop="url">iOS管理图形上下文context</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
-		
-  <p class="article-time">
-    <time datetime="2014-11-19T09:01:57.000Z" itemprop="datePublished"> 发表于 2014-11-19</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="iOS管理图形上下文Context">iOS管理图形上下文Context</h1><p>在<code>iOS</code>开发中, 不免与<code>UIKit</code>和<code>Core Graphics</code>打交道, 我们需要使用这两个框架实现自定义绘图的功能, 而这时图形上下文<code>context</code>这个概念就十分重要.</p>
-<p>视图可以通过子视图, 图层或实现<code>drawRect:</code>方法来表现内容. 提供给<code>drawRect:</code>方法的图形上下文是特殊的视图图形上下文<code>CGContext</code>, <code>context</code>中包含了大量的信息</p>
-<ul>
-<li>画笔颜色</li>
-<li>文本颜色</li>
-<li>当前字体</li>
-<li>…</li>
-</ul>
-<p>由于系统的当前<code>CGContext</code>只有一个, 所以想要改变<code>CGContext</code>的内容就会影响之后的内容, 我们可以使用两种方法保存当前的<code>CGContext</code>:</p>
-<p>1.使用<code>Core Graphics</code>中的 <code>CGContextSaveGState</code>和<code>CGContextRestoreGState</code>将当前<code>CGContext</code>入栈和出栈.</p>
-<pre><code><span class="attr_selector">[[UIColor redColor]</span> setFill]; <span class="comment">// {context : red}</span>
-<span class="function">CGContextSaveGState</span>(<span class="function">UIGraphicsGetCurrentContext</span>()); <span class="comment">//{context : red}</span>
-<span class="attr_selector">[[UIColor blueColor]</span> setFill]; <span class="comment">//{context : blue}</span>
-<span class="function">CGContextRestoreGState</span>(<span class="function">UIGraphicsGetCurrentContext</span>()); <span class="comment">//{context : red}</span>
-</code></pre><p>2.使用<code>UIKit</code>中的<code>UIGraphicsPushContext()</code>和<code>UIGraphicsPopContext()</code>方法, 在这里<code>UIGraphicsPushContext()</code>方法不能保存上下文的当前状态, 它能够保存当前绘制的内容, 切换到<em>全新的绘图上下文</em>, 而<code>UIGraphicsPopContext()</code>创建完当前位图后将当前<code>CGContext</code>出栈, 我们使用<code>UIGraphicsBeginImageContext()</code>完成这种常用操作, 将旧的上下文入栈、为新上下文分配内存, 创建新的上下文, 并使其作为当前上下文使用.</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/iOS/">iOS</a>
-</div>
-
-
-  <div class="article-tags">
+<section class="post" itemscope itemprop="blogitem">
   
-  <span></span> <a href="/tags/iOS/">iOS</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2014/11/19/iOS使用联线自定义切换/" title="iOS使用联线自定义切换" itemprop="url">iOS使用联线自定义切换</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
-		
-  <p class="article-time">
-    <time datetime="2014-11-18T17:12:12.000Z" itemprop="datePublished"> 发表于 2014-11-19</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="iOS使用联线自定义切换">iOS使用联线自定义切换</h1><p>通过添加<code>UIStoryboardSegure</code>的子类, 覆盖其<code>perform</code>方法, 来创建自定义切换.</p>
-<pre><code>- (void)perform {
-    UIViewController *sourceVC = (UIViewController *)self.sourceViewController;
-    UIViewController *destinationVC = (UIViewController *)self.destinationViewController;
-
-    CGRect frame = sourceVC.<span class="keyword">view</span>.frame;
-    CGRect originalSourceRect = sourceVC.<span class="keyword">view</span>.frame;
-    frame.origin.y = frame.size.height;
-
-    [UIView animateWithDuration:0.3
-                     animations:^{
-                         sourceVC.<span class="keyword">view</span>.frame = frame;
-                     } completion:^(BOOL finished) {
-                         sourceVC.<span class="keyword">view</span>.<span class="keyword">alpha</span> = 0;
-                         destinationVC.<span class="keyword">view</span>.frame = frame;
-                         destinationVC.<span class="keyword">view</span>.<span class="keyword">alpha</span> = 0;
-                         [[sourceVC.<span class="keyword">view</span> superview] addSubview:destinationVC.<span class="keyword">view</span>];
-                         [UIView animateWithDuration:0.3 animations:^{
-                             destinationVC.<span class="keyword">view</span>.frame = originalSourceRect;
-                             destinationVC.<span class="keyword">view</span>.<span class="keyword">alpha</span> = 0;
-                         } completion:^(BOOL finished) {
-                             [destinationVC.<span class="keyword">view</span> removeFromSuperview];
-                             sourceVC.<span class="keyword">view</span>.<span class="keyword">alpha</span> = 1.0;
-                             [sourceVC.navigationController pushViewController:destinationVC animated:YES];
-                         }];
-                     }];
-}
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/iOS/">iOS</a>
-</div>
-
-
-  <div class="article-tags">
+    <a href="/2014/11/19/iOS Alpha, Opaque和hidden/" title="iOS Alpha Opaque Hidden" itemprop="url">
   
-  <span></span> <a href="/tags/iOS/">iOS</a><a href="/tags/segue/">segue</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
+    <h1 itemprop="name">iOS Alpha Opaque Hidden</h1>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+     
+           <p itemprop="description" >在iOS的视图中, 有三个非常相似的属性, alpha, opaque hidden. 这三个属性实际上没有什么太多的关系.
+
+hidden属性我们首先来解释一下hidden属性, 如果将一个控件设置的view属性设置为YES, 那么这个view根本不会被绘制, 它通常等于alp</p>
+        
     
-      <a href="/2014/11/18/iOS关联引用为分类添加属性/" title="iOS关联引用为分类添加属性" itemprop="url">iOS关联引用为分类添加属性</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
-		
-  <p class="article-time">
-    <time datetime="2014-11-17T16:00:00.000Z" itemprop="datePublished"> 发表于 2014-11-18</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="iOS关联引用为分类添加属性">iOS关联引用为分类添加属性</h1><p>开发者可以使用关联引用为任何对象附着键值数据.</p>
-<p>使用关联引用为分类添加属性, 首先, 我们新建一个<code>Person</code>类, <code>Person.h</code>的文件如下</p>
-<pre><code><span class="comment">//Person.h</span>
-<span class="preprocessor">#import <span class="title">&lt;Foundation/Foundation.h&gt;</span></span>
-
-<span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> : <span class="title">NSObject</span></span>
-
-<span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> *name;
-
-<span class="keyword">@end</span>
-</code></pre><p><code>Person</code>类的实现文件如下:</p>
-<pre><code><span class="comment">//Person.m</span>
-<span class="preprocessor">#import <span class="title">"Person.h"</span></span>
-
-<span class="class"><span class="keyword">@implementation</span> <span class="title">Person</span></span>
-
-<span class="keyword">@end</span>
-</code></pre><p>现在, 我们在<code>Person</code>的分类中添加新的属性<code>emailAddress</code>, 现在头文件中使用<code>@property</code>声明这个属性.</p>
-<pre><code><span class="comment">//Person+EmailAddress.h    </span>
-<span class="preprocessor">#import <span class="title">"Person.h"</span></span>
-
-<span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> (<span class="title">EmailAddress</span>)</span>
-
-<span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> *emailAddress;
-
-<span class="keyword">@end</span>
-</code></pre><p>当我们只在分类的<code>.h</code>文件中加入属性的时候, 会产生如下的警告.</p>
-<pre><code><span class="type">Property</span> 'emailAddress' requires <span class="keyword">method</span> 'setEmailAddress:' to be defined - use @dynamic <span class="keyword">or</span> provide a <span class="keyword">method</span> implementation <span class="keyword">in</span> this category.
-</code></pre><p>这时, 我们使用<code>objc/Runtime</code>库中的动态方法为生成获取和设置属性的方法.</p>
-<pre><code><span class="keyword">id</span> objc_getAssociatedObject(<span class="keyword">id</span> object, <span class="keyword">void</span> *key)
-
-<span class="keyword">void</span> objc_setAssociatedObject(<span class="keyword">id</span> object, <span class="keyword">void</span> *key, <span class="keyword">id</span> value, objc_AssociationPolicy policy)
-</code></pre><p><code>Person+emailAddress.m</code>方法的实现代码如下</p>
-<pre><code><span class="preprocessor">#import <span class="title">"Person+EmailAddress.h"</span></span>
-<span class="preprocessor">#import <span class="title">&lt;objc/runtime.h&gt;</span></span>
-
-<span class="class"><span class="keyword">@implementation</span> <span class="title">Person</span> (<span class="title">EmailAddress</span>)</span>
-
-<span class="keyword">static</span> <span class="keyword">char</span> emailAddressKey;
-
-- (<span class="built_in">NSString</span> *)emailAddress {
-    <span class="keyword">return</span> objc_getAssociatedObject(<span class="keyword">self</span>, &amp;emailAddressKey);
-}
-
-- (<span class="keyword">void</span>)setEmailAddress:(<span class="built_in">NSString</span> *)emailAddress {
-    objc_setAssociatedObject(<span class="keyword">self</span>, &amp;emailAddressKey,
-                             emailAddress, OBJC_ASSOCIATION_COPY);
-}
-
-<span class="keyword">@end</span>
-</code></pre><p>注意:</p>
-<ol>
-<li><code>emailAddressKey</code>的声明方法, 使用<code>static char</code>.</li>
-<li><code>emailAddressKey</code>这个名字并不重要, 它与我们实际使用的属性<code>emailAddress</code>的名字无关,这里加入后缀<code>Key</code>仅仅为了<code>code</code>的整洁</li>
-<li>我们使用<code>OBJC_ASSOCIATION_COPY</code>等参数作为语义管理,正确处理<code>copy</code>, <code>assign</code>, <code>retain</code>等语义.</li>
-</ol>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/iOS/">iOS</a>
-</div>
+    <time datetime="2014-11-19T09:36:49.000Z" itemprop="datePublished">2014-11-19</time>
+  </a>
+</section>
 
 
-  <div class="article-tags">
+
+
+
+
   
-  <span></span> <a href="/tags/Runtime/">Runtime</a><a href="/tags/iOS/">iOS</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2014/11/19/iOS管理图形上下文Context/" title="iOS管理图形上下文context" itemprop="url">
+  
+    <h1 itemprop="name">iOS管理图形上下文context</h1>
+    
+     
+           <p itemprop="description" >iOS管理图形上下文Context在iOS开发中, 不免与UIKit和Core Graphics打交道, 我们需要使用这两个框架实现自定义绘图的功能, 而这时图形上下文context这个概念就十分重要.
+视图可以通过子视图, 图层或实现drawRect:方法来表现内容. 提供给d</p>
+        
+    
+    <time datetime="2014-11-19T09:01:57.000Z" itemprop="datePublished">2014-11-19</time>
+  </a>
+</section>
 
 
 
 
 
 
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2014/11/19/iOS使用联线自定义切换/" title="iOS使用联线自定义切换" itemprop="url">
+  
+    <h1 itemprop="name">iOS使用联线自定义切换</h1>
+    
+     
+           <p itemprop="description" >iOS使用联线自定义切换通过添加UIStoryboardSegure的子类, 覆盖其perform方法, 来创建自定义切换.
+- (void)perform {
+    UIViewController *sourceVC = (UIViewController *)self.s</p>
+        
+    
+    <time datetime="2014-11-18T17:12:12.000Z" itemprop="datePublished">2014-11-19</time>
+  </a>
+</section>
 
-  <nav id="page-nav" class="clearfix">
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2014/11/18/iOS关联引用为分类添加属性/" title="iOS关联引用为分类添加属性" itemprop="url">
+  
+    <h1 itemprop="name">iOS关联引用为分类添加属性</h1>
+    
+     
+           <p itemprop="description" >iOS关联引用为分类添加属性开发者可以使用关联引用为任何对象附着键值数据.
+使用关联引用为分类添加属性, 首先, 我们新建一个Person类, Person.h的文件如下
+//Person.h
+#import &amp;lt;Foundation/Foundation.h&amp;gt;
+
+@i</p>
+        
+    
+    <time datetime="2014-11-17T16:00:00.000Z" itemprop="datePublished">2014-11-18</time>
+  </a>
+</section>
+
+
+
+
+
+
+
+  <nav id="page-nav" class="clearfix unexpand">
     <a class="extend prev" rel="prev" href="/page/2/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
   </nav>
 
