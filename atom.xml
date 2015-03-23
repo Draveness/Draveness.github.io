@@ -1,0 +1,2361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[DeltaX]]></title>
+  <subtitle><![CDATA[为了成为牛逼闪闪的工程师]]></subtitle>
+  <link href="/atom.xml" rel="self"/>
+  <link href="http://deltax.me/"/>
+  <updated>2015-03-23T10:27:31.000Z</updated>
+  <id>http://deltax.me/</id>
+  
+  <author>
+    <name><![CDATA[Draven]]></name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Class as Data Abstraction in OOP]]></title>
+    <link href="http://deltax.me/2015/03/23/Class-as-Data-Abstraction-in-OOP/"/>
+    <id>http://deltax.me/2015/03/23/Class-as-Data-Abstraction-in-OOP/</id>
+    <published>2015-03-23T02:28:07.000Z</published>
+    <updated>2015-03-23T10:27:31.000Z</updated>
+    <content type="html"><![CDATA[<p>The heart of the object concept is controlled access to encapsulated data. The behaviour of an object is specified by a <strong>class</strong> which is an incremental definition of a data abstraction.</p>
+<ul>
+<li>Complete data abstraction<ul>
+<li>Defining the various elements that make up a class.</li>
+<li>Taking advantage of dynamic typing.</li>
+</ul>
+</li>
+<li>Incremental data abstraction<ul>
+<li>Related to inheritance.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Defining_Classes_and_Objects">Defining Classes and Objects</h2><p>A class is data structure that defines an object’s internal state (attributes), its behavior (methods), the classes it inherits several properties and operations.</p>
+<p>A class is a data abstraction that give its partial and total implementation.</p>
+<p>Objects of a given class is called <strong>instances</strong>. These object have differenty identities but can have differnet values for their interval state. And instance is initialized with the operation <code>New</code>.</p>
+<pre><code>Obj={<span class="keyword">New</span> <span class="class"><span class="keyword">Class</span> <span class="title">Init</span>}</span>
+</code></pre><p>This code creates an new object <code>Obj</code> of class <code>Class</code> and invokes with the message <code>Init</code>. And after the initialize, we can use the syntax <code>{Obj Message}</code> to call a message on instance <code>Obj</code>.</p>
+<h2 id="Class_members">Class members</h2><p>A class defines the constituent parts part each of its object will have. There are three kinds of members in class:</p>
+<ul>
+<li><strong>Attributes</strong><blockquote>
+<p>An attribute is a cell that contains part of the instance’s state which is always called <strong>instance variable</strong> in an instance. And this just visible in the class definition. Every instance have seperate set of attributes.</p>
+</blockquote>
+</li>
+<li><p><strong>Methods</strong></p>
+<blockquote>
+<p>A method is a kind of procedure that is called in the context of a particular object and that access the object’s attribute. </p>
+</blockquote>
+<ul>
+<li>The method consists of a head and body. </li>
+<li>The head consists of a label, which must be an atom or a name, and a set of arguments.</li>
+<li>The arguments must be distinct variables.</li>
+</ul>
+</li>
+<li><strong>Properties</strong><blockquote>
+<p>A property modifies how an object behaves.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Initializing_Attributes">Initializing Attributes</h2><p>Attributes can be initialized in two ways: per instance or per class.</p>
+<ul>
+<li><p>Per instance</p>
+<ul>
+<li><p>An attribute can be given a different initial value per instance.</p>
+<pre><code><span class="class"><span class="keyword">class</span> <span class="title">OneApt</span></span>
+    attr streetName
+    meth init(X) @streetName=X <span class="keyword">end</span>
+<span class="keyword">end</span>
+Apt1={<span class="keyword">New</span> OneApt init(drottninggatan)}
+Apt2={<span class="keyword">New</span> OneApt init(runNeuve)}
+</code></pre></li>
+</ul>
+</li>
+<li><p>Per class</p>
+<ul>
+<li><p>An attribute can be given a value that is the same for all instances of a class. This is done by initilizing it with “:” in the class definition.</p>
+<pre><code><span class="class"><span class="keyword">class</span> <span class="title">YorkApt</span></span>
+    attr
+        streetName:york
+        streetNumber:<span class="number">100</span>
+        wallColor:_
+        floorSurface:wood
+    meth init skip <span class="keyword">end</span>
+<span class="keyword">end</span>
+Apt3={<span class="keyword">New</span> OneApt init}
+Apt4={<span class="keyword">New</span> OneApt init}
+</code></pre></li>
+</ul>
+</li>
+<li><p>Per brand</p>
+<ul>
+<li><p>This is another way to use the per-class initialization. A brand is a set of classes that related in some way.</p>
+<pre><code><span class="keyword">L</span>=linux
+<span class="keyword">class</span> RedHat attr ostype:<span class="keyword">L</span> end
+<span class="keyword">class</span> SuSE attr ostype:<span class="keyword">L</span> end
+<span class="keyword">class</span> Debian attr ostype:<span class="keyword">L</span> end
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<h2 id="First-class_Messages">First-class Messages</h2><p>Messages are records and method heads are patterns that match a record. We can use different type of records to pass to a method.</p>
+<ol>
+<li>Static record as message. In this case, message is known at <strong>compile time</strong>.</li>
+<li>Dynamic record as message. In this case, message is a variable that references a record that calculated at <strong>run time</strong>.</li>
+</ol>
+<p>In the method definition, the following approach is possible:</p>
+<ol>
+<li><p>Fixed argument list</p>
+<pre><code>meth <span class="keyword">add</span>(x:X y:Y)
+    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+<span class="title">end</span></span>
+</code></pre></li>
+<li><p>Flexible argument list</p>
+<pre><code>meth <span class="keyword">add</span>(x:X y:Y ...)
+    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+<span class="title">end</span></span>
+</code></pre><p> The “…” in the method head means that any message is accepted if has least the listed argument.</p>
+</li>
+<li><p>Variable reference to method head</p>
+<p> The whole method head is referenced by a variable.</p>
+<pre><code>meth <span class="keyword">add</span>(x:X y:Y ...)=M
+    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+<span class="title">end</span></span>
+</code></pre><p> The variable <code>M</code> references the full message as a record.</p>
+</li>
+<li><p>Optional argument</p>
+<pre><code>meth <span class="keyword">add</span>(x:X y:Y z:Z&lt;=V)
+    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+<span class="title">end</span></span>
+</code></pre><p> The <code>&lt;=V</code> in the method head means that field <code>z</code> is optional. You can either called the method with <code>add(x:1 y:2)</code> or <code>add(x:1 y:2 z:3)</code>.</p>
+</li>
+<li><p>Private method label</p>
+<p> Method label can be names. This is denoted by using a variable identifier</p>
+<pre><code>meth A(bar:X)
+    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+<span class="title">end</span></span>
+</code></pre><p> The method <code>A</code> is bound to a fresh name whtn the class is defined. If this method must be used elsewhere in the program, we should pass it explicitly.</p>
+</li>
+<li><p>Dynamic method label</p>
+<pre><code>meth !A(bar:X)
+    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+<span class="title">end</span></span>
+</code></pre><p> The method label has to be known when the class definitions is executed. The variable must be bound to an atom or a name. This technique can make method secure.</p>
+</li>
+<li><p>The <code>otherwise</code> method</p>
+<p> The method head with label <code>otherwise</code> is a catchall that accepts any message for message for which no other method exists.</p>
+<pre><code>meth otherwise(M)
+    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+<span class="title">end</span></span>
+</code></pre><p> A class has only one method with <code>otherwise</code>, if this method exists, it accepts any message.</p>
+</li>
+</ol>
+<h2 id="First-class_Attributes">First-class Attributes</h2><p>Attribute names can be calculated at tun time. It is possible to write methods to access and assign any attributes.</p>
+<pre><code>class Inspector
+    meth <span class="built_in">get</span>(A ?X)
+        X=@A
+    <span class="function"><span class="keyword">end</span></span>
+    meth <span class="built_in">set</span>(A X)
+        A:=X
+    <span class="function"><span class="keyword">end</span></span>
+<span class="function"><span class="keyword">end</span></span>
+</code></pre><p>The <code>get</code> method can get any attribute, and the <code>set</code> method can assign any attribute.</p>
+<h2 id="Programming_Techniques">Programming Techniques</h2><p>The class concept we have introduced so far gives a convenient syntax for defining data abstractions with excapsulated state and multiple operations.</p>
+<ul>
+<li>The class statement defines a class value, which can be instantiated to give objects.</li>
+<li>Classes can have external references.</li>
+<li>Classes are cmpositional, they can be nested within classes.</li>
+<li>Classes are compatible with procedure values, they can be nested within procedures and vice versa.</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>The heart of the object concept is controlled access to encapsulated data. The behaviour of an object is specified by a <strong>class</st]]>
+    </summary>
+    
+      <category term="OOP" scheme="http://deltax.me/tags/OOP/"/>
+    
+      <category term="Programming Paradigm" scheme="http://deltax.me/categories/Programming-Paradigm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[快速排序]]></title>
+    <link href="http://deltax.me/2015/03/22/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/"/>
+    <id>http://deltax.me/2015/03/22/快速排序/</id>
+    <published>2015-03-22T05:06:38.000Z</published>
+    <updated>2015-03-22T11:09:55.000Z</updated>
+    <content type="html"><![CDATA[<p><a href="http://zh.wikipedia.org/wiki/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F" target="_blank" rel="external">快速排序</a>使用分治法策略把一个数组分成两个子数组, 并对两个子数组递归排序.</p>
+<p>快速排序的分治过程有三步:</p>
+<ul>
+<li>分解<ul>
+<li>数组 <code>A[p..r]</code> 被分解为两个可能为空的子数组 <code>A[p..q-1]</code> 和 <code>A[q+1..r]</code>, 使 <code>A[p..q-1]</code> 中的所有元素都小于或等于 <code>A[q]</code>, <code>A[q+1..r]</code> 中的所有元素都大于或等于 <code>A[q]</code>.</li>
+</ul>
+</li>
+<li>解决<ul>
+<li>地柜地调用快速排序, 对子数组 <code>A[p..q-1]</code> 和 <code>A[q+1..r]</code> 进行排序.</li>
+</ul>
+</li>
+<li>合并<ul>
+<li>不需要合并操作, 数组 <code>A[p..r]</code> 已经有序.</li>
+</ul>
+</li>
+</ul>
+<h2 id="快速排序的实现">快速排序的实现</h2><pre><code><span class="function"><span class="keyword">void</span> <span class="title">quicksort</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> p, <span class="keyword">int</span> r)</span> </span>{
+    <span class="keyword">if</span> (p &lt; r - <span class="number">1</span>) {
+        <span class="keyword">int</span> q = partition(A, p, r);
+        quicksort(A, p, q - <span class="number">1</span>);
+        quicksort(A, q + <span class="number">1</span>, r);
+    }
+}
+</code></pre><p>为了排序一个数组, 我们需要调用 `quicksort(A, 0, A.length - 1)</p>
+<h2 id="数组的划分(partition)">数组的划分(partition)</h2><p>快速排序最关键的部分就是数组的划分, 也就是过程 <code>partition</code>, 它实现了对数组的重新排序.</p>
+<pre><code><span class="comment">#define EXCHANGE(a, b) tmp = a; a = b; b = tmp;</span>
+
+<span class="keyword">int</span> partition(<span class="keyword">int</span> A[], <span class="keyword">int</span> p, <span class="keyword">int</span> r) {
+    <span class="keyword">int</span> <span class="keyword">x</span> = A[r],
+         i = p - <span class="number">1</span>;
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> j = p; j &lt; r; j++) {
+        <span class="keyword">if</span> (A[j] &lt;= <span class="keyword">x</span>) {
+            i++;
+            EXCHANGE(A[i], A[j]);
+        }
+    }
+    EXCHANGE(A[r], A[i + <span class="number">1</span>]);
+    <span class="keyword">return</span> i + <span class="number">1</span>;
+}
+</code></pre><p>每一轮迭代开始时, 对于任意数组下标 <code>k</code>, 有:</p>
+<ol>
+<li><code>p &lt;= k &lt;= i, A[k] &lt;= x</code></li>
+<li><code>i + 1 &lt;= k &lt;= j - 1, A[k] &gt; x</code></li>
+<li><code>k = r, A[k] = x</code></li>
+</ol>
+<h2 id="性能">性能</h2><p>快速排序的性能依赖于数组是否被平衡的划分, 如果平衡, 那么快速排序的划分是<strong>平衡</strong>的. 那么快速排序的性能与归并排序相同, 否则, 划分是<strong>不平衡</strong>的, 快速排序的性能就接近于插入排序.</p>
+<h3 id="最坏情况下的性能">最坏情况下的性能</h3><p>当快速排序在最坏情况下时, 我们获得一个递归式:</p>
+<blockquote>
+<p>T(n) = T(n-1) + Θ(n)</p>
+</blockquote>
+<p>得到最坏情况下的时间复杂度仍然为 <code>Θ(n^2)</code>, 而插入排序在最坏情况下时间复杂度也为 <code>Θ(n^2)</code>, 而在几乎有序的情况下快速排序的时间复杂度也为 <code>Θ(n^2)</code>, 插入排序则为 <code>Θ(n)</code>.</p>
+<h3 id="最好情况下性能">最好情况下性能</h3><p>在最好的情况下, 每次划分都是平均的, 递归式为:</p>
+<blockquote>
+<p>T(n) = 2T(n/2) + Θ(n)</p>
+</blockquote>
+<p>最好的情况下的时间复杂度为 <code>Θ(nlgn)</code>, 我们得到了一个渐进时间最快的算法.</p>
+<h3 id="平衡的划分">平衡的划分</h3><p>假设划分算法总是产生 9:1 的划分, 那么递归式为:</p>
+<blockquote>
+<p> T(n) = T(n/10) + T(9n/10) + cn</p>
+</blockquote>
+<p>我们在这里求得快速排序的总时间代价依然为 <code>Ο(nlgn)</code>, 由此可以发现, 任何一种<strong>常数</strong>比例的划分都会产生时间复杂度为 <code>Ο(nlgn)</code> 的算法.</p>
+<h3 id="随机版本的快速排序">随机版本的快速排序</h3><p>因为快速排序的时间复杂度取决于数组的划分, 有时, 我们希望引入随机性来改善算法的性能. 在这里我们可以采用一种随机抽样的方式选择数组的主元, 达到随机的目的.</p>
+<pre><code><span class="function"><span class="keyword">int</span> <span class="title">randomized_partition</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> p, <span class="keyword">int</span> r)</span> </span>{
+    <span class="keyword">int</span> i = i = rand() % (r - p) + p;
+    EXCHANGE(A[r], A[i])    ;
+    <span class="function"><span class="keyword">return</span> <span class="title">partition</span><span class="params">(A, p, r)</span></span>;
+}
+
+<span class="function"><span class="keyword">int</span> <span class="title">randomized_quicksort</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> p, <span class="keyword">int</span> r)</span> </span>{
+    <span class="keyword">if</span> (p &lt; r - <span class="number">1</span>) {
+        <span class="keyword">int</span> q = randomized_partition(A, p, r);
+        randomized_quicksort(A, p, q - <span class="number">1</span>);
+        randomized_quicksort(A, q + <span class="number">1</span>, r);
+    }
+}
+</code></pre><p>我们只需要在调用 <code>partition</code> 之前随机选择一个 pivot 然后与 <code>A[r]</code> 交换即可.</p>
+<h3 id="Hoare版本的快速排序">Hoare版本的快速排序</h3><p>我们在之前使用的 <code>partition</code> 并不是快速排序算法最初的版本, 下面给出的是快速排序最初的版本.</p>
+<pre><code><span class="function"><span class="keyword">int</span> <span class="title">hoare_partition</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> p, <span class="keyword">int</span> r)</span> </span>{
+    <span class="keyword">int</span> x = A[p],
+         i = p - <span class="number">1</span>,
+         j = r + <span class="number">1</span>;
+    <span class="keyword">while</span> (<span class="keyword">true</span>) {
+        <span class="keyword">do</span> { j--; } <span class="keyword">while</span> (!(A[i] &lt;= x));
+        <span class="keyword">do</span> { i++; } <span class="keyword">while</span> (!(A[j] &gt;= x));
+        <span class="keyword">if</span> (i &lt; j) {
+            EXCHANGE(A[i], A[j]);
+        } <span class="keyword">else</span> {
+            <span class="keyword">return</span> k;
+        }
+    }
+}
+
+<span class="function"><span class="keyword">int</span> <span class="title">hoare_quicksort</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> p, <span class="keyword">int</span> r)</span> </span>{
+    <span class="keyword">if</span> (p &lt; r - <span class="number">1</span>) {
+        <span class="keyword">int</span> q = hoare_partition(A, p, r);
+        hoare_quicksort(A, p, q - <span class="number">1</span>);
+        hoare_quicksort(A, q + <span class="number">1</span>, r);
+    }
+}
+</code></pre><h3 id="针对相同元素的快速排序">针对相同元素的快速排序</h3><pre><code>typedef struct {
+    <span class="type">int</span> q;
+    <span class="type">int</span> t;
+} pivot_t;
+
+pivot_t partition(<span class="type">int</span> A[], <span class="type">int</span> p, <span class="type">int</span> r) {
+    <span class="type">int</span> x = A[r - <span class="number">1</span>],
+        q = p,
+        t,
+        tmp;
+
+    <span class="keyword">for</span> (<span class="type">int</span> i = p; i &lt; r - <span class="number">1</span>; i++) {
+        <span class="keyword">if</span> (A[i] &lt; x) {
+            <span class="type">EXCHANGE</span>(A[q], A[i]);
+            q++;
+        }
+    }
+
+    <span class="keyword">for</span> (t = q; t &lt; r &amp;&amp; A[t] == x; t++);
+
+    <span class="keyword">for</span> (<span class="type">int</span> i = r - <span class="number">1</span>; i &gt;= t; i--) {
+        <span class="keyword">if</span> (A[i] == x) {
+            <span class="type">EXCHANGE</span>(A[t], A[i]);
+            t++;
+        }
+    }
+
+    pivot_t <span class="literal">result</span> = {q, t};
+    <span class="keyword">return</span> <span class="literal">result</span>;
+}
+</code></pre><p><code>partition</code> 过程在这一版本中, 返回 <code>q</code> 和 <code>t</code>, 使得 </p>
+<ul>
+<li><code>A[p..q-1]</code> 中的每个元素都小于 <code>A[q]</code>.</li>
+<li><code>A[q..t]</code> 中的每个元素都等于 <code>A[q]</code>.</li>
+<li><code>A[t+1..r]</code> 中的每个元素都大于 <code>A[q]</code>.</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><a href="http://zh.wikipedia.org/wiki/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F" target="_blank" rel="external">快速排序</a>使用分治法策略把一个数组分成两个子数组, 并]]>
+    </summary>
+    
+      <category term="算法" scheme="http://deltax.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="算法导论" scheme="http://deltax.me/categories/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA/"/>
+    
+      <category term="算法" scheme="http://deltax.me/categories/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Stateful Collections]]></title>
+    <link href="http://deltax.me/2015/03/20/Stateful-Collections/"/>
+    <id>http://deltax.me/2015/03/20/Stateful-Collections/</id>
+    <published>2015-03-20T15:51:23.000Z</published>
+    <updated>2015-03-21T05:30:36.000Z</updated>
+    <content type="html"><![CDATA[<p>There are different kinds of collection depending on what operations are provided. We discuss in two axises about collections.</p>
+<ol>
+<li>Indexed collections and unindexed collections, depending on whether or not thereis rapid access to individual elements.</li>
+<li>Extensible or inextensible collections, depending on whether the number of elements is variable or fixed.</li>
+</ol>
+<h2 id="Indexed_Collections">Indexed Collections</h2><p>The stateful versions of <strong>tuples</strong> and <strong>records</strong> are <strong>arrays</strong> and <strong>dictionaries</strong>. And now, we have four different kinds of indexed collections.</p>
+<p><img src="http://deltax.qiniudn.com/Stateful%20Collections1.png?attname=&amp;e=1426994526&amp;token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:UnC-uFe4--jbxOxg76kR83rvZB4" alt="Indexes Collections"></p>
+<h3 id="Arrays">Arrays</h3><p>An array is a mapping from integers to partial values. </p>
+<ul>
+<li>The domain is a set of consecutive integers from lower bound to an upper bound.</li>
+<li>The domain is givenwhen the array is declared and cannot be changed afterward.</li>
+<li>The range of the mapping can be changed.</li>
+<li>Both accessing and changing an array element are done in constant time.</li>
+</ul>
+<p>There is a strong relationship between tuples and arrays, each of them are mapping from integers to partial values. <strong>But tuples are stateless and arrays are stateful.</strong> And the content of arrays can be changed but tuples can not.</p>
+<h3 id="Dictionaries">Dictionaries</h3><p>A dictionary is a mapping from simple constants to partial values. </p>
+<ul>
+<li>Both the domain and the range of the range of mapping can be changes.</li>
+<li>Accessing and changing are done in constant time and adding/removal are done in amortized constant time.</li>
+<li>There are no limits to the number of fields in the mapping.</li>
+</ul>
+<p>There is a close relationship between records and dictionaries. Each of them maps simple contants to partial values. <strong>But records and stateless and dictionaries and stateful.</strong> A records has a fixed set of field but dictionary not.</p>
+<h3 id="Choosing_Indexed_Collections">Choosing Indexed Collections</h3><p>The different has different trade-offs in possible operations, memory use, and execution time.</p>
+<p>Let us compare the four collections mention above:</p>
+<ul>
+<li>Tuples<ul>
+<li>Most restrictive</li>
+<li>Fastest</li>
+<li>Require less memory</li>
+<li>Stored consecutively</li>
+<li>Indexed by number</li>
+</ul>
+</li>
+<li>Records<ul>
+<li>More flexible then tuples</li>
+<li>Indecies can te literal</li>
+<li>Efficient</li>
+<li>Stored consecutively</li>
+</ul>
+</li>
+<li>Arrays<ul>
+<li>Field can be changed</li>
+<li>Bounds can not be changes</li>
+<li>Stored consecutively</li>
+<li>Efficient</li>
+<li>Indexed by number</li>
+</ul>
+</li>
+<li>Dictionaries<ul>
+<li>Most general</li>
+<li>Indecies can te literal</li>
+<li>Created empty</li>
+<li>Efficient</li>
+<li>More memory and alower access (by a constant factor)</li>
+</ul>
+</li>
+</ul>
+<p>We can choose the proper collection type when we use.</p>
+<h2 id="Unindexed_Collections">Unindexed Collections</h2><p>Indexed collection are not always the best choice. Sometimes it is better to use unindexed collections, such as lists and streams.</p>
+<p>Both of them are declrative data types that collect elements in a linear sqeuence can be traversed from front to back. Any number of traversals can beb done simulataneously on the same list or stream.</p>
+<h3 id="Lists">Lists</h3><p>Lists are of finite, fixed length. They are one of the most important data struture in functional programming language. It is really an elegant data struture. And we use <code>map</code> <code>filter</code> <code>fold</code> and many powerful operation to deal with it.</p>
+<h3 id="Streams">Streams</h3><p>Streams are also called incomplete lists or partial lists. Their tail are unbound variables. </p>
+<ul>
+<li>Stream is one of the most efficient extensible collections.</li>
+<li>Stream is useful for representing orered sequences of message.</li>
+</ul>
+<h2 id="Extensible_Collections">Extensible Collections</h2><p>Final, I will introduce some extensible collections, streams, dictionaries and extensible arrays.</p>
+<h3 id="Extensible_Arrays">Extensible Arrays</h3><p>As we mentioned above, array is a bounded data structure. How do extensible array work? </p>
+<ul>
+<li>When the array is full, we create a new array with double size of the older one. And copy all the elements from old one to new one. </li>
+<li>When the array is quarter full, we create a new array with half size of the older one. And copy the elements.</li>
+</ul>
+<p>This data structure take constant time to the cost of resize operation. The most important thing is to ensure that the index must always remain in bound.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>There are different kinds of collection depending on what operations are provided. We discuss in two axises about collections.</p>
+<ol>
+<]]>
+    </summary>
+    
+      <category term="FP" scheme="http://deltax.me/tags/FP/"/>
+    
+      <category term="FP" scheme="http://deltax.me/categories/FP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Incredible Functional Programming]]></title>
+    <link href="http://deltax.me/2015/03/20/Incredible%20Functional%20Programming/"/>
+    <id>http://deltax.me/2015/03/20/Incredible Functional Programming/</id>
+    <published>2015-03-19T16:40:16.000Z</published>
+    <updated>2015-03-20T12:22:40.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Experience">Experience</h2><p>这一次我为大家分享的主题是, <code>Incredible Functional Programming</code>. 分享的主要的内容是<strong>函数式编程</strong>的一些非常基础的东西, 这与我们平时所使用的<strong>面向对象编程</strong>这种编程范式有着极大的不同. 也希望能给今天的各位带来一些收获或者启发, 而我也能为 <code>Function Programming</code> 的传播与壮大做出自己的一份贡献.</p>
+<h3 id="Encounter_Functinol_Programming">Encounter Functinol Programming</h3><p>首先呢, 我想说一下我是如何接触到函数式编程这一编程范式的, 在大一下学期的时候, 有几位 Thoughtworks 的工程师, 来为我们讲解如何使用 Rails 建站. 我个人对这几位工程师也是非常的尊敬的, 在一次偶然的交流中, 他多次提出 Functional Programming 这一编程范式, 当时我对它的第一感觉是很好奇, 而且哪位工程师说过一句话, 我只能记住大概的意思:</p>
+<blockquote>
+<p>OOP 现在也被很多人批评, 未来一定是 FP 的天下.</p>
+</blockquote>
+<p>这对于当时只用 Ojective-C 的我来说是不可想象的, 也极大地激起了我的兴趣, 不过, 这件事情虽然没有让我直接转投 FP 的怀抱但是, 我也对 FP 有了很深的印象, 我想: 我就是那时被传教的吧, 也让我之后陷入了这个大坑中.</p>
+<p>在之后的学习中, 我学习了<br><a href="http://www.amazon.cn/%E9%BB%91%E5%AE%A2%E4%B8%8E%E7%94%BB%E5%AE%B6-%E7%A1%85%E8%B0%B7%E5%88%9B%E4%B8%9A%E4%B9%8B%E7%88%B6Paul-Graham%E6%96%87%E9%9B%86-Paul-Graham/dp/B004WHZGZQ/ref=sr_1_4?ie=UTF8&amp;qid=1426784128&amp;sr=8-4&amp;keywords=%E9%BB%91%E5%AE%A2" target="_blank" rel="external">黑客与画家</a><br>这本书, 书中提到了对 <a href="http://zh.wikipedia.org/wiki/LISP" target="_blank" rel="external">Lisp</a> (Lisp 是第一个函数式编程语言, 其名称源自列表处理器（英语：List Processor）的缩写) 的推崇, 以及他们使用 Lisp 进行开发的效率是当时其他公司的几十倍, 这对于当时使用 OOP 的我是一种巨大的震撼.</p>
+<p>EXTREMLY INCREDIBLE!</p>
+<h3 id="Learn_Functional_Programming">Learn Functional Programming</h3><p>随着我对 Lisp 的了解, 我也开始学习 Lisp 的方言, 也就是 Scheme. 当时看的书呢, 也是倍受推崇的 SICP(计算机程序的构造和解释), 这也是到目前为止对我影响最大的书, 第一次颠覆了我对编程这项活动的认识, 而我也感觉到了 Lisp 的神奇, 而我们 Programmer 实际上就是魔术师. 我们使用代码当做我们的咒语, 控制着计算机做出各种神奇的事情. </p>
+<p>而在学习 Lisp 之后, 我有参加了 Coursera 中的一门公开课, Programming Language, 在这门课中, 我学习了 <a href="http://zh.wikipedia.org/wiki/ML%E8%AF%AD%E8%A8%80" target="_blank" rel="external">Standerd ML</a>, 而且学习了各种各样的编程范式和编程语言 Ruby SML Racket, 以及它们的区别和联系, 而且写了人生中第二个解释器. 这门课也是我在 Coursera 唯一一门从头追到尾并且完成的课程. 感觉跟下来收获还是非常大的.</p>
+<p>之后在几个月前, 我又开始学习了 <a href="http://zh.wikipedia.org/wiki/Haskell" target="_blank" rel="external">Haskell</a>, 了解了 Haskell 这门语言的抽象能力是多么的强大, 多么的难学, 概念多么的难以理解, 不过我还是选择学习 Haskell 这门编程语言, 而我学习的最大理由就是他太好玩了, 在 Learn you a Haskell for Great Good 这本书中的前言写到:</p>
+<blockquote>
+<p>Haskell 很有趣, 这就够了.</p>
+</blockquote>
+<p>然后就是在 <a href="https://www.hackerrank.com/domains/fp" target="_blank" rel="external">HackerRank</a> 上隔三差五刷两道题解解闷, 顺便陶冶一下情操. 后来我有接触到了 <a href="http://zh.wikipedia.org/wiki/Scala" target="_blank" rel="external">Scala</a>, 不过看着那个丑陋的 IDE 和字体我果断放弃了. 目前就是闲来无事刷刷题, 看看博客, 读读论文. 这基本上就是我到目前为止学习函数式编程的全部经历了.</p>
+<hr>
+<h2 id="Why_Functional_Programming">Why Functional Programming</h2><p>函数式编程有哪些好处, 我们为什么要学习函数式编程呢.</p>
+<ul>
+<li>首先, 它很有趣, 这也是我学习函数式编程的原因</li>
+<li>其次, 函数在函数式编程中作为一等公民, 提供了强大的抽象能力.  <code>map</code> <code>fold</code> <code>filter</code> 等等操作处理数据非常的优雅. 传统的编程语言都在想方设法集成这些特性.</li>
+<li>由于函数式编程中的数据不可改变, 线程竞争在函数式编程是不可能的事情, 这也就能够大大地提高并发编程的处理速度. </li>
+<li>同时, 在纯函数式编程语言中, 函数没有任何副作用. 因为函数的返回结果只与输入结果有关, 所以它的稳定性是面向对象编程所不能比的. 因为所有的函数, 都不会依赖于外部的状态, 只取决于输入的参数.</li>
+</ul>
+<p>随着人们对函数式编程的认识越来越高, 许多公司也开始重视函数式编程在高并发以及稳定性方面的强大能力. </p>
+<hr>
+<h2 id="Introduction">Introduction</h2><p>接下来, 我介绍一下函数式编程的一些特点和如何学习(入)习(坑), 入坑前请深思熟虑, 我是否能为一个我很少用到的东西投入大量的时间, 换来一些对于个人可以接受的结果.</p>
+<p>而对于使用哪一种语言来对函数式编程进行介绍, 我选择了非常简单的 <a href="http://zh.wikipedia.org/wiki/Scheme" target="_blank" rel="external">Scheme</a> 来为各位演示函数式编程, 与我们平时使用的命令式编程有什么区别.</p>
+<h3 id="Lambda_Calculus">Lambda Calculus</h3><p>我们在讨论 Scheme 之前, 首先要了解什么是 <a href="http://zh.wikipedia.org/wiki/%CE%9B%E6%BC%94%E7%AE%97" target="_blank" rel="external">lambda演算</a></p>
+<blockquote>
+<p>λ演算（英语: lambda calculus，λ-calculus）是一套用于研究函数定义、函数应用和递归的形式系统. Lambda 演算可以被称为最小的通用程序设计语言. 它包括一条变换规则（变量替换）和一条函数定义方式, Lambda 演算之通用在于, 任何一个可计算函数都能用这种形式来表达和求值. 因而, 它是等价于图灵机的. 尽管如此, Lambda演算强调的是变换规则的运用,  而非实现它们的具体机器. 可以认为这是一种更接近软件而非硬件的方式.</p>
+</blockquote>
+<p>我们在接下来的讨论中会提高 lambda 在 Scheme 中如何使用, 所以在这里就先不再多说了.</p>
+<h3 id="Church_Number">Church Number</h3><p><a href="http://zh.wikipedia.org/wiki/%E9%82%B1%E5%A5%87%E6%95%B0" target="_blank" rel="external">邱奇数</a> 是把数据和运算符嵌入到 lambda 演算内的一种方式, 它是使用 lambda 符号的自然数表示法.</p>
+<pre><code><span class="list">(<span class="keyword"><span class="built_in">define</span></span> zero <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">f</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">x</span>)</span> x)</span>)</span>)</span>
+<span class="list">(<span class="keyword"><span class="built_in">define</span></span> one <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">f</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">x</span>)</span> <span class="list">(<span class="keyword">f</span> x)</span>)</span>)</span>)</span>
+<span class="list">(<span class="keyword"><span class="built_in">define</span></span> two <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">f</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">x</span>)</span> <span class="list">(<span class="keyword">f</span> <span class="list">(<span class="keyword">f</span> x)</span>)</span>)</span>)</span>)</span>
+<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">plus</span> n m)</span>
+  <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">f</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">x</span>)</span> <span class="list">(<span class="list">(<span class="keyword">m</span> f)</span> <span class="list">(<span class="list">(<span class="keyword">n</span> f)</span> x)</span>)</span>)</span>)</span>)</span>
+
+<span class="list">(<span class="keyword"><span class="built_in">define</span></span> true <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">x</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">y</span>)</span> x)</span>)</span>)</span>
+<span class="list">(<span class="keyword"><span class="built_in">define</span></span> false <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">x</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">y</span>)</span> y)</span>)</span>)</span>
+</code></pre><p>我在这里只为各位简单的展示一下如何使用 lambda 来表示一些数据类型.</p>
+<h3 id="Intrduction_to_Scheme">Intrduction to Scheme</h3><p>Scheme 是一种函数式语言, 是 Lisp 的两种主要的方言之一, 它的设计极其的简单, 一个小型语言核心作为标准, 加上各种强力的语法糖扩展语言本身. Scheme的哲学是: 设计计算机语言不应该进行功能的堆砌, 而应该尽可能减少弱点和限制, 使剩下的功能显得必要. Scheme 是第一个使用静态作用域的 Lisp 方言, 也是第一个引入”干净宏”和第一类续延的编程语言.</p>
+<h4 id="Warm_Up">Warm Up</h4><p>我现在介绍一下在 Scheme 中最简单的一些表达式</p>
+<pre><code>(+ <span class="number">2</span> <span class="number">5</span>) =&gt; <span class="number">7</span>
+(* <span class="number">3</span> <span class="number">5</span> (+ <span class="number">2</span> <span class="number">4</span>)) =&gt; <span class="number">90</span>
+</code></pre><p>我们可以看到, 在 Scheme 中所有的表达式都是被采用前序(prefix)表示法, 并且<strong>括号</strong>以及空白作为分隔符.</p>
+<pre><code><span class="comment">(define a 1)</span>
+<span class="comment">(define b 2)</span>
+<span class="comment">(define (double x)</span> <span class="comment">(+ x x)</span>)
+<span class="comment">(if (= (double a)</span> <span class="number">2</span>)
+    <span class="comment">((lambda (x)</span> <span class="comment">(+ x b)</span>) <span class="number">2</span>)
+    <span class="number">0</span>)
+
+=&gt; <span class="number">4</span>
+</code></pre><ul>
+<li><code>define</code> 不仅可以定义一个变量 <code>(define  a 1)</code>, 也可以定义一个函数 <code>(define (double x) (+ x x))</code>.<ul>
+<li><code>(define &lt;identifier&gt; &lt;expression&gt;)</code></li>
+</ul>
+</li>
+<li><code>if</code> 语句的语法如下<ul>
+<li><code>(if &lt;predicate-clause&gt; &lt;true-clause&gt; &lt;false-clause&gt;)</code></li>
+</ul>
+</li>
+<li><code>lambda</code> 其实可以看作一个匿名函数, 在这里它接收一个参数 <code>x</code> 返回一个单参数的函数, 然后把 <code>2</code> 作为这个函数的参数返回 <code>(+ 2 b) =&gt; 4</code>.<ul>
+<li><code>(lambda (parameters) expression)</code></li>
+</ul>
+</li>
+</ul>
+<p>而到目前为止, 我们已经掌握了这次分享与 Scheme 有关的全部语法了.</p>
+<h4 id="Newton’s_Method">Newton’s Method</h4><p>不论你学习哪一种函数式编程语言, <strong>牛顿法</strong> (Newton’s method)求平方跟都是一个你基本扰不过的问题, 因为我在很多函数式编程语言的书或者课程中, 都发现了他的身影, 包括 Scala Haskell Scheme …</p>
+<p>牛顿法怎么求某个 <code>x</code> 的平方根呢.</p>
+<ol>
+<li>做出一个猜测 <code>guess</code>.</li>
+<li>求出 <code>guess</code> 的平方, 然后与 <code>x</code> 比较, 如果差值在可以容忍的范围之内, 那么 <code>guess</code> 就是我们要求的近似的平方根, 如果不满足, 则继续步骤 3.</li>
+<li>求出 <code>x/guess</code> 的值, 并与 <code>guess</code> 求平均数, 提高 <code>guess</code> 的准确性, 返回步骤 2.</li>
+</ol>
+<p>代码如下:</p>
+<pre><code><span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword"><span class="built_in">sqrt</span></span> x)</span>
+  <span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">good-enough?</span> guess)</span>
+    <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> <span class="list">(<span class="keyword"><span class="built_in">abs</span></span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> <span class="list">(<span class="keyword">square</span> guess)</span> x)</span>)</span> tolerance)</span>)</span>
+  <span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">improve</span> guess)</span>
+    <span class="list">(<span class="keyword">average</span> guess <span class="list">(<span class="keyword"><span class="built_in">/</span></span> x guess)</span>)</span>)</span>
+  <span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">sqrt-iter</span> guess)</span>
+    <span class="list">(<span class="keyword"><span class="built_in">if</span></span> <span class="list">(<span class="keyword">good-enough?</span> guess)</span>
+        guess
+        <span class="list">(<span class="keyword">sqrt-iter</span> <span class="list">(<span class="keyword">improve</span> guess)</span>)</span>)</span>)</span>
+  <span class="list">(<span class="keyword"><span class="built_in">define</span></span> tolerance <span class="number">0.001</span>)</span>
+  <span class="list">(<span class="keyword">sqrt-iter</span> <span class="number">1.0</span>)</span>)</span>
+</code></pre><p>这段代码使用了非常神奇的方式, 迭代地解决了如何使求平方根的问题, 我觉得在此处用作例子也再好不过, 我们整理一下这段代码, 让你们感觉到函数式编程的神奇和它带给我们的强大的表达能力.</p>
+<h3 id="Introduction_to_Haskell">Introduction to Haskell</h3><p>接下来我们将使用 Haskell 继续对函数式编程进行介绍. 我们接下来将介绍一下几个概念:</p>
+<ul>
+<li>列表(和列表推导式)</li>
+<li>模式匹配</li>
+<li>柯里化</li>
+</ul>
+<p>这三个重要的概念都是在函数编程中极其常用的, 如果你选择了函数式编程, 那么几乎每时每刻都在与这三者打交道.</p>
+<h4 id="Warm_Up-1">Warm Up</h4><p>我们先来写几个非常简单的 Haskell 函数来热一热身, 我们先把之前 使用 Scheme 求平方根的代码, 转换为 Haskell 编译器能够理解的 Haskell 代码.</p>
+<pre><code>sqrt :: (Ord s, Floating s) =&gt; s -&gt; s
+sqrt <span class="variable">x =</span> sqrtIter <span class="number">1.0</span>
+  where <span class="variable">tolerance =</span> <span class="number">0.0001</span>
+        goodEnough <span class="variable">guess =</span> abs ((guess ** <span class="number">2</span>) - x) &lt; tolerance
+        improve <span class="variable">guess =</span> (guess + x / guess) / <span class="number">2</span>
+        sqrtIter <span class="variable">guess =</span> <span class="keyword">if</span> goodEnough guess
+                         <span class="keyword">then</span> guess
+                         <span class="keyword">else</span> sqrtIter $ improve guess
+</code></pre><p>在 Haskell 中为函数加上类型声明是非常好的习惯, 这里的类型声明暂时不需要大家理解.</p>
+<pre><code><span class="keyword">double</span> :: <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span>
+<span class="keyword">double</span> x = x * <span class="number">2</span>
+
+square :: <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span>
+square x = x * x
+</code></pre><p>这里我们可以看到两个函数的类型声明都是 <code>Int -&gt; Int</code> 就是接收一个 <code>Int</code> 类型的值, 返回一个 <code>Int</code> 类型的值.</p>
+<h4 id="List_and_List_Comprehension">List and List Comprehension</h4><p>在Haskell中, List 非常的重要. 它是最常用的数据结构，并且十分强大，灵活地使用它可以解决很多问题. 它是一种单类型的数据结构, 可以用来存储多个类型相同的元素. 我们可以在里面装一组数字或者一组字符, 但不能把字符和数字装在一起, 而且 List 是可以嵌套的.</p>
+<pre><code>ghci&gt; let numbers = [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>]
+ghci&gt; numbers
+[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>]
+
+ghci&gt; let nestedNumbers = <span class="string">[[1,2,3,4],[5,3,3,3],[1,2,2,3,4],[1,2,3]]</span>   
+ghci&gt; nestedNumbers
+<span class="string">[[1,2,3,4],[5,3,3,3],[1,2,2,3,4],[1,2,3]]</span>   
+
+ghci&gt; <span class="number">3</span>:[head numbers] ++ [head $ tail numbers]
+[<span class="number">4</span>,<span class="number">5</span>]
+</code></pre><ul>
+<li>我们使用 head tail ++ : 几种对列表进行简单的处理.<ul>
+<li>head 取出列表中第一个元素</li>
+<li>tail 取出列表去掉第一个元素后剩下的列表</li>
+<li>++ 连接两个列表</li>
+<li>: 在列表前添加一个元素</li>
+</ul>
+</li>
+</ul>
+<p>至于一些其他的方法, 在这里也不做过多的介绍, 比如说 <code>length</code> <code>reverse</code> <code>take</code> … 他们都是非常重要的操作.</p>
+<p>如果你现在还记得对集合的 Comprehension 那么, 你对 Haskell 的 List Comprehension 理解也会十分的轻松.</p>
+<pre><code><span class="title">ghci</span>&gt; [x*<span class="number">2</span> | x &lt;- [<span class="number">1.</span><span class="number">.10</span>]]   
+[<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">10</span>,<span class="number">12</span>,<span class="number">14</span>,<span class="number">16</span>,<span class="number">18</span>,<span class="number">20</span>]
+
+<span class="title">ghci</span>&gt; [x*<span class="number">2</span> | x &lt;- [<span class="number">1.</span><span class="number">.10</span>], x*<span class="number">2</span> &gt;= <span class="number">12</span>]   
+[<span class="number">12</span>,<span class="number">14</span>,<span class="number">16</span>,<span class="number">18</span>,<span class="number">20</span>] 
+
+<span class="title">ghci</span>&gt; [ x | x &lt;- [<span class="number">50.</span><span class="number">.100</span>], x `mod` <span class="number">7</span> == <span class="number">3</span>]   
+[<span class="number">52</span>,<span class="number">59</span>,<span class="number">66</span>,<span class="number">73</span>,<span class="number">80</span>,<span class="number">87</span>,<span class="number">94</span>]
+
+<span class="title">ghci</span>&gt; [ x*y | x &lt;- [<span class="number">2</span>,<span class="number">5</span>,<span class="number">10</span>], y &lt;- [<span class="number">8</span>,<span class="number">10</span>,<span class="number">11</span>]]   
+[<span class="number">16</span>,<span class="number">20</span>,<span class="number">22</span>,<span class="number">40</span>,<span class="number">50</span>,<span class="number">55</span>,<span class="number">80</span>,<span class="number">100</span>,<span class="number">110</span>]
+</code></pre><p>这里也没啥好说的, 太简单了.</p>
+<p>我们使用列表推倒来实现 quicksort.</p>
+<pre><code>quicksort :: [Int] -&gt; [Int]
+quicksort [] = []
+quicksort (x:xs) = quicksort <span class="keyword">ls</span> ++ [x] ++ quicksort <span class="keyword">bs</span>
+  where <span class="keyword">ls</span> = [<span class="keyword">l</span> | <span class="keyword">l</span> &lt;- xs, <span class="keyword">l</span> &lt;= x]
+        <span class="keyword">bs</span> = [b | b &lt;- xs, b &gt; x]
+</code></pre><h4 id="Pattern_Matching">Pattern Matching</h4><p>模式匹配通过检查数据的特定结构来检查其是否匹配, 并按模式从中取得数据. 举一个例子大家就能非常轻松地理解模式匹配.</p>
+<pre><code><span class="label">factorial ::</span> (Integral <span class="literal">a</span>) =&gt; <span class="literal">a</span> -&gt; <span class="literal">a</span>   
+factorial <span class="number">0</span> = <span class="number">1</span>   
+factorial n = n * factorial (n - <span class="number">1</span>)  
+</code></pre><p><code>factorial</code> 是一个递归的函数, <code>factorial</code> 接收一个参数, 当这个参数为 0 的时候, 会匹配到第一种情况直接返回 1, 否则就会匹配到第二种情况, 递归地求解 <code>factorial</code>, 直到参数为 0, 返回结果.</p>
+<p>这个函数可以等价为</p>
+<pre><code><span class="label">factorial ::</span> (Integral <span class="literal">a</span>) =&gt; <span class="literal">a</span> -&gt; <span class="literal">a</span>
+factorial n = <span class="keyword">if</span> n == <span class="number">0</span> then <span class="number">1</span> <span class="keyword">else</span> n * factorial (n - <span class="number">1</span>)
+</code></pre><p>不过使用模式匹配的写法对于使用函数式编程的人来说更加具有可读性, 而经过长时间的使用, 相信各位一定会习惯模式匹配的写法.</p>
+<p>有很多命令式语言都提供 <code>case</code> 表达式, 就是取一个变量, 按照对变量的判断选择对应的代码块, 而模式匹配实际上就是 <code>case</code> 表达式的语法糖.</p>
+<pre><code><span class="keyword">case</span> expression <span class="keyword">of</span> pattern -&gt; <span class="literal">result</span>   
+                   pattern -&gt; <span class="literal">result</span>   
+                   pattern -&gt; <span class="literal">result</span> 
+</code></pre><p>我们将阶乘函数转化为 <code>case</code> 形式:</p>
+<pre><code>factorial :: (<span class="type">Integral</span> a) =&gt; a -&gt; a   
+factorial n = <span class="keyword">case</span> n <span class="keyword">of</span> <span class="number">0</span> -&gt; <span class="number">1</span>
+                                 n -&gt; n * factorial (n-<span class="number">1</span>)
+</code></pre><p>好了, 我们已经对模式匹配有了了解, 接下来我们该介绍函数式编程下一个非常有趣的话题.</p>
+<h4 id="Currying">Currying</h4><p><a href="http://zh.wikipedia.org/wiki/%E6%9F%AF%E9%87%8C%E5%8C%96" target="_blank" rel="external">柯里化</a> 是把接收多个参数的函数变换成接收一个单一参数的函数.</p>
+<p>比如我们定义一个函数 <code>add</code>:</p>
+<pre><code><span class="keyword">add</span> :: <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span>
+</code></pre><p>在之前的理解中, <code>add</code> 是一个接收两个 <code>Int</code> 类型参数的并返回一个 <code>Int</code> 的函数.</p>
+<pre><code><span class="keyword">add</span> <span class="built_in">x</span> <span class="built_in">y</span> = <span class="built_in">x</span> + <span class="built_in">y</span>
+</code></pre><p>我们直接将两个参数传入这个函数 <code>add 3 4</code> 就会返回 <code>5</code>.</p>
+<p>但是, 现在我们能不能只给他传一个参数呢, 我么来尝试一下:</p>
+<pre><code>ghci&gt;<span class="instruction"> add </span>3
+
+&lt;interactive&gt;:9:1:
+    No<span class="instruction"> instance </span>for<span class="function"> (</span>Show<span class="function"> (</span>a0 -&gt; a0<span class="function">)</span><span class="function">)</span> arising from a use of ‘print’
+    In a stmt of an interactive GHCi command: print it
+</code></pre><p>我们直接在 ghci 中输入 <code>add 3</code> 然后, 编译器报错了, 错误的内容是不能正确的显示这个结果, 说明编译器不理解如何 <code>print</code> 这个结果, 我们换一种方式查看一下类型:</p>
+<pre><code>ghci&gt; :t <span class="keyword">add</span> <span class="number">3</span>
+<span class="keyword">add</span> <span class="number">3</span> :: <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span>
+</code></pre><p>发现这个 <code>add 3</code> 的类型竟然是 <code>Int -&gt; Int</code> 这说明, <code>add</code> 函数接受了一个 <code>Int</code> 返回了一个 <code>Int -&gt; Int</code> 的函数.</p>
+<p>我们接下来为这个函数起一个名字</p>
+<pre><code>ghci&gt; let addThree = <span class="keyword">add</span> <span class="number">3</span>
+ghci&gt; :t <span class="keyword">add</span>
+<span class="keyword">add</span>       addThree
+ghci&gt; :t addThree
+addThree :: <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span>
+</code></pre><p>然后尝试调用这个函数</p>
+<pre><code>ghci&gt; addThree 4
+7
+</code></pre><p>发现这个函数的返回值竟然也是 <code>7</code> 这是为什么呢?</p>
+<p>因为在函数式语言的实现中, 函数的定义会被转换为如下的形式:</p>
+<pre><code>add :: Int<span class="function"> -&gt;</span> Int<span class="function"> -&gt;</span> Int
+add = <span class="string">\x</span> <span class="function">-&gt;</span> (<span class="string">\y</span> <span class="function">-&gt;</span> x + y)
+</code></pre><p>它可以每次只接受一个参数, 然后返回一个函数或者值. 这就是函数为什么可以柯里化的原因.</p>
+<p>柯里化又可以做些什么呢, 我们在介绍一个非常重要的函数 <code>map</code>, <code>map</code> 翻译过来就是映射, 他把一个函数映射到一个列表中, 我们简单的举个例子.</p>
+<pre><code><span class="tag">ghci</span>&gt; <span class="tag">map</span> (\<span class="tag">x</span> <span class="tag">-</span>&gt; <span class="tag">x</span> * <span class="tag">x</span>) <span class="attr_selector">[1,2,3,4,5]</span>
+<span class="attr_selector">[1,4,9,16,25]</span>    
+</code></pre><p>它把一个匿名函数依次映射到列表 <code>[1,2,3,4,5]</code> 中, 最后将这些结果连接成一个列表.</p>
+<p><code>map</code> 为我们提供了一个高阶的抽象, 它以一个函数和列表作为参数, 返回一个列表.</p>
+<pre><code>map :: <span class="function"><span class="params">(a -&gt; b)</span> -&gt;</span> [a]<span class="function"> -&gt;</span> [b]
+</code></pre><p>我们接下来就可以使用 <code>map</code> 和柯里化构建大量的函数, 减少我们的工作量</p>
+<pre><code>square :: <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span>
+square = \x -&gt; x * x
+
+<span class="keyword">double</span> :: <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span>
+<span class="keyword">double</span> = (+<span class="number">2</span>)
+
+squareList :: [<span class="keyword">Int</span>] -&gt; [<span class="keyword">Int</span>]
+squareList = map square
+
+doubleList :: [<span class="keyword">Int</span>] -&gt; [<span class="keyword">Int</span>]
+doubleList = map <span class="keyword">double</span>
+</code></pre><p>而接下来我们就可以直接使用 <code>squareList</code> 和 <code>doubleList</code> 完成对列表的操作.</p>
+<hr>
+<h2 id="Application">Application</h2><p>目前应用到生产环境还是比较少, 不过已经有一些公司, 使用 scala, Erlang 等等语言做一些后端方面的开发. 我对这些语言的了解还是比较少的.</p>
+<p>Lisp 也被用来开发 Emacs 和一些人工智能的领域, 具体戳这里<a href="http://en.wikipedia.org/wiki/Common_Lisp#Applications" target="_blank" rel="external">http://en.wikipedia.org/wiki/Common_Lisp#Applications</a>.</p>
+<p>当你理解了函数式编程的一些思想, 你会发现原来以前所学过的很多东西都是函数式编程的缩影, 而对于 iOS 开发, 目前是十分流行的框架 <code>ReactiveCocoa</code> 就是由函数式编程的思想开发的.</p>
+<hr>
+<h2 id="Final">Final</h2><p>最后的最后, 我为大家推荐一些函数式编程的学习资料.</p>
+<p>Scheme:</p>
+<ul>
+<li><a href="http://www.amazon.cn/The-Little-Schemer-Friedman-Daniel-P/dp/0262560992/ref=sr_1_1?ie=UTF8&amp;qid=1426822097&amp;sr=8-1&amp;keywords=the+little+schemer" target="_blank" rel="external">The Litter Schemer</a></li>
+<li><a href="http://www.amazon.cn/Structure-and-Interpretation-of-Computer-Programs-Abelson-Harold/dp/0262510871/ref=sr_1_2?ie=UTF8&amp;qid=1426822081&amp;sr=8-2&amp;keywords=Structure+and+Interpretation+of+Computer+Program" target="_blank" rel="external">Structure and Interpretation of Computer Program</a></li>
+<li><a href="http://mitpress.mit.edu/sicp/" target="_blank" rel="external">http://mitpress.mit.edu/sicp/</a></li>
+</ul>
+<p>Haskell:</p>
+<ul>
+<li><a href="http://learnyouahaskell.com/" target="_blank" rel="external">Learn you a haskell for great good</a></li>
+<li><a href="http://book.realworldhaskell.org/read/" target="_blank" rel="external">Real World Haskell</a></li>
+</ul>
+<p>终于结束了…真累.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Experience">Experience</h2><p>这一次我为大家分享的主题是, <code>Incredible Functional Programming</code>. 分享的主要的内容是<strong>函数式编程</strong>的一些非常基础的]]>
+    </summary>
+    
+      <category term="FP" scheme="http://deltax.me/tags/FP/"/>
+    
+      <category term="Scheme" scheme="http://deltax.me/tags/Scheme/"/>
+    
+      <category term="FP" scheme="http://deltax.me/categories/FP/"/>
+    
+      <category term="Scheme" scheme="http://deltax.me/categories/FP/Scheme/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[堆排序]]></title>
+    <link href="http://deltax.me/2015/03/19/%E5%A0%86%E6%8E%92%E5%BA%8F/"/>
+    <id>http://deltax.me/2015/03/19/堆排序/</id>
+    <published>2015-03-19T07:06:47.000Z</published>
+    <updated>2015-03-19T11:23:05.000Z</updated>
+    <content type="html"><![CDATA[<p>一种时间复杂度为 <code>Ο(nlgn)</code> 的排序算法.</p>
+<h2 id="堆">堆</h2><p><code>二叉堆</code> 是一个数组, 它可以被看成一个近似的完全二叉树, 除了最底层外, 该树是完全充满的, 而且是从左向右填充.</p>
+<pre><code><span class="function"><span class="keyword">int</span> <span class="title">parent</span><span class="params">(<span class="keyword">int</span> i)</span> </span>{
+    <span class="keyword">return</span> i / <span class="number">2</span>;
+}
+
+<span class="function"><span class="keyword">int</span> <span class="title">left</span><span class="params">(<span class="keyword">int</span> i)</span> </span>{
+    <span class="keyword">return</span> <span class="number">2</span> * i;
+}
+
+<span class="function"><span class="keyword">int</span> <span class="title">right</span><span class="params">(<span class="keyword">int</span> i)</span> </span>{
+    <span class="keyword">return</span> <span class="number">2</span> * i + <span class="number">1</span>;
+}
+</code></pre><p>二叉堆分两种形式: 最大堆和最小堆. 在这两种堆中, 结点的值都要满足堆的性质.</p>
+<ul>
+<li>在最大堆中 <code>(max-heap)</code> 中, 除了根以外的所有节点 <code>i</code> 都满足:<ul>
+<li><code>A[PARENT.(i)] ≧ A[i]</code></li>
+</ul>
+</li>
+<li>在最小堆 <code>(min-heap)</code> 中, 除了根以外的所有节点 <code>i</code> 都满足:<ul>
+<li><code>A[PARENT.(i)] ≦ A[i]</code></li>
+</ul>
+</li>
+</ul>
+<p>一般情况下, 我们在堆排序算法中使用<strong>最大堆</strong>, 在构造优先队列中使用<strong>最小堆</strong></p>
+<hr>
+<h2 id="维护堆的性质">维护堆的性质</h2><p><code>max_heapify</code> 是用于维护最大堆性质的重要过程.</p>
+<pre><code>void max_heapify(heap_t *heap, <span class="built_in">int</span> i) {
+    <span class="built_in">int</span> largest;
+    <span class="built_in">int</span> l = left(i);
+    <span class="built_in">int</span> r = right(i);
+
+    <span class="keyword">if</span> (l &lt;= <span class="type">A</span>-&gt;heap_size &amp;&amp; heap-&gt;elements[l] &gt; heap-&gt;elements[i]) {
+        largest = l;
+    } <span class="keyword">else</span> {
+        largest = i;
+    }
+
+    <span class="keyword">if</span> (r &lt;= <span class="type">A</span>-&gt;heap_size &amp;&amp; heap-&gt;elements[r] &gt; heap-&gt;elements[i]) {
+        largest = r;
+    }
+
+    <span class="keyword">if</span> (largest != i) {
+        <span class="built_in">int</span> temp = heap-&gt;elements[largest];
+        heap-&gt;elements[i] = heap-&gt;elements[largest];
+        heap-&gt;elements[largest] = temp
+        max_heapify(heap, largest);
+    }
+}
+</code></pre><p>对于一棵以 <code>i</code> 为根节点, 大小为 <code>n</code> 的子树, <code>max_heapify</code> 的时间代价的递归式为:</p>
+<pre><code><span class="function"><span class="title">T</span><span class="params">(n)</span></span> ≦ <span class="function"><span class="title">T</span><span class="params">(<span class="number">2</span>n/<span class="number">3</span>)</span></span> + Θ(<span class="number">1</span>) =&gt; <span class="function"><span class="title">T</span><span class="params">(n)</span></span> = Ο(lgn)
+</code></pre><hr>
+<h2 id="建堆">建堆</h2><p>我们可以使用自底向上的方法利用过程 <code>max_heapify</code> 把一个大小为 <code>n = A.length</code> 的数组 <code>A[1..n]</code> 转换为最大堆.</p>
+<pre><code><span class="keyword">void</span> build_max_heap(heap_t *heap) {
+    heap-&gt;heap_size = heap-&gt;<span class="built_in">length</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = heap-&gt;<span class="built_in">length</span> / <span class="number">2</span>; i &lt;= <span class="number">1</span>; i--) {
+        max_heapify(heap, i)
+    }
+}
+</code></pre><p><code>build_max_heap</code> 的时间复杂度为 <code>Ο(n)</code>.</p>
+<hr>
+<h2 id="堆排序算法">堆排序算法</h2><p>堆排序算法使用 <code>build_max_heap</code> 将输入的数组 <code>A[0..n-1]</code> 建成最大堆. 数组中的最大元素总在根节点 <code>A[0]</code>, 通过把它与 <code>A[n-1]</code> 进行交换, 我们可以把元素放到正确的位置. 而我们只需要不断的调用 <code>max_heapify</code> 来维护堆的性质——<strong>A[0]为最大元素</strong>, 并把子数组中的最大元素移到合适的位置.</p>
+<pre><code>void heapsort(heap_t *heap) {
+    build_max_heap(heap);
+    <span class="keyword">for</span> (<span class="built_in">int</span> i = heap-&gt;length - <span class="number">1</span>; i &gt;= <span class="number">2</span>; i--) {
+        <span class="built_in">int</span> temp = heap-&gt;elements[<span class="number">0</span>];
+        heap-&gt;elements[<span class="number">0</span>] = heap-&gt;elements[i];
+        heap-&gt;elements[i] = temp;
+        heap-&gt;heap_size--;
+        max_heapify(heap, <span class="number">1</span>)
+    }
+}
+</code></pre><p><code>heapsort</code> 过程的时间复杂度是 <code>Ο(nlgn)</code> </p>
+<hr>
+<h2 id="优先队列">优先队列</h2><p><code>优先队列</code> (priority queue)是一种用来维护由一组最大元素构成的集合 S 的数据结构, 其中的每个元素都有一个相关的值, 成为<strong>关键字</strong>. 一个最大优先队列支持以下的操作:</p>
+<ul>
+<li><code>INSERT(S, x)</code>: 把元素 <code>x</code> 插入集合 <code>S</code> 中, 这一操作等价于 <code>S=S U {x}</code></li>
+<li><code>MAXIMUM(S)</code>: 返回 <code>S</code> 中具有最大键字的元素.</li>
+<li><code>EXTRACT-MAX(S)</code>: 去掉并返回 <code>S</code> 中的具有最大键字的元素.</li>
+<li><code>INCREASE-KEY(S, x, k)</code>: 将元素 <code>x</code> 的关键字值增加到 <code>k</code>, 这里假设 <code>k</code> 的值不小于 <code>x</code> 的原关键字值.</li>
+</ul>
+<p>优先队列可以使用堆来实现, 我们来实现最大优先队列:</p>
+<pre><code><span class="keyword">int</span> heap_maximum(heap_t *heap) {
+    <span class="keyword">return</span> heap-&gt;element[<span class="number">0</span>];
+}
+
+<span class="keyword">int</span> heap_extract_max(heap_t *heap) {
+    <span class="keyword">if</span> (heap-&gt;heap_size &lt; <span class="number">1</span>) {
+        fprinrf(stderr, <span class="string">"heap underflow"</span>);
+    }
+    <span class="keyword">int</span> max = A[<span class="number">0</span>];
+    A[<span class="number">0</span>] = A[heap-&gt;heap_size];
+    heap-&gt;heap_size--;
+    max_heapify(heap, <span class="number">0</span>);
+    <span class="keyword">return</span> max;
+}
+
+void heap_increase_key(heap_t *heap, <span class="keyword">int</span> i, <span class="keyword">int</span> key) {
+    <span class="keyword">if</span> (key &lt; heap-&gt;elements[i]) {
+        fprinrf(stderr, <span class="string">"new key is smaller than current key"</span>);
+    }
+    heap-&gt;elements[i] = key;
+
+    <span class="keyword">while</span> (i &gt; <span class="number">0</span> &amp;&amp; heap-&gt;elements[parent(i)] &lt; A[i]) {
+        <span class="keyword">int</span> temp = heap-&gt;elements[i];
+        heap-&gt;elements[i] = heap-&gt;elements[parent(i)];
+        heap-&gt;elements[parent(i)] = temp;
+        i = PARENT(i);
+    }
+}
+
+void max_heap_insert(heap_t *heap, <span class="keyword">int</span> key) {
+    heap-&gt;heap_size++;
+    heap-&gt;elements[heap-&gt;heap_size] = INT_MIN;
+    heap_increase_key(heap, heap-&gt;heap_size - <span class="number">1</span>, key);
+}
+</code></pre>]]></content>
+    <summary type="html">
+    <![CDATA[<p>一种时间复杂度为 <code>Ο(nlgn)</code> 的排序算法.</p>
+<h2 id="堆">堆</h2><p><code>二叉堆</code> 是一个数组, 它可以被看成一个近似的完全二叉树, 除了最底层外, 该树是完全充满的, 而且是从左向右填充.</p>
+<]]>
+    </summary>
+    
+      <category term="堆" scheme="http://deltax.me/tags/%E5%A0%86/"/>
+    
+      <category term="算法" scheme="http://deltax.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="算法导论" scheme="http://deltax.me/categories/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA/"/>
+    
+      <category term="算法" scheme="http://deltax.me/categories/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Parameter Passing Mechanisms]]></title>
+    <link href="http://deltax.me/2015/03/18/Parameter-Passing-Mechanisms/"/>
+    <id>http://deltax.me/2015/03/18/Parameter-Passing-Mechanisms/</id>
+    <published>2015-03-18T08:47:50.000Z</published>
+    <updated>2015-03-20T15:48:23.000Z</updated>
+    <content type="html"><![CDATA[<p>The operation of a data abstraction can have arguments and results. Many different mechanisms have been divised to pass the arguments and results between a calling program and an abstraction.</p>
+<h3 id="Call_by_Reference">Call by Reference</h3><p>The identity of a <strong>language entity is passed to the procedure</strong>. The procedure can then use this language entity freely. This is the primitive mechanism used by the computation models of the book for all language entities including dataflow variables and cells.</p>
+<h3 id="Call_by_Variable">Call by Variable</h3><p>This is a special case of call by reference. <strong>The identity of a cell is passed to the procedure</strong>.</p>
+<pre><code><span class="keyword">proc</span> {<span class="type">Sqr</span> A}
+    A:=@A*@A
+<span class="keyword">end</span>
+local
+    C={<span class="type">NewCell</span> <span class="number">0</span>}
+<span class="keyword">in</span>
+    C:=<span class="number">25</span>
+    {<span class="type">Sqr</span> C}
+    {<span class="type">Browse</span> @C}
+<span class="keyword">end</span>
+</code></pre><h3 id="Call_by_Value">Call by Value</h3><p>A value is passed to the procedure and put into a cell local to the procedure.</p>
+<pre><code><span class="keyword">proc</span> {<span class="type">Sqr</span> D}
+    A={<span class="type">NewCell</span> D}
+<span class="keyword">in</span>
+    A:=@A+<span class="number">1</span>
+    {<span class="type">Browse</span> @A*@A}
+<span class="keyword">end</span>
+{<span class="type">Sqrt</span> <span class="number">25</span>}
+</code></pre><p>The cell a is initialized with the arguement of <code>Sqr</code>.</p>
+<h3 id="Call_by_Value-result">Call by Value-result</h3><p>This is a modification of call by variable. When the procedure is called, the content of a cell is put into another mutable variable local to the procedure. When the procedure returns, the content of the latter cell is put into the former cell.</p>
+<pre><code>proc <span class="list">{Sqr A}</span>
+    <span class="keyword">D</span>=<span class="list">{NewCell @A}</span>
+in
+    <span class="keyword">D</span>:=@<span class="keyword">D</span>*@<span class="keyword">D</span>
+    A:=@<span class="keyword">D</span>
+end
+local
+    <span class="keyword">C</span>=<span class="list">{NewCell 0}</span>
+in
+    <span class="keyword">C</span>:=<span class="number">25</span>
+    <span class="list">{Sqr C}</span>
+    <span class="list">{Browse @C}</span>
+end
+</code></pre><p>When entering the <code>Sqr</code>, <code>D</code> is assigned to the content of <code>A</code>. After computation, assigned the content of <code>D</code> back to the <code>C</code>. And we can reference <code>C</code> from outside.</p>
+<h3 id="Call_by_Name">Call by Name</h3><p>This mechanism creates a function to wrap each argument which is called thunk. And each time argument is needed, call it as a function, and this returns an unwrapped argument.</p>
+<pre><code><span class="keyword">proc</span> {<span class="type">Sqr</span> A}
+    {A}:=@{A}*@{A}
+<span class="keyword">end</span>
+local C={<span class="type">NewCell</span> <span class="number">0</span>} <span class="keyword">in</span>
+    C:=<span class="number">25</span>
+    {<span class="type">Sqr</span> fun {$} C <span class="keyword">end</span>}
+    {<span class="type">Browse</span> @C}
+<span class="keyword">end</span>
+</code></pre><p>The function wrapped in thunk is called each time, the argument is needed.</p>
+<h3 id="Call_by_Need">Call by Need</h3><p>This is a modification and improve of call by name, which the function is called at most once. When the function is first called, its result stored and used for subsequent evaluations.</p>
+<pre><code><span class="keyword">proc</span> {<span class="type">Sqr</span> A}
+    B={A}
+<span class="keyword">in</span>
+    B:=@B*@B
+<span class="keyword">end</span>
+local C={<span class="type">NewCell</span> <span class="number">0</span>} <span class="keyword">in</span>
+    C:=<span class="number">25</span>
+    {<span class="type">Sqr</span> fun {$} C <span class="keyword">end</span>}
+    {<span class="type">Browse</span> @C}
+<span class="keyword">end</span>
+</code></pre><p>The argument <code>A</code> is evaluated when it is needed, and after first evaluate, it stored in the variable <code>B</code>, and then every time <code>A</code> is needed, just use <code>B</code> instead.</p>
+<p>This approach is exactly the same concept as lazy evalution.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>The operation of a data abstraction can have arguments and results. Many different mechanisms have been divised to pass the arguments and]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Explicit State]]></title>
+    <link href="http://deltax.me/2015/03/18/Explicit-State/"/>
+    <id>http://deltax.me/2015/03/18/Explicit-State/</id>
+    <published>2015-03-18T06:34:39.000Z</published>
+    <updated>2015-03-18T08:43:12.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="State">State</h2><p>A <code>state</code> is a sequence of values in time that contains the intermediate results of a desired computation.</p>
+<p>There are different ways that state can be used in a program.</p>
+<ul>
+<li>Implicit or declarative state<ul>
+<li>The state need only exist in the mind of the programmer. It does not need any support at all from the computation model.</li>
+</ul>
+</li>
+<li><p>Explicit state</p>
+<ul>
+<li><p>A procedure is a state whose lifetime extends over more than one procedure call without being present in the procedure’s arguments.</p>
+<pre><code>local
+    C=<span class="comment">{NewCell 0}</span>
+<span class="keyword">in</span>
+    fun <span class="comment">{SumList Xs S}</span>
+        C:=@C+<span class="number">1</span>
+        <span class="keyword">case</span> Xs
+        <span class="keyword">of</span> <span class="keyword">nil</span> <span class="keyword">then</span> S
+        [] X|Xr <span class="keyword">then</span> <span class="comment">{SumList Xr X+S}</span>
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+    fun <span class="comment">{SumCount}</span> @C <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+% <span class="keyword">In</span> this <span class="function"><span class="keyword">procedure</span>, <span class="title">C</span> <span class="title">is</span> <span class="title">not</span> <span class="title">an</span> <span class="title">arugment</span> <span class="title">for</span> <span class="title">the</span> <span class="title">function</span> <span class="title">SumList</span> <span class="title">and</span> <span class="title">we</span> <span class="title">can</span> <span class="title">use</span> <span class="title">another</span> <span class="title">helper</span> <span class="title">function</span> <span class="title">SumCount</span> <span class="title">to</span> <span class="title">get</span> <span class="title">its</span> <span class="title">value</span>.</span>
+</code></pre></li>
+<li><p>With explicit state, data abstraction gain tremendously in modularity since is is possible to <strong>encapsulate an explicit state inside a data abstraction</strong>. And the access to state is limited according to the operations of the data abstraction.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Data_Abstraction">Data Abstraction</h2><p><strong>Data abstraction</strong> is a way of using data in abstract fashion, we can use the data without having to deal with its implementation. It contains a set of instances that can be used according to certain rules called interface.</p>
+<h3 id="Organize_Data_Abstraction">Organize Data Abstraction</h3><ul>
+<li><code>Openness and Security</code><ul>
+<li>A data abstraction is <code>secure</code> if its encapsulation is enforced by the language. Otherwise it is open. If the data abstraction is open, the encapsulation should be <strong>enforced by programmer discipline</strong>.</li>
+</ul>
+</li>
+<li><code>Bundling</code><ul>
+<li>A data abstraction is <code>unbundled</code> if it defines two kinds of entities, called <strong>value and operation</strong>.</li>
+<li>A data abstraction is <code>bundled</code> if it defines just one kind of entity, called <strong>object</strong>, that combines the notion of value and operation. (Which is sometimes called a precedural data abstraction, <code>PDA</code>)</li>
+</ul>
+</li>
+<li><code>Explicit</code><ul>
+<li>A data is stateful if it uses <strong>explicit state</strong>. Otherwise it is known as stateless or declarative.</li>
+</ul>
+</li>
+</ul>
+<p>We use these three axes, secure, bundling and explit state to organize data abstraction is <code>8</code> ways.</p>
+<h3 id="Open_Declarative_Stack">Open Declarative Stack</h3><pre><code>% This <span class="built_in">version</span> is <span class="built_in">open</span>, declarative <span class="operator">and</span> unbundled.
+
+declare    
+<span class="built_in">local</span>
+     fun {NewStack} nil <span class="function"><span class="keyword">end</span></span>
+     fun {Push S E} E|S <span class="function"><span class="keyword">end</span></span>
+     fun {Pop S ?E} <span class="keyword">case</span> S <span class="operator">of</span> X|S1 <span class="keyword">then</span> E=X S1 <span class="function"><span class="keyword">end</span> <span class="title">end</span></span>
+     fun {IsEmpty S} S==nil <span class="function"><span class="keyword">end</span></span>
+<span class="operator">in</span>
+     Stack=stack(<span class="built_in">new</span>:NewStack push:Push pop:Pop isEmpty:IsEmpty)
+<span class="function"><span class="keyword">end</span></span>
+</code></pre><h3 id="Secure_Declarative_Unbundled_Stack">Secure Declarative Unbundled Stack</h3><pre><code>% This <span class="built_in">version</span> is secure, declarative <span class="operator">and</span> unbundled. 
+
+declare
+<span class="built_in">local</span> Wrap Unwrap
+     {NewWrapper Wrap Unwrap}
+     fun {NewStack} {Wrap nil} <span class="function"><span class="keyword">end</span></span>
+     fun {Push S E} {Wrap E|{Unwrap S}} <span class="function"><span class="keyword">end</span></span>
+     fun {Pop S ?E} <span class="keyword">case</span> {Unwrap S} <span class="operator">of</span> X|S1 <span class="keyword">then</span> E=X {Wrap S1} <span class="function"><span class="keyword">end</span> <span class="title">end</span></span>
+     fun {IsEmpty S} {Unwrap S}==nil <span class="function"><span class="keyword">end</span></span>
+<span class="operator">in</span>
+     Stack=stack(<span class="built_in">new</span>:NewStack push:Push pop:Pop isEmpty:IsEmpty)
+<span class="function"><span class="keyword">end</span></span>
+</code></pre><p>The stack is unwrapped when entering an ADT and wrapped when the operation exits.</p>
+<h3 id="Secure_Declarative_Bundled_Stack">Secure Declarative Bundled Stack</h3><pre><code>% <span class="type">This</span> version is secure, declarative <span class="keyword">and</span> bundled.
+
+<span class="keyword">local</span>
+     <span class="keyword">fun</span> {<span class="type">StackObject</span> <span class="type">S</span>}
+          <span class="keyword">fun</span> {<span class="type">Push</span> <span class="type">E</span>} {<span class="type">StackObject</span> <span class="type">E</span>|<span class="type">S</span>} <span class="keyword">end</span>
+          <span class="keyword">fun</span> {<span class="type">Pop</span> ?<span class="type">E</span>}
+               <span class="keyword">case</span> <span class="type">S</span> <span class="keyword">of</span> <span class="type">X</span>|<span class="type">S1</span> <span class="keyword">then</span> <span class="type">E</span>=<span class="type">X</span> {<span class="type">StackObject</span> <span class="type">S1</span>} <span class="keyword">end</span> <span class="keyword">end</span>
+          <span class="keyword">fun</span> {<span class="type">IsEmpty</span>} <span class="type">S</span>==<span class="literal">nil</span> <span class="keyword">end</span>
+     <span class="keyword">in</span> stack(push:<span class="type">Push</span> pop:<span class="type">Pop</span> isEmpty:<span class="type">IsEmpty</span>) <span class="keyword">end</span>
+<span class="keyword">in</span>
+     <span class="keyword">fun</span> {<span class="type">NewStack</span>} {<span class="type">StackObject</span> <span class="literal">nil</span>} <span class="keyword">end</span>
+<span class="keyword">end</span>
+</code></pre><p>We can make a data abstraction secure only use <code>higher-order</code> programming instead of using explicit state and name.</p>
+<p>Because this version is both secure and bundled, we cansider it as a declarative form of <code>object-oriented programming</code>.</p>
+<h3 id="Secure_Stateful_Bundled_Stack">Secure Stateful Bundled Stack</h3><pre><code>% <span class="type">This</span> version <span class="keyword">is</span> secure, stateful <span class="keyword">and</span> bundled.
+
+declare
+fun {<span class="type">NewStack</span>}
+     C={<span class="type">NewCell</span> <span class="keyword">nil</span>}
+     <span class="keyword">proc</span> {<span class="type">Push</span> E} C:=E|@C <span class="keyword">end</span>
+     fun {<span class="type">Pop</span>} <span class="keyword">case</span> @C <span class="keyword">of</span> X|<span class="type">S1</span> then C:=<span class="type">S1</span> X <span class="keyword">end</span> <span class="keyword">end</span>
+     fun {<span class="type">IsEmpty</span>} @C=<span class="keyword">nil</span> <span class="keyword">end</span>
+<span class="keyword">in</span>
+     stack(push:<span class="type">Push</span> pop:<span class="type">Pop</span> isEmpty:<span class="type">IsEmpty</span>)
+<span class="keyword">end</span>
+</code></pre><p>In this version the objectis represented by a recored of procedure values. This version provides the basic functionality of object-oriented programming, namely a group of operations <code>methods</code> with a hidden internal state.</p>
+<h3 id="Secure_Stateful_Bundled_Stack_With_Procedure_Dispatching">Secure Stateful Bundled Stack With Procedure Dispatching</h3><pre><code>% <span class="type">This</span> version <span class="keyword">is</span> secure, stateful <span class="keyword">and</span> bundled.
+
+declare
+fun {<span class="type">NewStack</span>}
+     C={<span class="type">NewCell</span> <span class="keyword">nil</span>}
+     <span class="keyword">proc</span> {<span class="type">Push</span> E} C:=E|@C <span class="keyword">end</span>
+     fun {<span class="type">Pop</span>} <span class="keyword">case</span> @C <span class="keyword">of</span> X|<span class="type">S1</span> then C:=<span class="type">S1</span> X <span class="keyword">end</span> <span class="keyword">end</span>
+     fun {<span class="type">IsEmpty</span>} @C=<span class="keyword">nil</span> <span class="keyword">end</span>
+<span class="keyword">in</span>
+     <span class="keyword">proc</span> {$ <span class="type">Msg</span>}
+          <span class="keyword">case</span> <span class="type">Msg</span>
+          <span class="keyword">of</span> push(X) then {<span class="type">Push</span> X}
+          [] pop(?E) then E={<span class="type">Pop</span>}
+          [] isEmpty(?B) then B={<span class="type">IsEmpty</span>}
+     <span class="keyword">end</span>
+<span class="keyword">end</span>
+</code></pre><p>This is called procedure dispatching as opposed to the previous version which uses record dispatching. It is another way to implement secure, stateful bundled stack. With this approach, we use <code>{S.push X}</code> to invocate method <code>push</code>.</p>
+<h3 id="Secure_Stateful_Unbundled_Stack">Secure Stateful Unbundled Stack</h3><pre><code>% This <span class="built_in">version</span> is secure, stateful <span class="operator">and</span> unbundled.
+
+declare
+<span class="built_in">local</span> Wrap Unwrap
+     {NewWrapper Wrap Unwrap}
+     fun {NewStack} {Wrap {NewCell nil}} <span class="function"><span class="keyword">end</span></span>
+     proc {Push S E} C={Unwrap S} <span class="operator">in</span> C:=E|@C <span class="function"><span class="keyword">end</span></span>
+     fun {Pop S}
+          C={Unwrap S} <span class="operator">in</span> <span class="keyword">case</span> @C <span class="operator">of</span> X|S1 <span class="keyword">then</span> C:=S1 X <span class="function"><span class="keyword">end</span> <span class="title">end</span></span>
+     fun {IsEmpty S} @{Unwrap S}==nil <span class="function"><span class="keyword">end</span></span>
+<span class="operator">in</span>
+     Stack=stack(<span class="built_in">new</span>:NewStack push:Push pop:Pop isEmpty:IsEmpty)
+<span class="function"><span class="keyword">end</span></span>
+</code></pre><p>This style is little used in object-oriented programming, but deserves to be more widely known. In this version, we group four operations in a module.</p>
+<h2 id="Polymorphism">Polymorphism</h2><p><code>Polymorphism</code> is the ability of an entity to take om many forms. In the context of data abstraction, we say an operation is polymorphic if it works correct for arguments of different types.</p>
+<ul>
+<li>The <code>object</code> stype has an advantage over the <code>ADT</code> style in that polymorphism is particularly easy to express.</li>
+<li>The <code>ADT</code> style gives more freedom to make efficient implementation.</li>
+</ul>
+<h3 id="An_Example:_Collection_Type">An Example: Collection Type</h3><p>We implement a collection type in both <code>object</code> and <code>ADT</code> style which with three operations.</p>
+<p>First, we use <code>ADT</code> to implement the stateful unbundled collection:</p>
+<pre><code><span class="built_in">local</span> Wrap Unwrap
+    {NewWrapper Wrap Unwrap}
+    fun {NewCollection} {Wrap {Stack.<span class="built_in">new</span>}} <span class="function"><span class="keyword">end</span></span>
+    proc {Put C X} S={Unwrap C} <span class="operator">in</span> {Stack.push S X} <span class="function"><span class="keyword">end</span></span>
+    fun {Get C} S={Unwrap C} <span class="operator">in</span> {Stack.pop S} <span class="function"><span class="keyword">end</span></span>
+    fun {IsEmpty C} {Stack.isEmpty {Unwrap C}} <span class="function"><span class="keyword">end</span></span>
+<span class="operator">in</span>
+    Collection=collection(<span class="built_in">new</span>:NewCollection <span class="built_in">put</span>:Put <span class="built_in">get</span>:Get
+                          isEmpty:IsEmpty)
+<span class="function"><span class="keyword">end</span></span>
+</code></pre><p>Then, implement this with object style:</p>
+<pre><code>fun {NewCollection}
+    S={NewStack}
+    proc {Put X} {S.<span class="built_in">put</span> X} <span class="function"><span class="keyword">end</span></span>
+    fun {Get X} {S.pop} <span class="function"><span class="keyword">end</span></span>
+    fun {IsEmpty} {S.isEmpty} <span class="function"><span class="keyword">end</span></span>
+<span class="operator">in</span>
+    collection(<span class="built_in">put</span>:Put <span class="built_in">get</span>:Pop isEmpty:IsEmpty)
+<span class="function"><span class="keyword">end</span></span>
+</code></pre><p>Now we have out colletion type with both styles, in order to compare the difference between them, let us add an operation <code>union</code> to this collection type.</p>
+<h3 id="Adding_a_union_Operation_in_the_ADT_case">Adding a <code>union</code> Operation in the ADT case</h3><p>To implement <code>union</code>, let us introduce a control abstraction:</p>
+<pre><code><span class="keyword">proc</span> {<span class="type">DoUntil</span> <span class="type">BF</span> S}
+    <span class="keyword">if</span> {<span class="type">BF</span>} then skip <span class="keyword">else</span> {S} {<span class="type">DoUntil</span> <span class="type">BF</span> S} <span class="keyword">end</span>
+<span class="keyword">end</span>
+</code></pre><p>With <code>DoUntil</code>, we can implement the new <code>Collection</code> type as follows.</p>
+<pre><code>% <span class="type">Use</span> <span class="type">Internal</span> representations
+
+local <span class="type">Wrap</span> <span class="type">Unwrap</span>
+    ...
+    <span class="keyword">proc</span> {<span class="type">Union</span> <span class="type">C1</span> <span class="type">C2</span>}
+    <span class="type">S1</span>={<span class="type">Unwrap</span> <span class="type">C1</span>} <span class="type">S2</span>={<span class="type">Unwrap</span> <span class="type">C2</span>} <span class="keyword">in</span>
+        {<span class="type">DoUntil</span> fun {$} {<span class="type">Stack</span>.isEmpty <span class="type">S2</span>} <span class="keyword">end</span>
+        <span class="keyword">proc</span> {$} {<span class="type">Stack</span>.push <span class="type">S1</span> {<span class="type">Stack</span>.pop <span class="type">S2</span>}} <span class="keyword">end</span>}
+    <span class="keyword">end</span>
+<span class="keyword">in</span>
+    <span class="type">Collection</span>=collection(... union:<span class="type">Union</span>)
+<span class="keyword">end</span>
+
+% <span class="type">Use</span> external interfaces
+
+local <span class="type">Wrap</span> <span class="type">Unwrap</span>
+    ...
+    <span class="keyword">proc</span> {<span class="type">Union</span> <span class="type">C1</span> <span class="type">C2</span>}
+    <span class="type">S1</span>={<span class="type">Unwrap</span> <span class="type">C1</span>} <span class="type">S2</span>={<span class="type">Unwrap</span> <span class="type">C2</span>} <span class="keyword">in</span>
+        {<span class="type">DoUntil</span> fun {$} {<span class="type">Collection</span>.isEmpty <span class="type">S2</span>} <span class="keyword">end</span>
+        <span class="keyword">proc</span> {$} {<span class="type">Collection</span>.put <span class="type">S1</span> {<span class="type">Collection</span>.get <span class="type">S2</span>}} <span class="keyword">end</span>}
+    <span class="keyword">end</span>
+<span class="keyword">in</span>
+    <span class="type">Collection</span>=collection(... union:<span class="type">Union</span>)
+<span class="keyword">end</span>    
+</code></pre><p>We have choice of whether or not to use the internal representation of each collection argument. This gives us the freedom to make a <strong>more efficient implementation</strong>.</p>
+<h3 id="Adding_a_union_Operation_in_the_Object_case">Adding a <code>union</code> Operation in the Object case</h3><p>Let us implement <code>union</code> operation in object stype. This is called as <code>{C1 union(C2)}</code>.</p>
+<pre><code>% <span class="type">Use</span> internal representation <span class="keyword">of</span> <span class="type">C1</span> but external <span class="keyword">interface</span> <span class="keyword">of</span> <span class="type">C2</span>
+
+fun {<span class="type">NewCollection</span>}
+    <span class="type">S1</span>={<span class="type">NewStack</span>}
+    ...
+    <span class="keyword">proc</span> {<span class="type">Union</span> <span class="type">C2</span>}
+        {<span class="type">DoUntil</span> <span class="type">C2</span>.isEmpty
+        <span class="keyword">proc</span> {$} {<span class="type">S1</span>.push {<span class="type">C2</span>.get}} <span class="keyword">end</span>}
+    <span class="keyword">end</span>
+<span class="keyword">in</span>
+    collection(... union:<span class="type">Union</span>)
+<span class="keyword">end</span>
+</code></pre><p>The implementation uses the <strong>internal representation</strong> of <code>C1</code> but the external interface of <code>C2</code>. This is a crucial difference with the <code>ADT</code> stype. We can also use both <strong>external interfaces</strong> to implement this operation again.</p>
+<pre><code>% <span class="type">Use</span> external interfaces
+
+fun {<span class="type">NewCollection</span>}
+    <span class="type">S1</span>={<span class="type">NewStack</span>}
+    ...
+    <span class="keyword">proc</span> {<span class="type">Union</span> <span class="type">C2</span>}
+        {<span class="type">DoUntil</span> <span class="type">C2</span>.isEmpty
+        <span class="keyword">proc</span> {$} {<span class="type">This</span>.push {<span class="type">C2</span>.get}} <span class="keyword">end</span>}
+    <span class="keyword">end</span>
+    <span class="type">This</span>=collection(... union:<span class="type">Union</span>)
+<span class="keyword">in</span>
+    <span class="type">This</span>
+<span class="keyword">end</span>
+</code></pre><p>The object <code>C1</code> refers to itself through the variable <code>This</code>.</p>
+<h3 id="Decision_between_ADT_and_Object_styles">Decision between ADT and Object styles</h3><ul>
+<li>The <code>ADT</code> style can be more efficient because it allows accessing both internal representations.</li>
+<li>Sometimes the <code>ADT</code> style is the only one that works. Especially when we deal with addtion between integer.</li>
+<li>The <code>object</code> style provides polyphism “for free”.</li>
+<li>The <code>object</code> style is not limited to sequential objects.</li>
+<li>The ‘ADT` style provides polymorohism if the language has first-class modules.</li>
+<li>If we use the <code>ADT</code> style without first-class modules, then we must write new code to get types to interoperate.</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="State">State</h2><p>A <code>state</code> is a sequence of values in time that contains the intermediate results of a desired computa]]>
+    </summary>
+    
+      <category term="Abstraction" scheme="http://deltax.me/tags/Abstraction/"/>
+    
+      <category term="Polymorphism" scheme="http://deltax.me/tags/Polymorphism/"/>
+    
+      <category term="State" scheme="http://deltax.me/tags/State/"/>
+    
+      <category term="Programming Paradigm" scheme="http://deltax.me/categories/Programming-Paradigm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Message-Passing Concurrency]]></title>
+    <link href="http://deltax.me/2015/03/16/Message-Passing-Concurrency/"/>
+    <id>http://deltax.me/2015/03/16/Message-Passing-Concurrency/</id>
+    <published>2015-03-15T17:13:25.000Z</published>
+    <updated>2015-03-16T01:04:29.000Z</updated>
+    <content type="html"><![CDATA[<p><code>Message-passing</code> is a programming style in which a program consists of independent entities that interact by sending each other messages asynchronously.</p>
+<h2 id="Why_Message-passing_important?">Why Message-passing important?</h2><ul>
+<li>It is the basic framework for <strong>multi-agent</strong> systems.</li>
+<li>It is the natural stype for a <strong>distributed</strong> system.</li>
+<li>It lends itself well to building highly reliable systems.</li>
+</ul>
+<h2 id="Message-passing_concurrent_model">Message-passing concurrent model</h2><p>The message-passing concurrent model extends the declarative concurrent model by adding ports. We add two operions to manipulate ports.</p>
+<pre><code>{NewPort &lt;y&gt; &lt;x&gt;}  Port creation: <span class="built_in">create</span> <span class="operator">a</span> <span class="built_in">new</span> port <span class="operator">with</span> entry point &lt;x&gt; <span class="operator">and</span> stream &lt;y&gt;
+{Send &lt;x&gt; &lt;y&gt;}     Port <span class="built_in">send</span>: append &lt;y&gt; <span class="built_in">to</span> he stream corresponding <span class="built_in">to</span> <span class="operator">the</span> entry point &lt;x&gt;
+</code></pre><h2 id="Port_Objects">Port Objects</h2><p>A <code>port object</code> is a combination of one or more ports and a stream object. This extends stream objects in two ways.</p>
+<ol>
+<li><strong>Many-to-one communication</strong> is possible, many threads can reference a given port object and send message to it independently.</li>
+<li>Port objects can be <strong>embedded inside data structures</strong>.</li>
+</ol>
+<p>In message-passing model, a program consists of a set of port objects sending and receiving messages. </p>
+<ul>
+<li>Port objects can create new port objects. </li>
+<li>Port objects can send messages containing references to other port objects.</li>
+</ul>
+<h3 id="NewPortObject_abstraction">NewPortObject abstraction</h3><p>We can define an abstraction to make it easier to program with port objects.</p>
+<pre><code>fun {NewPortObject Init Fun}
+<span class="built_in">Sin</span> Sout <span class="keyword">in</span>
+    thread {FoldL <span class="built_in">Sin</span> FUn Init Sout} <span class="keyword">end</span>
+    {NewPort <span class="built_in">Sin</span>}
+<span class="keyword">end</span>
+fun {NewPortObject2 Proc}
+<span class="built_in">Sin</span> <span class="keyword">in</span>
+    thread <span class="keyword">for</span> Msg <span class="keyword">in</span> <span class="built_in">Sin</span> <span class="keyword">do</span> {Proc Msg} <span class="keyword">end</span> <span class="keyword">end</span>
+    {NewPort <span class="built_in">Sin</span>}
+<span class="keyword">end</span>
+</code></pre><h2 id="Message_Protocol">Message Protocol</h2><p>We can use message-passing paradigm to model simple message protocol.</p>
+<h3 id="RMI">RMI</h3><p><code>RMI</code> is the most popular of the simple protocols. It allows to call another object in a different operating system process.</p>
+<pre><code><span class="keyword">proc</span> {<span class="type">ServerProc</span> <span class="type">Msg</span>}
+    <span class="keyword">case</span> <span class="type">Msg</span>
+    <span class="keyword">of</span> calc(X Y) then
+        Y=X*X+<span class="number">2</span>.<span class="number">0</span>*X+<span class="number">2</span>.<span class="number">0</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="type">Server</span>={<span class="type">NewPortObject2</span> <span class="type">ServerProc</span>}
+
+<span class="keyword">proc</span> {<span class="type">ClientProc</span> <span class="type">Msg</span>}
+    <span class="keyword">case</span> <span class="type">Msg</span>
+    <span class="keyword">of</span> work(Y) then <span class="type">Y1</span> <span class="type">Y2</span> <span class="keyword">in</span>
+        {<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">1</span>.<span class="number">0</span> <span class="type">Y1</span>)}
+        {<span class="type">Wait</span> <span class="type">Y1</span>}
+        {<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">2</span>.<span class="number">0</span> <span class="type">Y1</span>)}
+        {<span class="type">Wait</span> <span class="type">Y2</span>}
+        Y=<span class="type">Y1</span>+<span class="type">Y2</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="type">Client</span>={<span class="type">NewPortObject2</span> <span class="type">ClientProc</span>}
+{<span class="type">Browse</span> {<span class="type">Send</span> <span class="type">Client</span> work($)}}
+
+// <span class="number">15</span>
+</code></pre><h3 id="Asynchronous_RMI">Asynchronous RMI</h3><p>This protocol is similar to <code>RMI</code>, except that the client continues immediately after sending the request. The client is informed when the reply arrives. Multiple requests can be handled in rapid succession.</p>
+<pre><code><span class="keyword">proc</span> {<span class="type">ClientProc</span> <span class="type">Msg</span>}
+    <span class="keyword">case</span> <span class="type">Msg</span>
+    <span class="keyword">of</span> work(?Y) then <span class="type">Y1</span> <span class="type">Y2</span> <span class="keyword">in</span>
+        {<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">1</span>.<span class="number">0</span> <span class="type">Y1</span>)}
+        {<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">2</span>.<span class="number">0</span> <span class="type">Y1</span>)}
+        Y=<span class="type">Y1</span>+<span class="type">Y2</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="type">Client</span>={<span class="type">NewPortObject2</span> <span class="type">ClientProc</span>}
+{<span class="type">Browse</span> {<span class="type">Send</span> <span class="type">Client</span> work($)}}
+// <span class="number">15</span>
+</code></pre><p>Requests are handled by the server the same order as they are sent and replies arrive in that order as well.</p>
+<h3 id="RMI_with_callback">RMI with callback</h3><p>Here is a server that does a callback to find the value of a special value <code>delta</code> only known by the client.</p>
+<pre><code><span class="keyword">proc</span> {<span class="type">ServerProc</span> <span class="type">Msg</span>}
+    <span class="keyword">case</span> <span class="type">Msg</span>
+    <span class="keyword">of</span> calc(X ?Y <span class="type">Client</span>) then <span class="type">X1</span> D <span class="keyword">in</span>
+        {<span class="type">Send</span> <span class="type">Client</span> delta(D)}
+        <span class="type">X1</span>=X+D
+        Y=<span class="type">X1</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="type">Server</span>={<span class="type">NewPortObject2</span> <span class="type">ServerProc</span>}
+
+<span class="keyword">proc</span> {<span class="type">ClientProc</span> <span class="type">Msg</span>}
+    <span class="keyword">case</span> <span class="type">Msg</span>
+    <span class="keyword">of</span> work(?Z) then Y <span class="keyword">in</span>
+        {<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">10</span>.<span class="number">0</span> Y <span class="type">Client</span>)}
+        Z=Y+<span class="number">100</span>.<span class="number">0</span>
+    [] delta(?D) then
+        D=<span class="number">1</span>.<span class="number">0</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="type">Client</span>={<span class="type">NewPortObject2</span> <span class="type">ClientProc</span>}
+{<span class="type">Browse</span> {<span class="type">Send</span> <span class="type">Client</span> work($)}}
+
+// _
+</code></pre><p>This solution not work, because the client suspends when it calls th server, so that the server cannot call the client.</p>
+<h4 id="Using_thread">Using thread</h4><p>First, we use concurrency to solve this problem.</p>
+<pre><code>proc {ClientProc Msg}
+    <span class="keyword">case</span> Msg
+    <span class="operator">of</span> work(?Z) <span class="keyword">then</span> Y <span class="operator">in</span>
+        {Send Server calc(<span class="number">10.0</span> Y Client)}
+        thread Z=Y+<span class="number">100.0</span> <span class="function"><span class="keyword">end</span></span>
+    [] delta(?D) <span class="keyword">then</span>
+        D=<span class="number">1.0</span>
+    <span class="function"><span class="keyword">end</span></span>
+<span class="function"><span class="keyword">end</span></span>
+<span class="comment">
+// 245.0</span>
+</code></pre><p>After the client sent a message to the server, it does not suspend, because the <code>thread</code> creates a new thread and execute it on it.</p>
+<h4 id="Using_record_continuation">Using record continuation</h4><p>Instead of using thread, we can use record to solve this issue. In this way, the client never waits and deadlock is avoiding.</p>
+<pre><code><span class="keyword">proc</span> {<span class="type">ServerProc</span> <span class="type">Msg</span>}
+    <span class="keyword">case</span> <span class="type">Msg</span>
+    <span class="keyword">of</span> calc(X <span class="type">Client</span> <span class="type">Cont</span>) then <span class="type">X1</span> D Y <span class="keyword">in</span>
+        {<span class="type">Send</span> <span class="type">Client</span> delta(D)}
+        <span class="type">X1</span>=X+D
+        Y=<span class="type">X1</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span>
+        {<span class="type">Send</span> <span class="type">Client</span> <span class="type">Cont</span><span class="comment">#Y}</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="type">Server</span>={<span class="type">NewPortObject2</span> <span class="type">ServerProc</span>}
+
+<span class="keyword">proc</span> {<span class="type">ClientProc</span> <span class="type">Msg</span>}
+    <span class="keyword">case</span> <span class="type">Msg</span>
+    <span class="keyword">of</span> work(?Z) then Y <span class="keyword">in</span>
+        {<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">10</span>.<span class="number">0</span> <span class="type">Client</span> cont(Z))}
+    [] cont(Z)<span class="comment">#Y then</span>
+        Z=Y+<span class="number">100</span>.<span class="number">0</span>
+    [] delta(?D) then
+        D=<span class="number">1</span>.<span class="number">0</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="type">Client</span>={<span class="type">NewPortObject2</span> <span class="type">ClientProc</span>}
+{<span class="type">Browse</span> {<span class="type">Send</span> <span class="type">Client</span> work($)}}
+
+// <span class="number">245</span>.<span class="number">0</span>
+</code></pre><p>When we pass <code>work</code> message to <code>client</code> it immediately send <code>server</code> message <code>calc</code>. After the server execute <code>calc</code>, it pass back <code>Cont#Y</code> back to the client, then client finishes the calculation.</p>
+<h4 id="Using_procedure_continuation">Using procedure continuation</h4><p>The previous example can be generalized in a powerful way by passing a precedure instead of a record.</p>
+<pre><code><span class="keyword">proc</span> {<span class="type">ClientProc</span> <span class="type">Msg</span>}
+    <span class="keyword">case</span> <span class="type">Msg</span>
+    <span class="keyword">of</span> work(?Z) then
+        C=<span class="keyword">proc</span> {$ Y} Z=Y+<span class="number">100</span>.<span class="number">0</span> <span class="keyword">end</span>
+    <span class="keyword">in</span>
+        {<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">10</span>.<span class="number">0</span> <span class="type">Client</span> cont(C))}
+    [] cont(C)<span class="comment">#Y then</span>
+        {C Y}
+    [] delta(?D) then
+        D=<span class="number">1</span>.<span class="number">0</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+</code></pre><p>The continuation contains the work that the client has to do after the server returns. Since the continuation is a procedure value, it is self-contained, it can be executed by anyone without knowing anything inside it.    </p>
+<h4 id="Asynchronous_RMI_with_callback">Asynchronous RMI with callback</h4><p>We might want to do two asynchronous RMIs where each <code>RMI</code> does a callback.</p>
+<pre><code><span class="keyword">proc</span> {<span class="type">ServerProc</span> <span class="type">Msg</span>}
+    <span class="keyword">case</span> <span class="type">Msg</span>
+    <span class="keyword">of</span> calc(X ?Y <span class="type">Client</span>) then <span class="type">X1</span> D <span class="keyword">in</span>
+        {<span class="type">Send</span> <span class="type">Client</span> delta(D)}
+        thread 
+            <span class="type">X1</span>=X+D
+            Y=<span class="type">X1</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span>
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">proc</span> {<span class="type">ClientProc</span> <span class="type">Msg</span>}
+    <span class="keyword">case</span> <span class="type">Msg</span>
+    <span class="keyword">of</span> work(?Z) then <span class="type">Y1</span> <span class="type">Y2</span> <span class="keyword">in</span>
+        {<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">10</span>.<span class="number">0</span> <span class="type">Y1</span> <span class="type">Client</span>)}
+        {<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">20</span>.<span class="number">0</span> <span class="type">Y2</span> <span class="type">Client</span>)}
+        thread Y=<span class="type">Y1</span>+<span class="type">Y2</span> <span class="keyword">end</span>
+    [] delta(?D) then
+        D=<span class="number">1</span>.<span class="number">0</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+</code></pre><h4 id="Double_callback">Double callback</h4><p>When the server does a first callback to client, and which itself calls a second callback to the server. To handle this, both the client and the server should response immediately and not wait until the result come back.</p>
+<pre><code>proc {ServerProc Msg}
+    <span class="keyword">case</span> Msg
+    <span class="operator">of</span> calc(X ?Y Client) <span class="keyword">then</span> X1 D <span class="operator">in</span>
+        {Send Client delta(D)}
+        thread 
+            X1=X+D
+            Y=X1*X1+<span class="number">2.0</span>*X1+<span class="number">2.0</span>
+        <span class="function"><span class="keyword">end</span></span>
+    <span class="function"><span class="keyword">end</span></span>
+    [] serverdelta(?S) <span class="keyword">then</span>
+        S=<span class="number">0.01</span>
+    <span class="function"><span class="keyword">end</span></span>
+<span class="function"><span class="keyword">end</span></span>
+
+proc {ClientProc Msg}
+    <span class="keyword">case</span> Msg
+    <span class="operator">of</span> work(?Z) <span class="keyword">then</span> Y <span class="operator">in</span>
+        {Send Server calc(<span class="number">10.0</span> Y Client)}
+        thread Z=Y+<span class="number">100.0</span> <span class="function"><span class="keyword">end</span></span>
+    [] delta(?D) <span class="keyword">then</span> S <span class="operator">in</span>
+        {Send Server serverdelta(S)}
+        thread D=<span class="number">1.0</span>+S <span class="function"><span class="keyword">end</span></span>
+    <span class="function"><span class="keyword">end</span></span>
+<span class="function"><span class="keyword">end</span></span>
+</code></pre><p>Calling <code>{Send Client work(Z)}</code> calls the server, which calls the client method <code>delta(D)</code>, which iteself calls the server method <code>serverdelta(?S)</code>.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><code>Message-passing</code> is a programming style in which a program consists of independent entities that interact by sending each oth]]>
+    </summary>
+    
+      <category term="Concurrency" scheme="http://deltax.me/tags/Concurrency/"/>
+    
+      <category term="Message Passing" scheme="http://deltax.me/tags/Message-Passing/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[分治策略]]></title>
+    <link href="http://deltax.me/2015/03/15/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/"/>
+    <id>http://deltax.me/2015/03/15/分治策略/</id>
+    <published>2015-03-15T07:14:54.000Z</published>
+    <updated>2015-03-19T07:07:46.000Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>在计算机科学中, <a href="http://zh.wikipedia.org/wiki/%E5%88%86%E6%B2%BB%E6%B3%95" target="_blank" rel="external">分治法</a>是基于多项分支递归的一种很重要的算法范式. 字面上的解释是”分而治之”, 就是把一个复杂的问题分成两个或更多的相同或相似的子问题, 知道最后子问题可以简单的直接求解, 原问题的解就是子问题的解的合并.</p>
+</blockquote>
+<h2 id="分治法的步骤">分治法的步骤</h2><ol>
+<li>分解: 将问题划分为一些子问题, 子问题的形式与原问题相同, <strong>只是规模更小</strong>.</li>
+<li>解决: <strong>递归</strong>地求解出子问题. </li>
+<li>合并: 将子问题的解<strong>合并</strong>.</li>
+</ol>
+<h2 id="求解递归式的方法">求解递归式的方法</h2><ol>
+<li>代入法</li>
+<li>递归树法</li>
+<li>主方法</li>
+</ol>
+<p>在这里我们不对前两种方法进行说明, 仅仅讨论一下主方法的使用, 以及适用的情况.</p>
+<h3 id="主方法">主方法</h3><p>主方法<code>(Master Method)</code>可以求解一下形式的递归式的边界.</p>
+<pre><code><span class="function"><span class="title">T</span><span class="params">(n)</span></span> = <span class="function"><span class="title">aT</span><span class="params">(n/b)</span></span> + <span class="function"><span class="title">f</span><span class="params">(n)</span></span>
+</code></pre><p>其中 <code>a &gt;= 1</code> <code>b &gt; 1</code> <code>f(n)</code> 是一个给定的函数. 这个递归式刻画了一个如下的分治算法:</p>
+<blockquote>
+<p>生成 <code>a</code> 个子问题, 每个子问题的规模是原问题规模的 <code>1/b</code> , 分解和合并步骤总共消耗 <code>f(n)</code> 的时间.</p>
+</blockquote>
+<h4 id="使用">使用</h4><ol>
+<li>求出 <code>c = log(b,a)</code> </li>
+<li>比较 <code>n^c</code> 与 <code>f(n)</code> 的大小<ul>
+<li>如果前者<strong>多项式</strong>的小于后者, 那么该递归式的边界为 <code>Θ(f(n))</code>.</li>
+<li>如果前者<strong>多项式</strong>的大于后者, 那么该递归式的边界为 <code>Θ(n^log(b,a))</code>.</li>
+<li>如果两者<strong>多项式</strong>意义上的相等, 那么只需要乘上一个对数因子 <code>lgn</code>, ex, <code>T(n) = T(n/2) + 1 =&gt; Θ(lgn)</code></li>
+</ul>
+</li>
+</ol>
+<h4 id="总结">总结</h4><p>恰当运用主方法可以解决大多数的递归式边界问题, 但是当两项非多项式意义上的小于或者大于, 那么就不能使用主方法求解, ex, <code>T(n)=2T(n/2)+n/lgn</code></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>在计算机科学中, <a href="http://zh.wikipedia.org/wiki/%E5%88%86%E6%B2%BB%E6%B3%95" target="_blank" rel="external">分治法</a>是基于多项分支递归的]]>
+    </summary>
+    
+      <category term="算法" scheme="http://deltax.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="算法导论" scheme="http://deltax.me/categories/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA/"/>
+    
+      <category term="算法" scheme="http://deltax.me/categories/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[HTTP报文内的HTTP信息]]></title>
+    <link href="http://deltax.me/2015/01/27/HTTP%E6%8A%A5%E6%96%87%E5%86%85%E7%9A%84HTTP%E4%BF%A1%E6%81%AF.md/"/>
+    <id>http://deltax.me/2015/01/27/HTTP报文内的HTTP信息.md/</id>
+    <published>2015-01-27T04:17:20.000Z</published>
+    <updated>2015-01-27T04:35:42.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="HTTP报文">HTTP报文</h2><p><code>HTTP报文</code>是由多行数据构成的字符串文本, 大致可分为<strong>报文首部</strong>和<strong>报文主体</strong>两部分.</p>
+<pre><code><span class="code">------------------
+|     报文首部     |
+------------------</span>
+<span class="header">|  空行(CR + LF)  |
+------------------</span>
+|                |
+|     报文主体    |
+<span class="header">|                | 
+------------------</span>
+</code></pre><p>请求报文和响应报文的主要区别在于<strong>请求行</strong>和<strong>状态行</strong>的不同.</p>
+<pre><code><span class="attribute">请求报文首部 </span>=<span class="string"> 请求行 + 请求首部字段 + 通用首部字段 + 实体首部字段 + 其他
+响应报文首部 = 响应行 + 响应首部字段 + 响应首部字段 + 实体首部字段 + 其他</span>
+</code></pre><p>可以通过<code>Range</code>字段获取部分内容的范围请求</p>
+<pre><code><span class="attribute">Range</span>: <span class="string">bytes=5001-10000</span>
+<span class="attribute">Range</span>: <span class="string">bytes=5001-</span>
+<span class="attribute">Range</span>: <span class="string">bytes=-3000, 5000-7000</span>
+</code></pre><p>当Web界面有多份相同的内容时, 根据浏览器的默认语言会返回不同的界面, 例如中文版或者英文版, 这样的机制就叫做<strong>内容协商</strong>.</p>
+<p><strong>内容协商</strong>就是客户端和服务端对响应的资源内容进行交涉, 返回合适的内容, 具体有以下三种类型.</p>
+<ul>
+<li>服务端驱动协商(Server-driven Negotiation)</li>
+<li>客户端驱动协商(Client-driven Negotiation)</li>
+<li>透明协商(Transparent Negotiation)</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="HTTP报文">HTTP报文</h2><p><code>HTTP报文</code>是由多行数据构成的字符串文本, 大致可分为<strong>报文首部</strong>和<strong>报文主体</strong>两部分.</p>
+<pre><code><span c]]>
+    </summary>
+    
+      <category term="HTTP" scheme="http://deltax.me/tags/HTTP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[简单的HTTP协议]]></title>
+    <link href="http://deltax.me/2015/01/24/%E7%AE%80%E5%8D%95%E7%9A%84HTTP%E5%8D%8F%E8%AE%AE/"/>
+    <id>http://deltax.me/2015/01/24/简单的HTTP协议/</id>
+    <published>2015-01-24T13:59:11.000Z</published>
+    <updated>2015-01-24T14:19:36.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="HTTP协议">HTTP协议</h2><p><code>HTTP</code>协议主要用于客户端和服务端之间的通信, 应用HTTP协议时必须是一端担任客户端角色, 一端担任服务端角色</p>
+<ul>
+<li>客户端发送HTTP请求</li>
+<li>服务端进行响应回复</li>
+</ul>
+<h2 id="请求报文">请求报文</h2><pre><code>请求报文 = 请求方法 + URI + 协议版本 + (请求首部) + (内容实体)
+
+GET <span class="regexp">/index.htm HTTP/</span><span class="number">1.1</span>
+<span class="string">HOST:</span> DeltaX.me
+</code></pre><ul>
+<li><code>GET</code>表示访问服务器的类型, 也就是<code>Method</code></li>
+<li><code>/index.htm</code>指明请求的资源对象, 也叫<code>URI</code></li>
+<li><code>HTTP/1.1</code>为<code>HTTP</code>的版本号</li>
+<li>这段请求的意思是访问HTTP服务器上的<code>/index.htm</code>资源</li>
+</ul>
+<h2 id="响应报文">响应报文</h2><pre><code>请求报文 = 协议版本 + 状态码 + 原因短语 + (响应首部字段) + 实体主体
+
+HTTP/<span class="number">1.1</span> <span class="number">200</span> OK
+<span class="string">Date:</span> Sat, <span class="number">23</span> January <span class="number">2014</span> <span class="number">22</span>:<span class="number">07</span>:<span class="number">00</span> GMT
+Content-<span class="string">Length:</span> <span class="number">500</span>
+Content-<span class="string">Type:</span> text/html
+
+&lt;html&gt;.....
+</code></pre><ul>
+<li>状态码表示请求的处理结果</li>
+<li>原因短语用于解释状态码</li>
+</ul>
+<h2 id="无状态协议和Cookie">无状态协议和Cookie</h2><p><code>HTTP</code>协议自身不对请求和响应之间的通信状态进行保存, 对于发送过的请求和响应<strong>不做持久化处理</strong>. 由于不必保存状态, 自然可以减轻服务器的CPU以及内存资源的销号, 但是要解决状态的问题, 引入了<code>Cookie</code>技术.</p>
+<p>Cookie会根据从服务器端发送的响应豹纹的<code>Set-Cookie</code>的首部字段信息, 通知客户端保存<code>Cookie</code>. 当下次客户端向服务器发送通信时, 客户端后自动在请求报文中加入<code>Cookie</code>值后发送出去, 服务端接收<code>Cookie</code>值之后, 会对比服务器上的记录, 得到之前的状态信息.</p>
+<h2 id="持久连接和管线化">持久连接和管线化</h2><p>为了解决<code>TCP</code>连接的问题, <code>HTTP/1.1</code>和一部分<code>HTTP/1.0</code>实现了<em>持久连接</em>(HTTP keep-alive)方法</p>
+<ul>
+<li>只要任意一端没有明确提出断开连接, 则保持<code>TCP</code>连接状态</li>
+<li><code>HTTP/1.1</code>中所有的连接默认都是持久连接, 这样可以减轻服务器负担, 减少了<code>TCP</code>连接的重复建立和断开造成的额外开销.</li>
+</ul>
+<p><em>管线化</em>及同时并行发送多个请求, 不需要依次等待相应.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="HTTP协议">HTTP协议</h2><p><code>HTTP</code>协议主要用于客户端和服务端之间的通信, 应用HTTP协议时必须是一端担任客户端角色, 一端担任服务端角色</p>
+<ul>
+<li>客户端发送HTTP请求</li>
+<li>服务端进行响]]>
+    </summary>
+    
+      <category term="HTTP" scheme="http://deltax.me/tags/HTTP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[SICP 1.1 The Elements of Programming]]></title>
+    <link href="http://deltax.me/2015/01/19/SICP-1-1/"/>
+    <id>http://deltax.me/2015/01/19/SICP-1-1/</id>
+    <published>2015-01-19T02:06:27.000Z</published>
+    <updated>2015-01-19T04:34:42.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="Summary">Summary</h1><p>This blog just a summary of what I learned from SICP and the solution I made for exercises.</p>
+<p>There are three tips on how our mind works and how we build abstractions.</p>
+<ol>
+<li>Combining several simple ideas into one compound one, one thus all complex idea are made.</li>
+<li>The second is bringing two ideas, whether simple or complex, together, and setting them by one another so as to take a view of them at once, without untiling them into one, by which it gets all its ideas of relations.</li>
+<li>Thr third is separating them from all other ideas that accompany them in their existence.</li>
+</ol>
+<p>Every powerful language has three mechanisms for accomplishing this</p>
+<ol>
+<li><strong>primitive expressions</strong>, which represent the simplest entities the language is concerned with.</li>
+<li><strong>means of combination</strong>, by which compound elements are built from simpler ones, and</li>
+<li><strong>means of abstraction</strong>, by which compound elements can be named and manipulated as units.</li>
+</ol>
+<p>In programming, we just deal with two kinds of elements: <code>procedures</code> and <code>data</code>. Data is ‘stuff’ we manipulated and procedures are descriptions of the rules for manipulating the data. When we learn a new programming language, the first three thing we should learn is what is the primitive expressions in this language, how to combinate those primitive elements, and how to abstract them to make many complex system.</p>
+<p>In <code>Scheme</code> and many other languages <code>define</code> is means of abstraction. We can use <code>define</code> to add a tuple to the global environment, such as <code>(define a 3)</code> is to associate <code>a</code> with a value 3.</p>
+<p>And then, what are the important things in LISP, the most powerful programming language</p>
+<ul>
+<li>Numbers and arithmetic operations are primitive data and procedures.</li>
+<li>Nesting of combination provides a means of combing operations.</li>
+<li>Definitions that associate names with values provide a limited means of abstraction.</li>
+</ul>
+<p>Substitution model for procedure application is not to provide a description of how the interpreter really works. It just helps us how to think about how procedure application works.</p>
+<p>Application order versus nornal order</p>
+<ul>
+<li>Application order is to evalute the argument and then apply.</li>
+<li>Normal order is to fully expand and then reduce.</li>
+</ul>
+<p>The most important thing I learned from this chapter is to build abstraction to suppress details, and the interface user should not know how it is happened, he just needs to know how it should be used and what result does this occured. We use <code>black box abstraction</code> to suppress details and make a big problem into a number of subproblems. For a human beings, when we meet problem in building extremely complex system, we can abstract, abstract and abstract, make new language such as domain specific language to solve complex problem.</p>
+<p>In Lisp, the syntax is very concise and beautiful, use parentheses to build tree-like programs, and the interpreter can interpret it easily.</p>
+<h2 id="Exercise_1-1">Exercise 1.1</h2><pre><code>&gt; <span class="number">10</span>
+<span class="number">10</span>
+&gt; <span class="comment">(+ 5 3 4)</span>
+<span class="number">12</span>
+&gt; <span class="comment">(- 9 1)</span>
+<span class="number">8</span>
+&gt; <span class="comment">(/ 6 2)</span>
+<span class="number">3</span>
+&gt; <span class="comment">(+ (* 2 4)</span> <span class="comment">(- 4 6)</span>)
+<span class="number">6</span>
+&gt; <span class="comment">(define a 3)</span>
+&gt; <span class="comment">(define b (+ a 1)</span>)
+&gt; <span class="comment">(+ a b (* a b)</span>)
+<span class="number">19</span>
+&gt; <span class="comment">(= a b)</span>
+<span class="title">#f
+&gt; (if (and (&gt; b a) (&lt; b (* a b)))
+      b
+      a)
+4</span>
+&gt; <span class="comment">(cond ((= a 4)</span> <span class="number">6</span>)
+        <span class="comment">((= b 4)</span> <span class="comment">(+ 6 7 a)</span>)
+        <span class="comment">(else 25)</span>)
+<span class="number">16</span>
+&gt; <span class="comment">(+ 2 (if (&gt; b a)</span> b a))
+<span class="number">6</span>
+&gt; <span class="comment">(* (cond ((&gt; a b)</span> a)
+           <span class="comment">((&lt; a b)</span> b)
+           <span class="comment">(else -1)</span>)
+     <span class="comment">(+ a 1)</span>)
+<span class="number">16</span>
+</code></pre><h2 id="Exercise_1-2">Exercise 1.2</h2><pre><code><span class="list">(<span class="keyword"><span class="built_in">/</span></span> <span class="list">(<span class="keyword"><span class="built_in">+</span></span> <span class="number">5</span> <span class="number">4</span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> <span class="number">2</span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> <span class="number">3</span> <span class="list">(<span class="keyword"><span class="built_in">+</span></span> <span class="number">6</span> <span class="list">(<span class="keyword"><span class="built_in">/</span></span> <span class="number">4</span> <span class="number">5</span>)</span>)</span>)</span>)</span>)</span>
+   <span class="list">(<span class="keyword"><span class="built_in">*</span></span> <span class="number">3</span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> <span class="number">6</span> <span class="number">2</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> <span class="number">2</span> <span class="number">7</span>)</span>)</span>)</span>
+</code></pre><h2 id="Exercise_1-3">Exercise 1.3</h2><pre><code><span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">square</span> x)</span> <span class="list">(<span class="keyword"><span class="built_in">*</span></span> x x)</span>)</span>
+<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">sum-of-square</span> a b)</span>
+  <span class="list">(<span class="keyword"><span class="built_in">+</span></span> <span class="list">(<span class="keyword">square</span> a)</span> <span class="list">(<span class="keyword">square</span> b)</span>)</span>)</span>
+<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">two-larger-sum-of-square</span> a b c)</span>
+  <span class="list">(<span class="keyword"><span class="built_in">cond</span></span> <span class="list">(<span class="list">(<span class="keyword"><span class="built_in">and</span></span> <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> a b)</span> <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> a c)</span>)</span> <span class="list">(<span class="keyword">sum-of-square</span> b c)</span>)</span>
+        <span class="list">(<span class="list">(<span class="keyword"><span class="built_in">and</span></span> <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> b a)</span> <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> b c)</span>)</span> <span class="list">(<span class="keyword">sum-of-square</span> a c)</span>)</span>
+        <span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword">sum-of-square</span> a b)</span>)</span>)</span>)</span>
+</code></pre><h2 id="Exercise_1-4">Exercise 1.4</h2><p>if parameter <code>b</code> is greater than zero, then the <code>if</code> clouse will return operator <code>+</code>, otherwise it will return <code>-</code>.</p>
+<h2 id="Exercise_1-5">Exercise 1.5</h2><p>if the interpreter uses <code>applicative-order</code> evaluation, every parameters pass to the function are evaluated immediately. So the <code>p</code> function call it self and never terminate. The interpreter falls into infinite loop.</p>
+<p>However, if the intepreter uses <code>normal-order</code> evaluation, the interpreter does not evaluate <code>(test 0 (p))</code> immediately, when the <code>if</code> clouse is sent to the interpreter, the <code>(p)</code> branch will never evaluate.</p>
+<h2 id="Exercise_1-6">Exercise 1.6</h2><p><code>if</code> clouse is a different syntax, it is different from <code>new-if</code> function, in this function every branch will be evaluated when passed into the function. So the <code>sqrt-iter</code> branch will never terminate and fall into infinite recursion.</p>
+<h2 id="Exercise_1-7">Exercise 1.7</h2><p>The constant in function <code>good-enough?</code> determines this strategy not works well when evaluate a square root of a small number. When the number is very large, the strategy becomes very inefficient, and the procedure works very slow.</p>
+<h2 id="Exercise_1-8">Exercise 1.8</h2><pre><code><span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">square</span> x)</span> <span class="list">(<span class="keyword"><span class="built_in">*</span></span> x x)</span>)</span>
+<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">cube</span> x)</span> <span class="list">(<span class="keyword"><span class="built_in">*</span></span> x x x)</span>)</span>
+<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">cube-iter</span> guess x)</span>
+  <span class="list">(<span class="keyword"><span class="built_in">if</span></span> <span class="list">(<span class="keyword">good-enough?</span> guess x)</span>
+      guess
+      <span class="list">(<span class="keyword">cube-iter</span> <span class="list">(<span class="keyword">improve</span> guess x)</span>
+                 x)</span>)</span>)</span>
+<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">improve</span> guess x)</span>
+  <span class="list">(<span class="keyword">average</span> guess <span class="list">(<span class="keyword"><span class="built_in">/</span></span> <span class="list">(<span class="keyword"><span class="built_in">+</span></span> <span class="list">(<span class="keyword"><span class="built_in">/</span></span> x <span class="list">(<span class="keyword">square</span> guess)</span>)</span> 
+                       <span class="list">(<span class="keyword"><span class="built_in">*</span></span> <span class="number">2</span> guess)</span>)</span>
+                    <span class="number">3</span>)</span>)</span>)</span>
+<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">average</span> x y)</span>
+  <span class="list">(<span class="keyword"><span class="built_in">/</span></span> <span class="list">(<span class="keyword"><span class="built_in">+</span></span> x y)</span> <span class="number">2</span>)</span>)</span>
+<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">good-enough?</span> guess x)</span>
+  <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> <span class="list">(<span class="keyword"><span class="built_in">abs</span></span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> <span class="list">(<span class="keyword">cube</span> guess)</span> x)</span>)</span> <span class="number">0.001</span>)</span>)</span>
+<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">cube-root</span> x)</span>
+  <span class="list">(<span class="keyword">cube-iter</span> <span class="number">1.0</span> x)</span>)</span> 
+</code></pre>]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="Summary">Summary</h1><p>This blog just a summary of what I learned from SICP and the solution I made for exercises.</p>
+<p>There are]]>
+    </summary>
+    
+      <category term="FP" scheme="http://deltax.me/tags/FP/"/>
+    
+      <category term="SICP" scheme="http://deltax.me/tags/SICP/"/>
+    
+      <category term="Scheme" scheme="http://deltax.me/tags/Scheme/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Persistent Storage with levelDB]]></title>
+    <link href="http://deltax.me/2014/12/11/Persistent-Storage-with-levelDB/"/>
+    <id>http://deltax.me/2014/12/11/Persistent-Storage-with-levelDB/</id>
+    <published>2014-12-11T11:18:56.000Z</published>
+    <updated>2014-12-11T12:10:30.000Z</updated>
+    <content type="html"><![CDATA[<p><code>LevelDB</code> is a key-value pair database developing by google. Why I use this instead of <code>Core Data</code> which is so widely used.</p>
+<p><code>Core Data</code> is a framework deals with data in <code>Cocoa</code>. It is extremly important but compliated. There are many concepts and problems in it. And every time I use <code>Core Data</code> to fetch some datas, I have to write couple lines code.</p>
+<pre><code><span class="title">UIAppdelegate</span> *appDelegate = [UIApplication sharedApplication].delegate;
+<span class="title">NSManagedObjectContext</span> *appDelegate = ApplicationDelegate.managedObjectContext;
+<span class="title">NSError</span> *<span class="built_in">error</span> = nil;
+<span class="title">NSFetchRequest</span> *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Item class])];
+<span class="title">NSArray</span> *items  = [manageContext executeFetchRequest:request <span class="built_in">error</span>:&amp;<span class="built_in">error</span>];
+</code></pre><p>This is so complicated and not elegant. I prefer to use <code>key-value</code> storage instead of it in some situations. When data are not compliated and the relation between models are simple.</p>
+<p>I use <code>levelDB</code> this way:</p>
+<pre><code>UIAppdelegate *appDelegate = [UIApplication sharedApplication].delegate<span class="comment">;</span>
+[]appDelegate<span class="preprocessor">.db</span> objectForKey:@<span class="string">"key"</span>]<span class="comment">;</span>
+</code></pre><p>Just like dictionary and incredible simple to deal with.</p>
+<p>Before using <code>LevelDB</code>, the first thing you need to do is downlod repo on github <a href="https://github.com/google/leveldb" target="_blank" rel="external"><code>google/LevelDB</code></a> or type this in terminal</p>
+<pre><code>git clone <span class="string">https:</span><span class="comment">//github.com/google/leveldb.git</span>
+</code></pre><p>And then you need to compile it.</p>
+<pre><code><span class="variable">CXXFLAGS=</span><span class="variable">-stdlib=</span>libstdc++ make <span class="variable">PLATFORM=</span>IOS
+</code></pre><p>Download the wrapper on this <a href="http://www.tanhao.me/pieces/1397.html" target="_blank" rel="external">tanhao</a> Just drag this all in your project.</p>
+<p>The prepare work are all done.</p>
+<p>But when I you this <code>levelDB</code> to store data, I met some problems, if you want to store some data which is an object, you should make the <code>class</code> of that <code>object</code> to confirm <code>NSCoding</code> protocol.</p>
+<pre><code>- (id)<span class="string">initWithCoder:</span>(NSCoder *)decoder {
+    self = [<span class="keyword">super</span> init];
+    <span class="keyword">if</span> (!self) {
+        <span class="keyword">return</span> nil;
+    }
+
+    self.avatar = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"avatar"</span>];
+    self.nickName = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"nickName"</span>];
+    self.userID = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"userID"</span>];
+    self.comments = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"comments"</span>];
+
+    <span class="keyword">return</span> self;
+}
+
+- (<span class="typename">void</span>)<span class="string">encodeWithCoder:</span>(NSCoder *)encoder {
+    [encoder <span class="string">encodeObject:</span>self.avatar <span class="string">forKey:</span>@<span class="string">"avatar"</span>];
+    [encoder <span class="string">encodeObject:</span>self.nickName <span class="string">forKey:</span>@<span class="string">"nickName"</span>];
+    [encoder <span class="string">encodeObject:</span>self.userID <span class="string">forKey:</span>@<span class="string">"userID"</span>];
+    [encoder <span class="string">encodeObject:</span>self.comments <span class="string">forKey:</span>@<span class="string">"comments"</span>];
+}
+</code></pre><p>You need to implement this two methods, if not when you fetch the object from the data base, the compiler do not know what in it and what is it. So you should <code>encode</code> the object propety before store them. And <code>decode</code> the object when you fetch them. Work similar as <code>NSKeyedArchiver</code>, if we have dozens of property, we have to write code for every property, after I find that I have to solve this problem in this approach. I think I want to write a <code>Meta Propgram</code> in <code>Ruby</code> to deal with this.</p>
+<p>And I will do it after my second App on line.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><code>LevelDB</code> is a key-value pair database developing by google. Why I use this instead of <code>Core Data</code> which is so wide]]>
+    </summary>
+    
+      <category term="iOS" scheme="http://deltax.me/tags/iOS/"/>
+    
+      <category term="iOS" scheme="http://deltax.me/categories/iOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[iOS Using AFNetworking <Bug03>]]></title>
+    <link href="http://deltax.me/2014/12/03/iOS%20Using%20AFNetworking%20%3CBug03%3E/"/>
+    <id>http://deltax.me/2014/12/03/iOS Using AFNetworking <Bug03>/</id>
+    <published>2014-12-02T16:56:49.000Z</published>
+    <updated>2014-12-02T17:18:27.000Z</updated>
+    <content type="html"><![CDATA[<p>During these days development, when I connect our iOS App to Python <code>back-end</code> using <code>AFNetworking</code>, I met an error. It is my first time to use the <code>AFNetworking</code> framework, I am used to use <code>MKNetworking</code> instead, but with some reasons. I planned to use <code>AFNetworking</code> instead. And then, as you see, I met a few problems. </p>
+<pre><code>Error: Error Domain=NSCocoaErrorDomain Code=3840 <span class="string">"The operation couldn’t be completed. (Cocoa error 3840.)"</span><span class="function"> (</span>JSON text did<span class="instruction"> not </span>start with<span class="instruction"> array </span>or object<span class="instruction"> and </span>option to allow fragments<span class="instruction"> not </span>set.<span class="function">)</span> UserInfo=0x17697430 {NSDebugDescription=JSON text did<span class="instruction"> not </span>start with<span class="instruction"> array </span>or object<span class="instruction"> and </span>option to allow fragments<span class="instruction"> not </span>set., NSUnderlyingError=0x176f9ec0 
+</code></pre><p>At first, I do not know, what it’s mean, but I ask my partner, he tells me, in order to beautify the <code>JSON</code> he use some method, to make them like this, I do not know exactly what he did, but <code>JSON</code> looks like this.</p>
+<pre><code>{
+  "<span class="attribute">message</span>": <span class="value"><span class="string">"success"</span></span>, 
+  "<span class="attribute">posts</span>": <span class="value">[]</span>, 
+  "<span class="attribute">status</span>": <span class="value"><span class="number">0</span>
+</span>}
+</code></pre><p>It is not like the <code>JSON</code> I used to deal with before, I think they should be this shape:</p>
+<pre><code>{ "<span class="attribute">message</span>": <span class="value"><span class="string">"success"</span></span>, "<span class="attribute">posts</span>": <span class="value">[]</span>,  "<span class="attribute">status</span>": <span class="value"><span class="number">0</span></span>}
+</code></pre><p>But it’s not, at that time, he explains that if I could not deal with this, he could modify them back. For he can not change this immediately, so I tried to fix this problem.</p>
+<p>And then, I find this problem is cuz but my mistakes, I add one more <code>/</code> in the <code>URL</code>. After I fix this. I confidently run my App, and there is also an different error:</p>
+<pre><code><span class="setting">NSUnderlyingError=<span class="value"><span class="number">0</span>x156a3e80 <span class="string">"Request failed: unacceptable content-type: text/html"</span></span></span>
+</code></pre><p>I search this on google and stackoverflow, someone says add a <code>acceptableContentType</code> to <code>responseSerialzer</code>, someone says to <code>initialize</code> a <code>responseSerailize</code> and change it option to <code>AllowFragment</code>. When I tries them, I find the first solution is right.</p>
+<p>I add a <code>acceptableContentType</code> to the <code>responseSerializer</code>, and I fix this. But I think this quiet messy, everytime I use this framework, I had to add an <code>acceptableContentType</code>. I am too naive to realize this as a mistake. So I open an <code>issue</code> on <code>AFNetworking</code> and add this <code>type</code> <code>text/html</code> to the source code.</p>
+<pre><code>self.acceptableContentTypes = [NSSet setWithObjects:<span class="variable">@"</span>application/json<span class="string">", @"</span><span class="keyword">text</span>/json<span class="string">", @"</span><span class="keyword">text</span>/javascript<span class="string">", @"</span><span class="keyword">text</span>/html<span class="string">", nil];</span>
+</code></pre><p>And soon, the author of <code>AFNetworking</code> reply me as follows:</p>
+<pre><code>The solution <span class="keyword">is</span> already built <span class="keyword">into</span> <span class="keyword">the</span> design <span class="keyword">of</span> <span class="keyword">the</span> framework. Patching <span class="keyword">it</span> <span class="keyword">is</span> unnecessary.
+</code></pre><p>A little disappointed, but I add this type to my source code, in order to not add this everytime initialize the <code>manager</code>.</p>
+<p>Hope this helps. </p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>During these days development, when I connect our iOS App to Python <code>back-end</code> using <code>AFNetworking</code>, I met an error]]>
+    </summary>
+    
+      <category term="iOS" scheme="http://deltax.me/tags/iOS/"/>
+    
+      <category term="iOS" scheme="http://deltax.me/categories/iOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[iOS Combine TabbarController and NavigationController<Bug02>]]></title>
+    <link href="http://deltax.me/2014/11/28/iOS%E7%BB%84%E5%90%88TabbarController%E5%92%8CNavigationController%20%3CBug02%3E/"/>
+    <id>http://deltax.me/2014/11/28/iOS组合TabbarController和NavigationController <Bug02>/</id>
+    <published>2014-11-28T12:36:59.000Z</published>
+    <updated>2014-11-28T13:47:01.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="TabbarController_and_NavigationController">TabbarController and NavigationController</h2><p><code>UINavigationController</code> and <code>UITabBarController</code> are two kinds of container classes in Cocoa. The two controllers are tremendous important in iOS development, we deal with them every day. Even if you are not a developer, just an iOS device user. Almost every thing you see in an iOS App have some relationship with them.</p>
+<p>Why are they so important, because of they are container classes, they handle many view controllers in an App. And <code>MVC</code> is the basic design patterns in <code>Cocoa</code> and <code>Cocoa touch</code>.</p>
+<p>Personally, I prefer to initialize everything programmingly, not in a storyboard or a nib file. Because I think it is easy to deal with. Sometimes using storyboard or a nib is too simple, but they may cause undetectable crash.</p>
+<h2 id="Use_them_Programatically">Use them Programatically</h2><p>The first thing we start an App is set up the project, and I am used to delete the <code>Main.storyboard</code> file first. And add some code to configure the <code>AppDelegate</code>.</p>
+<p>The common code you add may be this:</p>
+<pre><code>- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions {
+    <span class="comment">// Override point for customization after application launch.</span>
+    <span class="keyword">self</span><span class="variable">.window</span> = [[<span class="built_in">UIWindow</span> alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    <span class="keyword">self</span><span class="variable">.window</span><span class="variable">.rootViewController</span> = [[<span class="built_in">UIViewController</span> alloc] init];
+    [<span class="keyword">self</span><span class="variable">.window</span> makeKeyAndVisible];
+    [[<span class="built_in">UIApplication</span> sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    <span class="keyword">return</span> <span class="literal">YES</span>;
+}
+</code></pre><p>Every project without a <code>storyboard</code> needs to initialize like this. How should we do then?</p>
+<p>What should we do, if we want to set up with a <code>navigationController</code>:</p>
+<pre><code>- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions {
+    <span class="comment">// Override point for customization after application launch.</span>
+    <span class="keyword">self</span><span class="variable">.window</span> = [[<span class="built_in">UIWindow</span> alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    <span class="built_in">UINavigationController</span> *navigationController = [[<span class="built_in">UINavigationController</span> alloc] initWithRootViewController:[[<span class="built_in">UIViewController</span> alloc] init]];
+    <span class="keyword">self</span><span class="variable">.window</span><span class="variable">.rootViewController</span> = navigationController;
+    [<span class="keyword">self</span><span class="variable">.window</span> makeKeyAndVisible];
+    [[<span class="built_in">UIApplication</span> sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    <span class="keyword">return</span> <span class="literal">YES</span>;
+}
+</code></pre><p>It’s quiet simple and easy to understand, what about <code>tabBarController</code>:</p>
+<pre><code>- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions {
+    <span class="comment">// Override point for customization after application launch.</span>
+    <span class="keyword">self</span><span class="variable">.window</span> = [[<span class="built_in">UIWindow</span> alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
+    <span class="built_in">UIViewController</span> *firstViewController = [[<span class="built_in">UIViewController</span> alloc] init];
+    <span class="built_in">UIViewController</span> *secondViewController = [[<span class="built_in">UIViewController</span> alloc] init];
+    <span class="built_in">UIViewController</span> *thirdViewController = [[<span class="built_in">UIViewController</span> alloc] init];
+
+    <span class="built_in">UITabBarController</span> *tabBarController = [[<span class="built_in">UITabBarController</span> alloc] init];        
+    tabBarController<span class="variable">.viewControllers</span> = @[firstViewController, secondViewController, thirdViewController];
+    <span class="keyword">self</span><span class="variable">.window</span><span class="variable">.rootViewController</span> = tabBarController;
+    [<span class="keyword">self</span><span class="variable">.window</span> makeKeyAndVisible];
+    [[<span class="built_in">UIApplication</span> sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    <span class="keyword">return</span> <span class="literal">YES</span>;
+}
+</code></pre><p>Just set <code>tabBarController</code>‘s property <code>viewControllers</code> to proper <code>viewController</code>.</p>
+<h2 id="Why_combine_TabBarController_and_NavigationController">Why combine TabBarController and NavigationController</h2><p>If you want to switch to another view from one of <code>tabBarController</code>, you can not do it with a single <code>tabBarController</code>. Because you need a stack to manage all of your controllers. If you not have one, the system do not know which view controller will display after this view pop from the window.</p>
+<p>So we need to combine them, in my first project, I do this in this way:</p>
+<pre><code>- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions {
+    <span class="comment">// Override point for customization after application launch.</span>
+    <span class="keyword">self</span><span class="variable">.window</span> = [[<span class="built_in">UIWindow</span> alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
+    <span class="built_in">UIViewController</span> *firstViewController = [[<span class="built_in">UIViewController</span> alloc] init];
+    <span class="built_in">UIViewController</span> *secondViewController = [[<span class="built_in">UIViewController</span> alloc] init];
+    <span class="built_in">UIViewController</span> *thirdViewController = [[<span class="built_in">UIViewController</span> alloc] init];
+
+    <span class="built_in">UITabBarController</span> *tabBarController = [[<span class="built_in">UITabBarController</span> alloc] init];        
+    tabBarController<span class="variable">.viewControllers</span> = @[firstViewController, secondViewController, thirdViewController];
+    <span class="built_in">UINavigationController</span> *navigationController = [[UINavigationControlle alloc] initWithRootViewController:tabBarController];
+    <span class="keyword">self</span><span class="variable">.window</span><span class="variable">.rootViewController</span> = tabBarController;
+    [<span class="keyword">self</span><span class="variable">.window</span> makeKeyAndVisible];
+    [[<span class="built_in">UIApplication</span> sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    <span class="keyword">return</span> <span class="literal">YES</span>;
+}
+</code></pre><p>When I did this, I do not consider about other thing, because the apple developer document use this approach: </p>
+<pre><code><span class="built_in">UIViewController</span> *firstViewController = [[<span class="built_in">UIViewController</span> alloc] init];
+<span class="built_in">UIViewController</span> *secondViewController = [[<span class="built_in">UIViewController</span> alloc] init];
+<span class="built_in">UIViewController</span> *thirdViewController = [[<span class="built_in">UIViewController</span> alloc] init];
+<span class="built_in">UIViewController</span> *rootViewController = [[<span class="built_in">UIViewController</span> alloc] init];
+<span class="built_in">UINavigationController</span>* navController = [[<span class="built_in">UINavigationController</span> alloc]
+                        initWithRootViewController:rootViewController];
+
+<span class="built_in">NSArray</span>* controllers = [<span class="built_in">NSArray</span> arrayWithObjects:firstViewController, secondViewController, thirdViewController, navController, <span class="literal">nil</span>];
+
+<span class="built_in">UITabBarController</span> *tabBarController = [[<span class="built_in">UITabBarController</span> alloc] init];
+tabBarController<span class="variable">.viewControllers</span> = controllers;
+
+<span class="keyword">self</span><span class="variable">.window</span><span class="variable">.rootViewController</span> = tabBarController;
+</code></pre><p>I just think this is a silly way. if I imitate this, <strong>Do I need to initialize five navigation controllers each with a view controller?</strong></p>
+<p>The answer is right. I need to do so. Why? After I imitate this approach, my previous approach has some side effects.</p>
+<ol>
+<li>Sometimes you reference <code>navigationController</code> with <code>self</code>, you may get a null. Because the five viewController are bot pushed on the stack.</li>
+<li>If you change <code>navigationBar</code> in one tab, as you swich to another, all the <code>navigationBar</code> are changed. Because they are just one <code>navigationController</code> and it just have only one <code>navigatonBar</code>.</li>
+<li>If you <code>pushViewController</code> from one of <code>tabBarController</code>‘s <code>viewControllers</code>, tab bar will disapper, you will not see it, because <code>tabBarController</code> is not the <code>rootViewController</code>, it just in the stack with its <code>tabBar</code>.</li>
+</ol>
+<p>So the verbose but correct approach is this:</p>
+<pre><code><span class="built_in">UIViewController</span> *firstViewController = [[<span class="built_in">UIViewController</span> alloc] init];
+<span class="built_in">UIViewController</span> *secondViewController = [[<span class="built_in">UIViewController</span> alloc] init];
+<span class="built_in">UIViewController</span> *thirdViewController = [[<span class="built_in">UIViewController</span> alloc] init];
+<span class="built_in">UINavigationController</span> *firstNavigationController = [[<span class="built_in">UINavigationController</span> alloc]
+                        initWithRootViewController:rootViewController];
+<span class="built_in">UINavigationController</span> *secondNavigationController = [[<span class="built_in">UINavigationController</span> alloc]
+                        initWithRootViewController:rootViewController];
+<span class="built_in">UINavigationController</span> *thirdNavigationController = [[<span class="built_in">UINavigationController</span> alloc]
+                        initWithRootViewController:rootViewController];
+
+<span class="built_in">NSArray</span>* controllers = [<span class="built_in">NSArray</span> arrayWithObjects:firstNavigationController, secondNavigationController, thirdNavigationController, <span class="literal">nil</span>];
+
+<span class="built_in">UITabBarController</span> *tabBarController = [[<span class="built_in">UITabBarController</span> alloc] init];
+tabBarController<span class="variable">.viewControllers</span> = controllers;
+
+<span class="keyword">self</span><span class="variable">.window</span><span class="variable">.rootViewController</span> = tabBarController;
+</code></pre><p>PS: <code>navigationBar</code> is damn difficult to use. Hope this help.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="TabbarController_and_NavigationController">TabbarController and NavigationController</h2><p><code>UINavigationController</code> and ]]>
+    </summary>
+    
+      <category term="iOS" scheme="http://deltax.me/tags/iOS/"/>
+    
+      <category term="iOS" scheme="http://deltax.me/categories/iOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Lists and Patterns Matching]]></title>
+    <link href="http://deltax.me/2014/11/26/Lists-and-Patterns-Matching/"/>
+    <id>http://deltax.me/2014/11/26/Lists-and-Patterns-Matching/</id>
+    <published>2014-11-26T07:57:59.000Z</published>
+    <updated>2014-11-26T10:01:38.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Recursive_computations">Recursive computations</h2><p>递归的计算模型是声明式编程的核心, 有些人可能并不知道, 类型也是可以递归的. 比如说列表.</p>
+<h3 id="List">List</h3><p>列表是在函数式编程中是很有趣的, 也是很强大的, 大多数函数式编程语言都支持列表, 比如<code>Haskell</code>, <code>ML</code>, <code>Scheme</code>. 列表. 列表与<code>C</code>, <code>Java</code>, <code>Objective-C</code> 语言中的<code>array</code>非常的相似, 但是却有着很大的不同. </p>
+<p>列表是一种递归的数据类型:</p>
+<pre><code>% <span class="type">Xs</span> <span class="type">Xr</span> 是列表
+<span class="type">Xs</span> =&gt; <span class="literal">nil</span>
+<span class="type">Xr</span> =&gt; <span class="type">X</span>|<span class="type">Xr</span>
+</code></pre><p>我们使用上下文无关文案表示列表在核心语言中的语法的表示.</p>
+<pre><code><span class="tag">&lt;<span class="title">List</span>&gt;</span> ::=  nil
+         |   <span class="tag">&lt;<span class="title">T</span>&gt;</span> `|` <span class="tag">&lt;<span class="title">List</span> <span class="attribute">T</span>&gt;</span>
+</code></pre><p>列表可以由<code>nil</code>开始, 不挺的重复自己, 直到列表结束<code>&lt;List&gt; =&gt; nil</code>.</p>
+<p>我们也可以使用这种方式表示其他更复杂的数据类型, 比如说<code>binary tree</code></p>
+<pre><code><span class="tag">&lt;<span class="title">BTree</span> <span class="attribute">T</span>&gt;</span>  ::= leaf
+            |  tree(key: <span class="tag">&lt;<span class="title">Literal</span>&gt;</span> value: T
+                    left: <span class="tag">&lt;<span class="title">BTree</span> <span class="attribute">T</span>&gt;</span> right: <span class="tag">&lt;<span class="title">BTree</span> <span class="attribute">T</span>&gt;</span>)
+</code></pre><h4 id="Haskell">Haskell</h4><p>在<code>Haskell</code>中, 列表是一种单类型的数据结构, 可以用来存储多个类型的东西, 同时它还可以嵌套. 简单展示一下<code>Haskell</code>中的列表吧:</p>
+<pre><code><span class="attr_selector">[1,2,3,4,5]</span>
+
+<span class="comment">//嵌套列表</span>
+<span class="attr_selector">[[1,2,3,4]</span>,<span class="attr_selector">[5,6,7,8]</span>,<span class="attr_selector">[9,10,11,12]</span>]
+</code></pre><p>访问列表中的元素, 有两种基本的方法, 在<code>Haskell</code>中一种是<code>head</code>访问数组的头部, 一种的<code>tail</code>返回列表的尾部.</p>
+<pre><code>head [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]  =&gt; <span class="number">1</span>
+tail [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]  =&gt; [<span class="number">2</span>,<span class="number">3</span>]
+
+head [<span class="number">1</span>,<span class="number">2</span>] =&gt; <span class="number">1</span>
+tail [<span class="number">1</span>,<span class="number">2</span>] =&gt; [<span class="number">2</span>]
+
+head [<span class="number">2</span>] =&gt; <span class="number">2</span>
+tail [<span class="number">2</span>] =&gt; <span class="literal">[]</span>
+</code></pre><p>有几点注意的是, 这两个函数都只能对列表进行操作, <code>head</code>返回的是列表中的一个元素, 而<code>tail</code>返回的是一个<strong>列表</strong>. 尤其注意后面的两种情况.</p>
+<p>在<code>Haskell</code>中呢, 有一种更强大过滤组合列表的方式, 叫做<code>list comprehension</code>列表推导, 我们可以使用列表推导轻松的完成快速排序的实现.</p>
+<pre><code><span class="label">quicksort ::</span> (Ord <span class="literal">a</span>) =&gt; [<span class="literal">a</span>] -&gt; [<span class="literal">a</span>]  
+quicksort [] = []  
+<span class="label">quicksort (x:</span>xs) =   
+    let smallerSorted = quicksort [<span class="literal">a</span> | <span class="literal">a</span> &lt;- xs, <span class="literal">a</span> &lt;= x]  
+        biggerSorted = quicksort [<span class="literal">a</span> | <span class="literal">a</span> &lt;- xs, <span class="literal">a</span> &gt; x]  
+    in  smallerSorted ++ [x] ++ biggerSorted  
+</code></pre><p>这段代码就是用列表推导完成了使用其他语言需要几倍代码量才能完成的快速排序.</p>
+<h4 id="Scheme">Scheme</h4><p><code>Scheme</code>是<code>Lisp</code>主要的两种方言之一. 它与<code>lambda</code>演算的关系相当的密切, <code>Scheme</code>中的有两种方式构造一个列表.</p>
+<pre><code><span class="list">(<span class="keyword">list</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span>)</span>
+
+<span class="comment">; This is just a syntax sugar</span>
+<span class="quoted">'(<span class="number">1</span> <span class="number">2</span> <span class="number">3</span>)</span>
+</code></pre><p><code>Scheme</code>中对列表的操作, 使用<code>car</code>和<code>cdr</code>, 用法基本与<code>Haskell</code>中的<code>head</code>和<code>tail</code>一样.</p>
+<h4 id="Oz">Oz</h4><p><code>Oz</code>是在<code>CTMCP</code>一书中提到的用于研究的语言, 我们使用它来展示列表是如何工作和使用的.</p>
+<pre><code><span class="comment">% 列表的声明</span>
+<span class="variable">L</span> = [<span class="number">5</span> <span class="number">6</span> <span class="number">7</span> <span class="number">8</span>]
+
+<span class="comment">% car 方法</span>
+<span class="variable">L</span>.<span class="number">1</span> = <span class="number">5</span>
+
+<span class="comment">% cdr 方法</span>
+<span class="variable">L</span>.<span class="number">2</span> = [<span class="number">6</span> <span class="number">7</span> <span class="number">8</span>]
+</code></pre><p>我们也可以使用<code>|</code>操作符创建列表</p>
+<pre><code>L = <span class="number">5</span><span class="string">|6|7|8|nil</span>
+</code></pre><h2 id="Programming_with_Lists">Programming with Lists</h2><p>因为列表简单的结构, 使用它们进行声明式编程是非常简单和强大的.</p>
+<ul>
+<li>递归式的思考, 解决问题的更小一部分.</li>
+<li>将递归式的计算模型转化为迭代式的计算模型.</li>
+<li>校正迭代式的计算模型.</li>
+<li>遵循类型来构建程序.</li>
+</ul>
+<h3 id="Pattern_Matching">Pattern Matching</h3><p>模式匹配同样是<code>FP</code>中强大的特性, 我们可以使用它来代替<code>car</code>和<code>cdr</code>方法同时获取列表的头部和尾部, 避免使用<code>if</code>条件.</p>
+<pre><code>% <span class="keyword">display</span> 5 and [6 7 8]
+declare
+<span class="keyword">L</span>=[5 6 7 8]
+case <span class="keyword">L</span> of <span class="keyword">H</span>|T then {<span class="keyword">Browse</span> <span class="keyword">H</span>} {<span class="keyword">Browse</span> T} end
+</code></pre>]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Recursive_computations">Recursive computations</h2><p>递归的计算模型是声明式编程的核心, 有些人可能并不知道, 类型也是可以递归的. 比如说列表.</p>
+<h3 id="List">List</h3><p>列]]>
+    </summary>
+    
+      <category term="Haskell" scheme="http://deltax.me/tags/Haskell/"/>
+    
+      <category term="List" scheme="http://deltax.me/tags/List/"/>
+    
+      <category term="ML" scheme="http://deltax.me/tags/ML/"/>
+    
+      <category term="Pattern Match" scheme="http://deltax.me/tags/Pattern-Match/"/>
+    
+      <category term="Haskell" scheme="http://deltax.me/categories/Haskell/"/>
+    
+      <category term="ML" scheme="http://deltax.me/categories/Haskell/ML/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Iteration versus Recursion]]></title>
+    <link href="http://deltax.me/2014/11/24/Iterative-versus-Recursive/"/>
+    <id>http://deltax.me/2014/11/24/Iterative-versus-Recursive/</id>
+    <published>2014-11-24T13:25:57.000Z</published>
+    <updated>2014-11-25T00:35:26.000Z</updated>
+    <content type="html"><![CDATA[<p><code>Iteration</code> 和 <code>Recursion</code> 在我们所有的编程语言中都是非常重要的概念, 尤其是在声明式的编程模型中.</p>
+<h2 id="Iteraive_computation">Iteraive computation</h2><p>迭代的计算模型是一个<code>stack</code>大小为<code>constant</code>并且大小保持不变的循环.</p>
+<p>非常重要的地方就是, 迭代的计算模型拥有一个初始的状态<code>S 0</code>, 在经过多次的转换最后会得到<code>S final</code>:</p>
+<pre><code>S0 -&gt; S1 -&gt; <span class="keyword">...</span> -&gt; Sfinal
+</code></pre><p>这种思想的通用的表示可以被总结为如下的形式:</p>
+<pre><code><span class="list">(<span class="keyword">define</span> <span class="list">(<span class="keyword">iter</span> state)</span>
+    <span class="list">(<span class="keyword"><span class="built_in">if</span></span> <span class="list">(<span class="keyword">good-enough?</span> state)</span>
+        state
+        <span class="list">(<span class="keyword">iter</span> <span class="list">(<span class="keyword"><span class="built_in">next</span></span> state)</span>)</span>)</span>)</span>
+</code></pre><p>在这个模式中, 函数<code>good-enough?</code>和<code>next</code>依赖于相应的问题. 我们使用<code>Newton&#39;s method</code>求平方根来验证这个迭代的计算模型.</p>
+<pre><code><span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword"><span class="built_in">sqrt</span></span> x)</span>
+    <span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">iter</span> guess x)</span>
+        <span class="list">(<span class="keyword"><span class="built_in">if</span></span> <span class="list">(<span class="keyword">good-enough?</span> guess x)</span>
+            guess
+            <span class="list">(<span class="keyword">iter</span> <span class="list">(<span class="keyword">improve</span> guess x)</span> x)</span>)</span>)</span>
+    <span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">improve</span> guess x)</span>
+        <span class="list">(<span class="keyword"><span class="built_in">/</span></span> <span class="list">(<span class="keyword"><span class="built_in">+</span></span> guess <span class="list">(<span class="keyword"><span class="built_in">/</span></span> x guess)</span>)</span> <span class="number">2</span>)</span>)</span>
+    <span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">good-enough?</span> guess x)</span>
+        <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> <span class="list">(<span class="keyword"><span class="built_in">abs</span></span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> x <span class="list">(<span class="keyword"><span class="built_in">*</span></span> guess guess)</span>)</span>)</span> <span class="number">0.00001</span>)</span>)</span>
+    <span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword"><span class="built_in">abs</span></span> x)</span> <span class="list">(<span class="keyword"><span class="built_in">if</span></span> <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> x <span class="number">0</span>)</span> <span class="list">(<span class="keyword">-x</span>)</span> x)</span>)</span>
+    <span class="list">(<span class="keyword">iter</span> <span class="number">1.0</span> x)</span>)</span>
+</code></pre><p>这就是我们使用迭代式的计算模型使用<code>Newton&#39;s method</code>求平方根的方法.</p>
+<h3 id="Control_abstraction">Control abstraction</h3><p>上面所提到的帮助我们设计高效的程序, 但是它并不是一种计算模型, 我们接下来提供一种通用的表示作为其他程序组成的一部分, 通过将其中的两部分提取出来, 然后作为函数的参数, 把这种通用的模式转化成一种控制的抽象.</p>
+<pre><code><span class="list">(<span class="keyword">define</span> <span class="list">(<span class="keyword">iter</span> state good-enough? next)</span>
+    <span class="list">(<span class="keyword"><span class="built_in">if</span></span> <span class="list">(<span class="keyword">good-enough?</span> state)</span>
+        state
+        <span class="list">(<span class="keyword">iter</span> <span class="list">(<span class="keyword"><span class="built_in">next</span></span> state)</span>)</span>)</span>)</span>
+</code></pre><p>当我们使用这种控制抽象的时候, 需要为他提供<code>good-enough?</code>和<code>next</code>这两个函数, 每个函数带有一个参数. 将函数像参数一样传递给其他函数的技术叫做<code>higher-order programming</code>.</p>
+<pre><code><span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword"><span class="built_in">sqrt</span></span> x)</span>
+    <span class="list">(<span class="keyword">iter</span> <span class="number">1.0</span> 
+          <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">guess</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> <span class="list">(<span class="keyword"><span class="built_in">/</span></span> <span class="list">(<span class="keyword"><span class="built_in">abs</span></span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> x <span class="list">(<span class="keyword"><span class="built_in">*</span></span> guess guess)</span>)</span>)</span> x)</span> <span class="number">0.00001</span>)</span>)</span>
+          <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">guess</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">/</span></span> <span class="list">(<span class="keyword"><span class="built_in">+</span></span> guess <span class="list">(<span class="keyword"><span class="built_in">/</span></span> x guess)</span>)</span> <span class="number">2</span>)</span>)</span>)</span>)</span>
+</code></pre><p>使用两个匿名函数作为参数传给<code>iter</code>. 这是一种非常强大的组织程序的方式, 因为它把通用的控制流和特殊用法分离. 如果一种抽象经常使用, 我们可以将它更近一步, 将它转化为语言抽象.</p>
+<hr>
+<h2 id="Recursive_computation">Recursive computation</h2><p>迭代式的计算模型实际上是特殊的递归抽象模型. 递归函数可以在自己的函数体内部的任何地方多次调用自己. 在编程中, 递归多出现在函数以及数据类型中.</p>
+<p>递归函数在调用时, 本身的<code>stack</code>大小会越来越大, 然后随着达到临界条件, <code>stack</code>的大小才会缩小, 直至返回结果. 我们使用最经典的例子<code>factorical</code>来演示递归函数<code>stack</code>的大小是如何改变的.</p>
+<pre><code>// 当计算(factorical 4)时
+(factorical 4)
+(<span class="keyword">*</span> 4 (factorical 3))
+(<span class="keyword">*</span> 4 (<span class="keyword">*</span> 3 (factorical 2)))
+(<span class="keyword">*</span> 4 (<span class="keyword">*</span> 3 (<span class="keyword">*</span> 2 (factorical 1))))
+(<span class="keyword">*</span> 4 (<span class="keyword">*</span> 3 (<span class="keyword">*</span> 2 (<span class="keyword">*</span> 1 (factorical 0)))))
+(<span class="keyword">*</span> 4 (<span class="keyword">*</span> 3 (<span class="keyword">*</span> 2 (<span class="keyword">*</span> 1 1))))
+(<span class="keyword">*</span> 4 (<span class="keyword">*</span> 3 (<span class="keyword">*</span> 2 1)))
+(<span class="keyword">*</span> 4 (<span class="keyword">*</span> 3 2))
+(<span class="keyword">*</span> 4 6)
+(24)
+</code></pre><p>我们可以从代码所占的大小中就可以轻易的看出当调用递归函数时<code>stack</code>大小的变化. 当我们使用迭代式的<code>factorical</code>时:</p>
+<pre><code><span class="comment">// 当计算(factorical 4 1)时</span>
+<span class="comment">(factorical 4 1)</span>
+<span class="comment">(factorical 3 4)</span>
+<span class="comment">(factorical 2 12)</span>
+<span class="comment">(factorical 1 24)</span>
+<span class="comment">(factorical 0 24)</span>
+<span class="comment">(24)</span>
+</code></pre><p>迭代式的函数的调用所占用的空间是<strong>线性</strong>的. 但是迭代函数的定义相对递归函数表达的意思并不清楚, 需要理解, 递归函数的定义非常清楚.</p>
+<pre><code><span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">factorical</span> n)</span>
+    <span class="list">(<span class="keyword"><span class="built_in">if</span></span> <span class="list">(<span class="keyword"><span class="built_in">=</span></span> n <span class="number">0</span>)</span>
+        <span class="number">1</span>
+        <span class="list">(<span class="keyword"><span class="built_in">*</span></span> n <span class="list">(<span class="keyword">factorical</span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> n <span class="number">1</span>)</span>)</span>)</span>)</span>)</span>
+</code></pre><p>与数学上的定义是完全相同的.</p>
+<pre><code><span class="keyword">fact</span> 0 = 1
+<span class="keyword">fact</span> <span class="keyword">n</span> = <span class="keyword">n</span> * <span class="keyword">fact</span> <span class="keyword">n</span>-1
+</code></pre><h3 id="Converting_a_recursive_to_an_iterative_computation">Converting a recursive to an iterative computation</h3><p>虽然递归有着更好的表达能力, 但是当有性能(时间和空间)上的需求时, 我们通常使用迭代式的计算模型代替递归式的计算模型. 其实就是做如下的转换:</p>
+<pre><code>R = (5<span class="keyword">*</span>(4<span class="keyword">*</span>(3<span class="keyword">*</span>(2<span class="keyword">*</span>(1<span class="keyword">*</span>1))))) =&gt; R = (((((1<span class="keyword">*</span>5)<span class="keyword">*</span>4)<span class="keyword">*</span>3)<span class="keyword">*</span>2)<span class="keyword">*</span>1)
+
+(define (factorical n)
+    (define (iter n acc)
+        (if (= n 0)
+            acc
+            (iter (- n 1) (<span class="keyword">*</span> acc n)))))
+    (iter n 1))
+</code></pre><p>以上重构的函数就是使用迭代的思想, 通常将递归转化为迭代遵循以下的规律:</p>
+<ol>
+<li>需要一个辅助函数, 这里就是<code>iter</code>.</li>
+<li>需要一个或多个<code>accumulator</code>来保存函数调用过程中需要保存的状态, 在这里就是<code>acc</code>保存了每次调用<code>*</code>之后的值.</li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><code>Iteration</code> 和 <code>Recursion</code> 在我们所有的编程语言中都是非常重要的概念, 尤其是在声明式的编程模型中.</p>
+<h2 id="Iteraive_computation">Iteraive computati]]>
+    </summary>
+    
+      <category term="Iteration" scheme="http://deltax.me/tags/Iteration/"/>
+    
+      <category term="Recursion" scheme="http://deltax.me/tags/Recursion/"/>
+    
+      <category term="Scheme" scheme="http://deltax.me/tags/Scheme/"/>
+    
+      <category term="FP" scheme="http://deltax.me/categories/FP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[iOS Combine View and TableView <Bug01>]]></title>
+    <link href="http://deltax.me/2014/11/23/iOS%20Combine%20View%20and%20TableView%3CBug01%3E/"/>
+    <id>http://deltax.me/2014/11/23/iOS Combine View and TableView<Bug01>/</id>
+    <published>2014-11-23T15:26:11.000Z</published>
+    <updated>2014-11-25T09:57:54.000Z</updated>
+    <content type="html"><![CDATA[<p>我在开发我的第一个项目<code>SportJoin</code>的过程中遇到过这样一个问题, 需要写出一个同时有<code>UIView</code>和<code>UITablView</code>的界面, 这个为什么很困难呢. </p>
+<ol>
+<li>需要写出易于维护的结构.</li>
+<li>需要在<code>tableView</code>滚动的时候滚动.</li>
+<li>需要在<code>headerView</code>到达顶部的时候<code>segmentControl</code>停在视图的顶部.</li>
+</ol>
+<p>我在第一次遇到这种问题的时候, 想到的第一种解决办法就是在第一个<code>UITableViewCell</code>里面加入<code>headerView</code>, 但是这样却导致了另一个问题, 所有在<code>dataSource</code>方法和一些<code>delegate</code>方法中的一些<code>count</code>都需要<code>+1</code>, 我认为这一点相当的不优雅, 而随着需求的更改, 这种结构也被抛弃了, 所以我开始选择另一种方式解决这个问题. 经过了无数的实验与摸索, 选择了下图的这种方式达到我想要的效果.</p>
+<p><img src="http://deltax.qiniudn.com/iOSIMG_0297.PNG?attname=&amp;e=1416844521&amp;token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:_bferGdE5a6TstVFFQim9BFG1m8" alt=""></p>
+<p>但是…经过我们团队成员多次测试, 竟然发现了这样的<code>bug</code>… <code>tableView</code>和<code>headerView</code>之间有<code>20 offset</code>. 而且当下拉刷新动画被打断的时候, 比如点击其他的<code>tabBarItem</code>. <code>offset</code>会越来越大.</p>
+<p><img src="http://deltax.qiniudn.com/iOSIMG_0296.PNG?attname=&amp;e=1416844521&amp;token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:kvaxSMZaJNTjNqusD04lA827jJ8" alt=""></p>
+<p>设计师第一次发现这个<code>bug</code>告诉我之后, 我立刻感觉到这个高度<code>20</code>应该跟<code>status bar</code>有关, 找了所有与<code>status bar</code>以及这个视图有关的代码, 并且上<code>google</code>搜索了无数次, 都没有发现这是因为什么. </p>
+<p>后来由于团队缺少运营, 参加完比赛, 项目不了了之, 这个<code>bug</code>我也没有再去改了. 不过这个<code>bug</code>一直我都记得非常的清楚, 实在是让我头痛不已.</p>
+<p>现在先解释一下这个界面是如何完成的, 简单说一下这个界面的根控制器是一个<code>UIViewController</code>, 它的<code>view</code>上面只有一个子视图<code>tableView</code>, 注意只有<strong>一个</strong>子视图, 而这个子视图包含了我们在这个界面中看到的<code>headerView</code>, 也就是顶部的个人信息.</p>
+<p>界面的层级如下:</p>
+<pre><code><span class="code">-----------------
+|      view     |
+-----------------</span>
+<span class="code">        ^</span>
+<span class="code">        |</span>
+<span class="header">        |
+-----------------</span>
+<span class="header">|   tableView   |
+-----------------</span>
+<span class="code">        ^</span>
+<span class="code">        |</span>
+<span class="header">        |
+-----------------</span>
+<span class="header">|   headerView  |
+-----------------</span>
+</code></pre><p><code>headerView</code> 是 <code>tableView</code>的子视图, 但是为什么会这么显示呢, 有这么几个原因.</p>
+<ol>
+<li><p>在视图加载时, 我通过调整<code>tableView</code>的<code>contentInset</code>使<code>tableView</code>在初始化时向下偏移<code>headerView</code>的高度, 目的呢, 就是将<code>cell</code>开始显示的位置设置到目标的区域.</p>
+<pre><code><span class="attribute">tableView.contentInset </span>=<span class="string"> UIEdgeInsetsMake(HEADER_HEIGHT, 0, 0, 0);</span>
+</code></pre></li>
+<li><p>然后呢, 将<code>headerView</code>初始化, 并添加到<code>tableView</code>上面, 这里呢, 有一点需要注意的就是<code>headerView.frame.origin.y</code>是小于<code>0</code>的. 这是为什么呢, 是因为我们上一步将<code>tableView</code>内容开是显示的<code>height</code>设置为<code>295</code>, 那么我们需要将<code>headerView</code>初始化到<code>tableView</code>的”外面”</p>
+<pre><code><span class="comment">// 使用CGRect的情况下, 使用AutoLayout可以类比一下</span>
+headerView.frame = CGRectMake <span class="comment">(0, -HEADER_HEIGHT, WIDTH_SCREEN, HEADER_HEIGHT)</span>;
+</code></pre></li>
+<li><p>这样我们就完成了这个界面的显示, 但是, 当我们向这个<code>headerView</code>中添加按钮的时候, 却发现, 这个按钮的<code>action</code>没有触发, 因为<code>headerView</code>是<code>tableView</code>的<code>subview</code>并且在它的外部, 所以, 我们需要设置<code>clipsToBound</code>属性, 防止<code>tableView</code>拦截这个实践.</p>
+<pre><code><span class="attribute">tableView.clipsToBound </span>=<span class="string"> NO;</span>
+</code></pre></li>
+<li><p>接下来我们要实现让界面的一部分停在屏幕上, 只需要调用<code>UIScrollView</code>的<code>delegate</code>方法, 注意设置适当的条件就可以.</p>
+<pre><code>- (<span class="keyword">void</span>)scrollViewDidScroll:(<span class="built_in">UIScrollView</span> *)scrollView
+{
+    <span class="keyword">static</span> <span class="built_in">CGFloat</span> headerHeight = <span class="number">60</span>;
+    <span class="keyword">if</span> (scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span> &gt;= -<span class="number">60</span>)
+        [<span class="keyword">self</span><span class="variable">.headerView</span> setFrame:CGRectMake(<span class="number">0</span>, scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span> - (HEADER_HEIGHT - headerHeight), WIDTH_SCREEN, HEADER_HEIGHT)];
+    <span class="keyword">if</span> (scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span> &lt;= -HEADER_HEIGHT)
+        [<span class="keyword">self</span><span class="variable">.headerView</span> setFrame:CGRectMake(<span class="number">0</span>, scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span>, WIDTH_SCREEN, HEADER_HEIGHT)];
+}
+</code></pre></li>
+</ol>
+<p>卧槽, 终于搞定了, 我特么太爽了, 然而………就是上面的<code>bug</code>让我头疼了好久…</p>
+<p>直到今天, 我在新项目中又遇到了这个问题, 无论我怎么更改布局, 使用<code>CGRect</code>, <code>AutoLayout</code>都没能解决, 因为代码量较小, 经过多次调试, 认为这次绝对另有原因, 我机智的上<code>Google</code>搜索了如下关键字<code>contentInset</code> <code>20</code> <code>iOS</code>, 结果, 这回果然发现了问题所在, 在<code>stackoverflow</code>上面找到了这个问题的答案, 原来<code>automaticallyAdjustsScrollViewInsets</code>才是导致问题的罪魁祸首, 而之前我完全没有接触过这个属性. 在苹果官方文档中是这样描述的.</p>
+<blockquote>
+<p> If you don’t want a scroll view’s content insets to be automatically adjusted, set automaticallyAdjustsScrollViewInsets to NO. (The default value of automaticallyAdjustsScrollViewInsets is YES.)</p>
+</blockquote>
+<p>在设置了<code>tableViewController</code>之后, 仍然没有起到任何作用.</p>
+<pre><code><span class="keyword">self</span><span class="variable">.automaticallyAdjustsScrollViewInsets</span> = <span class="literal">NO</span>;
+</code></pre><p>经过仔细寻找其他答案后, 找到了这样一条答案</p>
+<blockquote>
+<p>Your view controller must be directly on a <code>UINavigaitonController</code>‘s stack for <code>automaticallyAdjustsScrollViewInsets</code> to work (i.e. not a child view controller)</p>
+<p>If it is a child view controller of another view controller which is on the navigation stack, you can instead set <code>automaticallyAdjustsScrollViewInsets = NO</code> on the parent. Alternatively you can do this:</p>
+<pre><code><span class="keyword">self</span><span class="variable">.parentViewController</span><span class="variable">.automaticallyAdjustsScrollViewInsets</span> = <span class="literal">NO</span>;
+</code></pre></blockquote>
+<p>意思就是, 如果你的<code>viewController</code>直接在<code>UINavigationController</code>那么, 直接设置这个<code>viewController</code>的<code>automaticallyAdjustsScrollViewInsets</code>属性, 如果<code>viewController</code>是另一个<code>viewController</code>比如说<code>tabBarViewController</code>, 那么需要设置这个<code>viewController</code>的<code>parentViewController</code>的属性.</p>
+<p>最后, 我在3个月后的今天, <code>fix</code>了这个<code>bug</code>, 实在是太难忘了.</p>
+<p>5 . self.parentViewController.automaticallyAdjustsScrollViewInsets = NO;</p>
+<hr>
+<p>最后总结一下:</p>
+<ol>
+<li><p><code>tableView.contentInset = UIEdgeInsetsMake(HEADER_HEIGHT, 0, 0, 0);</code></p>
+</li>
+<li><p><code>headerView.frame = CGRectMake (0, -HEADER_HEIGHT, WIDTH_SCREEN, HEADER_HEIGHT);</code></p>
+</li>
+<li><p><code>tableView.clipsToBound = NO;</code></p>
+</li>
+<li><p><code>scrollViewDidScroll</code></p>
+</li>
+<li><p><code>self.parentViewController.automaticallyAdjustsScrollViewInsets = NO;</code></p>
+</li>
+</ol>
+<hr>
+<p>后来的后来…我发现了<code>tableView</code>的的另一个属性<code>tableHeaderView</code>, 只需要设置这个属性, 就可以把视图放在<code>tableView</code>的前面…真是蛋都碎了…</p>
+<pre><code><span class="keyword">self</span>.tableView.tableHeaderView = headerView;
+</code></pre><p>……</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>我在开发我的第一个项目<code>SportJoin</code>的过程中遇到过这样一个问题, 需要写出一个同时有<code>UIView</code>和<code>UITablView</code>的界面, 这个为什么很困难呢. </p>
+<ol>
+<li>需要写出易于维]]>
+    </summary>
+    
+      <category term="iOS" scheme="http://deltax.me/tags/iOS/"/>
+    
+      <category term="iOS" scheme="http://deltax.me/categories/iOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Subtype]]></title>
+    <link href="http://deltax.me/2014/11/22/subtype/"/>
+    <id>http://deltax.me/2014/11/22/subtype/</id>
+    <published>2014-11-22T12:26:08.000Z</published>
+    <updated>2014-11-22T15:08:15.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Subtyping">Subtyping</h2><ul>
+<li>While languages like <code>Java</code> and <code>C#</code> have generics these days, the source of type-system expressiveness most fundamental to object-oriented style is <em>subtype polymorphism</em>, also known as <em>subtyping</em>.</li>
+</ul>
+<p>We need a type system, with a form of types for records and typing rules for each of our expressions.</p>
+<ul>
+<li>If <code>e1</code> has type <code>t1</code>, <code>e2</code> has type <code>t2</code>, …, <code>en</code> has type <code>tn</code>, then <code>{f1=e1, f2=e2, ..., fn=en}</code> has type <code>{f1:t1, f2:t2, ..., fn:tn}</code>.</li>
+<li>If <code>e</code> has a record type containing <code>f : t</code>, then <code>e.f</code> has type <code>t</code> (else <code>e.f</code> does not type-check).</li>
+<li>If <code>e1</code> has a record type containing <code>f : t</code> and <code>e2</code> has type <code>t</code>,then <code>e1.f = e2</code> has type <code>t</code> (else <code>e1.f = e2</code> does not type-check).</li>
+<li>“Width” subtyping: A supertype can have a subset of fields with the same types, i.e., a subtype can have <strong>“extra”</strong> fields</li>
+<li>“Permutation” subtyping: A supertype can have the same set of fields with the same types in a different order.</li>
+<li>Transitivity: If <code>t1 &lt;: t2</code> and <code>t2 &lt;: t3</code>, then <code>t1 &lt;: t3</code>.</li>
+<li>Reflexivity: Every type is a subtype of itself: <code>t &lt;: t</code>.</li>
+</ul>
+<hr>
+<h2 id="Depth_Subtyping">Depth Subtyping</h2><ul>
+<li>“Depth” subtyping: If <code>ta &lt;: tb</code>, then <code>{f1:t1,...,f:ta,...,fn:tn} &lt;: {f1:t1,...,f:tb,...,fn:tn}</code>.</li>
+</ul>
+<p>This rule breaks out type system, allowing programs that we do not want to allow to type-check!</p>
+<p>Another way to look at the issue is that given the three features of (1) setting a field, (2) letting depth subtyping change the type of a field, and (3) having a type system actually prevent field-missing errors, you can have any two of the three.</p>
+<hr>
+<h2 id="Function_Subtyping">Function Subtyping</h2><p> The rules for when one function tyoe is a subtype of another function type are even less intuitive than the issue of depth subtyping for records, but we should understand them to safely override methods in <code>OOP</code> languages.</p>
+<pre><code><span class="comment">// (({x:real,y:real}-&gt;{x:real,y:real}) * {x:real,y:real}) -&gt; real</span>
+
+fun distMoved (<span class="string">f :</span> {<span class="string">x:</span>real,<span class="string">y:</span>real}-&gt;{<span class="string">x:</span>real,<span class="string">y:</span>real},
+           <span class="string">p :</span> {<span class="string">x:</span>real,<span class="string">y:</span>real}) =
+   let val <span class="string">p2 :</span> {<span class="string">x:</span>real,<span class="string">y:</span>real} = f p
+       val <span class="string">dx :</span> real = p2.x - p.x
+       val <span class="string">dy :</span> real = p2.y - p.y
+   <span class="keyword">in</span> Math.sqrt(dx*dx + dy*dy) end
+
+fun flip p = {x=~p.x, y=~p.y}
+val d = distMoved(flip, {x=<span class="number">3.0</span>, y=<span class="number">4.0</span>})
+</code></pre><p>It is safe to pass in a function with a return type that promises more, such as return a <code>subtype</code> of the needed reuturn type.</p>
+<pre><code>// {x:real,y:real} -&gt; {x:real,y:real,color:string}
+
+fun flipGreen <span class="variable">p =</span> {<span class="variable">x=</span>~p.x, <span class="variable">y=</span>~p.y, <span class="variable">color=</span><span class="string">"green"</span>}
+val <span class="variable">d =</span> distMoved(flipGreen, {<span class="variable">x=</span><span class="number">3.0</span>, <span class="variable">y=</span><span class="number">4.0</span>})
+</code></pre><blockquote>
+<p>In general, the rule is that if <code>ta &lt;: tb</code>, then t -&gt;ta &lt;: t -&gt; tb</p>
+</blockquote>
+<p>But it turns out it works just fine to use a function that “need less of its argument” in place of that “need more of its argument”.</p>
+<pre><code>// {x:real} -&gt; {x:real,y:real}
+
+fun flipX_Y0 <span class="variable">p =</span> {<span class="variable">x=</span>~p.x, <span class="variable">y=</span><span class="number">0.0</span>}
+val <span class="variable">d =</span> distMoved(flipX_Y0, {<span class="variable">x=</span><span class="number">3.0</span>, <span class="variable">y=</span><span class="number">4.0</span>})
+</code></pre><blockquote>
+<p> In general, the rule is that if <code>tb &lt;: ta</code>, then ta -&gt; t &lt;: tb -&gt; t</p>
+</blockquote>
+<p>The technical jargon for “backwords” is <em>contravariance</em>, meaning the subtyping for argument is the reverse of the subtyping for the types overall.</p>
+<p>Function subtyping also allow contravariance of arguments and convariance of results.</p>
+<pre><code>// {x:real} -&gt; {x:real,y:real,color:string}
+
+fun flipXMakeGreen <span class="variable">p =</span> {<span class="variable">x=</span>~p.x, <span class="variable">y=</span><span class="number">0.0</span>, <span class="variable">color=</span><span class="string">"green"</span>}
+val <span class="variable">d =</span> distMoved(flipXMakeGreen, {<span class="variable">x=</span><span class="number">3.0</span>, <span class="variable">y=</span><span class="number">4.0</span>})
+</code></pre><p><code>{x:real} -&gt; {x:real,y:real,color:string}</code> is a subtype of <code>{x:real, y:real} -&gt; {x:real, y:real}</code>, because <code>{x:real,y:real} &lt;: {x:real}</code> (contravariance on arguments) and <code>{x:real,y:real,color:string} &lt;: {x:real,y:real}</code> (covariance on results).</p>
+<blockquote>
+<p>The general rule for this subtype is If <code>t3 &lt;: t1</code> and <code>t2 &lt;: t4</code>, then <code>t1-&gt;t2 &lt;: t3-&gt;t4</code>.</p>
+</blockquote>
+<hr>
+<h2 id="Subtype_for_OOP">Subtype for OOP</h2><p>An object is a record holding mutable fields methods. We assume methods are immutable. With this perspective, sound subtyping for objects follows sound subtyping for records and functions.</p>
+<ul>
+<li>A subtype can have extra fields</li>
+<li>a subtype cannot have a different type for a field because it is mutable.</li>
+<li>A subtype can have extra methods.</li>
+<li>Because methods are immutable, a subtype can have a subtype for a method, which means the method in the subtype can have contravariant argument types and a covariant result type.</li>
+</ul>
+<p>In particular, the <code>object-oriented</code> implement is more restrictive than subtyping requires.</p>
+<ul>
+<li>A subclass can add fields but not remove them.</li>
+<li>A subclass can add methods but not remove them.</li>
+<li>A subclass can override a method with a covariant return type.</li>
+<li>A class can implement more methods than an interface requires or implement a required method with covariant return type.</li>
+</ul>
+<p><code>Classes</code> and <code>types</code> and different things,</p>
+<hr>
+<h2 id="Generics_Versus_Subtyping">Generics Versus Subtyping</h2><p>There are functions that combine other functions as compse:</p>
+<pre><code>val compose : <span class="function"><span class="params">(’b -&gt; ’c)</span> * <span class="params">(’a -&gt; ’b)</span> -&gt;</span> (’a<span class="function"> -&gt;</span> ’c)
+</code></pre><p>Generic types are much more useful and precise than just saying that some argument can be<br>“anything” </p>
+<h3 id="Subtyping_is_a_Bad_Substitute_for_Generics">Subtyping is a Bad Substitute for Generics</h3><p>Consider Java code example:</p>
+<pre><code><span class="class"><span class="keyword">class</span> <span class="title">LamePair</span> </span>{
+  <span class="built_in">Object</span> x;
+  <span class="built_in">Object</span> y;
+  LamePair(<span class="built_in">Object</span> _x, <span class="built_in">Object</span> _y){ x=_x; y=_y; }
+  LamePair swap() { <span class="keyword">return</span> <span class="keyword">new</span> LamePair(y,x); }
+  ...
+}
+
+<span class="built_in">String</span> s = (<span class="built_in">String</span>)(<span class="keyword">new</span> LamePair(<span class="string">"hi"</span>,<span class="number">4</span>).y); <span class="comment">// error caught only at run-time</span>
+</code></pre><p>Subtyping does not work that way, the type-checker only knows that the field holds an <code>Object</code>. So we have to use a <code>downcast</code>, cast the <code>Object</code> type to <code>String</code>. Such <code>downcast</code> costs in terms of performance, but may cause a failure.</p>
+<h3 id="What_is_Subtyping_Good_For?">What is Subtyping Good For?</h3><p>A generally agreed upon example where subtyping works well is graphical user interfaces. Much of the code for graphics libraries works fine for any sort of graphical element (“paint it on the screen,” “change the background color,” “report if the mouse is clicked on it,” etc.) where different elements such as buttons, slider bars, or text boxes can then be subtypes.</p>
+<h3 id="Generics_are_a_Bad_Substitute_for_Subtyping">Generics are a Bad Substitute for Subtyping</h3><p>In a language with generics instead of subtyping, you can code up your own code reuse with higher-order functions, but it can be quite a bit of trouble for a simple idea.</p>
+<pre><code><span class="keyword">fun</span> distToOrigin2(getx,gety,v) =
+<span class="keyword">let</span>
+    <span class="keyword">val</span> x = getx v
+    <span class="keyword">val</span> y = gety v
+<span class="keyword">in</span>
+    <span class="type">Math</span>.sqrt (x*x + y*y)
+<span class="keyword">end</span>
+<span class="keyword">fun</span> distToOriginPt (p : {x:<span class="built_in">real</span>,y:<span class="built_in">real</span>}) =
+    distToOrigin2(<span class="keyword">fn</span> v =&gt; #x v,
+                  <span class="keyword">fn</span> v =&gt; #y v, p)
+<span class="keyword">fun</span> distToOriginColorPt (p : {x:<span class="built_in">real</span>,y:<span class="built_in">real</span>,color:<span class="built_in">string</span>}) =
+    distToOrigin2(<span class="keyword">fn</span> v =&gt; #x v,
+                   <span class="keyword">fn</span> v =&gt; #y v, 
+                   p)
+</code></pre>]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Subtyping">Subtyping</h2><ul>
+<li>While languages like <code>Java</code> and <code>C#</code> have generics these days, the source of]]>
+    </summary>
+    
+      <category term="generic" scheme="http://deltax.me/tags/generic/"/>
+    
+      <category term="subtype" scheme="http://deltax.me/tags/subtype/"/>
+    
+      <category term="Programming Paradigm" scheme="http://deltax.me/categories/Programming-Paradigm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Multiple Inheritance]]></title>
+    <link href="http://deltax.me/2014/11/22/Multiple%20Inheritence/"/>
+    <id>http://deltax.me/2014/11/22/Multiple Inheritence/</id>
+    <published>2014-11-22T07:51:39.000Z</published>
+    <updated>2014-11-22T11:21:49.000Z</updated>
+    <content type="html"><![CDATA[<p>The essence of <code>Object-Oriented Programming</code> is inheritance, overriding, and dynamic dispatch. Because the inheritance is so powerful in programming, what about using it to do some more powerful thinds.</p>
+<ul>
+<li>Multiple inheritance</li>
+<li>Mixins</li>
+<li>Interfaces</li>
+</ul>
+<h1 id="Multiple_inheritance">Multiple inheritance</h1><ul>
+<li>Languages with <code>multiple inheritance</code> let one class extend multiple other classes. It is the most powerful idea among those three.</li>
+</ul>
+<p>Let us give you one example to show why <code>mutiple inheritance</code> is very powerful.</p>
+<h2 id="Point_Example">Point Example</h2><pre><code>      -<span class="ruby">----------
+</span>      | Point2D |
+      -<span class="ruby">----------
+</span>           ^
+<span class="comment">          / \</span>
+<span class="comment">         /   \</span>
+<span class="comment">        /     \</span>
+<span class="comment">       /       \</span>
+-<span class="ruby">----------    --------------
+</span>| Point3D |    | ColorPoint |
+-<span class="ruby">----------    --------------
+</span>    ^              ^
+     \            /
+      \          /
+       \        /
+        \      /
+         \    /
+          \  /
+    -<span class="ruby">---------------
+</span>    | ColorPoint3D |
+    -<span class="ruby">---------------</span>
+</code></pre><p>Without <code>multiple inheritance</code>, you may copy the code from <code>Point3D</code> and <code>ColorPoint</code>, but if we have <code>multiple inheritance</code>, we might say that the new class has all the methods od all the superclasses. </p>
+<p>But <code>multiple inheritance</code> has some serius problem, if two of the supclasses have the same property or methods, what does that mean? This is diamond problem.</p>
+<p>With single <code>inheritance</code>, the class hierarchy is a tree. With <code>multiple inheritance</code>, class hierarchy may not be a tree, like the class hierarchy above.</p>
+<pre><code>   -<span class="ruby">------
+</span>   |  A  |
+   -<span class="ruby">------
+</span>      ^
+      |
+      |
+   -<span class="ruby">------
+</span>   |  B  |
+   -<span class="ruby">------
+</span>      ^
+<span class="comment">     / \</span>
+<span class="comment">    /   \</span>
+<span class="comment">   /     \</span>
+-<span class="ruby">------ -------
+</span>|  C  | |  D  |
+-<span class="ruby">------ -------</span>
+</code></pre><h1 id="Mixins">Mixins</h1><ul>
+<li>Ruby has mixins, which is a very elegant feature and a wise approach to solve <code>multiple inheritance</code> problem. It is between <code>multiple inheritance</code> and <code>interfaces</code>.</li>
+</ul>
+<p>Mixins provide actual code to classes that include them, but <strong>they are not class</strong>, we cannot create a instance of it.</p>
+<p>We can define Ruby <code>mixin</code> with keyword <code>module</code> instead of <code>class</code>.</p>
+<pre><code>// This mixins defines <span class="constant">three</span> methods, color, color=, <span class="operator">and</span> darken
+module Color
+  attr_accessor :color
+  def darken
+    self.color = <span class="string">"dark "</span> + self.color
+  <span class="function"><span class="keyword">end</span></span>
+<span class="function"><span class="keyword">end</span></span>
+</code></pre><p>Use <code>include</code> keyword to include the <code>mixin</code>, like this.</p>
+<pre><code><span class="class"><span class="keyword">class</span> <span class="title">ColorPt</span> <span class="inheritance">&lt; <span class="parent">Pt</span></span></span>
+  <span class="keyword">include</span> <span class="constant">Color</span>
+<span class="keyword">end</span>
+</code></pre><p>Mixins are just a bunch of methods, not instance variables, <code>attr_accessor</code> just create two method.</p>
+<p>Now it’s time to reconsider our method lookup rules. We have to choose something and this is what Ruby chooses: If <code>obj</code> is an instance of class <code>C</code> and we send message <code>m</code> to <code>obj</code>.</p>
+<pre><code>C -&gt; C<span class="class">.mixins</span> -&gt; C<span class="class">.superclass</span> -&gt; C<span class="class">.superclass</span><span class="class">.mixins</span> -&gt; C<span class="class">.supersuperclass</span> -&gt; Etc
+</code></pre><p>Many of the elegant uses of <code>mixins</code> do this things, call other methods on <code>self</code> that are not defined by the <code>mixin</code>. For example, the below code needs the class include this module implements <code>+</code> method.</p>
+<pre><code><span class="keyword">module</span> Doubler
+  def double
+    <span class="keyword">self</span> + <span class="keyword">self</span> # <span class="keyword">uses</span> <span class="keyword">self</span>’s + message, <span class="keyword">not</span> defined <span class="keyword">in</span> Doubler
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</code></pre><p>if we want to include this <code>mixin</code>, we should implement <code>+</code> method:</p>
+<pre><code>class <span class="type">Point</span>
+    attr_accessor :x, :y
+    <span class="keyword">include</span> <span class="type">Doubler</span>
+    def + other
+        <span class="literal">result</span> = <span class="type">Point</span>.new
+        <span class="literal">result</span>.x = self.x + other.x
+        <span class="literal">result</span>.y = self.y + other.y
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+class <span class="type">String</span>
+    <span class="keyword">include</span> <span class="type">Doubler</span>
+<span class="keyword">end</span>
+</code></pre><p>The same idea in Ruby with two mixins named <code>Enumerable</code> and <code>Comparable</code>.</p>
+<ul>
+<li>Enumerable <code>each</code> method.</li>
+<li>Comparable <code>&lt;=&gt;</code> method.</li>
+</ul>
+<h1 id="Interfaces">Interfaces</h1><ul>
+<li>In Java/C#, a class can only have one immediate superclass but it can implement any number of interfaces. An <code>interface</code> is <strong>just a list of methods</strong> and each method’s argument types and return type. An <code>interface</code> is a type, so class <code>C</code> implements interface <code>I</code>, means that class <code>C</code> should implement all the methods define in interface <code>I</code>, and it can implements a bunch of interface.</li>
+</ul>
+<p>Because interface only provide methods types, none of the problem discusses in multiple inheritance arise. But they can not use like mixin in <code>Ruby</code>.</p>
+<p>Implementing interfaces does not inherit code, It makes the type checker systems in these languages more flexiable.</p>
+<hr>
+<ul>
+<li><code>Multiple inheritance</code> is powerful but harmful in <code>OOP</code>, many modern programming languages implement this in another way, such as <code>mixin</code> in Ruby, <code>interface</code> in Java/C#, <code>delegate</code> in Objective-C and so on.</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>The essence of <code>Object-Oriented Programming</code> is inheritance, overriding, and dynamic dispatch. Because the inheritance is so p]]>
+    </summary>
+    
+      <category term="Inheritance" scheme="http://deltax.me/tags/Inheritance/"/>
+    
+      <category term="OOP" scheme="http://deltax.me/tags/OOP/"/>
+    
+      <category term="Programming Paradigm" scheme="http://deltax.me/categories/Programming-Paradigm/"/>
+    
+  </entry>
+  
+</feed>
