@@ -14,7 +14,7 @@
     <meta name="description" content="在iOS的视图中, 有三个非常相似的属性, alpha, opaque hidden. 这三个属性实际上没有什么太多的关系.
 
 hidden属性我们首先来解释一下hidden属性, 如果将一个控件设置的view属性设置为YES, 那么这个view根本不会被绘制, 它通常等于alpha值被设置为0, 但是设置hidden属性并不会产生动画, 如果你需要动画完成过渡就需要修改alpha的值.
-//wi">
+1234">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS Alpha Opaque Hidden">
 <meta property="og:url" content="http://deltax.me/2014/11/19/iOS Alpha, Opaque和hidden/index.html">
@@ -22,13 +22,13 @@ hidden属性我们首先来解释一下hidden属性, 如果将一个控件设置
 <meta property="og:description" content="在iOS的视图中, 有三个非常相似的属性, alpha, opaque hidden. 这三个属性实际上没有什么太多的关系.
 
 hidden属性我们首先来解释一下hidden属性, 如果将一个控件设置的view属性设置为YES, 那么这个view根本不会被绘制, 它通常等于alpha值被设置为0, 但是设置hidden属性并不会产生动画, 如果你需要动画完成过渡就需要修改alpha的值.
-//wi">
+1234">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS Alpha Opaque Hidden">
 <meta name="twitter:description" content="在iOS的视图中, 有三个非常相似的属性, alpha, opaque hidden. 这三个属性实际上没有什么太多的关系.
 
 hidden属性我们首先来解释一下hidden属性, 如果将一个控件设置的view属性设置为YES, 那么这个view根本不会被绘制, 它通常等于alpha值被设置为0, 但是设置hidden属性并不会产生动画, 如果你需要动画完成过渡就需要修改alpha的值.
-//wi">
+1234">
 
     
     <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
@@ -110,21 +110,15 @@ hidden属性我们首先来解释一下hidden属性, 如果将一个控件设置
 		<p>在<code>iOS</code>的视图中, 有三个非常相似的属性, <code>alpha</code>, <code>opaque</code> <code>hidden</code>. 这三个属性实际上没有什么太多的关系.</p>
 <hr>
 <h2 id="hidden属性">hidden属性</h2><p>我们首先来解释一下<code>hidden</code>属性, 如果将一个控件设置的<code>view</code>属性设置为<code>YES</code>, 那么这个<code>view</code>根本不会被绘制, 它通常等于<code>alpha</code>值被设置为<code>0</code>, 但是设置<code>hidden</code>属性并不会产生动画, 如果你需要动画完成过渡就需要修改<code>alpha</code>的值.</p>
-<pre><code><span class="comment">//without animation</span>
-(view<span class="class">.alpha</span> = <span class="number">0</span>) == (view<span class="class">.hidden</span> = YES)
-<span class="comment">//with animation</span>
-(view<span class="class">.alpha</span> = <span class="number">0</span>) != (view<span class="class">.hideen</span> = YES)
-</code></pre><hr>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//without animation</span></span><br><span class="line">(view<span class="class">.alpha</span> = <span class="number">0</span>) == (view<span class="class">.hidden</span> = YES)</span><br><span class="line"><span class="comment">//with animation</span></span><br><span class="line">(view<span class="class">.alpha</span> = <span class="number">0</span>) != (view<span class="class">.hideen</span> = YES)</span><br></pre></td></tr></table></figure>
+<hr>
 <h2 id="alpha属性">alpha属性</h2><p><code>alpha</code>属性决定了视图会通过像素显示多少信息. <code>alpha</code>值设为<code>1</code>意味着所有的视图信息都在像素上表现出来. 而<code>alpha</code>值设为<code>0</code>意味着没有视图信息能在像素上显示出来. 在iOS中, 屏幕上的任何真正透明的东西, 改变<code>alpha</code>值其实就是改变视图以及子视图的显示程度.</p>
 <p>当<code>alpha</code>值被设置为<code>0</code>之后, 当前<code>UIView</code>和<code>subviews</code>会被隐藏, 而且当前<code>UIView</code>会从响应链删除.</p>
 <hr>
 <h2 id="opaque属性">opaque属性</h2><p>是否将视图标记为<code>opaque</code>并不会升高或降低一个<code>UIView</code>的透明度. 它实际的坐拥实际上是为<code>GPU</code>节省工作量, 设置它的值并不影响视图是否绘制的最终结果.</p>
 <hr>
 <p>我们可以通过设置以下的属性, 创建一个透明的视图接收事件.</p>
-<pre><code><span class="keyword">view</span>.<span class="keyword">alpha</span> = 1;
-<span class="keyword">view</span>.opaque = <span class="keyword">NO</span>;
-<span class="keyword">view</span>.backgroundColor = [UIColor clearColor];
-</code></pre>  
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">view</span>.<span class="keyword">alpha</span> = 1;</span><br><span class="line"><span class="keyword">view</span>.opaque = <span class="keyword">NO</span>;</span><br><span class="line"><span class="keyword">view</span>.backgroundColor = [UIColor clearColor];</span><br></pre></td></tr></table></figure>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
