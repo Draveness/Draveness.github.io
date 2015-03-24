@@ -218,7 +218,7 @@ in {<span class="keyword">New</span> Tracer TInit} <span class="keyword">end</sp
     <link href="http://deltax.me/2015/03/23/Class-as-Data-Abstraction-in-OOP/"/>
     <id>http://deltax.me/2015/03/23/Class-as-Data-Abstraction-in-OOP/</id>
     <published>2015-03-23T02:28:07.000Z</published>
-    <updated>2015-03-24T17:14:25.000Z</updated>
+    <updated>2015-03-24T17:14:44.000Z</updated>
     <content type="html"><![CDATA[<p>The heart of the object concept is controlled access to encapsulated data. The behaviour of an object is specified by a <strong>class</strong> which is an incremental definition of a data abstraction.</p>
 <ul>
 <li>Complete data abstraction<ul>
@@ -261,15 +261,12 @@ in {<span class="keyword">New</span> Tracer TInit} <span class="keyword">end</sp
 <li><p>Per instance</p>
 <ul>
 <li><p>An attribute can be given a different initial value per instance.</p>
-<pre><code><span class="class"><span class="keyword">class</span> <span class="title">OneApt</span></span>
-    attr streetName
-    meth init(X) @streetName=X <span class="keyword">end</span>
-<span class="keyword">end</span>
-Apt1={<span class="keyword">New</span> OneApt init(drottninggatan)}
-Apt2={<span class="keyword">New</span> OneApt init(runNeuve)}
-</code></pre></li>
+  <figure class="highlight monkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OneApt</span></span></span><br><span class="line">	attr streetName</span><br><span class="line">	meth init(X) @streetName=X <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">Apt1=&#123;<span class="keyword">New</span> OneApt init(drottninggatan)&#125;</span><br><span class="line">Apt2=&#123;<span class="keyword">New</span> OneApt init(runNeuve)&#125;</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 </li>
+</ul>
+<ul>
 <li><p>Per class</p>
 <ul>
 <li><p>An attribute can be given a value that is the same for all instances of a class. This is done by initilizing it with “:” in the class definition.</p>
