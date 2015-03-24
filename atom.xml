@@ -4,7 +4,7 @@
   <subtitle><![CDATA[为了成为牛逼闪闪的工程师]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
-  <updated>2015-03-24T04:01:36.000Z</updated>
+  <updated>2015-03-24T04:26:57.000Z</updated>
   <id>http://deltax.me/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://deltax.me/2015/03/24/Inheritence-in-Object-Oriented-Programming/"/>
     <id>http://deltax.me/2015/03/24/Inheritence-in-Object-Oriented-Programming/</id>
     <published>2015-03-24T01:07:46.000Z</published>
-    <updated>2015-03-24T04:01:36.000Z</updated>
+    <updated>2015-03-24T04:26:57.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Introduction">Introduction</h2><p>The main addition that <strong>OOP</strong> adds to component-based programming is inheritence. OOP allows defining a class incrementally by extending existing classes.</p>
 <p>While using inheritence, it must be taken good care of. It may lost control if your application doesn’t use good design patterns.</p>
 <h2 id="Inheritence_Graph">Inheritence Graph</h2><p>Inheritence is a way to construct new classes from existing classes. </p>
@@ -30,7 +30,7 @@
 <li>The inheritence is directed and acyclic, there cannot be any inherit cicle in the inheritence hierachy.</li>
 <li>After striking out all overridden methods, each remaing method should have a unique label.</li>
 </ul>
-<p><img src="http://deltax.qiniudn.com/Class-Hierarchy.png?attname=&amp;e=1427254344&amp;token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:YuVSCsLdlEzG3RyHdiJQmj7fE2Y" alt="Class-Hierarchy"></p>
+<p><img src="http://deltax.qiniudn.com/Class-Hierarchy.png?attname=&e=1427254344&token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:YuVSCsLdlEzG3RyHdiJQmj7fE2Y" style="display:block;margin:auto"></p>
 <h2 id="Method_Access_Control">Method Access Control</h2><p>When executing inside an object, we often want to call another method in the same object, do a kind of recursive invocation. </p>
 <p>We need two ways to do a recursive call. They are called static binding and dynamic binding.</p>
 <p>Both of them are needed when using inheritence to override methods.</p>
@@ -71,7 +71,7 @@
 <h2 id="Forwarding_and_Delegation">Forwarding and Delegation</h2><p>Inheritence is one way to reuse functionality when defining new functionality. But it can be tricky to use, because it implies a tight binding between classes. </p>
 <p>When developing a application, we want to decomposition different components, always inheritence is not a greate choice for this reason.</p>
 <p>Sometimes we use looser approaches. Two such approaches are forwarding and delegation.</p>
-<p><img src="http://deltax.qiniudn.com/Delegation-Forwarding.png?attname=&amp;e=1427254344&amp;token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:56KTT0g8JxSKHlqaNzvLtqiiXOs" alt="Delegation-Forwarding"></p>
+<p><img src="http://deltax.qiniudn.com/Delegation-Forwarding.png?attname=&e=1427254344&token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:56KTT0g8JxSKHlqaNzvLtqiiXOs" style="display:block;margin:auto"></p>
 <h3 id="Forwarding">Forwarding</h3><p>An object can forward any message to another object. In this system, we implement this strategy in <code>otherwise</code> method.</p>
 <pre><code><span class="built_in">local</span>
     class ForwardMixin
