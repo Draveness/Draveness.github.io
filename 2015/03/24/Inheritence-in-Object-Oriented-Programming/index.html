@@ -1,0 +1,741 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Inheritence in Object-Oriented-Programming | DeltaX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Draven">
+    
+
+    
+    <meta name="description" content="IntroductionThe main addition that OOP adds to component-based programming is inheritence. OOP allows defining a class incrementally by extending existing classes.
+While using inheritence, it must be">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Inheritence in Object-Oriented-Programming">
+<meta property="og:url" content="http://deltax.me/2015/03/24/Inheritence-in-Object-Oriented-Programming/index.html">
+<meta property="og:site_name" content="DeltaX">
+<meta property="og:description" content="IntroductionThe main addition that OOP adds to component-based programming is inheritence. OOP allows defining a class incrementally by extending existing classes.
+While using inheritence, it must be">
+<meta property="og:image" content="http://deltax.qiniudn.com/Class-Hierarchy.png?attname=&e=1427254344&token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:YuVSCsLdlEzG3RyHdiJQmj7fE2Y">
+<meta property="og:image" content="http://deltax.qiniudn.com/Delegation-Forwarding.png?attname=&e=1427254344&token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:56KTT0g8JxSKHlqaNzvLtqiiXOs">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Inheritence in Object-Oriented-Programming">
+<meta name="twitter:description" content="IntroductionThe main addition that OOP adds to component-based programming is inheritence. OOP allows defining a class incrementally by extending existing classes.
+While using inheritence, it must be">
+
+    
+    <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="DeltaX" title="DeltaX"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="DeltaX">DeltaX</a></h1>
+				<h2 class="blog-motto">为了成为牛逼闪闪的工程师</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:deltax.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/24/Inheritence-in-Object-Oriented-Programming/" title="Inheritence in Object-Oriented-Programming" itemprop="url">Inheritence in Object-Oriented-Programming</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-24T01:07:46.000Z" itemprop="datePublished"> 发表于 2015-03-24</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Inheritence_Graph"><span class="toc-number">2.</span> <span class="toc-text">Inheritence Graph</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Method_Access_Control"><span class="toc-number">3.</span> <span class="toc-text">Method Access Control</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic_Binding"><span class="toc-number">3.1.</span> <span class="toc-text">Dynamic Binding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Static_Binding"><span class="toc-number">3.2.</span> <span class="toc-text">Static Binding</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Encapsulation_Control"><span class="toc-number">4.</span> <span class="toc-text">Encapsulation Control</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Private_and_Public_Scopes"><span class="toc-number">4.1.</span> <span class="toc-text">Private and Public Scopes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Private_Methods"><span class="toc-number">4.2.</span> <span class="toc-text">Private Methods</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Protected_Methods"><span class="toc-number">4.3.</span> <span class="toc-text">Protected Methods</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Forwarding_and_Delegation"><span class="toc-number">5.</span> <span class="toc-text">Forwarding and Delegation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Forwarding"><span class="toc-number">5.1.</span> <span class="toc-text">Forwarding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Delegation"><span class="toc-number">5.2.</span> <span class="toc-text">Delegation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reflection"><span class="toc-number">6.</span> <span class="toc-text">Reflection</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Meta-Object_Protocols"><span class="toc-number">6.1.</span> <span class="toc-text">Meta-Object Protocols</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Methig_Wrapping"><span class="toc-number">6.2.</span> <span class="toc-text">Methig Wrapping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reflection_of_object_state"><span class="toc-number">6.3.</span> <span class="toc-text">Reflection of object state</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h2 id="Introduction">Introduction</h2><p>The main addition that <strong>OOP</strong> adds to component-based programming is inheritence. OOP allows defining a class incrementally by extending existing classes.</p>
+<p>While using inheritence, it must be taken good care of. It may lost control if your application doesn’t use good design patterns.</p>
+<h2 id="Inheritence_Graph">Inheritence Graph</h2><p>Inheritence is a way to construct new classes from existing classes. </p>
+<ul>
+<li>A method in <code>class C</code> overrrdes any method with the same label in all of <code>C</code>‘s superclass.</li>
+<li>A class that inherits from exactly one class is said to use <strong>single inheritence</strong>. Inheritence from more than one class is called <strong>multiple inheritence</strong>.</li>
+<li>A class hierarchy with the superclass relation can be seen as a directed graph with the current class being the root.</li>
+<li>The inheritence is directed and acyclic, there cannot be any inherit cicle in the inheritence hierachy.</li>
+<li>After striking out all overridden methods, each remaing method should have a unique label.</li>
+</ul>
+<p><img src="http://deltax.qiniudn.com/Class-Hierarchy.png?attname=&amp;e=1427254344&amp;token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:YuVSCsLdlEzG3RyHdiJQmj7fE2Y" alt="Class-Hierarchy"></p>
+<h2 id="Method_Access_Control">Method Access Control</h2><p>When executing inside an object, we often want to call another method in the same object, do a kind of recursive invocation. </p>
+<p>We need two ways to do a recursive call. They are called static binding and dynamic binding.</p>
+<p>Both of them are needed when using inheritence to override methods.</p>
+<h3 id="Dynamic_Binding">Dynamic Binding</h3><p>Dynamic binding allows the new class to correctly extend the old class by letting old methods can new methods. Even the new method did not exist whtn the old method is defined. </p>
+<p>This is written as <code>{self M}</code>. This chooses the method matching <code>M</code> that is visible in the current object.</p>
+<h3 id="Static_Binding">Static Binding</h3><p>Static binding allows the new methods call the old methods when they have to.</p>
+<p>This is written <code>C, M</code> (with a comma), where <code>C</code> is a class that defines a method matching <code>M</code>. This chooses the method matching <code>M</code> tgat us visible in class <code>C</code>.</p>
+<h2 id="Encapsulation_Control">Encapsulation Control</h2><p>The principle of controlling encapsulation in an object-oriented language is to limit access to class members (attributes and methods) according to the requirements of the application architecure.</p>
+<h3 id="Private_and_Public_Scopes">Private and Public Scopes</h3><p>The two most basic scopes are private and public.</p>
+<ul>
+<li>A private member is one which is only visible in the object instance. The object instance can see all members defined in its class and its superclasses.</li>
+<li>A public member is one which is visible everywhere in the program.</li>
+</ul>
+<p>These definitions of private and public are natural if classes are used to construct data abstractions.</p>
+<ol>
+<li>A class is not the same thing as the data abstractions it defines. The class is increment.</li>
+<li>Attributes are internal to the data abstraction and should be invisible from the outside. This is exactly the definition of private scope.</li>
+<li>Methods are make up the external interface of the data abstraction, so they should be visible to all entities that reference the abstraction. This is exactly the definition of public scope.</li>
+</ol>
+<h3 id="Private_Methods">Private Methods</h3><p>When a method head is a name value, then its scope limited to all instances of the class, but not to the subclasses or their instances. These method is only visible inside the class definition. </p>
+<pre><code><span class="keyword">class</span> C
+    meth A(X)
+        % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+    <span class="title">end</span>
+<span class="title">end</span></span>
+</code></pre><p>And with <code>!</code> we can capture the method outside the scope.</p>
+<pre><code>local
+    A=<span class="comment">{NewName}</span>
+<span class="keyword">in</span>
+    <span class="keyword">class</span> C
+        meth !A(X)
+            % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+        <span class="title">end</span>
+    <span class="title">end</span>
+<span class="title">end</span></span>
+</code></pre><p>This creates a name at class definition time.</p>
+<h3 id="Protected_Methods">Protected Methods</h3><p>In <code>C++</code>,  method is protected if it is accessible only in the class it is defined or in descendant classes (and all instances of this classes).</p>
+<h2 id="Forwarding_and_Delegation">Forwarding and Delegation</h2><p>Inheritence is one way to reuse functionality when defining new functionality. But it can be tricky to use, because it implies a tight binding between classes. </p>
+<p>When developing a application, we want to decomposition different components, always inheritence is not a greate choice for this reason.</p>
+<p>Sometimes we use looser approaches. Two such approaches are forwarding and delegation.</p>
+<p><img src="http://deltax.qiniudn.com/Delegation-Forwarding.png?attname=&amp;e=1427254344&amp;token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:56KTT0g8JxSKHlqaNzvLtqiiXOs" alt="Delegation-Forwarding"></p>
+<h3 id="Forwarding">Forwarding</h3><p>An object can forward any message to another object. In this system, we implement this strategy in <code>otherwise</code> method.</p>
+<pre><code><span class="built_in">local</span>
+    class ForwardMixin
+        attr Forward:<span class="constant">none</span>
+        meth setForward(F) Forward:= F <span class="function"><span class="keyword">end</span></span>
+        meth otherwise(M)
+            <span class="keyword">if</span> @Forward==<span class="constant">none</span> <span class="keyword">then</span> raise undefinedMethod <span class="function"><span class="keyword">end</span></span>
+            <span class="keyword">else</span> {@Forward M} <span class="function"><span class="keyword">end</span></span>
+        <span class="function"><span class="keyword">end</span></span>
+    <span class="function"><span class="keyword">end</span></span>
+<span class="operator">in</span>
+    fun {NewF Class Init}
+        {New class $ <span class="built_in">from</span> Class ForwardMixin <span class="function"><span class="keyword">end</span> <span class="title">Init</span>}</span>
+    <span class="function"><span class="keyword">end</span></span>
+<span class="function"><span class="keyword">end</span></span>
+</code></pre><p>Objects created with <code>NewF</code> have a method <code>setForward(F)</code> that lets them set dynamically the object to which the object will forward messages if they do not understand.</p>
+<pre><code>class C1
+    meth init skip <span class="function"><span class="keyword">end</span></span>
+    meth cube(A B) B=A*A*A <span class="function"><span class="keyword">end</span></span>
+<span class="function"><span class="keyword">end</span></span>
+
+class C2
+    meth init skip <span class="function"><span class="keyword">end</span></span>
+    meth square(A B) B=A*A <span class="function"><span class="keyword">end</span></span>
+<span class="function"><span class="keyword">end</span></span>
+Obj1={NewF C1 init}
+Obj2={NewF C2 init}
+{Obj2 setForward(Obj1)}
+</code></pre><p>When <code>{Obj2 cube(10 X)}</code> is called, <code>Obj2</code> forward this message to <code>Obj1</code> and bind the result to <code>X</code>.</p>
+<h3 id="Delegation">Delegation</h3><p>Delegation is powerful way to struture a system dynamically. <strong>It lets us build a hierachy among objects instead of among classes</strong>.</p>
+<p>Delegation can achieve the same effects as inheritence, with two main differences, but with objects instead of classes, and can be changed at any time.</p>
+<pre><code><span class="built_in">local</span>
+    SetSelf={NewName}
+    class DelegateMixin
+        attr this Delegate:<span class="constant">none</span>
+        meth !SetSelf(S) this:=S <span class="function"><span class="keyword">end</span></span>
+        meth <span class="built_in">set</span>(A X) A:=X <span class="function"><span class="keyword">end</span></span>
+        meth <span class="built_in">get</span>(X ?X) X=@A <span class="function"><span class="keyword">end</span></span>
+        meth setDelegate(D) Delegate:=D End
+        meth Del(M S) SS <span class="operator">in</span>
+            SS:=this this:=S
+            <span class="keyword">try</span> {self M} <span class="keyword">finally</span> this:=SS <span class="function"><span class="keyword">end</span></span>
+        <span class="function"><span class="keyword">end</span></span>
+        meth call(M) SS <span class="operator">in</span>
+            SS:=this this:=self
+            <span class="keyword">try</span> {self M} <span class="keyword">finally</span> this:=SS <span class="function"><span class="keyword">end</span></span>
+        <span class="function"><span class="keyword">end</span></span>
+        meth otherwise(M)
+            <span class="keyword">if</span> @Delegate==<span class="constant">none</span> <span class="keyword">then</span>
+                raise undefinedMethod <span class="function"><span class="keyword">end</span></span>
+            <span class="keyword">else</span>
+                {@Delegate Del(M @this)}
+            <span class="function"><span class="keyword">end</span></span>
+        <span class="function"><span class="keyword">end</span></span>
+    <span class="function"><span class="keyword">end</span></span>
+<span class="operator">in</span>
+    fun {NewD Class Init}
+        Obj={New class $ <span class="built_in">from</span> Class DelegateMixin <span class="function"><span class="keyword">end</span> <span class="title">Init</span>}</span>
+    <span class="operator">in</span>
+        {Obj SetSelf(Obj)}
+        Obj
+    <span class="function"><span class="keyword">end</span></span>
+<span class="function"><span class="keyword">end</span></span>
+</code></pre><p>If there are two objects <code>Obj1</code> and <code>Obj2</code>, suppose there exists a method <code>setDelegate</code> such that <code>{Obj2 setDelegate(Obj1)}</code> sets <code>Obj2</code> to delegate to <code>Obj1</code>. And <code>Obj1</code> behaves like <code>Obj2</code>‘s superclass.</p>
+<p>When we enter the <code>Del</code> method, we should preserve our <code>this</code> value in a temp variable. Because the <code>{Self M}</code> should executes in the <code>Obj1</code> context and change <code>Obj1</code> attributes.</p>
+<pre><code><span class="class"><span class="keyword">class</span> <span class="title">C1</span></span>
+   attr <span class="symbol">i:</span><span class="number">0</span>
+   meth init skip <span class="keyword">end</span>
+   meth inc(<span class="constant">I</span>)
+      {<span class="variable">@this</span> set(i {<span class="variable">@this</span> get(i <span class="variable">$)</span>}+<span class="constant">I</span>)}
+   <span class="keyword">end</span>
+   meth browse
+      {<span class="variable">@this</span> inc(<span class="number">10</span>)}
+      {<span class="constant">Browse</span> c1<span class="comment">#{<span class="yardoctag">@this</span> get(i $)}}</span>
+   <span class="keyword">end</span>
+   meth c {<span class="variable">@this</span> browse} <span class="keyword">end</span> <span class="keyword">end</span>
+<span class="constant">Obj1</span>={<span class="constant">NewD</span> <span class="constant">C1</span> init}
+<span class="class"><span class="keyword">class</span> <span class="title">C2</span></span>
+   attr <span class="symbol">i:</span><span class="number">0</span>
+   meth init skip <span class="keyword">end</span>
+   meth browse
+      {<span class="variable">@this</span> inc(<span class="number">100</span>)}
+      {<span class="constant">Browse</span> c2<span class="comment">#{<span class="yardoctag">@this</span> get(i $)}}</span>
+   <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="constant">Obj2</span>={<span class="constant">NewD</span> <span class="constant">C2</span> init}
+{<span class="constant">Obj2</span> setDelegate(<span class="constant">Obj1</span>)}
+</code></pre><p>If we execute</p>
+<pre><code>{Obj<span class="number">1</span> <span class="keyword">call</span><span class="comment">(browse)</span>}
+{Obj<span class="number">2</span> <span class="keyword">call</span><span class="comment">(browse)</span>}
+
+<span class="preprocessor">%</span> c<span class="number">1</span><span class="title">#10</span> c<span class="number">2</span><span class="title">#100</span>
+</code></pre><p>But if we change the <code>Del</code> procedure like this:</p>
+<pre><code>meth <span class="constant">Del(M S)</span> <span class="keyword">in</span>
+    {<span class="keyword">self</span> <span class="constant">M}</span>
+<span class="keyword">end</span>
+</code></pre><p>The previous execution will browse</p>
+<pre><code>c1<span class="hexcolor">#100</span> c2#<span class="number">0</span>
+</code></pre><p>Because the <code>Obj1</code> does not preserve its attributes, <code>this</code> in <code>{self M}</code> means <code>Obj1</code> instead of <code>Obj2</code>. This make no sense, delegation indeed is design pattern that let other handle the message and deal with own attributes. If we do not save the context in <code>Del</code>, it just like send message to <code>Obj2</code>.</p>
+<h2 id="Reflection">Reflection</h2><p>A system is reflection if it can inspect part of its execution while running.</p>
+<p>Reflection can be purely introspective or intrusive.</p>
+<ul>
+<li>Purely Introspective<ul>
+<li>Only reading the internal state without modifying it.</li>
+</ul>
+</li>
+<li>Instrutive<ul>
+<li>Both reading and modifying the internal state.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Meta-Object_Protocols">Meta-Object Protocols</h3><p>The description of how an object system works at a basic level is called meta-object protocol. The ability to change the meta-object protocol is a powerful way to modify an obejct system. It is used for many purposes: debugging, customzing, and separation of concerns.</p>
+<h3 id="Methig_Wrapping">Methig Wrapping</h3><p>A common use of meta-object protocol is to do method wrapping. We can write a tracer to track the behavior of an object-oriented program.</p>
+<pre><code>fun {<span class="type">TraceNew</span> <span class="type">Class</span> <span class="type">Init</span>}
+    <span class="type">Obj</span>={<span class="type">New</span> <span class="type">Class</span> <span class="type">Init</span>}
+    <span class="keyword">proc</span> {<span class="type">TraceObj</span> M}
+        {<span class="type">Browse</span> entering({<span class="type">Label</span> M)}
+        {<span class="type">Obj</span> M}
+        {<span class="type">Browse</span> exiting({<span class="type">Label</span> M)}
+    <span class="keyword">end</span>
+<span class="keyword">in</span> <span class="type">TraceObj</span> <span class="keyword">end</span>
+</code></pre><p>If an object is created with this procedure, every method will be traced.</p>
+<p>A second way is to implement this with a class instead of a procedure.</p>
+<pre><code>fun {TraceNew2 <span class="class"><span class="keyword">Class</span> <span class="title">Init</span>}</span>
+   Obj={<span class="keyword">New</span> <span class="class"><span class="keyword">Class</span> <span class="title">Init</span>}</span>
+   TInit={NewName}
+   <span class="class"><span class="keyword">class</span> <span class="title">Tracer</span></span>
+      meth !TInit skip <span class="keyword">end</span>
+      meth otherwise(M)
+     {Browse entering({Label M})} {Obj M}
+     {Browse exiting({Label M})}
+      <span class="keyword">end</span>
+   <span class="keyword">end</span>
+in {<span class="keyword">New</span> Tracer TInit} <span class="keyword">end</span>
+</code></pre><p>This strategy is used dynamic class creation, the <code>otherwise</code> method and a freshname <code>TInit</code>.</p>
+<h3 id="Reflection_of_object_state">Reflection of object state</h3><p>We would like to ba able to read and write the whole state of an object, independant of the object’s class.</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/OOP/">OOP</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Inheritence/">Inheritence</a><a href="/tags/Oz/">Oz</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://deltax.me/2015/03/24/Inheritence-in-Object-Oriented-Programming/" data-title="Inheritence in Object-Oriented-Programming | DeltaX" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/03/23/Class-as-Data-Abstraction-in-OOP/"  title="Class as Data Abstraction in OOP">
+ <strong>下一篇：</strong><br/> 
+ <span>Class as Data Abstraction in OOP
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/03/24/Inheritence-in-Object-Oriented-Programming/" data-title="Inheritence in Object-Oriented-Programming" data-url="http://deltax.me/2015/03/24/Inheritence-in-Object-Oriented-Programming/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Inheritence_Graph"><span class="toc-number">2.</span> <span class="toc-text">Inheritence Graph</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Method_Access_Control"><span class="toc-number">3.</span> <span class="toc-text">Method Access Control</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic_Binding"><span class="toc-number">3.1.</span> <span class="toc-text">Dynamic Binding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Static_Binding"><span class="toc-number">3.2.</span> <span class="toc-text">Static Binding</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Encapsulation_Control"><span class="toc-number">4.</span> <span class="toc-text">Encapsulation Control</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Private_and_Public_Scopes"><span class="toc-number">4.1.</span> <span class="toc-text">Private and Public Scopes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Private_Methods"><span class="toc-number">4.2.</span> <span class="toc-text">Private Methods</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Protected_Methods"><span class="toc-number">4.3.</span> <span class="toc-text">Protected Methods</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Forwarding_and_Delegation"><span class="toc-number">5.</span> <span class="toc-text">Forwarding and Delegation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Forwarding"><span class="toc-number">5.1.</span> <span class="toc-text">Forwarding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Delegation"><span class="toc-number">5.2.</span> <span class="toc-text">Delegation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reflection"><span class="toc-number">6.</span> <span class="toc-text">Reflection</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Meta-Object_Protocols"><span class="toc-number">6.1.</span> <span class="toc-text">Meta-Object Protocols</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Methig_Wrapping"><span class="toc-number">6.2.</span> <span class="toc-text">Methig Wrapping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reflection_of_object_state"><span class="toc-number">6.3.</span> <span class="toc-text">Reflection of object state</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/FP/" title="FP">FP<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Haskell/" title="Haskell">Haskell<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Haskell/ML/" title="ML">ML<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/OOP/" title="OOP">OOP<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Programming-Paradigm/" title="Programming Paradigm">Programming Paradigm<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/FP/Scheme/" title="Scheme">Scheme<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/iOS/" title="iOS">iOS<sup>8</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法导论/算法/" title="算法">算法<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法导论/算法/" title="算法">算法<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法导论/算法/" title="算法">算法<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法导论/" title="算法导论">算法导论<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/iOS/" title="iOS">iOS<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/FP/" title="FP">FP<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Scheme/" title="Scheme">Scheme<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/OOP/" title="OOP">OOP<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Runtime/" title="Runtime">Runtime<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/segue/" title="segue">segue<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/堆/" title="堆">堆<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SICP/" title="SICP">SICP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/subtype/" title="subtype">subtype<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/generic/" title="generic">generic<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Inheritance/" title="Inheritance">Inheritance<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Oz/" title="Oz">Oz<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Message-Passing/" title="Message Passing">Message Passing<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Haskell/" title="Haskell">Haskell<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ML/" title="ML">ML<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/List/" title="List">List<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Pattern-Match/" title="Pattern Match">Pattern Match<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Iteration/" title="Iteration">Iteration<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Draven. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/https://github.com/Draveness" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:stark.draven@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="http://deltax.me/about" target="_blank" title="Draven">Draven</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+  
+    c.click();
+    
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"DeltaX"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1e03a2ac060d657818787bf497955fef' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
