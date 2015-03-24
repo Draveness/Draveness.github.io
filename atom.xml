@@ -4,7 +4,7 @@
   <subtitle><![CDATA[为了成为牛逼闪闪的工程师]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
-  <updated>2015-03-24T11:06:38.000Z</updated>
+  <updated>2015-03-24T16:53:15.000Z</updated>
   <id>http://deltax.me/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://deltax.me/2015/03/24/Inheritence-in-Object-Oriented-Programming/"/>
     <id>http://deltax.me/2015/03/24/Inheritence-in-Object-Oriented-Programming/</id>
     <published>2015-03-24T01:07:46.000Z</published>
-    <updated>2015-03-24T11:06:38.000Z</updated>
+    <updated>2015-03-24T16:53:15.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Introduction">Introduction</h2><p>The main addition that <strong>OOP</strong> adds to component-based programming is inheritence. OOP allows defining a class incrementally by extending existing classes.</p>
 <p>While using inheritence, it must be taken good care of. It may lost control if your application doesn’t use good design patterns.</p>
 <h2 id="Inheritence_Graph">Inheritence Graph</h2><p>Inheritence is a way to construct new classes from existing classes. </p>
@@ -57,16 +57,8 @@
     <span class="title">end</span>
 <span class="title">end</span></span>
 </code></pre><p>And with <code>!</code> we can capture the method outside the scope.</p>
-<pre><code>local
-    A=<span class="comment">{NewName}</span>
-<span class="keyword">in</span>
-    <span class="keyword">class</span> C
-        meth !A(X)
-            % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
-        <span class="title">end</span>
-    <span class="title">end</span>
-<span class="title">end</span></span>
-</code></pre><p>This creates a name at class definition time.</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">local</span><br><span class="line">	A=<span class="comment">&#123;NewName&#125;</span></span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">	<span class="keyword">class</span> C</span><br><span class="line">		meth !A(X)</span><br><span class="line">			% <span class="function"><span class="keyword">Method</span> <span class="title">body</span></span><br><span class="line">		<span class="title">end</span></span><br><span class="line">	<span class="title">end</span></span><br><span class="line"><span class="title">end</span></span></span><br></pre></td></tr></table></figure>
+<p>This creates a name at class definition time.</p>
 <h3 id="Protected_Methods">Protected Methods</h3><p>In <code>C++</code>,  method is protected if it is accessible only in the class it is defined or in descendant classes (and all instances of this classes).</p>
 <h2 id="Forwarding_and_Delegation">Forwarding and Delegation</h2><p>Inheritence is one way to reuse functionality when defining new functionality. But it can be tricky to use, because it implies a tight binding between classes. </p>
 <p>When developing a application, we want to decomposition different components, always inheritence is not a greate choice for this reason.</p>
