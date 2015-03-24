@@ -1,0 +1,671 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Class as Data Abstraction in OOP | DeltaX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Draven">
+    
+
+    
+    <meta name="description" content="The heart of the object concept is controlled access to encapsulated data. The behaviour of an object is specified by a class which is an incremental definition of a data abstraction.
+
+Complete data a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Class as Data Abstraction in OOP">
+<meta property="og:url" content="http://deltax.me/2015/03/23/Class-as-Data-Abstraction-in-OOP/index.html">
+<meta property="og:site_name" content="DeltaX">
+<meta property="og:description" content="The heart of the object concept is controlled access to encapsulated data. The behaviour of an object is specified by a class which is an incremental definition of a data abstraction.
+
+Complete data a">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Class as Data Abstraction in OOP">
+<meta name="twitter:description" content="The heart of the object concept is controlled access to encapsulated data. The behaviour of an object is specified by a class which is an incremental definition of a data abstraction.
+
+Complete data a">
+
+    
+    <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="DeltaX" title="DeltaX"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="DeltaX">DeltaX</a></h1>
+				<h2 class="blog-motto">为了成为牛逼闪闪的工程师</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:deltax.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/23/Class-as-Data-Abstraction-in-OOP/" title="Class as Data Abstraction in OOP" itemprop="url">Class as Data Abstraction in OOP</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-23T02:28:07.000Z" itemprop="datePublished"> 发表于 2015-03-23</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Defining_Classes_and_Objects"><span class="toc-number">1.</span> <span class="toc-text">Defining Classes and Objects</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Class_members"><span class="toc-number">2.</span> <span class="toc-text">Class members</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Initializing_Attributes"><span class="toc-number">3.</span> <span class="toc-text">Initializing Attributes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#First-class_Messages"><span class="toc-number">4.</span> <span class="toc-text">First-class Messages</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#First-class_Attributes"><span class="toc-number">5.</span> <span class="toc-text">First-class Attributes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Programming_Techniques"><span class="toc-number">6.</span> <span class="toc-text">Programming Techniques</span></a></li></ol>
+		
+		</div>
+		
+		<p>The heart of the object concept is controlled access to encapsulated data. The behaviour of an object is specified by a <strong>class</strong> which is an incremental definition of a data abstraction.</p>
+<ul>
+<li>Complete data abstraction<ul>
+<li>Defining the various elements that make up a class.</li>
+<li>Taking advantage of dynamic typing.</li>
+</ul>
+</li>
+<li>Incremental data abstraction<ul>
+<li>Related to inheritance.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Defining_Classes_and_Objects">Defining Classes and Objects</h2><p>A class is data structure that defines an object’s internal state (attributes), its behavior (methods), the classes it inherits several properties and operations.</p>
+<p>A class is a data abstraction that give its partial and total implementation.</p>
+<p>Objects of a given class is called <strong>instances</strong>. These object have differenty identities but can have differnet values for their interval state. And instance is initialized with the operation <code>New</code>.<br><figure class="highlight monkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Obj=&#123;<span class="keyword">New</span> <span class="class"><span class="keyword">Class</span> <span class="title">Init</span>&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>This code creates an new object <code>Obj</code> of class <code>Class</code> and invokes with the message <code>Init</code>. And after the initialize, we can use the syntax <code>{Obj Message}</code> to call a message on instance <code>Obj</code>.</p>
+<h2 id="Class_members">Class members</h2><p>A class defines the constituent parts part each of its object will have. There are three kinds of members in class:</p>
+<ul>
+<li><strong>Attributes</strong><blockquote>
+<p>An attribute is a cell that contains part of the instance’s state which is always called <strong>instance variable</strong> in an instance. And this just visible in the class definition. Every instance have seperate set of attributes.</p>
+</blockquote>
+</li>
+<li><p><strong>Methods</strong></p>
+<blockquote>
+<p>A method is a kind of procedure that is called in the context of a particular object and that access the object’s attribute. </p>
+</blockquote>
+<ul>
+<li>The method consists of a head and body. </li>
+<li>The head consists of a label, which must be an atom or a name, and a set of arguments.</li>
+<li>The arguments must be distinct variables.</li>
+</ul>
+</li>
+<li><strong>Properties</strong><blockquote>
+<p>A property modifies how an object behaves.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Initializing_Attributes">Initializing Attributes</h2><p>Attributes can be initialized in two ways: per instance or per class.</p>
+<ul>
+<li><p>Per instance</p>
+<ul>
+<li><p>An attribute can be given a different initial value per instance.</p>
+<pre><code><span class="class"><span class="keyword">class</span> <span class="title">OneApt</span></span>
+    attr streetName
+    meth init(X) @streetName=X <span class="keyword">end</span>
+<span class="keyword">end</span>
+Apt1={<span class="keyword">New</span> OneApt init(drottninggatan)}
+Apt2={<span class="keyword">New</span> OneApt init(runNeuve)}
+</code></pre></li>
+</ul>
+</li>
+<li><p>Per class</p>
+<ul>
+<li><p>An attribute can be given a value that is the same for all instances of a class. This is done by initilizing it with “:” in the class definition.</p>
+<pre><code><span class="class"><span class="keyword">class</span> <span class="title">YorkApt</span></span>
+    attr
+        streetName:york
+        streetNumber:<span class="number">100</span>
+        wallColor:_
+        floorSurface:wood
+    meth init skip <span class="keyword">end</span>
+<span class="keyword">end</span>
+Apt3={<span class="keyword">New</span> OneApt init}
+Apt4={<span class="keyword">New</span> OneApt init}
+</code></pre></li>
+</ul>
+</li>
+<li><p>Per brand</p>
+<ul>
+<li><p>This is another way to use the per-class initialization. A brand is a set of classes that related in some way.</p>
+<pre><code><span class="keyword">L</span>=linux
+<span class="keyword">class</span> RedHat attr ostype:<span class="keyword">L</span> end
+<span class="keyword">class</span> SuSE attr ostype:<span class="keyword">L</span> end
+<span class="keyword">class</span> Debian attr ostype:<span class="keyword">L</span> end
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<h2 id="First-class_Messages">First-class Messages</h2><p>Messages are records and method heads are patterns that match a record. We can use different type of records to pass to a method.</p>
+<ol>
+<li>Static record as message. In this case, message is known at <strong>compile time</strong>.</li>
+<li>Dynamic record as message. In this case, message is a variable that references a record that calculated at <strong>run time</strong>.</li>
+</ol>
+<p>In the method definition, the following approach is possible:</p>
+<ol>
+<li><p>Fixed argument list</p>
+<pre><code>meth <span class="keyword">add</span>(x:X y:Y)
+    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+<span class="title">end</span></span>
+</code></pre></li>
+<li><p>Flexible argument list</p>
+<pre><code>meth <span class="keyword">add</span>(x:X y:Y ...)
+    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+<span class="title">end</span></span>
+</code></pre><p> The “…” in the method head means that any message is accepted if has least the listed argument.</p>
+</li>
+<li><p>Variable reference to method head</p>
+<p> The whole method head is referenced by a variable.</p>
+<pre><code>meth <span class="keyword">add</span>(x:X y:Y ...)=M
+    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+<span class="title">end</span></span>
+</code></pre></li>
+</ol>
+<p>The variable <code>M</code> references the full message as a record.</p>
+<ol>
+<li><p>Optional argument</p>
+<pre><code>meth <span class="keyword">add</span>(x:X y:Y z:Z&lt;=V)
+    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+<span class="title">end</span></span>
+</code></pre><p> The <code>&lt;=V</code> in the method head means that field <code>z</code> is optional. You can either called the method with <code>add(x:1 y:2)</code> or <code>add(x:1 y:2 z:3)</code>.</p>
+</li>
+<li><p>Private method label</p>
+<p> Method label can be names. This is denoted by using a variable identifier</p>
+<pre><code>meth A(bar:X)
+    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+<span class="title">end</span></span>
+</code></pre><p> The method <code>A</code> is bound to a fresh name whtn the class is defined. If this method must be used elsewhere in the program, we should pass it explicitly.</p>
+</li>
+<li><p>Dynamic method label</p>
+<pre><code>meth !A(bar:X)
+    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+<span class="title">end</span></span>
+</code></pre><p> The method label has to be known when the class definitions is executed. The variable must be bound to an atom or a name. This technique can make method secure.</p>
+</li>
+<li><p>The <code>otherwise</code> method</p>
+<p> The method head with label <code>otherwise</code> is a catchall that accepts any message for message for which no other method exists.</p>
+<pre><code>meth otherwise(M)
+    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
+<span class="title">end</span></span>
+</code></pre><p> A class has only one method with <code>otherwise</code>, if this method exists, it accepts any message.</p>
+</li>
+</ol>
+<h2 id="First-class_Attributes">First-class Attributes</h2><p>Attribute names can be calculated at tun time. It is possible to write methods to access and assign any attributes.</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Inspector</span><br><span class="line">	meth <span class="built_in">get</span>(A ?X)</span><br><span class="line">		X=@A</span><br><span class="line">	<span class="function"><span class="keyword">end</span></span></span><br><span class="line">	meth <span class="built_in">set</span>(A X)</span><br><span class="line">		A:=X</span><br><span class="line">	<span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br></pre></td></tr></table></figure>
+<p>The <code>get</code> method can get any attribute, and the <code>set</code> method can assign any attribute.</p>
+<h2 id="Programming_Techniques">Programming Techniques</h2><p>The class concept we have introduced so far gives a convenient syntax for defining data abstractions with excapsulated state and multiple operations.</p>
+<ul>
+<li>The class statement defines a class value, which can be instantiated to give objects.</li>
+<li>Classes can have external references.</li>
+<li>Classes are cmpositional, they can be nested within classes.</li>
+<li>Classes are compatible with procedure values, they can be nested within procedures and vice versa.</li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Programming-Paradigm/">Programming Paradigm</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/CTMCP/">CTMCP</a><a href="/tags/OOP/">OOP</a><a href="/tags/Oz/">Oz</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://deltax.me/2015/03/23/Class-as-Data-Abstraction-in-OOP/" data-title="Class as Data Abstraction in OOP | DeltaX" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/03/24/Inheritence-in-Object-Oriented-Programming/" title="Inheritence in Object-Oriented-Programming">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Inheritence in Object-Oriented-Programming</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/03/22/快速排序/"  title="快速排序">
+ <strong>下一篇：</strong><br/> 
+ <span>快速排序
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/03/23/Class-as-Data-Abstraction-in-OOP/" data-title="Class as Data Abstraction in OOP" data-url="http://deltax.me/2015/03/23/Class-as-Data-Abstraction-in-OOP/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Defining_Classes_and_Objects"><span class="toc-number">1.</span> <span class="toc-text">Defining Classes and Objects</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Class_members"><span class="toc-number">2.</span> <span class="toc-text">Class members</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Initializing_Attributes"><span class="toc-number">3.</span> <span class="toc-text">Initializing Attributes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#First-class_Messages"><span class="toc-number">4.</span> <span class="toc-text">First-class Messages</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#First-class_Attributes"><span class="toc-number">5.</span> <span class="toc-text">First-class Attributes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Programming_Techniques"><span class="toc-number">6.</span> <span class="toc-text">Programming Techniques</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/clrs/Algorithm/" title="Algorithm">Algorithm<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/clrs/Algorithm/" title="Algorithm">Algorithm<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/clrs/Algorithm/" title="Algorithm">Algorithm<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Functional-Programming/" title="Functional Programming">Functional Programming<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Programming-Paradigm/" title="Programming Paradigm">Programming Paradigm<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/clrs/" title="clrs">clrs<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/iOS/" title="iOS">iOS<sup>8</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/iOS/" title="iOS">iOS<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Objective-C/" title="Objective-C">Objective-C<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CTMCP/" title="CTMCP">CTMCP<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Oz/" title="Oz">Oz<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Algorithm/" title="Algorithm">Algorithm<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Scheme/" title="Scheme">Scheme<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/OOP/" title="OOP">OOP<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ML/" title="ML">ML<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Functional-Programming/" title="Functional Programming">Functional Programming<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SICP/" title="SICP">SICP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Concurrency/" title="Concurrency">Concurrency<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Haskell/" title="Haskell">Haskell<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Draven. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/https://github.com/Draveness" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:stark.draven@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="http://deltax.me/about" target="_blank" title="Draven">Draven</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+  
+    c.click();
+    
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"DeltaX"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-56898419-1', 'deltax.me');  
+ga('send', 'pageview');
+</script>
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1e03a2ac060d657818787bf497955fef' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254626833'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s23.cnzz.com/z_stat.php%3Fid%3D1254626833' type='text/javascript'%3E%3C/script%3E"));</script>
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
