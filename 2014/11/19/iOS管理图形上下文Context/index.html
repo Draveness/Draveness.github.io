@@ -117,11 +117,8 @@
 </ul>
 <p>由于系统的当前<code>CGContext</code>只有一个, 所以想要改变<code>CGContext</code>的内容就会影响之后的内容, 我们可以使用两种方法保存当前的<code>CGContext</code>:</p>
 <p>1.使用<code>Core Graphics</code>中的 <code>CGContextSaveGState</code>和<code>CGContextRestoreGState</code>将当前<code>CGContext</code>入栈和出栈.</p>
-<pre><code><span class="attr_selector">[[UIColor redColor]</span> setFill]; <span class="comment">// {context : red}</span>
-<span class="function">CGContextSaveGState</span>(<span class="function">UIGraphicsGetCurrentContext</span>()); <span class="comment">//{context : red}</span>
-<span class="attr_selector">[[UIColor blueColor]</span> setFill]; <span class="comment">//{context : blue}</span>
-<span class="function">CGContextRestoreGState</span>(<span class="function">UIGraphicsGetCurrentContext</span>()); <span class="comment">//{context : red}</span>
-</code></pre><p>2.使用<code>UIKit</code>中的<code>UIGraphicsPushContext()</code>和<code>UIGraphicsPopContext()</code>方法, 在这里<code>UIGraphicsPushContext()</code>方法不能保存上下文的当前状态, 它能够保存当前绘制的内容, 切换到<em>全新的绘图上下文</em>, 而<code>UIGraphicsPopContext()</code>创建完当前位图后将当前<code>CGContext</code>出栈, 我们使用<code>UIGraphicsBeginImageContext()</code>完成这种常用操作, 将旧的上下文入栈、为新上下文分配内存, 创建新的上下文, 并使其作为当前上下文使用.</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr_selector">[[UIColor redColor]</span> setFill]; <span class="comment">// &#123;context : red&#125;</span></span><br><span class="line"><span class="function">CGContextSaveGState</span>(<span class="function">UIGraphicsGetCurrentContext</span>()); <span class="comment">//&#123;context : red&#125;</span></span><br><span class="line"><span class="attr_selector">[[UIColor blueColor]</span> setFill]; <span class="comment">//&#123;context : blue&#125;</span></span><br><span class="line"><span class="function">CGContextRestoreGState</span>(<span class="function">UIGraphicsGetCurrentContext</span>()); <span class="comment">//&#123;context : red&#125;</span></span><br></pre></td></tr></table></figure>
+<p>2.使用<code>UIKit</code>中的<code>UIGraphicsPushContext()</code>和<code>UIGraphicsPopContext()</code>方法, 在这里<code>UIGraphicsPushContext()</code>方法不能保存上下文的当前状态, 它能够保存当前绘制的内容, 切换到<em>全新的绘图上下文</em>, 而<code>UIGraphicsPopContext()</code>创建完当前位图后将当前<code>CGContext</code>出栈, 我们使用<code>UIGraphicsBeginImageContext()</code>完成这种常用操作, 将旧的上下文入栈、为新上下文分配内存, 创建新的上下文, 并使其作为当前上下文使用.</p>
   
 	</div>
 		<footer class="article-footer clearfix">
