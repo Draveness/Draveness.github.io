@@ -1257,47 +1257,23 @@ Content-<span class="string">Type:</span> text/html
     <link href="http://deltax.me/2014/12/11/Persistent-Storage-with-levelDB/"/>
     <id>http://deltax.me/2014/12/11/Persistent-Storage-with-levelDB/</id>
     <published>2014-12-11T11:18:56.000Z</published>
-    <updated>2015-03-24T10:54:49.000Z</updated>
+    <updated>2015-03-24T17:38:44.000Z</updated>
     <content type="html"><![CDATA[<p><code>LevelDB</code> is a key-value pair database developing by google. Why I use this instead of <code>Core Data</code> which is so widely used.</p>
 <p><code>Core Data</code> is a framework deals with data in <code>Cocoa</code>. It is extremly important but compliated. There are many concepts and problems in it. And every time I use <code>Core Data</code> to fetch some datas, I have to write couple lines code.</p>
-<pre><code><span class="title">UIAppdelegate</span> *appDelegate = [UIApplication sharedApplication].delegate;
-<span class="title">NSManagedObjectContext</span> *appDelegate = ApplicationDelegate.managedObjectContext;
-<span class="title">NSError</span> *<span class="built_in">error</span> = nil;
-<span class="title">NSFetchRequest</span> *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Item class])];
-<span class="title">NSArray</span> *items  = [manageContext executeFetchRequest:request <span class="built_in">error</span>:&amp;<span class="built_in">error</span>];
-</code></pre><p>This is so complicated and not elegant. I prefer to use <code>key-value</code> storage instead of it in some situations. When data are not compliated and the relation between models are simple.</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">UIAppdelegate</span> *appDelegate = [UIApplication sharedApplication].delegate;</span><br><span class="line"><span class="title">NSManagedObjectContext</span> *appDelegate = ApplicationDelegate.managedObjectContext;</span><br><span class="line"><span class="title">NSError</span> *<span class="built_in">error</span> = nil;</span><br><span class="line"><span class="title">NSFetchRequest</span> *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Item class])];</span><br><span class="line"><span class="title">NSArray</span> *items  = [manageContext executeFetchRequest:request <span class="built_in">error</span>:&amp;<span class="built_in">error</span>];</span><br></pre></td></tr></table></figure>
+<p>This is so complicated and not elegant. I prefer to use <code>key-value</code> storage instead of it in some situations. When data are not compliated and the relation between models are simple.</p>
 <p>I use <code>levelDB</code> this way:</p>
-<pre><code>UIAppdelegate *appDelegate = [UIApplication sharedApplication].delegate<span class="comment">;</span>
-[]appDelegate<span class="preprocessor">.db</span> objectForKey:@<span class="string">"key"</span>]<span class="comment">;</span>
-</code></pre><p>Just like dictionary and incredible simple to deal with.</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UIAppdelegate *appDelegate = [UIApplication sharedApplication].delegate<span class="comment">;</span></span><br><span class="line">[]appDelegate<span class="preprocessor">.db</span> objectForKey:@<span class="string">"key"</span>]<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>Just like dictionary and incredible simple to deal with.</p>
 <p>Before using <code>LevelDB</code>, the first thing you need to do is downlod repo on github <a href="https://github.com/google/leveldb" target="_blank" rel="external"><code>google/LevelDB</code></a> or type this in terminal</p>
-<pre><code>git clone <span class="string">https:</span><span class="comment">//github.com/google/leveldb.git</span>
-</code></pre><p>And then you need to compile it.</p>
-<pre><code><span class="variable">CXXFLAGS=</span><span class="variable">-stdlib=</span>libstdc++ make <span class="variable">PLATFORM=</span>IOS
-</code></pre><p>Download the wrapper on this <a href="http://www.tanhao.me/pieces/1397.html" target="_blank" rel="external">tanhao</a> Just drag this all in your project.</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone <span class="string">https:</span><span class="comment">//github.com/google/leveldb.git</span></span><br></pre></td></tr></table></figure>
+<p>And then you need to compile it.</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">CXXFLAGS=</span><span class="variable">-stdlib=</span>libstdc++ make <span class="variable">PLATFORM=</span>IOS</span><br></pre></td></tr></table></figure>
+<p>Download the wrapper on this <a href="http://www.tanhao.me/pieces/1397.html" target="_blank" rel="external">tanhao</a> Just drag this all in your project.</p>
 <p>The prepare work are all done.</p>
 <p>But when I you this <code>levelDB</code> to store data, I met some problems, if you want to store some data which is an object, you should make the <code>class</code> of that <code>object</code> to confirm <code>NSCoding</code> protocol.</p>
-<pre><code>- (id)<span class="string">initWithCoder:</span>(NSCoder *)decoder {
-    self = [<span class="keyword">super</span> init];
-    <span class="keyword">if</span> (!self) {
-        <span class="keyword">return</span> nil;
-    }
-
-    self.avatar = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"avatar"</span>];
-    self.nickName = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"nickName"</span>];
-    self.userID = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"userID"</span>];
-    self.comments = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"comments"</span>];
-
-    <span class="keyword">return</span> self;
-}
-
-- (<span class="typename">void</span>)<span class="string">encodeWithCoder:</span>(NSCoder *)encoder {
-    [encoder <span class="string">encodeObject:</span>self.avatar <span class="string">forKey:</span>@<span class="string">"avatar"</span>];
-    [encoder <span class="string">encodeObject:</span>self.nickName <span class="string">forKey:</span>@<span class="string">"nickName"</span>];
-    [encoder <span class="string">encodeObject:</span>self.userID <span class="string">forKey:</span>@<span class="string">"userID"</span>];
-    [encoder <span class="string">encodeObject:</span>self.comments <span class="string">forKey:</span>@<span class="string">"comments"</span>];
-}
-</code></pre><p>You need to implement this two methods, if not when you fetch the object from the data base, the compiler do not know what in it and what is it. So you should <code>encode</code> the object propety before store them. And <code>decode</code> the object when you fetch them. Work similar as <code>NSKeyedArchiver</code>, if we have dozens of property, we have to write code for every property, after I find that I have to solve this problem in this approach. I think I want to write a <code>Meta Propgram</code> in <code>Ruby</code> to deal with this.</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">- (id)<span class="string">initWithCoder:</span>(NSCoder *)decoder &#123;</span><br><span class="line">    self = [<span class="keyword">super</span> init];</span><br><span class="line">    <span class="keyword">if</span> (!self) &#123;</span><br><span class="line">        <span class="keyword">return</span> nil;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    self.avatar = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"avatar"</span>];</span><br><span class="line">    self.nickName = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"nickName"</span>];</span><br><span class="line">    self.userID = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"userID"</span>];</span><br><span class="line">    self.comments = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"comments"</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="typename">void</span>)<span class="string">encodeWithCoder:</span>(NSCoder *)encoder &#123;</span><br><span class="line">    [encoder <span class="string">encodeObject:</span>self.avatar <span class="string">forKey:</span>@<span class="string">"avatar"</span>];</span><br><span class="line">    [encoder <span class="string">encodeObject:</span>self.nickName <span class="string">forKey:</span>@<span class="string">"nickName"</span>];</span><br><span class="line">    [encoder <span class="string">encodeObject:</span>self.userID <span class="string">forKey:</span>@<span class="string">"userID"</span>];</span><br><span class="line">    [encoder <span class="string">encodeObject:</span>self.comments <span class="string">forKey:</span>@<span class="string">"comments"</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>You need to implement this two methods, if not when you fetch the object from the data base, the compiler do not know what in it and what is it. So you should <code>encode</code> the object propety before store them. And <code>decode</code> the object when you fetch them. Work similar as <code>NSKeyedArchiver</code>, if we have dozens of property, we have to write code for every property, after I find that I have to solve this problem in this approach. I think I want to write a <code>Meta Propgram</code> in <code>Ruby</code> to deal with this.</p>
 <p>And I will do it after my second App on line.</p>
 ]]></content>
     <summary type="html">
