@@ -4,7 +4,7 @@
   <subtitle><![CDATA[为了成为牛逼闪闪的工程师]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
-  <updated>2015-03-24T11:01:52.000Z</updated>
+  <updated>2015-03-24T11:04:05.000Z</updated>
   <id>http://deltax.me/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://deltax.me/2015/03/24/Inheritence-in-Object-Oriented-Programming/"/>
     <id>http://deltax.me/2015/03/24/Inheritence-in-Object-Oriented-Programming/</id>
     <published>2015-03-24T01:07:46.000Z</published>
-    <updated>2015-03-24T11:01:52.000Z</updated>
+    <updated>2015-03-24T11:04:05.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Introduction">Introduction</h2><p>The main addition that <strong>OOP</strong> adds to component-based programming is inheritence. OOP allows defining a class incrementally by extending existing classes.</p>
 <p>While using inheritence, it must be taken good care of. It may lost control if your application doesn’t use good design patterns.</p>
 <h2 id="Inheritence_Graph">Inheritence Graph</h2><p>Inheritence is a way to construct new classes from existing classes. </p>
@@ -215,9 +215,9 @@ in {<span class="keyword">New</span> Tracer TInit} <span class="keyword">end</sp
     
       <category term="Oz" scheme="http://deltax.me/tags/Oz/"/>
     
-      <category term="OOP" scheme="http://deltax.me/categories/OOP/"/>
+      <category term="Programming Paradigm" scheme="http://deltax.me/categories/Programming-Paradigm/"/>
     
-      <category term="CTMCP" scheme="http://deltax.me/categories/OOP/CTMCP/"/>
+      <category term="CTMCP" scheme="http://deltax.me/categories/Programming-Paradigm/CTMCP/"/>
     
   </entry>
   
@@ -550,7 +550,7 @@ pivot_t partition(<span class="type">int</span> A[], <span class="type">int</spa
     <link href="http://deltax.me/2015/03/20/Stateful-Collections/"/>
     <id>http://deltax.me/2015/03/20/Stateful-Collections/</id>
     <published>2015-03-20T15:51:23.000Z</published>
-    <updated>2015-03-24T11:02:32.000Z</updated>
+    <updated>2015-03-24T11:04:28.000Z</updated>
     <content type="html"><![CDATA[<p>There are different kinds of collection depending on what operations are provided. We discuss in two axises about collections.</p>
 <ol>
 <li>Indexed collections and unindexed collections, depending on whether or not thereis rapid access to individual elements.</li>
