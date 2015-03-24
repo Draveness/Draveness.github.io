@@ -1003,7 +1003,7 @@ local C={<span class="type">NewCell</span> <span class="number">0</span>} <span 
     <link href="http://deltax.me/2015/03/15/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/"/>
     <id>http://deltax.me/2015/03/15/分治策略/</id>
     <published>2015-03-15T07:14:54.000Z</published>
-    <updated>2015-03-24T10:48:32.000Z</updated>
+    <updated>2015-03-24T17:41:03.000Z</updated>
     <content type="html"><![CDATA[<blockquote>
 <p>在计算机科学中, <a href="http://zh.wikipedia.org/wiki/%E5%88%86%E6%B2%BB%E6%B3%95" target="_blank" rel="external">分治法</a>是基于多项分支递归的一种很重要的算法范式. 字面上的解释是”分而治之”, 就是把一个复杂的问题分成两个或更多的相同或相似的子问题, 知道最后子问题可以简单的直接求解, 原问题的解就是子问题的解的合并.</p>
 </blockquote>
@@ -1019,8 +1019,8 @@ local C={<span class="type">NewCell</span> <span class="number">0</span>} <span 
 </ol>
 <p>在这里我们不对前两种方法进行说明, 仅仅讨论一下主方法的使用, 以及适用的情况.</p>
 <h3 id="主方法">主方法</h3><p>主方法<code>(Master Method)</code>可以求解一下形式的递归式的边界.</p>
-<pre><code><span class="function"><span class="title">T</span><span class="params">(n)</span></span> = <span class="function"><span class="title">aT</span><span class="params">(n/b)</span></span> + <span class="function"><span class="title">f</span><span class="params">(n)</span></span>
-</code></pre><p>其中 <code>a &gt;= 1</code> <code>b &gt; 1</code> <code>f(n)</code> 是一个给定的函数. 这个递归式刻画了一个如下的分治算法:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">T</span><span class="params">(n)</span></span> = <span class="function"><span class="title">aT</span><span class="params">(n/b)</span></span> + <span class="function"><span class="title">f</span><span class="params">(n)</span></span></span><br></pre></td></tr></table></figure>
+<p>其中 <code>a &gt;= 1</code> <code>b &gt; 1</code> <code>f(n)</code> 是一个给定的函数. 这个递归式刻画了一个如下的分治算法:</p>
 <blockquote>
 <p>生成 <code>a</code> 个子问题, 每个子问题的规模是原问题规模的 <code>1/b</code> , 分解和合并步骤总共消耗 <code>f(n)</code> 的时间.</p>
 </blockquote>

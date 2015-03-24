@@ -134,8 +134,8 @@
 </ol>
 <p>在这里我们不对前两种方法进行说明, 仅仅讨论一下主方法的使用, 以及适用的情况.</p>
 <h3 id="主方法">主方法</h3><p>主方法<code>(Master Method)</code>可以求解一下形式的递归式的边界.</p>
-<pre><code><span class="function"><span class="title">T</span><span class="params">(n)</span></span> = <span class="function"><span class="title">aT</span><span class="params">(n/b)</span></span> + <span class="function"><span class="title">f</span><span class="params">(n)</span></span>
-</code></pre><p>其中 <code>a &gt;= 1</code> <code>b &gt; 1</code> <code>f(n)</code> 是一个给定的函数. 这个递归式刻画了一个如下的分治算法:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">T</span><span class="params">(n)</span></span> = <span class="function"><span class="title">aT</span><span class="params">(n/b)</span></span> + <span class="function"><span class="title">f</span><span class="params">(n)</span></span></span><br></pre></td></tr></table></figure>
+<p>其中 <code>a &gt;= 1</code> <code>b &gt; 1</code> <code>f(n)</code> 是一个给定的函数. 这个递归式刻画了一个如下的分治算法:</p>
 <blockquote>
 <p>生成 <code>a</code> 个子问题, 每个子问题的规模是原问题规模的 <code>1/b</code> , 分解和合并步骤总共消耗 <code>f(n)</code> 的时间.</p>
 </blockquote>
@@ -234,6 +234,8 @@
 		
 		  
 			<li><a href="/categories/clrs/Algorithm/" title="Algorithm">Algorithm<sup>1</sup></a></li>
+		  
+		
 		  
 		
 		  
