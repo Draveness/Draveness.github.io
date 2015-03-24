@@ -4,7 +4,7 @@
   <subtitle><![CDATA[为了成为牛逼闪闪的工程师]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
-  <updated>2015-03-24T10:57:37.000Z</updated>
+  <updated>2015-03-24T11:01:52.000Z</updated>
   <id>http://deltax.me/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://deltax.me/2015/03/24/Inheritence-in-Object-Oriented-Programming/"/>
     <id>http://deltax.me/2015/03/24/Inheritence-in-Object-Oriented-Programming/</id>
     <published>2015-03-24T01:07:46.000Z</published>
-    <updated>2015-03-24T10:57:37.000Z</updated>
+    <updated>2015-03-24T11:01:52.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Introduction">Introduction</h2><p>The main addition that <strong>OOP</strong> adds to component-based programming is inheritence. OOP allows defining a class incrementally by extending existing classes.</p>
 <p>While using inheritence, it must be taken good care of. It may lost control if your application doesn’t use good design patterns.</p>
 <h2 id="Inheritence_Graph">Inheritence Graph</h2><p>Inheritence is a way to construct new classes from existing classes. </p>
@@ -217,6 +217,8 @@ in {<span class="keyword">New</span> Tracer TInit} <span class="keyword">end</sp
     
       <category term="OOP" scheme="http://deltax.me/categories/OOP/"/>
     
+      <category term="CTMCP" scheme="http://deltax.me/categories/OOP/CTMCP/"/>
+    
   </entry>
   
   <entry>
@@ -224,7 +226,7 @@ in {<span class="keyword">New</span> Tracer TInit} <span class="keyword">end</sp
     <link href="http://deltax.me/2015/03/23/Class-as-Data-Abstraction-in-OOP/"/>
     <id>http://deltax.me/2015/03/23/Class-as-Data-Abstraction-in-OOP/</id>
     <published>2015-03-23T02:28:07.000Z</published>
-    <updated>2015-03-24T10:52:38.000Z</updated>
+    <updated>2015-03-24T11:01:34.000Z</updated>
     <content type="html"><![CDATA[<p>The heart of the object concept is controlled access to encapsulated data. The behaviour of an object is specified by a <strong>class</strong> which is an incremental definition of a data abstraction.</p>
 <ul>
 <li>Complete data abstraction<ul>
@@ -383,6 +385,8 @@ Apt4={<span class="keyword">New</span> OneApt init}
       <category term="Oz" scheme="http://deltax.me/tags/Oz/"/>
     
       <category term="Programming Paradigm" scheme="http://deltax.me/categories/Programming-Paradigm/"/>
+    
+      <category term="CTMCP" scheme="http://deltax.me/categories/Programming-Paradigm/CTMCP/"/>
     
   </entry>
   
@@ -546,7 +550,7 @@ pivot_t partition(<span class="type">int</span> A[], <span class="type">int</spa
     <link href="http://deltax.me/2015/03/20/Stateful-Collections/"/>
     <id>http://deltax.me/2015/03/20/Stateful-Collections/</id>
     <published>2015-03-20T15:51:23.000Z</published>
-    <updated>2015-03-24T10:55:24.000Z</updated>
+    <updated>2015-03-24T11:02:32.000Z</updated>
     <content type="html"><![CDATA[<p>There are different kinds of collection depending on what operations are provided. We discuss in two axises about collections.</p>
 <ol>
 <li>Indexed collections and unindexed collections, depending on whether or not thereis rapid access to individual elements.</li>
@@ -632,6 +636,8 @@ pivot_t partition(<span class="type">int</span> A[], <span class="type">int</spa
       <category term="Functional Programming" scheme="http://deltax.me/categories/Functional-Programming/"/>
     
       <category term="Programming Paradigm" scheme="http://deltax.me/categories/Functional-Programming/Programming-Paradigm/"/>
+    
+      <category term="CTMCP" scheme="http://deltax.me/categories/Functional-Programming/Programming-Paradigm/CTMCP/"/>
     
   </entry>
   
@@ -1034,7 +1040,7 @@ void max_heap_insert(heap_t *heap, <span class="keyword">int</span> key) {
     <link href="http://deltax.me/2015/03/18/Parameter-Passing-Mechanisms/"/>
     <id>http://deltax.me/2015/03/18/Parameter-Passing-Mechanisms/</id>
     <published>2015-03-18T08:47:50.000Z</published>
-    <updated>2015-03-24T10:54:46.000Z</updated>
+    <updated>2015-03-24T11:02:20.000Z</updated>
     <content type="html"><![CDATA[<p>The operation of a data abstraction can have arguments and results. Many different mechanisms have been divised to pass the arguments and results between a calling program and an abstraction.</p>
 <h3 id="Call_by_Reference">Call by Reference</h3><p>The identity of a <strong>language entity is passed to the procedure</strong>. The procedure can then use this language entity freely. This is the primitive mechanism used by the computation models of the book for all language entities including dataflow variables and cells.</p>
 <h3 id="Call_by_Variable">Call by Variable</h3><p>This is a special case of call by reference. <strong>The identity of a cell is passed to the procedure</strong>.</p>
@@ -1109,7 +1115,7 @@ local C={<span class="type">NewCell</span> <span class="number">0</span>} <span 
     <link href="http://deltax.me/2015/03/18/Explicit-State/"/>
     <id>http://deltax.me/2015/03/18/Explicit-State/</id>
     <published>2015-03-18T06:34:39.000Z</published>
-    <updated>2015-03-24T10:52:50.000Z</updated>
+    <updated>2015-03-24T11:01:41.000Z</updated>
     <content type="html"><![CDATA[<h2 id="State">State</h2><p>A <code>state</code> is a sequence of values in time that contains the intermediate results of a desired computation.</p>
 <p>There are different ways that state can be used in a program.</p>
 <ul>
@@ -1341,6 +1347,8 @@ fun {<span class="type">NewCollection</span>}
     
       <category term="Programming Paradigm" scheme="http://deltax.me/categories/Programming-Paradigm/"/>
     
+      <category term="CTMCP" scheme="http://deltax.me/categories/Programming-Paradigm/CTMCP/"/>
+    
   </entry>
   
   <entry>
@@ -1348,7 +1356,7 @@ fun {<span class="type">NewCollection</span>}
     <link href="http://deltax.me/2015/03/16/Message-Passing-Concurrency/"/>
     <id>http://deltax.me/2015/03/16/Message-Passing-Concurrency/</id>
     <published>2015-03-15T17:13:25.000Z</published>
-    <updated>2015-03-24T10:52:08.000Z</updated>
+    <updated>2015-03-24T11:02:08.000Z</updated>
     <content type="html"><![CDATA[<p><code>Message-passing</code> is a programming style in which a program consists of independent entities that interact by sending each other messages asynchronously.</p>
 <h2 id="Why_Message-passing_important?">Why Message-passing important?</h2><ul>
 <li>It is the basic framework for <strong>multi-agent</strong> systems.</li>
@@ -2317,7 +2325,7 @@ headerView.frame = CGRectMake <span class="comment">(0, -HEADER_HEIGHT, WIDTH_SC
     <link href="http://deltax.me/2014/11/22/subtype/"/>
     <id>http://deltax.me/2014/11/22/subtype/</id>
     <published>2014-11-22T12:26:08.000Z</published>
-    <updated>2015-03-24T10:55:46.000Z</updated>
+    <updated>2015-03-24T11:02:51.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Subtyping">Subtyping</h2><ul>
 <li>While languages like <code>Java</code> and <code>C#</code> have generics these days, the source of type-system expressiveness most fundamental to object-oriented style is <em>subtype polymorphism</em>, also known as <em>subtyping</em>.</li>
 </ul>
