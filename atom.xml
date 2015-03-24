@@ -4,7 +4,7 @@
   <subtitle><![CDATA[为了成为牛逼闪闪的工程师]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
-  <updated>2015-03-24T10:46:42.000Z</updated>
+  <updated>2015-03-24T10:53:06.000Z</updated>
   <id>http://deltax.me/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://deltax.me/2015/03/24/Inheritence-in-Object-Oriented-Programming/"/>
     <id>http://deltax.me/2015/03/24/Inheritence-in-Object-Oriented-Programming/</id>
     <published>2015-03-24T01:07:46.000Z</published>
-    <updated>2015-03-24T10:46:42.000Z</updated>
+    <updated>2015-03-24T10:53:06.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Introduction">Introduction</h2><p>The main addition that <strong>OOP</strong> adds to component-based programming is inheritence. OOP allows defining a class incrementally by extending existing classes.</p>
 <p>While using inheritence, it must be taken good care of. It may lost control if your application doesn’t use good design patterns.</p>
 <h2 id="Inheritence_Graph">Inheritence Graph</h2><p>Inheritence is a way to construct new classes from existing classes. </p>
@@ -213,8 +213,6 @@ in {<span class="keyword">New</span> Tracer TInit} <span class="keyword">end</sp
     <![CDATA[<h2 id="Introduction">Introduction</h2><p>The main addition that <strong>OOP</strong> adds to component-based programming is inheritence. OO]]>
     </summary>
     
-      <category term="Inheritence" scheme="http://deltax.me/tags/Inheritence/"/>
-    
       <category term="Oz" scheme="http://deltax.me/tags/Oz/"/>
     
       <category term="OOP" scheme="http://deltax.me/categories/OOP/"/>
@@ -226,7 +224,7 @@ in {<span class="keyword">New</span> Tracer TInit} <span class="keyword">end</sp
     <link href="http://deltax.me/2015/03/23/Class-as-Data-Abstraction-in-OOP/"/>
     <id>http://deltax.me/2015/03/23/Class-as-Data-Abstraction-in-OOP/</id>
     <published>2015-03-23T02:28:07.000Z</published>
-    <updated>2015-03-23T10:27:31.000Z</updated>
+    <updated>2015-03-24T10:52:38.000Z</updated>
     <content type="html"><![CDATA[<p>The heart of the object concept is controlled access to encapsulated data. The behaviour of an object is specified by a <strong>class</strong> which is an incremental definition of a data abstraction.</p>
 <ul>
 <li>Complete data abstraction<ul>
@@ -381,6 +379,8 @@ Apt4={<span class="keyword">New</span> OneApt init}
     </summary>
     
       <category term="OOP" scheme="http://deltax.me/tags/OOP/"/>
+    
+      <category term="Oz" scheme="http://deltax.me/tags/Oz/"/>
     
       <category term="Programming Paradigm" scheme="http://deltax.me/categories/Programming-Paradigm/"/>
     
@@ -546,7 +546,7 @@ pivot_t partition(<span class="type">int</span> A[], <span class="type">int</spa
     <link href="http://deltax.me/2015/03/20/Stateful-Collections/"/>
     <id>http://deltax.me/2015/03/20/Stateful-Collections/</id>
     <published>2015-03-20T15:51:23.000Z</published>
-    <updated>2015-03-21T05:30:36.000Z</updated>
+    <updated>2015-03-24T10:55:24.000Z</updated>
     <content type="html"><![CDATA[<p>There are different kinds of collection depending on what operations are provided. We discuss in two axises about collections.</p>
 <ol>
 <li>Indexed collections and unindexed collections, depending on whether or not thereis rapid access to individual elements.</li>
@@ -627,9 +627,11 @@ pivot_t partition(<span class="type">int</span> A[], <span class="type">int</spa
 <]]>
     </summary>
     
-      <category term="FP" scheme="http://deltax.me/tags/FP/"/>
+      <category term="Functional Programming" scheme="http://deltax.me/tags/Functional-Programming/"/>
     
-      <category term="FP" scheme="http://deltax.me/categories/FP/"/>
+      <category term="Functional Programming" scheme="http://deltax.me/categories/Functional-Programming/"/>
+    
+      <category term="Programming Paradigm" scheme="http://deltax.me/categories/Functional-Programming/Programming-Paradigm/"/>
     
   </entry>
   
@@ -638,7 +640,7 @@ pivot_t partition(<span class="type">int</span> A[], <span class="type">int</spa
     <link href="http://deltax.me/2015/03/20/Incredible%20Functional%20Programming/"/>
     <id>http://deltax.me/2015/03/20/Incredible Functional Programming/</id>
     <published>2015-03-19T16:40:16.000Z</published>
-    <updated>2015-03-20T12:22:40.000Z</updated>
+    <updated>2015-03-24T10:50:54.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Experience">Experience</h2><p>这一次我为大家分享的主题是, <code>Incredible Functional Programming</code>. 分享的主要的内容是<strong>函数式编程</strong>的一些非常基础的东西, 这与我们平时所使用的<strong>面向对象编程</strong>这种编程范式有着极大的不同. 也希望能给今天的各位带来一些收获或者启发, 而我也能为 <code>Function Programming</code> 的传播与壮大做出自己的一份贡献.</p>
 <h3 id="Encounter_Functinol_Programming">Encounter Functinol Programming</h3><p>首先呢, 我想说一下我是如何接触到函数式编程这一编程范式的, 在大一下学期的时候, 有几位 Thoughtworks 的工程师, 来为我们讲解如何使用 Rails 建站. 我个人对这几位工程师也是非常的尊敬的, 在一次偶然的交流中, 他多次提出 Functional Programming 这一编程范式, 当时我对它的第一感觉是很好奇, 而且哪位工程师说过一句话, 我只能记住大概的意思:</p>
 <blockquote>
@@ -882,13 +884,11 @@ doubleList = map <span class="keyword">double</span>
     <![CDATA[<h2 id="Experience">Experience</h2><p>这一次我为大家分享的主题是, <code>Incredible Functional Programming</code>. 分享的主要的内容是<strong>函数式编程</strong>的一些非常基础的]]>
     </summary>
     
-      <category term="FP" scheme="http://deltax.me/tags/FP/"/>
+      <category term="Functional Programming" scheme="http://deltax.me/tags/Functional-Programming/"/>
     
       <category term="Scheme" scheme="http://deltax.me/tags/Scheme/"/>
     
-      <category term="FP" scheme="http://deltax.me/categories/FP/"/>
-    
-      <category term="Scheme" scheme="http://deltax.me/categories/FP/Scheme/"/>
+      <category term="Functional Programming" scheme="http://deltax.me/categories/Functional-Programming/"/>
     
   </entry>
   
@@ -1034,7 +1034,7 @@ void max_heap_insert(heap_t *heap, <span class="keyword">int</span> key) {
     <link href="http://deltax.me/2015/03/18/Parameter-Passing-Mechanisms/"/>
     <id>http://deltax.me/2015/03/18/Parameter-Passing-Mechanisms/</id>
     <published>2015-03-18T08:47:50.000Z</published>
-    <updated>2015-03-20T15:48:23.000Z</updated>
+    <updated>2015-03-24T10:54:46.000Z</updated>
     <content type="html"><![CDATA[<p>The operation of a data abstraction can have arguments and results. Many different mechanisms have been divised to pass the arguments and results between a calling program and an abstraction.</p>
 <h3 id="Call_by_Reference">Call by Reference</h3><p>The identity of a <strong>language entity is passed to the procedure</strong>. The procedure can then use this language entity freely. This is the primitive mechanism used by the computation models of the book for all language entities including dataflow variables and cells.</p>
 <h3 id="Call_by_Variable">Call by Variable</h3><p>This is a special case of call by reference. <strong>The identity of a cell is passed to the procedure</strong>.</p>
@@ -1100,6 +1100,8 @@ local C={<span class="type">NewCell</span> <span class="number">0</span>} <span 
     <![CDATA[<p>The operation of a data abstraction can have arguments and results. Many different mechanisms have been divised to pass the arguments and]]>
     </summary>
     
+      <category term="Oz" scheme="http://deltax.me/tags/Oz/"/>
+    
   </entry>
   
   <entry>
@@ -1107,7 +1109,7 @@ local C={<span class="type">NewCell</span> <span class="number">0</span>} <span 
     <link href="http://deltax.me/2015/03/18/Explicit-State/"/>
     <id>http://deltax.me/2015/03/18/Explicit-State/</id>
     <published>2015-03-18T06:34:39.000Z</published>
-    <updated>2015-03-18T08:43:12.000Z</updated>
+    <updated>2015-03-24T10:52:50.000Z</updated>
     <content type="html"><![CDATA[<h2 id="State">State</h2><p>A <code>state</code> is a sequence of values in time that contains the intermediate results of a desired computation.</p>
 <p>There are different ways that state can be used in a program.</p>
 <ul>
@@ -1335,11 +1337,7 @@ fun {<span class="type">NewCollection</span>}
     <![CDATA[<h2 id="State">State</h2><p>A <code>state</code> is a sequence of values in time that contains the intermediate results of a desired computa]]>
     </summary>
     
-      <category term="Abstraction" scheme="http://deltax.me/tags/Abstraction/"/>
-    
-      <category term="Polymorphism" scheme="http://deltax.me/tags/Polymorphism/"/>
-    
-      <category term="State" scheme="http://deltax.me/tags/State/"/>
+      <category term="Oz" scheme="http://deltax.me/tags/Oz/"/>
     
       <category term="Programming Paradigm" scheme="http://deltax.me/categories/Programming-Paradigm/"/>
     
@@ -1350,7 +1348,7 @@ fun {<span class="type">NewCollection</span>}
     <link href="http://deltax.me/2015/03/16/Message-Passing-Concurrency/"/>
     <id>http://deltax.me/2015/03/16/Message-Passing-Concurrency/</id>
     <published>2015-03-15T17:13:25.000Z</published>
-    <updated>2015-03-16T01:04:29.000Z</updated>
+    <updated>2015-03-24T10:52:08.000Z</updated>
     <content type="html"><![CDATA[<p><code>Message-passing</code> is a programming style in which a program consists of independent entities that interact by sending each other messages asynchronously.</p>
 <h2 id="Why_Message-passing_important?">Why Message-passing important?</h2><ul>
 <li>It is the basic framework for <strong>multi-agent</strong> systems.</li>
@@ -1552,7 +1550,7 @@ proc {ClientProc Msg}
     
       <category term="Concurrency" scheme="http://deltax.me/tags/Concurrency/"/>
     
-      <category term="Message Passing" scheme="http://deltax.me/tags/Message-Passing/"/>
+      <category term="Oz" scheme="http://deltax.me/tags/Oz/"/>
     
   </entry>
   
@@ -1611,7 +1609,7 @@ proc {ClientProc Msg}
     <link href="http://deltax.me/2015/01/27/HTTP%E6%8A%A5%E6%96%87%E5%86%85%E7%9A%84HTTP%E4%BF%A1%E6%81%AF.md/"/>
     <id>http://deltax.me/2015/01/27/HTTP报文内的HTTP信息.md/</id>
     <published>2015-01-27T04:17:20.000Z</published>
-    <updated>2015-01-27T04:35:42.000Z</updated>
+    <updated>2015-03-24T10:52:56.000Z</updated>
     <content type="html"><![CDATA[<h2 id="HTTP报文">HTTP报文</h2><p><code>HTTP报文</code>是由多行数据构成的字符串文本, 大致可分为<strong>报文首部</strong>和<strong>报文主体</strong>两部分.</p>
 <pre><code><span class="code">------------------
 |     报文首部     |
@@ -1704,7 +1702,7 @@ Content-<span class="string">Type:</span> text/html
     <link href="http://deltax.me/2015/01/19/SICP-1-1/"/>
     <id>http://deltax.me/2015/01/19/SICP-1-1/</id>
     <published>2015-01-19T02:06:27.000Z</published>
-    <updated>2015-01-19T04:34:42.000Z</updated>
+    <updated>2015-03-24T10:55:09.000Z</updated>
     <content type="html"><![CDATA[<h1 id="Summary">Summary</h1><p>This blog just a summary of what I learned from SICP and the solution I made for exercises.</p>
 <p>There are three tips on how our mind works and how we build abstractions.</p>
 <ol>
@@ -1802,11 +1800,11 @@ Content-<span class="string">Type:</span> text/html
 <p>There are]]>
     </summary>
     
-      <category term="FP" scheme="http://deltax.me/tags/FP/"/>
-    
       <category term="SICP" scheme="http://deltax.me/tags/SICP/"/>
     
       <category term="Scheme" scheme="http://deltax.me/tags/Scheme/"/>
+    
+      <category term="Functional Programming" scheme="http://deltax.me/categories/Functional-Programming/"/>
     
   </entry>
   
@@ -1815,7 +1813,7 @@ Content-<span class="string">Type:</span> text/html
     <link href="http://deltax.me/2014/12/11/Persistent-Storage-with-levelDB/"/>
     <id>http://deltax.me/2014/12/11/Persistent-Storage-with-levelDB/</id>
     <published>2014-12-11T11:18:56.000Z</published>
-    <updated>2014-12-11T12:10:30.000Z</updated>
+    <updated>2015-03-24T10:54:49.000Z</updated>
     <content type="html"><![CDATA[<p><code>LevelDB</code> is a key-value pair database developing by google. Why I use this instead of <code>Core Data</code> which is so widely used.</p>
 <p><code>Core Data</code> is a framework deals with data in <code>Cocoa</code>. It is extremly important but compliated. There are many concepts and problems in it. And every time I use <code>Core Data</code> to fetch some datas, I have to write couple lines code.</p>
 <pre><code><span class="title">UIAppdelegate</span> *appDelegate = [UIApplication sharedApplication].delegate;
@@ -1862,6 +1860,8 @@ Content-<span class="string">Type:</span> text/html
     <![CDATA[<p><code>LevelDB</code> is a key-value pair database developing by google. Why I use this instead of <code>Core Data</code> which is so wide]]>
     </summary>
     
+      <category term="Objective-C" scheme="http://deltax.me/tags/Objective-C/"/>
+    
       <category term="iOS" scheme="http://deltax.me/tags/iOS/"/>
     
       <category term="iOS" scheme="http://deltax.me/categories/iOS/"/>
@@ -1873,7 +1873,7 @@ Content-<span class="string">Type:</span> text/html
     <link href="http://deltax.me/2014/12/03/iOS%20Using%20AFNetworking%20%3CBug03%3E/"/>
     <id>http://deltax.me/2014/12/03/iOS Using AFNetworking <Bug03>/</id>
     <published>2014-12-02T16:56:49.000Z</published>
-    <updated>2014-12-02T17:18:27.000Z</updated>
+    <updated>2015-03-24T10:53:40.000Z</updated>
     <content type="html"><![CDATA[<p>During these days development, when I connect our iOS App to Python <code>back-end</code> using <code>AFNetworking</code>, I met an error. It is my first time to use the <code>AFNetworking</code> framework, I am used to use <code>MKNetworking</code> instead, but with some reasons. I planned to use <code>AFNetworking</code> instead. And then, as you see, I met a few problems. </p>
 <pre><code>Error: Error Domain=NSCocoaErrorDomain Code=3840 <span class="string">"The operation couldn’t be completed. (Cocoa error 3840.)"</span><span class="function"> (</span>JSON text did<span class="instruction"> not </span>start with<span class="instruction"> array </span>or object<span class="instruction"> and </span>option to allow fragments<span class="instruction"> not </span>set.<span class="function">)</span> UserInfo=0x17697430 {NSDebugDescription=JSON text did<span class="instruction"> not </span>start with<span class="instruction"> array </span>or object<span class="instruction"> and </span>option to allow fragments<span class="instruction"> not </span>set., NSUnderlyingError=0x176f9ec0 
 </code></pre><p>At first, I do not know, what it’s mean, but I ask my partner, he tells me, in order to beautify the <code>JSON</code> he use some method, to make them like this, I do not know exactly what he did, but <code>JSON</code> looks like this.</p>
@@ -1899,6 +1899,8 @@ Content-<span class="string">Type:</span> text/html
     <![CDATA[<p>During these days development, when I connect our iOS App to Python <code>back-end</code> using <code>AFNetworking</code>, I met an error]]>
     </summary>
     
+      <category term="Objective-C" scheme="http://deltax.me/tags/Objective-C/"/>
+    
       <category term="iOS" scheme="http://deltax.me/tags/iOS/"/>
     
       <category term="iOS" scheme="http://deltax.me/categories/iOS/"/>
@@ -1910,7 +1912,7 @@ Content-<span class="string">Type:</span> text/html
     <link href="http://deltax.me/2014/11/28/iOS%E7%BB%84%E5%90%88TabbarController%E5%92%8CNavigationController%20%3CBug02%3E/"/>
     <id>http://deltax.me/2014/11/28/iOS组合TabbarController和NavigationController <Bug02>/</id>
     <published>2014-11-28T12:36:59.000Z</published>
-    <updated>2014-11-28T13:47:01.000Z</updated>
+    <updated>2015-03-24T10:54:14.000Z</updated>
     <content type="html"><![CDATA[<h2 id="TabbarController_and_NavigationController">TabbarController and NavigationController</h2><p><code>UINavigationController</code> and <code>UITabBarController</code> are two kinds of container classes in Cocoa. The two controllers are tremendous important in iOS development, we deal with them every day. Even if you are not a developer, just an iOS device user. Almost every thing you see in an iOS App have some relationship with them.</p>
 <p>Why are they so important, because of they are container classes, they handle many view controllers in an App. And <code>MVC</code> is the basic design patterns in <code>Cocoa</code> and <code>Cocoa touch</code>.</p>
 <p>Personally, I prefer to initialize everything programmingly, not in a storyboard or a nib file. Because I think it is easy to deal with. Sometimes using storyboard or a nib is too simple, but they may cause undetectable crash.</p>
@@ -2014,6 +2016,8 @@ tabBarController<span class="variable">.viewControllers</span> = controllers;
     <![CDATA[<h2 id="TabbarController_and_NavigationController">TabbarController and NavigationController</h2><p><code>UINavigationController</code> and ]]>
     </summary>
     
+      <category term="Objective-C" scheme="http://deltax.me/tags/Objective-C/"/>
+    
       <category term="iOS" scheme="http://deltax.me/tags/iOS/"/>
     
       <category term="iOS" scheme="http://deltax.me/categories/iOS/"/>
@@ -2025,7 +2029,7 @@ tabBarController<span class="variable">.viewControllers</span> = controllers;
     <link href="http://deltax.me/2014/11/26/Lists-and-Patterns-Matching/"/>
     <id>http://deltax.me/2014/11/26/Lists-and-Patterns-Matching/</id>
     <published>2014-11-26T07:57:59.000Z</published>
-    <updated>2014-11-26T10:01:38.000Z</updated>
+    <updated>2015-03-24T10:51:55.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Recursive_computations">Recursive computations</h2><p>递归的计算模型是声明式编程的核心, 有些人可能并不知道, 类型也是可以递归的. 比如说列表.</p>
 <h3 id="List">List</h3><p>列表是在函数式编程中是很有趣的, 也是很强大的, 大多数函数式编程语言都支持列表, 比如<code>Haskell</code>, <code>ML</code>, <code>Scheme</code>. 列表. 列表与<code>C</code>, <code>Java</code>, <code>Objective-C</code> 语言中的<code>array</code>非常的相似, 但是却有着很大的不同. </p>
 <p>列表是一种递归的数据类型:</p>
@@ -2100,15 +2104,9 @@ case <span class="keyword">L</span> of <span class="keyword">H</span>|T then {<s
     
       <category term="Haskell" scheme="http://deltax.me/tags/Haskell/"/>
     
-      <category term="List" scheme="http://deltax.me/tags/List/"/>
-    
       <category term="ML" scheme="http://deltax.me/tags/ML/"/>
     
-      <category term="Pattern Match" scheme="http://deltax.me/tags/Pattern-Match/"/>
-    
-      <category term="Haskell" scheme="http://deltax.me/categories/Haskell/"/>
-    
-      <category term="ML" scheme="http://deltax.me/categories/Haskell/ML/"/>
+      <category term="Functional Programming" scheme="http://deltax.me/categories/Functional-Programming/"/>
     
   </entry>
   
@@ -2117,7 +2115,7 @@ case <span class="keyword">L</span> of <span class="keyword">H</span>|T then {<s
     <link href="http://deltax.me/2014/11/24/Iterative-versus-Recursive/"/>
     <id>http://deltax.me/2014/11/24/Iterative-versus-Recursive/</id>
     <published>2014-11-24T13:25:57.000Z</published>
-    <updated>2014-11-25T00:35:26.000Z</updated>
+    <updated>2015-03-24T10:51:29.000Z</updated>
     <content type="html"><![CDATA[<p><code>Iteration</code> 和 <code>Recursion</code> 在我们所有的编程语言中都是非常重要的概念, 尤其是在声明式的编程模型中.</p>
 <h2 id="Iteraive_computation">Iteraive computation</h2><p>迭代的计算模型是一个<code>stack</code>大小为<code>constant</code>并且大小保持不变的循环.</p>
 <p>非常重要的地方就是, 迭代的计算模型拥有一个初始的状态<code>S 0</code>, 在经过多次的转换最后会得到<code>S final</code>:</p>
@@ -2201,13 +2199,9 @@ case <span class="keyword">L</span> of <span class="keyword">H</span>|T then {<s
 <h2 id="Iteraive_computation">Iteraive computati]]>
     </summary>
     
-      <category term="Iteration" scheme="http://deltax.me/tags/Iteration/"/>
-    
-      <category term="Recursion" scheme="http://deltax.me/tags/Recursion/"/>
-    
       <category term="Scheme" scheme="http://deltax.me/tags/Scheme/"/>
     
-      <category term="FP" scheme="http://deltax.me/categories/FP/"/>
+      <category term="Functional Programming" scheme="http://deltax.me/categories/Functional-Programming/"/>
     
   </entry>
   
@@ -2216,7 +2210,7 @@ case <span class="keyword">L</span> of <span class="keyword">H</span>|T then {<s
     <link href="http://deltax.me/2014/11/23/iOS%20Combine%20View%20and%20TableView%3CBug01%3E/"/>
     <id>http://deltax.me/2014/11/23/iOS Combine View and TableView<Bug01>/</id>
     <published>2014-11-23T15:26:11.000Z</published>
-    <updated>2014-11-25T09:57:54.000Z</updated>
+    <updated>2015-03-24T10:53:31.000Z</updated>
     <content type="html"><![CDATA[<p>我在开发我的第一个项目<code>SportJoin</code>的过程中遇到过这样一个问题, 需要写出一个同时有<code>UIView</code>和<code>UITablView</code>的界面, 这个为什么很困难呢. </p>
 <ol>
 <li>需要写出易于维护的结构.</li>
@@ -2310,6 +2304,8 @@ headerView.frame = CGRectMake <span class="comment">(0, -HEADER_HEIGHT, WIDTH_SC
 <li>需要写出易于维]]>
     </summary>
     
+      <category term="Objective-C" scheme="http://deltax.me/tags/Objective-C/"/>
+    
       <category term="iOS" scheme="http://deltax.me/tags/iOS/"/>
     
       <category term="iOS" scheme="http://deltax.me/categories/iOS/"/>
@@ -2321,7 +2317,7 @@ headerView.frame = CGRectMake <span class="comment">(0, -HEADER_HEIGHT, WIDTH_SC
     <link href="http://deltax.me/2014/11/22/subtype/"/>
     <id>http://deltax.me/2014/11/22/subtype/</id>
     <published>2014-11-22T12:26:08.000Z</published>
-    <updated>2014-11-22T15:08:15.000Z</updated>
+    <updated>2015-03-24T10:55:46.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Subtyping">Subtyping</h2><ul>
 <li>While languages like <code>Java</code> and <code>C#</code> have generics these days, the source of type-system expressiveness most fundamental to object-oriented style is <em>subtype polymorphism</em>, also known as <em>subtyping</em>.</li>
 </ul>
@@ -2433,9 +2429,7 @@ val <span class="variable">d =</span> distMoved(flipXMakeGreen, {<span class="va
 <li>While languages like <code>Java</code> and <code>C#</code> have generics these days, the source of]]>
     </summary>
     
-      <category term="generic" scheme="http://deltax.me/tags/generic/"/>
-    
-      <category term="subtype" scheme="http://deltax.me/tags/subtype/"/>
+      <category term="ML" scheme="http://deltax.me/tags/ML/"/>
     
       <category term="Programming Paradigm" scheme="http://deltax.me/categories/Programming-Paradigm/"/>
     
