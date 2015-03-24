@@ -4,7 +4,7 @@
   <subtitle><![CDATA[为了成为牛逼闪闪的工程师]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
-  <updated>2015-03-24T16:53:15.000Z</updated>
+  <updated>2015-03-24T17:26:19.000Z</updated>
   <id>http://deltax.me/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://deltax.me/2015/03/24/Inheritence-in-Object-Oriented-Programming/"/>
     <id>http://deltax.me/2015/03/24/Inheritence-in-Object-Oriented-Programming/</id>
     <published>2015-03-24T01:07:46.000Z</published>
-    <updated>2015-03-24T16:53:15.000Z</updated>
+    <updated>2015-03-24T17:26:19.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Introduction">Introduction</h2><p>The main addition that <strong>OOP</strong> adds to component-based programming is inheritence. OOP allows defining a class incrementally by extending existing classes.</p>
 <p>While using inheritence, it must be taken good care of. It may lost control if your application doesn’t use good design patterns.</p>
 <h2 id="Inheritence_Graph">Inheritence Graph</h2><p>Inheritence is a way to construct new classes from existing classes. </p>
@@ -51,12 +51,8 @@
 <li>Methods are make up the external interface of the data abstraction, so they should be visible to all entities that reference the abstraction. This is exactly the definition of public scope.</li>
 </ol>
 <h3 id="Private_Methods">Private Methods</h3><p>When a method head is a name value, then its scope limited to all instances of the class, but not to the subclasses or their instances. These method is only visible inside the class definition. </p>
-<pre><code><span class="keyword">class</span> C
-    meth A(X)
-        % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
-    <span class="title">end</span>
-<span class="title">end</span></span>
-</code></pre><p>And with <code>!</code> we can capture the method outside the scope.</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> C</span><br><span class="line">	meth A(X)</span><br><span class="line">		% <span class="function"><span class="keyword">Method</span> <span class="title">body</span></span><br><span class="line">	<span class="title">end</span></span><br><span class="line"><span class="title">end</span></span></span><br></pre></td></tr></table></figure>
+<p>And with <code>!</code> we can capture the method outside the scope.</p>
 <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">local</span><br><span class="line">	A=<span class="comment">&#123;NewName&#125;</span></span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">	<span class="keyword">class</span> C</span><br><span class="line">		meth !A(X)</span><br><span class="line">			% <span class="function"><span class="keyword">Method</span> <span class="title">body</span></span><br><span class="line">		<span class="title">end</span></span><br><span class="line">	<span class="title">end</span></span><br><span class="line"><span class="title">end</span></span></span><br></pre></td></tr></table></figure>
 <p>This creates a name at class definition time.</p>
 <h3 id="Protected_Methods">Protected Methods</h3><p>In <code>C++</code>,  method is protected if it is accessible only in the class it is defined or in descendant classes (and all instances of this classes).</p>
@@ -65,104 +61,23 @@
 <p>Sometimes we use looser approaches. Two such approaches are forwarding and delegation.</p>
 <p><img src="http://deltax.qiniudn.com/Delegation-Forwarding.png?attname=&e=1427254344&token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:56KTT0g8JxSKHlqaNzvLtqiiXOs" style="display:block;margin:auto"></p>
 <h3 id="Forwarding">Forwarding</h3><p>An object can forward any message to another object. In this system, we implement this strategy in <code>otherwise</code> method.</p>
-<pre><code><span class="built_in">local</span>
-    class ForwardMixin
-        attr Forward:<span class="constant">none</span>
-        meth setForward(F) Forward:= F <span class="function"><span class="keyword">end</span></span>
-        meth otherwise(M)
-            <span class="keyword">if</span> @Forward==<span class="constant">none</span> <span class="keyword">then</span> raise undefinedMethod <span class="function"><span class="keyword">end</span></span>
-            <span class="keyword">else</span> {@Forward M} <span class="function"><span class="keyword">end</span></span>
-        <span class="function"><span class="keyword">end</span></span>
-    <span class="function"><span class="keyword">end</span></span>
-<span class="operator">in</span>
-    fun {NewF Class Init}
-        {New class $ <span class="built_in">from</span> Class ForwardMixin <span class="function"><span class="keyword">end</span> <span class="title">Init</span>}</span>
-    <span class="function"><span class="keyword">end</span></span>
-<span class="function"><span class="keyword">end</span></span>
-</code></pre><p>Objects created with <code>NewF</code> have a method <code>setForward(F)</code> that lets them set dynamically the object to which the object will forward messages if they do not understand.</p>
-<pre><code>class C1
-    meth init skip <span class="function"><span class="keyword">end</span></span>
-    meth cube(A B) B=A*A*A <span class="function"><span class="keyword">end</span></span>
-<span class="function"><span class="keyword">end</span></span>
-
-class C2
-    meth init skip <span class="function"><span class="keyword">end</span></span>
-    meth square(A B) B=A*A <span class="function"><span class="keyword">end</span></span>
-<span class="function"><span class="keyword">end</span></span>
-Obj1={NewF C1 init}
-Obj2={NewF C2 init}
-{Obj2 setForward(Obj1)}
-</code></pre><p>When <code>{Obj2 cube(10 X)}</code> is called, <code>Obj2</code> forward this message to <code>Obj1</code> and bind the result to <code>X</code>.</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">local</span></span><br><span class="line">	class ForwardMixin</span><br><span class="line">		attr Forward:<span class="constant">none</span></span><br><span class="line">		meth setForward(F) Forward:= F <span class="function"><span class="keyword">end</span></span></span><br><span class="line">		meth otherwise(M)</span><br><span class="line">			<span class="keyword">if</span> @Forward==<span class="constant">none</span> <span class="keyword">then</span> raise undefinedMethod <span class="function"><span class="keyword">end</span></span></span><br><span class="line">			<span class="keyword">else</span> &#123;@Forward M&#125; <span class="function"><span class="keyword">end</span></span></span><br><span class="line">		<span class="function"><span class="keyword">end</span></span></span><br><span class="line">	<span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="operator">in</span></span><br><span class="line">	fun &#123;NewF Class Init&#125;</span><br><span class="line">		&#123;New class $ <span class="built_in">from</span> Class ForwardMixin <span class="function"><span class="keyword">end</span> <span class="title">Init</span>&#125;</span></span><br><span class="line">	<span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br></pre></td></tr></table></figure>
+<p>Objects created with <code>NewF</code> have a method <code>setForward(F)</code> that lets them set dynamically the object to which the object will forward messages if they do not understand.</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class C1</span><br><span class="line">	meth init skip <span class="function"><span class="keyword">end</span></span></span><br><span class="line">	meth cube(A B) B=A*A*A <span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br><span class="line"></span><br><span class="line">class C2</span><br><span class="line">	meth init skip <span class="function"><span class="keyword">end</span></span></span><br><span class="line">	meth square(A B) B=A*A <span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br><span class="line">Obj1=&#123;NewF C1 init&#125;</span><br><span class="line">Obj2=&#123;NewF C2 init&#125;</span><br><span class="line">&#123;Obj2 setForward(Obj1)&#125;</span><br></pre></td></tr></table></figure>
+<p>When <code>{Obj2 cube(10 X)}</code> is called, <code>Obj2</code> forward this message to <code>Obj1</code> and bind the result to <code>X</code>.</p>
 <h3 id="Delegation">Delegation</h3><p>Delegation is powerful way to struture a system dynamically. <strong>It lets us build a hierachy among objects instead of among classes</strong>.</p>
 <p>Delegation can achieve the same effects as inheritence, with two main differences, but with objects instead of classes, and can be changed at any time.</p>
-<pre><code><span class="built_in">local</span>
-    SetSelf={NewName}
-    class DelegateMixin
-        attr this Delegate:<span class="constant">none</span>
-        meth !SetSelf(S) this:=S <span class="function"><span class="keyword">end</span></span>
-        meth <span class="built_in">set</span>(A X) A:=X <span class="function"><span class="keyword">end</span></span>
-        meth <span class="built_in">get</span>(X ?X) X=@A <span class="function"><span class="keyword">end</span></span>
-        meth setDelegate(D) Delegate:=D End
-        meth Del(M S) SS <span class="operator">in</span>
-            SS:=this this:=S
-            <span class="keyword">try</span> {self M} <span class="keyword">finally</span> this:=SS <span class="function"><span class="keyword">end</span></span>
-        <span class="function"><span class="keyword">end</span></span>
-        meth call(M) SS <span class="operator">in</span>
-            SS:=this this:=self
-            <span class="keyword">try</span> {self M} <span class="keyword">finally</span> this:=SS <span class="function"><span class="keyword">end</span></span>
-        <span class="function"><span class="keyword">end</span></span>
-        meth otherwise(M)
-            <span class="keyword">if</span> @Delegate==<span class="constant">none</span> <span class="keyword">then</span>
-                raise undefinedMethod <span class="function"><span class="keyword">end</span></span>
-            <span class="keyword">else</span>
-                {@Delegate Del(M @this)}
-            <span class="function"><span class="keyword">end</span></span>
-        <span class="function"><span class="keyword">end</span></span>
-    <span class="function"><span class="keyword">end</span></span>
-<span class="operator">in</span>
-    fun {NewD Class Init}
-        Obj={New class $ <span class="built_in">from</span> Class DelegateMixin <span class="function"><span class="keyword">end</span> <span class="title">Init</span>}</span>
-    <span class="operator">in</span>
-        {Obj SetSelf(Obj)}
-        Obj
-    <span class="function"><span class="keyword">end</span></span>
-<span class="function"><span class="keyword">end</span></span>
-</code></pre><p>If there are two objects <code>Obj1</code> and <code>Obj2</code>, suppose there exists a method <code>setDelegate</code> such that <code>{Obj2 setDelegate(Obj1)}</code> sets <code>Obj2</code> to delegate to <code>Obj1</code>. And <code>Obj1</code> behaves like <code>Obj2</code>‘s superclass.</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">local</span></span><br><span class="line">	SetSelf=&#123;NewName&#125;</span><br><span class="line">	class DelegateMixin</span><br><span class="line">		attr this Delegate:<span class="constant">none</span></span><br><span class="line">		meth !SetSelf(S) this:=S <span class="function"><span class="keyword">end</span></span></span><br><span class="line">		meth <span class="built_in">set</span>(A X) A:=X <span class="function"><span class="keyword">end</span></span></span><br><span class="line">		meth <span class="built_in">get</span>(X ?X) X=@A <span class="function"><span class="keyword">end</span></span></span><br><span class="line">		meth setDelegate(D) Delegate:=D End</span><br><span class="line">		meth Del(M S) SS <span class="operator">in</span></span><br><span class="line">			SS:=this this:=S</span><br><span class="line">			<span class="keyword">try</span> &#123;self M&#125; <span class="keyword">finally</span> this:=SS <span class="function"><span class="keyword">end</span></span></span><br><span class="line">		<span class="function"><span class="keyword">end</span></span></span><br><span class="line">		meth call(M) SS <span class="operator">in</span></span><br><span class="line">			SS:=this this:=self</span><br><span class="line">			<span class="keyword">try</span> &#123;self M&#125; <span class="keyword">finally</span> this:=SS <span class="function"><span class="keyword">end</span></span></span><br><span class="line">		<span class="function"><span class="keyword">end</span></span></span><br><span class="line">		meth otherwise(M)</span><br><span class="line">			<span class="keyword">if</span> @Delegate==<span class="constant">none</span> <span class="keyword">then</span></span><br><span class="line">				raise undefinedMethod <span class="function"><span class="keyword">end</span></span></span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				&#123;@Delegate Del(M @this)&#125;</span><br><span class="line">			<span class="function"><span class="keyword">end</span></span></span><br><span class="line">		<span class="function"><span class="keyword">end</span></span></span><br><span class="line">	<span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="operator">in</span></span><br><span class="line">	fun &#123;NewD Class Init&#125;</span><br><span class="line">		Obj=&#123;New class $ <span class="built_in">from</span> Class DelegateMixin <span class="function"><span class="keyword">end</span> <span class="title">Init</span>&#125;</span></span><br><span class="line">	<span class="operator">in</span></span><br><span class="line">		&#123;Obj SetSelf(Obj)&#125;</span><br><span class="line">		Obj</span><br><span class="line">	<span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br></pre></td></tr></table></figure>
+<p>If there are two objects <code>Obj1</code> and <code>Obj2</code>, suppose there exists a method <code>setDelegate</code> such that <code>{Obj2 setDelegate(Obj1)}</code> sets <code>Obj2</code> to delegate to <code>Obj1</code>. And <code>Obj1</code> behaves like <code>Obj2</code>‘s superclass.</p>
 <p>When we enter the <code>Del</code> method, we should preserve our <code>this</code> value in a temp variable. Because the <code>{Self M}</code> should executes in the <code>Obj1</code> context and change <code>Obj1</code> attributes.</p>
-<pre><code><span class="class"><span class="keyword">class</span> <span class="title">C1</span></span>
-   attr <span class="symbol">i:</span><span class="number">0</span>
-   meth init skip <span class="keyword">end</span>
-   meth inc(<span class="constant">I</span>)
-      {<span class="variable">@this</span> set(i {<span class="variable">@this</span> get(i <span class="variable">$)</span>}+<span class="constant">I</span>)}
-   <span class="keyword">end</span>
-   meth browse
-      {<span class="variable">@this</span> inc(<span class="number">10</span>)}
-      {<span class="constant">Browse</span> c1<span class="comment">#{<span class="yardoctag">@this</span> get(i $)}}</span>
-   <span class="keyword">end</span>
-   meth c {<span class="variable">@this</span> browse} <span class="keyword">end</span> <span class="keyword">end</span>
-<span class="constant">Obj1</span>={<span class="constant">NewD</span> <span class="constant">C1</span> init}
-<span class="class"><span class="keyword">class</span> <span class="title">C2</span></span>
-   attr <span class="symbol">i:</span><span class="number">0</span>
-   meth init skip <span class="keyword">end</span>
-   meth browse
-      {<span class="variable">@this</span> inc(<span class="number">100</span>)}
-      {<span class="constant">Browse</span> c2<span class="comment">#{<span class="yardoctag">@this</span> get(i $)}}</span>
-   <span class="keyword">end</span>
-<span class="keyword">end</span>
-<span class="constant">Obj2</span>={<span class="constant">NewD</span> <span class="constant">C2</span> init}
-{<span class="constant">Obj2</span> setDelegate(<span class="constant">Obj1</span>)}
-</code></pre><p>If we execute</p>
-<pre><code>{Obj<span class="number">1</span> <span class="keyword">call</span><span class="comment">(browse)</span>}
-{Obj<span class="number">2</span> <span class="keyword">call</span><span class="comment">(browse)</span>}
-
-<span class="preprocessor">%</span> c<span class="number">1</span><span class="title">#10</span> c<span class="number">2</span><span class="title">#100</span>
-</code></pre><p>But if we change the <code>Del</code> procedure like this:</p>
-<pre><code>meth <span class="constant">Del(M S)</span> <span class="keyword">in</span>
-    {<span class="keyword">self</span> <span class="constant">M}</span>
-<span class="keyword">end</span>
-</code></pre><p>The previous execution will browse</p>
-<pre><code>c1<span class="hexcolor">#100</span> c2#<span class="number">0</span>
-</code></pre><p>Because the <code>Obj1</code> does not preserve its attributes, <code>this</code> in <code>{self M}</code> means <code>Obj1</code> instead of <code>Obj2</code>. This make no sense, delegation indeed is design pattern that let other handle the message and deal with own attributes. If we do not save the context in <code>Del</code>, it just like send message to <code>Obj2</code>.</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C1</span></span></span><br><span class="line">   attr <span class="symbol">i:</span><span class="number">0</span></span><br><span class="line">   meth init skip <span class="keyword">end</span></span><br><span class="line">   meth inc(<span class="constant">I</span>)</span><br><span class="line">      &#123;<span class="variable">@this</span> set(i &#123;<span class="variable">@this</span> get(i <span class="variable">$)</span>&#125;+<span class="constant">I</span>)&#125;</span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line">   meth browse</span><br><span class="line">      &#123;<span class="variable">@this</span> inc(<span class="number">10</span>)&#125;</span><br><span class="line">      &#123;<span class="constant">Browse</span> c1<span class="comment">#&#123;<span class="yardoctag">@this</span> get(i $)&#125;&#125;</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line">   meth c &#123;<span class="variable">@this</span> browse&#125; <span class="keyword">end</span> <span class="keyword">end</span></span><br><span class="line"><span class="constant">Obj1</span>=&#123;<span class="constant">NewD</span> <span class="constant">C1</span> init&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C2</span></span></span><br><span class="line">   attr <span class="symbol">i:</span><span class="number">0</span></span><br><span class="line">   meth init skip <span class="keyword">end</span></span><br><span class="line">   meth browse</span><br><span class="line">      &#123;<span class="variable">@this</span> inc(<span class="number">100</span>)&#125;</span><br><span class="line">      &#123;<span class="constant">Browse</span> c2<span class="comment">#&#123;<span class="yardoctag">@this</span> get(i $)&#125;&#125;</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="constant">Obj2</span>=&#123;<span class="constant">NewD</span> <span class="constant">C2</span> init&#125;</span><br><span class="line">&#123;<span class="constant">Obj2</span> setDelegate(<span class="constant">Obj1</span>)&#125;</span><br></pre></td></tr></table></figure>
+<p>If we execute</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;Obj<span class="number">1</span> <span class="keyword">call</span><span class="comment">(browse)</span>&#125;</span><br><span class="line">&#123;Obj<span class="number">2</span> <span class="keyword">call</span><span class="comment">(browse)</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">%</span> c<span class="number">1</span><span class="title">#10</span> c<span class="number">2</span><span class="title">#100</span></span><br></pre></td></tr></table></figure>
+<p>But if we change the <code>Del</code> procedure like this:</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">meth <span class="constant">Del(M S)</span> <span class="keyword">in</span></span><br><span class="line">	&#123;<span class="keyword">self</span> <span class="constant">M&#125;</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>The previous execution will browse</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c1<span class="hexcolor">#100</span> c2#<span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>Because the <code>Obj1</code> does not preserve its attributes, <code>this</code> in <code>{self M}</code> means <code>Obj1</code> instead of <code>Obj2</code>. This make no sense, delegation indeed is design pattern that let other handle the message and deal with own attributes. If we do not save the context in <code>Del</code>, it just like send message to <code>Obj2</code>.</p>
 <h2 id="Reflection">Reflection</h2><p>A system is reflection if it can inspect part of its execution while running.</p>
 <p>Reflection can be purely introspective or intrusive.</p>
 <ul>
@@ -177,28 +92,11 @@ Obj2={NewF C2 init}
 </ul>
 <h3 id="Meta-Object_Protocols">Meta-Object Protocols</h3><p>The description of how an object system works at a basic level is called meta-object protocol. The ability to change the meta-object protocol is a powerful way to modify an obejct system. It is used for many purposes: debugging, customzing, and separation of concerns.</p>
 <h3 id="Methig_Wrapping">Methig Wrapping</h3><p>A common use of meta-object protocol is to do method wrapping. We can write a tracer to track the behavior of an object-oriented program.</p>
-<pre><code>fun {<span class="type">TraceNew</span> <span class="type">Class</span> <span class="type">Init</span>}
-    <span class="type">Obj</span>={<span class="type">New</span> <span class="type">Class</span> <span class="type">Init</span>}
-    <span class="keyword">proc</span> {<span class="type">TraceObj</span> M}
-        {<span class="type">Browse</span> entering({<span class="type">Label</span> M)}
-        {<span class="type">Obj</span> M}
-        {<span class="type">Browse</span> exiting({<span class="type">Label</span> M)}
-    <span class="keyword">end</span>
-<span class="keyword">in</span> <span class="type">TraceObj</span> <span class="keyword">end</span>
-</code></pre><p>If an object is created with this procedure, every method will be traced.</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fun &#123;<span class="type">TraceNew</span> <span class="type">Class</span> <span class="type">Init</span>&#125;</span><br><span class="line">	<span class="type">Obj</span>=&#123;<span class="type">New</span> <span class="type">Class</span> <span class="type">Init</span>&#125;</span><br><span class="line">	<span class="keyword">proc</span> &#123;<span class="type">TraceObj</span> M&#125;</span><br><span class="line">		&#123;<span class="type">Browse</span> entering(&#123;<span class="type">Label</span> M)&#125;</span><br><span class="line">		&#123;<span class="type">Obj</span> M&#125;</span><br><span class="line">		&#123;<span class="type">Browse</span> exiting(&#123;<span class="type">Label</span> M)&#125;</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">in</span> <span class="type">TraceObj</span> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>If an object is created with this procedure, every method will be traced.</p>
 <p>A second way is to implement this with a class instead of a procedure.</p>
-<pre><code>fun {TraceNew2 <span class="class"><span class="keyword">Class</span> <span class="title">Init</span>}</span>
-   Obj={<span class="keyword">New</span> <span class="class"><span class="keyword">Class</span> <span class="title">Init</span>}</span>
-   TInit={NewName}
-   <span class="class"><span class="keyword">class</span> <span class="title">Tracer</span></span>
-      meth !TInit skip <span class="keyword">end</span>
-      meth otherwise(M)
-     {Browse entering({Label M})} {Obj M}
-     {Browse exiting({Label M})}
-      <span class="keyword">end</span>
-   <span class="keyword">end</span>
-in {<span class="keyword">New</span> Tracer TInit} <span class="keyword">end</span>
-</code></pre><p>This strategy is used dynamic class creation, the <code>otherwise</code> method and a freshname <code>TInit</code>.</p>
+<figure class="highlight monkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fun &#123;TraceNew2 <span class="class"><span class="keyword">Class</span> <span class="title">Init</span>&#125;</span></span><br><span class="line">   Obj=&#123;<span class="keyword">New</span> <span class="class"><span class="keyword">Class</span> <span class="title">Init</span>&#125;</span></span><br><span class="line">   TInit=&#123;NewName&#125;</span><br><span class="line">   <span class="class"><span class="keyword">class</span> <span class="title">Tracer</span></span></span><br><span class="line">      meth !TInit skip <span class="keyword">end</span></span><br><span class="line">      meth otherwise(M)</span><br><span class="line">	 &#123;Browse entering(&#123;Label M&#125;)&#125; &#123;Obj M&#125;</span><br><span class="line">	 &#123;Browse exiting(&#123;Label M&#125;)&#125;</span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line">in &#123;<span class="keyword">New</span> Tracer TInit&#125; <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>This strategy is used dynamic class creation, the <code>otherwise</code> method and a freshname <code>TInit</code>.</p>
 <h3 id="Reflection_of_object_state">Reflection of object state</h3><p>We would like to ba able to read and write the whole state of an object, independant of the object’s class.</p>
 ]]></content>
     <summary type="html">
