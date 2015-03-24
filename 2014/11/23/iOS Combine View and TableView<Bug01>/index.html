@@ -150,25 +150,17 @@
 </code></pre><p><code>headerView</code> 是 <code>tableView</code>的子视图, 但是为什么会这么显示呢, 有这么几个原因.</p>
 <ol>
 <li><p>在视图加载时, 我通过调整<code>tableView</code>的<code>contentInset</code>使<code>tableView</code>在初始化时向下偏移<code>headerView</code>的高度, 目的呢, 就是将<code>cell</code>开始显示的位置设置到目标的区域.</p>
-<pre><code><span class="attribute">tableView.contentInset </span>=<span class="string"> UIEdgeInsetsMake(HEADER_HEIGHT, 0, 0, 0);</span>
-</code></pre></li>
+ <figure class="highlight fix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">tableView.contentInset </span>=<span class="string"> UIEdgeInsetsMake(HEADER_HEIGHT, 0, 0, 0);</span></span><br></pre></td></tr></table></figure>
+</li>
 <li><p>然后呢, 将<code>headerView</code>初始化, 并添加到<code>tableView</code>上面, 这里呢, 有一点需要注意的就是<code>headerView.frame.origin.y</code>是小于<code>0</code>的. 这是为什么呢, 是因为我们上一步将<code>tableView</code>内容开是显示的<code>height</code>设置为<code>295</code>, 那么我们需要将<code>headerView</code>初始化到<code>tableView</code>的”外面”</p>
-<pre><code><span class="comment">// 使用CGRect的情况下, 使用AutoLayout可以类比一下</span>
-headerView.frame = CGRectMake <span class="comment">(0, -HEADER_HEIGHT, WIDTH_SCREEN, HEADER_HEIGHT)</span>;
-</code></pre></li>
+ <figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用CGRect的情况下, 使用AutoLayout可以类比一下</span></span><br><span class="line">headerView.frame = CGRectMake <span class="comment">(0, -HEADER_HEIGHT, WIDTH_SCREEN, HEADER_HEIGHT)</span>;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>这样我们就完成了这个界面的显示, 但是, 当我们向这个<code>headerView</code>中添加按钮的时候, 却发现, 这个按钮的<code>action</code>没有触发, 因为<code>headerView</code>是<code>tableView</code>的<code>subview</code>并且在它的外部, 所以, 我们需要设置<code>clipsToBound</code>属性, 防止<code>tableView</code>拦截这个实践.</p>
-<pre><code><span class="attribute">tableView.clipsToBound </span>=<span class="string"> NO;</span>
-</code></pre></li>
+ <figure class="highlight fix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">tableView.clipsToBound </span>=<span class="string"> NO;</span></span><br></pre></td></tr></table></figure>
+</li>
 <li><p>接下来我们要实现让界面的一部分停在屏幕上, 只需要调用<code>UIScrollView</code>的<code>delegate</code>方法, 注意设置适当的条件就可以.</p>
-<pre><code>- (<span class="keyword">void</span>)scrollViewDidScroll:(<span class="built_in">UIScrollView</span> *)scrollView
-{
-    <span class="keyword">static</span> <span class="built_in">CGFloat</span> headerHeight = <span class="number">60</span>;
-    <span class="keyword">if</span> (scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span> &gt;= -<span class="number">60</span>)
-        [<span class="keyword">self</span><span class="variable">.headerView</span> setFrame:CGRectMake(<span class="number">0</span>, scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span> - (HEADER_HEIGHT - headerHeight), WIDTH_SCREEN, HEADER_HEIGHT)];
-    <span class="keyword">if</span> (scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span> &lt;= -HEADER_HEIGHT)
-        [<span class="keyword">self</span><span class="variable">.headerView</span> setFrame:CGRectMake(<span class="number">0</span>, scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span>, WIDTH_SCREEN, HEADER_HEIGHT)];
-}
-</code></pre></li>
+ <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)scrollViewDidScroll:(<span class="built_in">UIScrollView</span> *)scrollView</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">CGFloat</span> headerHeight = <span class="number">60</span>;</span><br><span class="line">    <span class="keyword">if</span> (scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span> &gt;= -<span class="number">60</span>)</span><br><span class="line">        [<span class="keyword">self</span><span class="variable">.headerView</span> setFrame:CGRectMake(<span class="number">0</span>, scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span> - (HEADER_HEIGHT - headerHeight), WIDTH_SCREEN, HEADER_HEIGHT)];</span><br><span class="line">    <span class="keyword">if</span> (scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span> &lt;= -HEADER_HEIGHT)</span><br><span class="line">        [<span class="keyword">self</span><span class="variable">.headerView</span> setFrame:CGRectMake(<span class="number">0</span>, scrollView<span class="variable">.contentOffset</span><span class="variable">.y</span>, WIDTH_SCREEN, HEADER_HEIGHT)];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
 <p>卧槽, 终于搞定了, 我特么太爽了, 然而………就是上面的<code>bug</code>让我头疼了好久…</p>
 <p>直到今天, 我在新项目中又遇到了这个问题, 无论我怎么更改布局, 使用<code>CGRect</code>, <code>AutoLayout</code>都没能解决, 因为代码量较小, 经过多次调试, 认为这次绝对另有原因, 我机智的上<code>Google</code>搜索了如下关键字<code>contentInset</code> <code>20</code> <code>iOS</code>, 结果, 这回果然发现了问题所在, 在<code>stackoverflow</code>上面找到了这个问题的答案, 原来<code>automaticallyAdjustsScrollViewInsets</code>才是导致问题的罪魁祸首, 而之前我完全没有接触过这个属性. 在苹果官方文档中是这样描述的.</p>
@@ -176,8 +168,8 @@ headerView.frame = CGRectMake <span class="comment">(0, -HEADER_HEIGHT, WIDTH_SC
 <p> If you don’t want a scroll view’s content insets to be automatically adjusted, set automaticallyAdjustsScrollViewInsets to NO. (The default value of automaticallyAdjustsScrollViewInsets is YES.)</p>
 </blockquote>
 <p>在设置了<code>tableViewController</code>之后, 仍然没有起到任何作用.</p>
-<pre><code><span class="keyword">self</span><span class="variable">.automaticallyAdjustsScrollViewInsets</span> = <span class="literal">NO</span>;
-</code></pre><p>经过仔细寻找其他答案后, 找到了这样一条答案</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span><span class="variable">.automaticallyAdjustsScrollViewInsets</span> = <span class="literal">NO</span>;</span><br></pre></td></tr></table></figure>
+<p>经过仔细寻找其他答案后, 找到了这样一条答案</p>
 <blockquote>
 <p>Your view controller must be directly on a <code>UINavigaitonController</code>‘s stack for <code>automaticallyAdjustsScrollViewInsets</code> to work (i.e. not a child view controller)</p>
 <p>If it is a child view controller of another view controller which is on the navigation stack, you can instead set <code>automaticallyAdjustsScrollViewInsets = NO</code> on the parent. Alternatively you can do this:</p>
@@ -202,8 +194,8 @@ headerView.frame = CGRectMake <span class="comment">(0, -HEADER_HEIGHT, WIDTH_SC
 </ol>
 <hr>
 <p>后来的后来…我发现了<code>tableView</code>的的另一个属性<code>tableHeaderView</code>, 只需要设置这个属性, 就可以把视图放在<code>tableView</code>的前面…真是蛋都碎了…</p>
-<pre><code><span class="keyword">self</span>.tableView.tableHeaderView = headerView;
-</code></pre><p>……</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span>.tableView.tableHeaderView = headerView;</span><br></pre></td></tr></table></figure>
+<p>……</p>
   
 	</div>
 		<footer class="article-footer clearfix">
