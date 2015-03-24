@@ -190,10 +190,8 @@ Apt4={<span class="keyword">New</span> OneApt init}
 <p>In the method definition, the following approach is possible:</p>
 <ol>
 <li><p>Fixed argument list</p>
-<pre><code>meth <span class="keyword">add</span>(x:X y:Y)
-    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
-<span class="title">end</span></span>
-</code></pre></li>
+ <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">meth <span class="keyword">add</span>(x:X y:Y)</span><br><span class="line">	% <span class="function"><span class="keyword">Method</span> <span class="title">body</span></span><br><span class="line"><span class="title">end</span></span></span><br></pre></td></tr></table></figure>
+</li>
 <li><p>Flexible argument list</p>
  <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">meth <span class="keyword">add</span>(x:X y:Y ...)</span><br><span class="line">	% <span class="function"><span class="keyword">Method</span> <span class="title">body</span></span><br><span class="line"><span class="title">end</span></span></span><br></pre></td></tr></table></figure>
 <p> The “…” in the method head means that any message is accepted if has least the listed argument.</p>

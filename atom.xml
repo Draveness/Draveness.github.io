@@ -218,7 +218,7 @@ in {<span class="keyword">New</span> Tracer TInit} <span class="keyword">end</sp
     <link href="http://deltax.me/2015/03/23/Class-as-Data-Abstraction-in-OOP/"/>
     <id>http://deltax.me/2015/03/23/Class-as-Data-Abstraction-in-OOP/</id>
     <published>2015-03-23T02:28:07.000Z</published>
-    <updated>2015-03-24T17:13:01.000Z</updated>
+    <updated>2015-03-24T17:13:23.000Z</updated>
     <content type="html"><![CDATA[<p>The heart of the object concept is controlled access to encapsulated data. The behaviour of an object is specified by a <strong>class</strong> which is an incremental definition of a data abstraction.</p>
 <ul>
 <li>Complete data abstraction<ul>
@@ -305,10 +305,8 @@ Apt4={<span class="keyword">New</span> OneApt init}
 <p>In the method definition, the following approach is possible:</p>
 <ol>
 <li><p>Fixed argument list</p>
-<pre><code>meth <span class="keyword">add</span>(x:X y:Y)
-    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
-<span class="title">end</span></span>
-</code></pre></li>
+ <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">meth <span class="keyword">add</span>(x:X y:Y)</span><br><span class="line">	% <span class="function"><span class="keyword">Method</span> <span class="title">body</span></span><br><span class="line"><span class="title">end</span></span></span><br></pre></td></tr></table></figure>
+</li>
 <li><p>Flexible argument list</p>
  <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">meth <span class="keyword">add</span>(x:X y:Y ...)</span><br><span class="line">	% <span class="function"><span class="keyword">Method</span> <span class="title">body</span></span><br><span class="line"><span class="title">end</span></span></span><br></pre></td></tr></table></figure>
 <p> The “…” in the method head means that any message is accepted if has least the listed argument.</p>
