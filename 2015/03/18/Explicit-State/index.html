@@ -1,0 +1,606 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Explicit State | DeltaX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Draven">
+    
+
+    
+    <meta name="description" content="StateA state is a sequence of values in time that contains the intermediate results of a desired computation.
+There are different ways that state can be used in a program.
+
+Implicit or declarative sta">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Explicit State">
+<meta property="og:url" content="http://deltax.me/2015/03/18/Explicit-State/index.html">
+<meta property="og:site_name" content="DeltaX">
+<meta property="og:description" content="StateA state is a sequence of values in time that contains the intermediate results of a desired computation.
+There are different ways that state can be used in a program.
+
+Implicit or declarative sta">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Explicit State">
+<meta name="twitter:description" content="StateA state is a sequence of values in time that contains the intermediate results of a desired computation.
+There are different ways that state can be used in a program.
+
+Implicit or declarative sta">
+
+    
+    <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="DeltaX" title="DeltaX"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="DeltaX">DeltaX</a></h1>
+				<h2 class="blog-motto">为了成为牛逼闪闪的工程师</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:deltax.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/18/Explicit-State/" title="Explicit State" itemprop="url">Explicit State</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-18T06:34:39.000Z" itemprop="datePublished"> 发表于 2015-03-18</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#State"><span class="toc-number">1.</span> <span class="toc-text">State</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Data_Abstraction"><span class="toc-number">2.</span> <span class="toc-text">Data Abstraction</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Organize_Data_Abstraction"><span class="toc-number">2.1.</span> <span class="toc-text">Organize Data Abstraction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Open_Declarative_Stack"><span class="toc-number">2.2.</span> <span class="toc-text">Open Declarative Stack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Secure_Declarative_Unbundled_Stack"><span class="toc-number">2.3.</span> <span class="toc-text">Secure Declarative Unbundled Stack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Secure_Declarative_Bundled_Stack"><span class="toc-number">2.4.</span> <span class="toc-text">Secure Declarative Bundled Stack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Secure_Stateful_Bundled_Stack"><span class="toc-number">2.5.</span> <span class="toc-text">Secure Stateful Bundled Stack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Secure_Stateful_Bundled_Stack_With_Procedure_Dispatching"><span class="toc-number">2.6.</span> <span class="toc-text">Secure Stateful Bundled Stack With Procedure Dispatching</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Secure_Stateful_Unbundled_Stack"><span class="toc-number">2.7.</span> <span class="toc-text">Secure Stateful Unbundled Stack</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Polymorphism"><span class="toc-number">3.</span> <span class="toc-text">Polymorphism</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#An_Example:_Collection_Type"><span class="toc-number">3.1.</span> <span class="toc-text">An Example: Collection Type</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Adding_a_union_Operation_in_the_ADT_case"><span class="toc-number">3.2.</span> <span class="toc-text">Adding a union Operation in the ADT case</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Adding_a_union_Operation_in_the_Object_case"><span class="toc-number">3.3.</span> <span class="toc-text">Adding a union Operation in the Object case</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decision_between_ADT_and_Object_styles"><span class="toc-number">3.4.</span> <span class="toc-text">Decision between ADT and Object styles</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h2 id="State">State</h2><p>A <code>state</code> is a sequence of values in time that contains the intermediate results of a desired computation.</p>
+<p>There are different ways that state can be used in a program.</p>
+<ul>
+<li>Implicit or declarative state<ul>
+<li>The state need only exist in the mind of the programmer. It does not need any support at all from the computation model.</li>
+</ul>
+</li>
+<li><p>Explicit state</p>
+<ul>
+<li><p>A procedure is a state whose lifetime extends over more than one procedure call without being present in the procedure’s arguments.</p>
+  <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">local</span><br><span class="line">	C=<span class="comment">&#123;NewCell 0&#125;</span></span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">	fun <span class="comment">&#123;SumList Xs S&#125;</span></span><br><span class="line">		C:=@C+<span class="number">1</span></span><br><span class="line">		<span class="keyword">case</span> Xs</span><br><span class="line">		<span class="keyword">of</span> <span class="keyword">nil</span> <span class="keyword">then</span> S</span><br><span class="line">		[] X|Xr <span class="keyword">then</span> <span class="comment">&#123;SumList Xr X+S&#125;</span></span><br><span class="line">		<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	fun <span class="comment">&#123;SumCount&#125;</span> @C <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">% <span class="keyword">In</span> this <span class="function"><span class="keyword">procedure</span>, <span class="title">C</span> <span class="title">is</span> <span class="title">not</span> <span class="title">an</span> <span class="title">arugment</span> <span class="title">for</span> <span class="title">the</span> <span class="title">function</span> <span class="title">SumList</span> <span class="title">and</span> <span class="title">we</span> <span class="title">can</span> <span class="title">use</span> <span class="title">another</span> <span class="title">helper</span> <span class="title">function</span> <span class="title">SumCount</span> <span class="title">to</span> <span class="title">get</span> <span class="title">its</span> <span class="title">value</span>.</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>* <span class="keyword">With</span> <span class="keyword">explicit</span> state, data abstraction gain tremendously <span class="keyword">in</span> modularity since <span class="keyword">is</span> <span class="keyword">is</span> possible <span class="keyword">to</span> **encapsulate an <span class="keyword">explicit</span> state inside a data abstraction**. <span class="keyword">And</span> the access <span class="keyword">to</span> state <span class="keyword">is</span> limited according <span class="keyword">to</span> the operations <span class="keyword">of</span> the data abstraction.
+</code></pre><h2 id="Data_Abstraction">Data Abstraction</h2><p><strong>Data abstraction</strong> is a way of using data in abstract fashion, we can use the data without having to deal with its implementation. It contains a set of instances that can be used according to certain rules called interface.</p>
+<h3 id="Organize_Data_Abstraction">Organize Data Abstraction</h3><ul>
+<li><code>Openness and Security</code><ul>
+<li>A data abstraction is <code>secure</code> if its encapsulation is enforced by the language. Otherwise it is open. If the data abstraction is open, the encapsulation should be <strong>enforced by programmer discipline</strong>.</li>
+</ul>
+</li>
+<li><code>Bundling</code><ul>
+<li>A data abstraction is <code>unbundled</code> if it defines two kinds of entities, called <strong>value and operation</strong>.</li>
+<li>A data abstraction is <code>bundled</code> if it defines just one kind of entity, called <strong>object</strong>, that combines the notion of value and operation. (Which is sometimes called a precedural data abstraction, <code>PDA</code>)</li>
+</ul>
+</li>
+<li><code>Explicit</code><ul>
+<li>A data is stateful if it uses <strong>explicit state</strong>. Otherwise it is known as stateless or declarative.</li>
+</ul>
+</li>
+</ul>
+<p>We use these three axes, secure, bundling and explit state to organize data abstraction is <code>8</code> ways.</p>
+<h3 id="Open_Declarative_Stack">Open Declarative Stack</h3><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">% This <span class="built_in">version</span> is <span class="built_in">open</span>, declarative <span class="operator">and</span> unbundled.</span><br><span class="line"></span><br><span class="line">declare	</span><br><span class="line"><span class="built_in">local</span></span><br><span class="line">     fun &#123;NewStack&#125; nil <span class="function"><span class="keyword">end</span></span></span><br><span class="line">     fun &#123;Push S E&#125; E|S <span class="function"><span class="keyword">end</span></span></span><br><span class="line">     fun &#123;Pop S ?E&#125; <span class="keyword">case</span> S <span class="operator">of</span> X|S1 <span class="keyword">then</span> E=X S1 <span class="function"><span class="keyword">end</span> <span class="title">end</span></span></span><br><span class="line">     fun &#123;IsEmpty S&#125; S==nil <span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="operator">in</span></span><br><span class="line">     Stack=stack(<span class="built_in">new</span>:NewStack push:Push pop:Pop isEmpty:IsEmpty)</span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="Secure_Declarative_Unbundled_Stack">Secure Declarative Unbundled Stack</h3><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">% This <span class="built_in">version</span> is secure, declarative <span class="operator">and</span> unbundled. </span><br><span class="line"></span><br><span class="line">declare</span><br><span class="line"><span class="built_in">local</span> Wrap Unwrap</span><br><span class="line">     &#123;NewWrapper Wrap Unwrap&#125;</span><br><span class="line">     fun &#123;NewStack&#125; &#123;Wrap nil&#125; <span class="function"><span class="keyword">end</span></span></span><br><span class="line">     fun &#123;Push S E&#125; &#123;Wrap E|&#123;Unwrap S&#125;&#125; <span class="function"><span class="keyword">end</span></span></span><br><span class="line">     fun &#123;Pop S ?E&#125; <span class="keyword">case</span> &#123;Unwrap S&#125; <span class="operator">of</span> X|S1 <span class="keyword">then</span> E=X &#123;Wrap S1&#125; <span class="function"><span class="keyword">end</span> <span class="title">end</span></span></span><br><span class="line">     fun &#123;IsEmpty S&#125; &#123;Unwrap S&#125;==nil <span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="operator">in</span></span><br><span class="line">     Stack=stack(<span class="built_in">new</span>:NewStack push:Push pop:Pop isEmpty:IsEmpty)</span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br></pre></td></tr></table></figure>
+<p>The stack is unwrapped when entering an ADT and wrapped when the operation exits.</p>
+<h3 id="Secure_Declarative_Bundled_Stack">Secure Declarative Bundled Stack</h3><figure class="highlight sml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">% <span class="type">This</span> version is secure, declarative <span class="keyword">and</span> bundled.</span><br><span class="line"></span><br><span class="line"><span class="keyword">local</span></span><br><span class="line">     <span class="keyword">fun</span> &#123;<span class="type">StackObject</span> <span class="type">S</span>&#125;</span><br><span class="line">          <span class="keyword">fun</span> &#123;<span class="type">Push</span> <span class="type">E</span>&#125; &#123;<span class="type">StackObject</span> <span class="type">E</span>|<span class="type">S</span>&#125; <span class="keyword">end</span></span><br><span class="line">          <span class="keyword">fun</span> &#123;<span class="type">Pop</span> ?<span class="type">E</span>&#125;</span><br><span class="line">               <span class="keyword">case</span> <span class="type">S</span> <span class="keyword">of</span> <span class="type">X</span>|<span class="type">S1</span> <span class="keyword">then</span> <span class="type">E</span>=<span class="type">X</span> &#123;<span class="type">StackObject</span> <span class="type">S1</span>&#125; <span class="keyword">end</span> <span class="keyword">end</span></span><br><span class="line">          <span class="keyword">fun</span> &#123;<span class="type">IsEmpty</span>&#125; <span class="type">S</span>==<span class="literal">nil</span> <span class="keyword">end</span></span><br><span class="line">     <span class="keyword">in</span> stack(push:<span class="type">Push</span> pop:<span class="type">Pop</span> isEmpty:<span class="type">IsEmpty</span>) <span class="keyword">end</span></span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">     <span class="keyword">fun</span> &#123;<span class="type">NewStack</span>&#125; &#123;<span class="type">StackObject</span> <span class="literal">nil</span>&#125; <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>We can make a data abstraction secure only use <code>higher-order</code> programming instead of using explicit state and name.</p>
+<p>Because this version is both secure and bundled, we cansider it as a declarative form of <code>object-oriented programming</code>.</p>
+<h3 id="Secure_Stateful_Bundled_Stack">Secure Stateful Bundled Stack</h3><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">% <span class="type">This</span> version <span class="keyword">is</span> secure, stateful <span class="keyword">and</span> bundled.</span><br><span class="line"></span><br><span class="line">declare</span><br><span class="line">fun &#123;<span class="type">NewStack</span>&#125;</span><br><span class="line">     C=&#123;<span class="type">NewCell</span> <span class="keyword">nil</span>&#125;</span><br><span class="line">     <span class="keyword">proc</span> &#123;<span class="type">Push</span> E&#125; C:=E|@C <span class="keyword">end</span></span><br><span class="line">     fun &#123;<span class="type">Pop</span>&#125; <span class="keyword">case</span> @C <span class="keyword">of</span> X|<span class="type">S1</span> then C:=<span class="type">S1</span> X <span class="keyword">end</span> <span class="keyword">end</span></span><br><span class="line">     fun &#123;<span class="type">IsEmpty</span>&#125; @C=<span class="keyword">nil</span> <span class="keyword">end</span></span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">     stack(push:<span class="type">Push</span> pop:<span class="type">Pop</span> isEmpty:<span class="type">IsEmpty</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>In this version the objectis represented by a recored of procedure values. This version provides the basic functionality of object-oriented programming, namely a group of operations <code>methods</code> with a hidden internal state.</p>
+<h3 id="Secure_Stateful_Bundled_Stack_With_Procedure_Dispatching">Secure Stateful Bundled Stack With Procedure Dispatching</h3><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">% <span class="type">This</span> version <span class="keyword">is</span> secure, stateful <span class="keyword">and</span> bundled.</span><br><span class="line"></span><br><span class="line">declare</span><br><span class="line">fun &#123;<span class="type">NewStack</span>&#125;</span><br><span class="line">     C=&#123;<span class="type">NewCell</span> <span class="keyword">nil</span>&#125;</span><br><span class="line">     <span class="keyword">proc</span> &#123;<span class="type">Push</span> E&#125; C:=E|@C <span class="keyword">end</span></span><br><span class="line">     fun &#123;<span class="type">Pop</span>&#125; <span class="keyword">case</span> @C <span class="keyword">of</span> X|<span class="type">S1</span> then C:=<span class="type">S1</span> X <span class="keyword">end</span> <span class="keyword">end</span></span><br><span class="line">     fun &#123;<span class="type">IsEmpty</span>&#125; @C=<span class="keyword">nil</span> <span class="keyword">end</span></span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">     <span class="keyword">proc</span> &#123;$ <span class="type">Msg</span>&#125;</span><br><span class="line">          <span class="keyword">case</span> <span class="type">Msg</span></span><br><span class="line">          <span class="keyword">of</span> push(X) then &#123;<span class="type">Push</span> X&#125;</span><br><span class="line">          [] pop(?E) then E=&#123;<span class="type">Pop</span>&#125;</span><br><span class="line">          [] isEmpty(?B) then B=&#123;<span class="type">IsEmpty</span>&#125;</span><br><span class="line">     <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>This is called procedure dispatching as opposed to the previous version which uses record dispatching. It is another way to implement secure, stateful bundled stack. With this approach, we use <code>{S.push X}</code> to invocate method <code>push</code>.</p>
+<h3 id="Secure_Stateful_Unbundled_Stack">Secure Stateful Unbundled Stack</h3><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">% This <span class="built_in">version</span> is secure, stateful <span class="operator">and</span> unbundled.</span><br><span class="line"></span><br><span class="line">declare</span><br><span class="line"><span class="built_in">local</span> Wrap Unwrap</span><br><span class="line">     &#123;NewWrapper Wrap Unwrap&#125;</span><br><span class="line">     fun &#123;NewStack&#125; &#123;Wrap &#123;NewCell nil&#125;&#125; <span class="function"><span class="keyword">end</span></span></span><br><span class="line">     proc &#123;Push S E&#125; C=&#123;Unwrap S&#125; <span class="operator">in</span> C:=E|@C <span class="function"><span class="keyword">end</span></span></span><br><span class="line">     fun &#123;Pop S&#125;</span><br><span class="line">          C=&#123;Unwrap S&#125; <span class="operator">in</span> <span class="keyword">case</span> @C <span class="operator">of</span> X|S1 <span class="keyword">then</span> C:=S1 X <span class="function"><span class="keyword">end</span> <span class="title">end</span></span></span><br><span class="line">     fun &#123;IsEmpty S&#125; @&#123;Unwrap S&#125;==nil <span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="operator">in</span></span><br><span class="line">     Stack=stack(<span class="built_in">new</span>:NewStack push:Push pop:Pop isEmpty:IsEmpty)</span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br></pre></td></tr></table></figure>
+<p>This style is little used in object-oriented programming, but deserves to be more widely known. In this version, we group four operations in a module.</p>
+<h2 id="Polymorphism">Polymorphism</h2><p><code>Polymorphism</code> is the ability of an entity to take om many forms. In the context of data abstraction, we say an operation is polymorphic if it works correct for arguments of different types.</p>
+<ul>
+<li>The <code>object</code> stype has an advantage over the <code>ADT</code> style in that polymorphism is particularly easy to express.</li>
+<li>The <code>ADT</code> style gives more freedom to make efficient implementation.</li>
+</ul>
+<h3 id="An_Example:_Collection_Type">An Example: Collection Type</h3><p>We implement a collection type in both <code>object</code> and <code>ADT</code> style which with three operations.</p>
+<p>First, we use <code>ADT</code> to implement the stateful unbundled collection:</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">local</span> Wrap Unwrap</span><br><span class="line">	&#123;NewWrapper Wrap Unwrap&#125;</span><br><span class="line">	fun &#123;NewCollection&#125; &#123;Wrap &#123;Stack.<span class="built_in">new</span>&#125;&#125; <span class="function"><span class="keyword">end</span></span></span><br><span class="line">	proc &#123;Put C X&#125; S=&#123;Unwrap C&#125; <span class="operator">in</span> &#123;Stack.push S X&#125; <span class="function"><span class="keyword">end</span></span></span><br><span class="line">	fun &#123;Get C&#125; S=&#123;Unwrap C&#125; <span class="operator">in</span> &#123;Stack.pop S&#125; <span class="function"><span class="keyword">end</span></span></span><br><span class="line">	fun &#123;IsEmpty C&#125; &#123;Stack.isEmpty &#123;Unwrap C&#125;&#125; <span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="operator">in</span></span><br><span class="line">	Collection=collection(<span class="built_in">new</span>:NewCollection <span class="built_in">put</span>:Put <span class="built_in">get</span>:Get</span><br><span class="line">						  isEmpty:IsEmpty)</span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br></pre></td></tr></table></figure>
+<p>Then, implement this with object style:</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fun &#123;NewCollection&#125;</span><br><span class="line">	S=&#123;NewStack&#125;</span><br><span class="line">	proc &#123;Put X&#125; &#123;S.<span class="built_in">put</span> X&#125; <span class="function"><span class="keyword">end</span></span></span><br><span class="line">	fun &#123;Get X&#125; &#123;S.pop&#125; <span class="function"><span class="keyword">end</span></span></span><br><span class="line">	fun &#123;IsEmpty&#125; &#123;S.isEmpty&#125; <span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="operator">in</span></span><br><span class="line">	collection(<span class="built_in">put</span>:Put <span class="built_in">get</span>:Pop isEmpty:IsEmpty)</span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br></pre></td></tr></table></figure>
+<p>Now we have out colletion type with both styles, in order to compare the difference between them, let us add an operation <code>union</code> to this collection type.</p>
+<h3 id="Adding_a_union_Operation_in_the_ADT_case">Adding a <code>union</code> Operation in the ADT case</h3><p>To implement <code>union</code>, let us introduce a control abstraction:</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span> &#123;<span class="type">DoUntil</span> <span class="type">BF</span> S&#125;</span><br><span class="line">	<span class="keyword">if</span> &#123;<span class="type">BF</span>&#125; then skip <span class="keyword">else</span> &#123;S&#125; &#123;<span class="type">DoUntil</span> <span class="type">BF</span> S&#125; <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>With <code>DoUntil</code>, we can implement the new <code>Collection</code> type as follows.</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">% <span class="type">Use</span> <span class="type">Internal</span> representations</span><br><span class="line"></span><br><span class="line">local <span class="type">Wrap</span> <span class="type">Unwrap</span></span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">proc</span> &#123;<span class="type">Union</span> <span class="type">C1</span> <span class="type">C2</span>&#125;</span><br><span class="line">	<span class="type">S1</span>=&#123;<span class="type">Unwrap</span> <span class="type">C1</span>&#125; <span class="type">S2</span>=&#123;<span class="type">Unwrap</span> <span class="type">C2</span>&#125; <span class="keyword">in</span></span><br><span class="line">		&#123;<span class="type">DoUntil</span> fun &#123;$&#125; &#123;<span class="type">Stack</span>.isEmpty <span class="type">S2</span>&#125; <span class="keyword">end</span></span><br><span class="line">		<span class="keyword">proc</span> &#123;$&#125; &#123;<span class="type">Stack</span>.push <span class="type">S1</span> &#123;<span class="type">Stack</span>.pop <span class="type">S2</span>&#125;&#125; <span class="keyword">end</span>&#125;</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">	<span class="type">Collection</span>=collection(... union:<span class="type">Union</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">% <span class="type">Use</span> external interfaces</span><br><span class="line"></span><br><span class="line">local <span class="type">Wrap</span> <span class="type">Unwrap</span></span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">proc</span> &#123;<span class="type">Union</span> <span class="type">C1</span> <span class="type">C2</span>&#125;</span><br><span class="line">	<span class="type">S1</span>=&#123;<span class="type">Unwrap</span> <span class="type">C1</span>&#125; <span class="type">S2</span>=&#123;<span class="type">Unwrap</span> <span class="type">C2</span>&#125; <span class="keyword">in</span></span><br><span class="line">		&#123;<span class="type">DoUntil</span> fun &#123;$&#125; &#123;<span class="type">Collection</span>.isEmpty <span class="type">S2</span>&#125; <span class="keyword">end</span></span><br><span class="line">		<span class="keyword">proc</span> &#123;$&#125; &#123;<span class="type">Collection</span>.put <span class="type">S1</span> &#123;<span class="type">Collection</span>.get <span class="type">S2</span>&#125;&#125; <span class="keyword">end</span>&#125;</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">	<span class="type">Collection</span>=collection(... union:<span class="type">Union</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>We have choice of whether or not to use the internal representation of each collection argument. This gives us the freedom to make a <strong>more efficient implementation</strong>.</p>
+<h3 id="Adding_a_union_Operation_in_the_Object_case">Adding a <code>union</code> Operation in the Object case</h3><p>Let us implement <code>union</code> operation in object stype. This is called as <code>{C1 union(C2)}</code>.</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">% <span class="type">Use</span> internal representation <span class="keyword">of</span> <span class="type">C1</span> but external <span class="keyword">interface</span> <span class="keyword">of</span> <span class="type">C2</span></span><br><span class="line"></span><br><span class="line">fun &#123;<span class="type">NewCollection</span>&#125;</span><br><span class="line">	<span class="type">S1</span>=&#123;<span class="type">NewStack</span>&#125;</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">proc</span> &#123;<span class="type">Union</span> <span class="type">C2</span>&#125;</span><br><span class="line">		&#123;<span class="type">DoUntil</span> <span class="type">C2</span>.isEmpty</span><br><span class="line">		<span class="keyword">proc</span> &#123;$&#125; &#123;<span class="type">S1</span>.push &#123;<span class="type">C2</span>.get&#125;&#125; <span class="keyword">end</span>&#125;</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">	collection(... union:<span class="type">Union</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>The implementation uses the <strong>internal representation</strong> of <code>C1</code> but the external interface of <code>C2</code>. This is a crucial difference with the <code>ADT</code> stype. We can also use both <strong>external interfaces</strong> to implement this operation again.</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">% <span class="type">Use</span> external interfaces</span><br><span class="line"></span><br><span class="line">fun &#123;<span class="type">NewCollection</span>&#125;</span><br><span class="line">	<span class="type">S1</span>=&#123;<span class="type">NewStack</span>&#125;</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">proc</span> &#123;<span class="type">Union</span> <span class="type">C2</span>&#125;</span><br><span class="line">		&#123;<span class="type">DoUntil</span> <span class="type">C2</span>.isEmpty</span><br><span class="line">		<span class="keyword">proc</span> &#123;$&#125; &#123;<span class="type">This</span>.push &#123;<span class="type">C2</span>.get&#125;&#125; <span class="keyword">end</span>&#125;</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	<span class="type">This</span>=collection(... union:<span class="type">Union</span>)</span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">	<span class="type">This</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>The object <code>C1</code> refers to itself through the variable <code>This</code>.</p>
+<h3 id="Decision_between_ADT_and_Object_styles">Decision between ADT and Object styles</h3><ul>
+<li>The <code>ADT</code> style can be more efficient because it allows accessing both internal representations.</li>
+<li>Sometimes the <code>ADT</code> style is the only one that works. Especially when we deal with addtion between integer.</li>
+<li>The <code>object</code> style provides polyphism “for free”.</li>
+<li>The <code>object</code> style is not limited to sequential objects.</li>
+<li>The ‘ADT` style provides polymorohism if the language has first-class modules.</li>
+<li>If we use the <code>ADT</code> style without first-class modules, then we must write new code to get types to interoperate.</li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Programming-Paradigm/">Programming Paradigm</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/CTMCP/">CTMCP</a><a href="/tags/Oz/">Oz</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://deltax.me/2015/03/18/Explicit-State/" data-title="Explicit State | DeltaX" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/03/18/Parameter-Passing-Mechanisms/" title="Parameter Passing Mechanisms">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Parameter Passing Mechanisms</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/03/16/Message-Passing-Concurrency/"  title="Message-Passing Concurrency">
+ <strong>下一篇：</strong><br/> 
+ <span>Message-Passing Concurrency
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/03/18/Explicit-State/" data-title="Explicit State" data-url="http://deltax.me/2015/03/18/Explicit-State/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#State"><span class="toc-number">1.</span> <span class="toc-text">State</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Data_Abstraction"><span class="toc-number">2.</span> <span class="toc-text">Data Abstraction</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Organize_Data_Abstraction"><span class="toc-number">2.1.</span> <span class="toc-text">Organize Data Abstraction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Open_Declarative_Stack"><span class="toc-number">2.2.</span> <span class="toc-text">Open Declarative Stack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Secure_Declarative_Unbundled_Stack"><span class="toc-number">2.3.</span> <span class="toc-text">Secure Declarative Unbundled Stack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Secure_Declarative_Bundled_Stack"><span class="toc-number">2.4.</span> <span class="toc-text">Secure Declarative Bundled Stack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Secure_Stateful_Bundled_Stack"><span class="toc-number">2.5.</span> <span class="toc-text">Secure Stateful Bundled Stack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Secure_Stateful_Bundled_Stack_With_Procedure_Dispatching"><span class="toc-number">2.6.</span> <span class="toc-text">Secure Stateful Bundled Stack With Procedure Dispatching</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Secure_Stateful_Unbundled_Stack"><span class="toc-number">2.7.</span> <span class="toc-text">Secure Stateful Unbundled Stack</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Polymorphism"><span class="toc-number">3.</span> <span class="toc-text">Polymorphism</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#An_Example:_Collection_Type"><span class="toc-number">3.1.</span> <span class="toc-text">An Example: Collection Type</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Adding_a_union_Operation_in_the_ADT_case"><span class="toc-number">3.2.</span> <span class="toc-text">Adding a union Operation in the ADT case</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Adding_a_union_Operation_in_the_Object_case"><span class="toc-number">3.3.</span> <span class="toc-text">Adding a union Operation in the Object case</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decision_between_ADT_and_Object_styles"><span class="toc-number">3.4.</span> <span class="toc-text">Decision between ADT and Object styles</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/clrs/Algorithm/" title="Algorithm">Algorithm<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/clrs/Algorithm/" title="Algorithm">Algorithm<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/clrs/Algorithm/" title="Algorithm">Algorithm<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Functional-Programming/" title="Functional Programming">Functional Programming<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Programming-Paradigm/" title="Programming Paradigm">Programming Paradigm<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/clrs/" title="clrs">clrs<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/iOS/" title="iOS">iOS<sup>8</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/iOS/" title="iOS">iOS<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Objective-C/" title="Objective-C">Objective-C<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CTMCP/" title="CTMCP">CTMCP<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Oz/" title="Oz">Oz<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Algorithm/" title="Algorithm">Algorithm<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Scheme/" title="Scheme">Scheme<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/OOP/" title="OOP">OOP<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ML/" title="ML">ML<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Functional-Programming/" title="Functional Programming">Functional Programming<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SICP/" title="SICP">SICP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Concurrency/" title="Concurrency">Concurrency<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Haskell/" title="Haskell">Haskell<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Draven. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/https://github.com/Draveness" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:stark.draven@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="http://deltax.me/about" target="_blank" title="Draven">Draven</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+  
+    c.click();
+    
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"DeltaX"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-56898419-1', 'deltax.me');  
+ga('send', 'pageview');
+</script>
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1e03a2ac060d657818787bf497955fef' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254626833'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s23.cnzz.com/z_stat.php%3Fid%3D1254626833' type='text/javascript'%3E%3C/script%3E"));</script>
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
