@@ -218,7 +218,7 @@ in {<span class="keyword">New</span> Tracer TInit} <span class="keyword">end</sp
     <link href="http://deltax.me/2015/03/23/Class-as-Data-Abstraction-in-OOP/"/>
     <id>http://deltax.me/2015/03/23/Class-as-Data-Abstraction-in-OOP/</id>
     <published>2015-03-23T02:28:07.000Z</published>
-    <updated>2015-03-24T17:14:44.000Z</updated>
+    <updated>2015-03-24T17:17:26.000Z</updated>
     <content type="html"><![CDATA[<p>The heart of the object concept is controlled access to encapsulated data. The behaviour of an object is specified by a <strong>class</strong> which is an incremental definition of a data abstraction.</p>
 <ul>
 <li>Complete data abstraction<ul>
