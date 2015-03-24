@@ -217,16 +217,12 @@ Apt4={<span class="keyword">New</span> OneApt init}
 </li>
 <li><p>Private method label</p>
 <p> Method label can be names. This is denoted by using a variable identifier</p>
-<pre><code>meth A(bar:X)
-    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
-<span class="title">end</span></span>
-</code></pre><p> The method <code>A</code> is bound to a fresh name whtn the class is defined. If this method must be used elsewhere in the program, we should pass it explicitly.</p>
+ <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">meth A(bar:X)</span><br><span class="line">	% <span class="function"><span class="keyword">Method</span> <span class="title">body</span></span><br><span class="line"><span class="title">end</span></span></span><br></pre></td></tr></table></figure>
+<p> The method <code>A</code> is bound to a fresh name whtn the class is defined. If this method must be used elsewhere in the program, we should pass it explicitly.</p>
 </li>
 <li><p>Dynamic method label</p>
-<pre><code>meth !A(bar:X)
-    % <span class="function"><span class="keyword">Method</span> <span class="title">body</span>
-<span class="title">end</span></span>
-</code></pre><p> The method label has to be known when the class definitions is executed. The variable must be bound to an atom or a name. This technique can make method secure.</p>
+ <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">meth !A(bar:X)</span><br><span class="line">	% <span class="function"><span class="keyword">Method</span> <span class="title">body</span></span><br><span class="line"><span class="title">end</span></span></span><br></pre></td></tr></table></figure>
+<p> The method label has to be known when the class definitions is executed. The variable must be bound to an atom or a name. This technique can make method secure.</p>
 </li>
 <li><p>The <code>otherwise</code> method</p>
 <p> The method head with label <code>otherwise</code> is a catchall that accepts any message for message for which no other method exists.</p>
