@@ -668,21 +668,11 @@ pivot_t partition(<span class="type">int</span> A[], <span class="type">int</spa
     <link href="http://deltax.me/2015/03/19/%E5%A0%86%E6%8E%92%E5%BA%8F/"/>
     <id>http://deltax.me/2015/03/19/堆排序/</id>
     <published>2015-03-19T07:06:47.000Z</published>
-    <updated>2015-03-24T11:06:00.000Z</updated>
+    <updated>2015-03-24T17:42:08.000Z</updated>
     <content type="html"><![CDATA[<p>一种时间复杂度为 <code>Ο(nlgn)</code> 的排序算法.</p>
 <h2 id="堆">堆</h2><p><code>二叉堆</code> 是一个数组, 它可以被看成一个近似的完全二叉树, 除了最底层外, 该树是完全充满的, 而且是从左向右填充.</p>
-<pre><code><span class="function"><span class="keyword">int</span> <span class="title">parent</span><span class="params">(<span class="keyword">int</span> i)</span> </span>{
-    <span class="keyword">return</span> i / <span class="number">2</span>;
-}
-
-<span class="function"><span class="keyword">int</span> <span class="title">left</span><span class="params">(<span class="keyword">int</span> i)</span> </span>{
-    <span class="keyword">return</span> <span class="number">2</span> * i;
-}
-
-<span class="function"><span class="keyword">int</span> <span class="title">right</span><span class="params">(<span class="keyword">int</span> i)</span> </span>{
-    <span class="keyword">return</span> <span class="number">2</span> * i + <span class="number">1</span>;
-}
-</code></pre><p>二叉堆分两种形式: 最大堆和最小堆. 在这两种堆中, 结点的值都要满足堆的性质.</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">parent</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> i / <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">left</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">2</span> * i;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">right</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">2</span> * i + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>二叉堆分两种形式: 最大堆和最小堆. 在这两种堆中, 结点的值都要满足堆的性质.</p>
 <ul>
 <li>在最大堆中 <code>(max-heap)</code> 中, 除了根以外的所有节点 <code>i</code> 都满足:<ul>
 <li><code>A[PARENT.(i)] ≧ A[i]</code></li>
@@ -696,52 +686,17 @@ pivot_t partition(<span class="type">int</span> A[], <span class="type">int</spa
 <p>一般情况下, 我们在堆排序算法中使用<strong>最大堆</strong>, 在构造优先队列中使用<strong>最小堆</strong></p>
 <hr>
 <h2 id="维护堆的性质">维护堆的性质</h2><p><code>max_heapify</code> 是用于维护最大堆性质的重要过程.</p>
-<pre><code>void max_heapify(heap_t *heap, <span class="built_in">int</span> i) {
-    <span class="built_in">int</span> largest;
-    <span class="built_in">int</span> l = left(i);
-    <span class="built_in">int</span> r = right(i);
-
-    <span class="keyword">if</span> (l &lt;= <span class="type">A</span>-&gt;heap_size &amp;&amp; heap-&gt;elements[l] &gt; heap-&gt;elements[i]) {
-        largest = l;
-    } <span class="keyword">else</span> {
-        largest = i;
-    }
-
-    <span class="keyword">if</span> (r &lt;= <span class="type">A</span>-&gt;heap_size &amp;&amp; heap-&gt;elements[r] &gt; heap-&gt;elements[i]) {
-        largest = r;
-    }
-
-    <span class="keyword">if</span> (largest != i) {
-        <span class="built_in">int</span> temp = heap-&gt;elements[largest];
-        heap-&gt;elements[i] = heap-&gt;elements[largest];
-        heap-&gt;elements[largest] = temp
-        max_heapify(heap, largest);
-    }
-}
-</code></pre><p>对于一棵以 <code>i</code> 为根节点, 大小为 <code>n</code> 的子树, <code>max_heapify</code> 的时间代价的递归式为:</p>
-<pre><code><span class="function"><span class="title">T</span><span class="params">(n)</span></span> ≦ <span class="function"><span class="title">T</span><span class="params">(<span class="number">2</span>n/<span class="number">3</span>)</span></span> + Θ(<span class="number">1</span>) =&gt; <span class="function"><span class="title">T</span><span class="params">(n)</span></span> = Ο(lgn)
-</code></pre><hr>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">void max_heapify(heap_t *heap, <span class="built_in">int</span> i) &#123;</span><br><span class="line">	<span class="built_in">int</span> largest;</span><br><span class="line">	<span class="built_in">int</span> l = left(i);</span><br><span class="line">	<span class="built_in">int</span> r = right(i);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (l &lt;= <span class="type">A</span>-&gt;heap_size &amp;&amp; heap-&gt;elements[l] &gt; heap-&gt;elements[i]) &#123;</span><br><span class="line">		largest = l;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		largest = i;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (r &lt;= <span class="type">A</span>-&gt;heap_size &amp;&amp; heap-&gt;elements[r] &gt; heap-&gt;elements[i]) &#123;</span><br><span class="line">		largest = r;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (largest != i) &#123;</span><br><span class="line">		<span class="built_in">int</span> temp = heap-&gt;elements[largest];</span><br><span class="line">		heap-&gt;elements[i] = heap-&gt;elements[largest];</span><br><span class="line">		heap-&gt;elements[largest] = temp</span><br><span class="line">		max_heapify(heap, largest);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于一棵以 <code>i</code> 为根节点, 大小为 <code>n</code> 的子树, <code>max_heapify</code> 的时间代价的递归式为:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">T</span><span class="params">(n)</span></span> ≦ <span class="function"><span class="title">T</span><span class="params">(<span class="number">2</span>n/<span class="number">3</span>)</span></span> + Θ(<span class="number">1</span>) =&gt; <span class="function"><span class="title">T</span><span class="params">(n)</span></span> = Ο(lgn)</span><br></pre></td></tr></table></figure>
+<hr>
 <h2 id="建堆">建堆</h2><p>我们可以使用自底向上的方法利用过程 <code>max_heapify</code> 把一个大小为 <code>n = A.length</code> 的数组 <code>A[1..n]</code> 转换为最大堆.</p>
-<pre><code><span class="keyword">void</span> build_max_heap(heap_t *heap) {
-    heap-&gt;heap_size = heap-&gt;<span class="built_in">length</span>;
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = heap-&gt;<span class="built_in">length</span> / <span class="number">2</span>; i &lt;= <span class="number">1</span>; i--) {
-        max_heapify(heap, i)
-    }
-}
-</code></pre><p><code>build_max_heap</code> 的时间复杂度为 <code>Ο(n)</code>.</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> build_max_heap(heap_t *heap) &#123;</span><br><span class="line">	heap-&gt;heap_size = heap-&gt;<span class="built_in">length</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = heap-&gt;<span class="built_in">length</span> / <span class="number">2</span>; i &lt;= <span class="number">1</span>; i--) &#123;</span><br><span class="line">		max_heapify(heap, i)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>build_max_heap</code> 的时间复杂度为 <code>Ο(n)</code>.</p>
 <hr>
 <h2 id="堆排序算法">堆排序算法</h2><p>堆排序算法使用 <code>build_max_heap</code> 将输入的数组 <code>A[0..n-1]</code> 建成最大堆. 数组中的最大元素总在根节点 <code>A[0]</code>, 通过把它与 <code>A[n-1]</code> 进行交换, 我们可以把元素放到正确的位置. 而我们只需要不断的调用 <code>max_heapify</code> 来维护堆的性质——<strong>A[0]为最大元素</strong>, 并把子数组中的最大元素移到合适的位置.</p>
-<pre><code>void heapsort(heap_t *heap) {
-    build_max_heap(heap);
-    <span class="keyword">for</span> (<span class="built_in">int</span> i = heap-&gt;length - <span class="number">1</span>; i &gt;= <span class="number">2</span>; i--) {
-        <span class="built_in">int</span> temp = heap-&gt;elements[<span class="number">0</span>];
-        heap-&gt;elements[<span class="number">0</span>] = heap-&gt;elements[i];
-        heap-&gt;elements[i] = temp;
-        heap-&gt;heap_size--;
-        max_heapify(heap, <span class="number">1</span>)
-    }
-}
-</code></pre><p><code>heapsort</code> 过程的时间复杂度是 <code>Ο(nlgn)</code> </p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">void heapsort(heap_t *heap) &#123;</span><br><span class="line">	build_max_heap(heap);</span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">int</span> i = heap-&gt;length - <span class="number">1</span>; i &gt;= <span class="number">2</span>; i--) &#123;</span><br><span class="line">		<span class="built_in">int</span> temp = heap-&gt;elements[<span class="number">0</span>];</span><br><span class="line">		heap-&gt;elements[<span class="number">0</span>] = heap-&gt;elements[i];</span><br><span class="line">		heap-&gt;elements[i] = temp;</span><br><span class="line">		heap-&gt;heap_size--;</span><br><span class="line">		max_heapify(heap, <span class="number">1</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>heapsort</code> 过程的时间复杂度是 <code>Ο(nlgn)</code> </p>
 <hr>
 <h2 id="优先队列">优先队列</h2><p><code>优先队列</code> (priority queue)是一种用来维护由一组最大元素构成的集合 S 的数据结构, 其中的每个元素都有一个相关的值, 成为<strong>关键字</strong>. 一个最大优先队列支持以下的操作:</p>
 <ul>
@@ -751,41 +706,7 @@ pivot_t partition(<span class="type">int</span> A[], <span class="type">int</spa
 <li><code>INCREASE-KEY(S, x, k)</code>: 将元素 <code>x</code> 的关键字值增加到 <code>k</code>, 这里假设 <code>k</code> 的值不小于 <code>x</code> 的原关键字值.</li>
 </ul>
 <p>优先队列可以使用堆来实现, 我们来实现最大优先队列:</p>
-<pre><code><span class="keyword">int</span> heap_maximum(heap_t *heap) {
-    <span class="keyword">return</span> heap-&gt;element[<span class="number">0</span>];
-}
-
-<span class="keyword">int</span> heap_extract_max(heap_t *heap) {
-    <span class="keyword">if</span> (heap-&gt;heap_size &lt; <span class="number">1</span>) {
-        fprinrf(stderr, <span class="string">"heap underflow"</span>);
-    }
-    <span class="keyword">int</span> max = A[<span class="number">0</span>];
-    A[<span class="number">0</span>] = A[heap-&gt;heap_size];
-    heap-&gt;heap_size--;
-    max_heapify(heap, <span class="number">0</span>);
-    <span class="keyword">return</span> max;
-}
-
-void heap_increase_key(heap_t *heap, <span class="keyword">int</span> i, <span class="keyword">int</span> key) {
-    <span class="keyword">if</span> (key &lt; heap-&gt;elements[i]) {
-        fprinrf(stderr, <span class="string">"new key is smaller than current key"</span>);
-    }
-    heap-&gt;elements[i] = key;
-
-    <span class="keyword">while</span> (i &gt; <span class="number">0</span> &amp;&amp; heap-&gt;elements[parent(i)] &lt; A[i]) {
-        <span class="keyword">int</span> temp = heap-&gt;elements[i];
-        heap-&gt;elements[i] = heap-&gt;elements[parent(i)];
-        heap-&gt;elements[parent(i)] = temp;
-        i = PARENT(i);
-    }
-}
-
-void max_heap_insert(heap_t *heap, <span class="keyword">int</span> key) {
-    heap-&gt;heap_size++;
-    heap-&gt;elements[heap-&gt;heap_size] = INT_MIN;
-    heap_increase_key(heap, heap-&gt;heap_size - <span class="number">1</span>, key);
-}
-</code></pre>]]></content>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> heap_maximum(heap_t *heap) &#123;</span><br><span class="line">	<span class="keyword">return</span> heap-&gt;element[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> heap_extract_max(heap_t *heap) &#123;</span><br><span class="line">	<span class="keyword">if</span> (heap-&gt;heap_size &lt; <span class="number">1</span>) &#123;</span><br><span class="line">		fprinrf(stderr, <span class="string">"heap underflow"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> max = A[<span class="number">0</span>];</span><br><span class="line">	A[<span class="number">0</span>] = A[heap-&gt;heap_size];</span><br><span class="line">	heap-&gt;heap_size--;</span><br><span class="line">	max_heapify(heap, <span class="number">0</span>);</span><br><span class="line">	<span class="keyword">return</span> max;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void heap_increase_key(heap_t *heap, <span class="keyword">int</span> i, <span class="keyword">int</span> key) &#123;</span><br><span class="line">	<span class="keyword">if</span> (key &lt; heap-&gt;elements[i]) &#123;</span><br><span class="line">		fprinrf(stderr, <span class="string">"new key is smaller than current key"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	heap-&gt;elements[i] = key;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> (i &gt; <span class="number">0</span> &amp;&amp; heap-&gt;elements[parent(i)] &lt; A[i]) &#123;</span><br><span class="line">		<span class="keyword">int</span> temp = heap-&gt;elements[i];</span><br><span class="line">		heap-&gt;elements[i] = heap-&gt;elements[parent(i)];</span><br><span class="line">		heap-&gt;elements[parent(i)] = temp;</span><br><span class="line">		i = PARENT(i);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void max_heap_insert(heap_t *heap, <span class="keyword">int</span> key) &#123;</span><br><span class="line">	heap-&gt;heap_size++;</span><br><span class="line">	heap-&gt;elements[heap-&gt;heap_size] = INT_MIN;</span><br><span class="line">	heap_increase_key(heap, heap-&gt;heap_size - <span class="number">1</span>, key);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
     <summary type="html">
     <![CDATA[<p>一种时间复杂度为 <code>Ο(nlgn)</code> 的排序算法.</p>
 <h2 id="堆">堆</h2><p><code>二叉堆</code> 是一个数组, 它可以被看成一个近似的完全二叉树, 除了最底层外, 该树是完全充满的, 而且是从左向右填充.</p>
