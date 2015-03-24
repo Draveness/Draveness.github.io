@@ -12,23 +12,17 @@
 
     
     <meta name="description" content="iOS使用联线自定义切换通过添加UIStoryboardSegure的子类, 覆盖其perform方法, 来创建自定义切换.
-- (void)perform {
-    UIViewController *sourceVC = (UIViewController *)self.sourceViewController;
-    UIViewController *destinationVC = (">
+1234567891011121314151617181920212223242526- (void)perform &amp;#123;    UIViewController *sourceVC = (UIViewController *)self.sourceViewCont">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS使用联线自定义切换">
 <meta property="og:url" content="http://deltax.me/2014/11/19/iOS使用联线自定义切换/index.html">
 <meta property="og:site_name" content="DeltaX">
 <meta property="og:description" content="iOS使用联线自定义切换通过添加UIStoryboardSegure的子类, 覆盖其perform方法, 来创建自定义切换.
-- (void)perform {
-    UIViewController *sourceVC = (UIViewController *)self.sourceViewController;
-    UIViewController *destinationVC = (">
+1234567891011121314151617181920212223242526- (void)perform &amp;#123;    UIViewController *sourceVC = (UIViewController *)self.sourceViewCont">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS使用联线自定义切换">
 <meta name="twitter:description" content="iOS使用联线自定义切换通过添加UIStoryboardSegure的子类, 覆盖其perform方法, 来创建自定义切换.
-- (void)perform {
-    UIViewController *sourceVC = (UIViewController *)self.sourceViewController;
-    UIViewController *destinationVC = (">
+1234567891011121314151617181920212223242526- (void)perform &amp;#123;    UIViewController *sourceVC = (UIViewController *)self.sourceViewCont">
 
     
     <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
@@ -108,33 +102,7 @@
 		</div>
 		
 		<h1 id="iOS使用联线自定义切换">iOS使用联线自定义切换</h1><p>通过添加<code>UIStoryboardSegure</code>的子类, 覆盖其<code>perform</code>方法, 来创建自定义切换.</p>
-<pre><code>- (void)perform {
-    UIViewController *sourceVC = (UIViewController *)self.sourceViewController;
-    UIViewController *destinationVC = (UIViewController *)self.destinationViewController;
-
-    CGRect frame = sourceVC.<span class="keyword">view</span>.frame;
-    CGRect originalSourceRect = sourceVC.<span class="keyword">view</span>.frame;
-    frame.origin.y = frame.size.height;
-
-    [UIView animateWithDuration:0.3
-                     animations:^{
-                         sourceVC.<span class="keyword">view</span>.frame = frame;
-                     } completion:^(BOOL finished) {
-                         sourceVC.<span class="keyword">view</span>.<span class="keyword">alpha</span> = 0;
-                         destinationVC.<span class="keyword">view</span>.frame = frame;
-                         destinationVC.<span class="keyword">view</span>.<span class="keyword">alpha</span> = 0;
-                         [[sourceVC.<span class="keyword">view</span> superview] addSubview:destinationVC.<span class="keyword">view</span>];
-                         [UIView animateWithDuration:0.3 animations:^{
-                             destinationVC.<span class="keyword">view</span>.frame = originalSourceRect;
-                             destinationVC.<span class="keyword">view</span>.<span class="keyword">alpha</span> = 0;
-                         } completion:^(BOOL finished) {
-                             [destinationVC.<span class="keyword">view</span> removeFromSuperview];
-                             sourceVC.<span class="keyword">view</span>.<span class="keyword">alpha</span> = 1.0;
-                             [sourceVC.navigationController pushViewController:destinationVC animated:YES];
-                         }];
-                     }];
-}
-</code></pre>  
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">- (void)perform &#123;</span><br><span class="line">    UIViewController *sourceVC = (UIViewController *)self.sourceViewController;</span><br><span class="line">    UIViewController *destinationVC = (UIViewController *)self.destinationViewController;</span><br><span class="line"></span><br><span class="line">    CGRect frame = sourceVC.<span class="keyword">view</span>.frame;</span><br><span class="line">    CGRect originalSourceRect = sourceVC.<span class="keyword">view</span>.frame;</span><br><span class="line">    frame.origin.y = frame.size.height;</span><br><span class="line"></span><br><span class="line">    [UIView animateWithDuration:0.3</span><br><span class="line">                     animations:^&#123;</span><br><span class="line">                         sourceVC.<span class="keyword">view</span>.frame = frame;</span><br><span class="line">                     &#125; completion:^(BOOL finished) &#123;</span><br><span class="line">                         sourceVC.<span class="keyword">view</span>.<span class="keyword">alpha</span> = 0;</span><br><span class="line">                         destinationVC.<span class="keyword">view</span>.frame = frame;</span><br><span class="line">                         destinationVC.<span class="keyword">view</span>.<span class="keyword">alpha</span> = 0;</span><br><span class="line">                         [[sourceVC.<span class="keyword">view</span> superview] addSubview:destinationVC.<span class="keyword">view</span>];</span><br><span class="line">                         [UIView animateWithDuration:0.3 animations:^&#123;</span><br><span class="line">                             destinationVC.<span class="keyword">view</span>.frame = originalSourceRect;</span><br><span class="line">                             destinationVC.<span class="keyword">view</span>.<span class="keyword">alpha</span> = 0;</span><br><span class="line">                         &#125; completion:^(BOOL finished) &#123;</span><br><span class="line">                             [destinationVC.<span class="keyword">view</span> removeFromSuperview];</span><br><span class="line">                             sourceVC.<span class="keyword">view</span>.<span class="keyword">alpha</span> = 1.0;</span><br><span class="line">                             [sourceVC.navigationController pushViewController:destinationVC animated:YES];</span><br><span class="line">                         &#125;];</span><br><span class="line">                     &#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
