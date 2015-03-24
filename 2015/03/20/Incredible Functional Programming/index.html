@@ -134,29 +134,14 @@ Encounter Functin">
 </blockquote>
 <p>我们在接下来的讨论中会提高 lambda 在 Scheme 中如何使用, 所以在这里就先不再多说了.</p>
 <h3 id="Church_Number">Church Number</h3><p><a href="http://zh.wikipedia.org/wiki/%E9%82%B1%E5%A5%87%E6%95%B0" target="_blank" rel="external">邱奇数</a> 是把数据和运算符嵌入到 lambda 演算内的一种方式, 它是使用 lambda 符号的自然数表示法.</p>
-<pre><code><span class="list">(<span class="keyword"><span class="built_in">define</span></span> zero <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">f</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">x</span>)</span> x)</span>)</span>)</span>
-<span class="list">(<span class="keyword"><span class="built_in">define</span></span> one <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">f</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">x</span>)</span> <span class="list">(<span class="keyword">f</span> x)</span>)</span>)</span>)</span>
-<span class="list">(<span class="keyword"><span class="built_in">define</span></span> two <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">f</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">x</span>)</span> <span class="list">(<span class="keyword">f</span> <span class="list">(<span class="keyword">f</span> x)</span>)</span>)</span>)</span>)</span>
-<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">plus</span> n m)</span>
-  <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">f</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">x</span>)</span> <span class="list">(<span class="list">(<span class="keyword">m</span> f)</span> <span class="list">(<span class="list">(<span class="keyword">n</span> f)</span> x)</span>)</span>)</span>)</span>)</span>
-
-<span class="list">(<span class="keyword"><span class="built_in">define</span></span> true <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">x</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">y</span>)</span> x)</span>)</span>)</span>
-<span class="list">(<span class="keyword"><span class="built_in">define</span></span> false <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">x</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">y</span>)</span> y)</span>)</span>)</span>
-</code></pre><p>我在这里只为各位简单的展示一下如何使用 lambda 来表示一些数据类型.</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> zero <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">f</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">x</span>)</span> x)</span>)</span>)</span></span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> one <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">f</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">x</span>)</span> <span class="list">(<span class="keyword">f</span> x)</span>)</span>)</span>)</span></span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> two <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">f</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">x</span>)</span> <span class="list">(<span class="keyword">f</span> <span class="list">(<span class="keyword">f</span> x)</span>)</span>)</span>)</span>)</span></span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">plus</span> n m)</span></span><br><span class="line">  <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">f</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">x</span>)</span> <span class="list">(<span class="list">(<span class="keyword">m</span> f)</span> <span class="list">(<span class="list">(<span class="keyword">n</span> f)</span> x)</span>)</span>)</span>)</span>)</span></span><br><span class="line">  </span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> true <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">x</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">y</span>)</span> x)</span>)</span>)</span></span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> false <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">x</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">y</span>)</span> y)</span>)</span>)</span></span><br></pre></td></tr></table></figure>
+<p>我在这里只为各位简单的展示一下如何使用 lambda 来表示一些数据类型.</p>
 <h3 id="Intrduction_to_Scheme">Intrduction to Scheme</h3><p>Scheme 是一种函数式语言, 是 Lisp 的两种主要的方言之一, 它的设计极其的简单, 一个小型语言核心作为标准, 加上各种强力的语法糖扩展语言本身. Scheme的哲学是: 设计计算机语言不应该进行功能的堆砌, 而应该尽可能减少弱点和限制, 使剩下的功能显得必要. Scheme 是第一个使用静态作用域的 Lisp 方言, 也是第一个引入”干净宏”和第一类续延的编程语言.</p>
 <h4 id="Warm_Up">Warm Up</h4><p>我现在介绍一下在 Scheme 中最简单的一些表达式</p>
-<pre><code>(+ <span class="number">2</span> <span class="number">5</span>) =&gt; <span class="number">7</span>
-(* <span class="number">3</span> <span class="number">5</span> (+ <span class="number">2</span> <span class="number">4</span>)) =&gt; <span class="number">90</span>
-</code></pre><p>我们可以看到, 在 Scheme 中所有的表达式都是被采用前序(prefix)表示法, 并且<strong>括号</strong>以及空白作为分隔符.</p>
-<pre><code><span class="comment">(define a 1)</span>
-<span class="comment">(define b 2)</span>
-<span class="comment">(define (double x)</span> <span class="comment">(+ x x)</span>)
-<span class="comment">(if (= (double a)</span> <span class="number">2</span>)
-    <span class="comment">((lambda (x)</span> <span class="comment">(+ x b)</span>) <span class="number">2</span>)
-    <span class="number">0</span>)
-
-=&gt; <span class="number">4</span>
-</code></pre><ul>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(+ <span class="number">2</span> <span class="number">5</span>) =&gt; <span class="number">7</span></span><br><span class="line">(* <span class="number">3</span> <span class="number">5</span> (+ <span class="number">2</span> <span class="number">4</span>)) =&gt; <span class="number">90</span></span><br></pre></td></tr></table></figure>
+<p>我们可以看到, 在 Scheme 中所有的表达式都是被采用前序(prefix)表示法, 并且<strong>括号</strong>以及空白作为分隔符.</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(define a 1)</span></span><br><span class="line"><span class="comment">(define b 2)</span></span><br><span class="line"><span class="comment">(define (double x)</span> <span class="comment">(+ x x)</span>)</span><br><span class="line"><span class="comment">(if (= (double a)</span> <span class="number">2</span>)</span><br><span class="line">	<span class="comment">((lambda (x)</span> <span class="comment">(+ x b)</span>) <span class="number">2</span>)</span><br><span class="line">	<span class="number">0</span>)</span><br><span class="line">	</span><br><span class="line">=&gt; <span class="number">4</span></span><br></pre></td></tr></table></figure>
+<ul>
 <li><code>define</code> 不仅可以定义一个变量 <code>(define  a 1)</code>, 也可以定义一个函数 <code>(define (double x) (+ x x))</code>.<ul>
 <li><code>(define &lt;identifier&gt; &lt;expression&gt;)</code></li>
 </ul>
@@ -179,18 +164,8 @@ Encounter Functin">
 <li>求出 <code>x/guess</code> 的值, 并与 <code>guess</code> 求平均数, 提高 <code>guess</code> 的准确性, 返回步骤 2.</li>
 </ol>
 <p>代码如下:</p>
-<pre><code><span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword"><span class="built_in">sqrt</span></span> x)</span>
-  <span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">good-enough?</span> guess)</span>
-    <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> <span class="list">(<span class="keyword"><span class="built_in">abs</span></span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> <span class="list">(<span class="keyword">square</span> guess)</span> x)</span>)</span> tolerance)</span>)</span>
-  <span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">improve</span> guess)</span>
-    <span class="list">(<span class="keyword">average</span> guess <span class="list">(<span class="keyword"><span class="built_in">/</span></span> x guess)</span>)</span>)</span>
-  <span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">sqrt-iter</span> guess)</span>
-    <span class="list">(<span class="keyword"><span class="built_in">if</span></span> <span class="list">(<span class="keyword">good-enough?</span> guess)</span>
-        guess
-        <span class="list">(<span class="keyword">sqrt-iter</span> <span class="list">(<span class="keyword">improve</span> guess)</span>)</span>)</span>)</span>
-  <span class="list">(<span class="keyword"><span class="built_in">define</span></span> tolerance <span class="number">0.001</span>)</span>
-  <span class="list">(<span class="keyword">sqrt-iter</span> <span class="number">1.0</span>)</span>)</span>
-</code></pre><p>这段代码使用了非常神奇的方式, 迭代地解决了如何使求平方根的问题, 我觉得在此处用作例子也再好不过, 我们整理一下这段代码, 让你们感觉到函数式编程的神奇和它带给我们的强大的表达能力.</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword"><span class="built_in">sqrt</span></span> x)</span></span><br><span class="line">  <span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">good-enough?</span> guess)</span></span><br><span class="line">    <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> <span class="list">(<span class="keyword"><span class="built_in">abs</span></span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> <span class="list">(<span class="keyword">square</span> guess)</span> x)</span>)</span> tolerance)</span>)</span></span><br><span class="line">  <span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">improve</span> guess)</span></span><br><span class="line">    <span class="list">(<span class="keyword">average</span> guess <span class="list">(<span class="keyword"><span class="built_in">/</span></span> x guess)</span>)</span>)</span></span><br><span class="line">  <span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">sqrt-iter</span> guess)</span></span><br><span class="line">    <span class="list">(<span class="keyword"><span class="built_in">if</span></span> <span class="list">(<span class="keyword">good-enough?</span> guess)</span></span><br><span class="line">        guess</span><br><span class="line">        <span class="list">(<span class="keyword">sqrt-iter</span> <span class="list">(<span class="keyword">improve</span> guess)</span>)</span>)</span>)</span></span><br><span class="line">  <span class="list">(<span class="keyword"><span class="built_in">define</span></span> tolerance <span class="number">0.001</span>)</span></span><br><span class="line">  <span class="list">(<span class="keyword">sqrt-iter</span> <span class="number">1.0</span>)</span>)</span></span><br></pre></td></tr></table></figure>
+<p>这段代码使用了非常神奇的方式, 迭代地解决了如何使求平方根的问题, 我觉得在此处用作例子也再好不过, 我们整理一下这段代码, 让你们感觉到函数式编程的神奇和它带给我们的强大的表达能力.</p>
 <h3 id="Introduction_to_Haskell">Introduction to Haskell</h3><p>接下来我们将使用 Haskell 继续对函数式编程进行介绍. 我们接下来将介绍一下几个概念:</p>
 <ul>
 <li>列表(和列表推导式)</li>
@@ -199,33 +174,13 @@ Encounter Functin">
 </ul>
 <p>这三个重要的概念都是在函数编程中极其常用的, 如果你选择了函数式编程, 那么几乎每时每刻都在与这三者打交道.</p>
 <h4 id="Warm_Up-1">Warm Up</h4><p>我们先来写几个非常简单的 Haskell 函数来热一热身, 我们先把之前 使用 Scheme 求平方根的代码, 转换为 Haskell 编译器能够理解的 Haskell 代码.</p>
-<pre><code>sqrt :: (Ord s, Floating s) =&gt; s -&gt; s
-sqrt <span class="variable">x =</span> sqrtIter <span class="number">1.0</span>
-  where <span class="variable">tolerance =</span> <span class="number">0.0001</span>
-        goodEnough <span class="variable">guess =</span> abs ((guess ** <span class="number">2</span>) - x) &lt; tolerance
-        improve <span class="variable">guess =</span> (guess + x / guess) / <span class="number">2</span>
-        sqrtIter <span class="variable">guess =</span> <span class="keyword">if</span> goodEnough guess
-                         <span class="keyword">then</span> guess
-                         <span class="keyword">else</span> sqrtIter $ improve guess
-</code></pre><p>在 Haskell 中为函数加上类型声明是非常好的习惯, 这里的类型声明暂时不需要大家理解.</p>
-<pre><code><span class="keyword">double</span> :: <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span>
-<span class="keyword">double</span> x = x * <span class="number">2</span>
-
-square :: <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span>
-square x = x * x
-</code></pre><p>这里我们可以看到两个函数的类型声明都是 <code>Int -&gt; Int</code> 就是接收一个 <code>Int</code> 类型的值, 返回一个 <code>Int</code> 类型的值.</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sqrt :: (Ord s, Floating s) =&gt; s -&gt; s</span><br><span class="line">sqrt <span class="variable">x =</span> sqrtIter <span class="number">1.0</span></span><br><span class="line">  where <span class="variable">tolerance =</span> <span class="number">0.0001</span></span><br><span class="line">        goodEnough <span class="variable">guess =</span> abs ((guess ** <span class="number">2</span>) - x) &lt; tolerance</span><br><span class="line">        improve <span class="variable">guess =</span> (guess + x / guess) / <span class="number">2</span></span><br><span class="line">        sqrtIter <span class="variable">guess =</span> <span class="keyword">if</span> goodEnough guess</span><br><span class="line">                         <span class="keyword">then</span> guess</span><br><span class="line">                         <span class="keyword">else</span> sqrtIter $ improve guess</span><br></pre></td></tr></table></figure>
+<p>在 Haskell 中为函数加上类型声明是非常好的习惯, 这里的类型声明暂时不需要大家理解.</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> :: <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span></span><br><span class="line"><span class="keyword">double</span> x = x * <span class="number">2</span></span><br><span class="line"></span><br><span class="line">square :: <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span></span><br><span class="line">square x = x * x</span><br></pre></td></tr></table></figure>
+<p>这里我们可以看到两个函数的类型声明都是 <code>Int -&gt; Int</code> 就是接收一个 <code>Int</code> 类型的值, 返回一个 <code>Int</code> 类型的值.</p>
 <h4 id="List_and_List_Comprehension">List and List Comprehension</h4><p>在Haskell中, List 非常的重要. 它是最常用的数据结构，并且十分强大，灵活地使用它可以解决很多问题. 它是一种单类型的数据结构, 可以用来存储多个类型相同的元素. 我们可以在里面装一组数字或者一组字符, 但不能把字符和数字装在一起, 而且 List 是可以嵌套的.</p>
-<pre><code>ghci&gt; let numbers = [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>]
-ghci&gt; numbers
-[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>]
-
-ghci&gt; let nestedNumbers = <span class="string">[[1,2,3,4],[5,3,3,3],[1,2,2,3,4],[1,2,3]]</span>   
-ghci&gt; nestedNumbers
-<span class="string">[[1,2,3,4],[5,3,3,3],[1,2,2,3,4],[1,2,3]]</span>   
-
-ghci&gt; <span class="number">3</span>:[head numbers] ++ [head $ tail numbers]
-[<span class="number">4</span>,<span class="number">5</span>]
-</code></pre><ul>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ghci&gt; let numbers = [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>]</span><br><span class="line">ghci&gt; numbers</span><br><span class="line">[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>]</span><br><span class="line"></span><br><span class="line">ghci&gt; let nestedNumbers = <span class="string">[[1,2,3,4],[5,3,3,3],[1,2,2,3,4],[1,2,3]]</span>   </span><br><span class="line">ghci&gt; nestedNumbers</span><br><span class="line"><span class="string">[[1,2,3,4],[5,3,3,3],[1,2,2,3,4],[1,2,3]]</span>   </span><br><span class="line"></span><br><span class="line">ghci&gt; <span class="number">3</span>:[head numbers] ++ [head $ tail numbers]</span><br><span class="line">[<span class="number">4</span>,<span class="number">5</span>]</span><br></pre></td></tr></table></figure>
+<ul>
 <li>我们使用 head tail ++ : 几种对列表进行简单的处理.<ul>
 <li>head 取出列表中第一个元素</li>
 <li>tail 取出列表去掉第一个元素后剩下的列表</li>
@@ -236,91 +191,48 @@ ghci&gt; <span class="number">3</span>:[head numbers] ++ [head $ tail numbers]
 </ul>
 <p>至于一些其他的方法, 在这里也不做过多的介绍, 比如说 <code>length</code> <code>reverse</code> <code>take</code> … 他们都是非常重要的操作.</p>
 <p>如果你现在还记得对集合的 Comprehension 那么, 你对 Haskell 的 List Comprehension 理解也会十分的轻松.</p>
-<pre><code><span class="title">ghci</span>&gt; [x*<span class="number">2</span> | x &lt;- [<span class="number">1.</span><span class="number">.10</span>]]   
-[<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">10</span>,<span class="number">12</span>,<span class="number">14</span>,<span class="number">16</span>,<span class="number">18</span>,<span class="number">20</span>]
-
-<span class="title">ghci</span>&gt; [x*<span class="number">2</span> | x &lt;- [<span class="number">1.</span><span class="number">.10</span>], x*<span class="number">2</span> &gt;= <span class="number">12</span>]   
-[<span class="number">12</span>,<span class="number">14</span>,<span class="number">16</span>,<span class="number">18</span>,<span class="number">20</span>] 
-
-<span class="title">ghci</span>&gt; [ x | x &lt;- [<span class="number">50.</span><span class="number">.100</span>], x `mod` <span class="number">7</span> == <span class="number">3</span>]   
-[<span class="number">52</span>,<span class="number">59</span>,<span class="number">66</span>,<span class="number">73</span>,<span class="number">80</span>,<span class="number">87</span>,<span class="number">94</span>]
-
-<span class="title">ghci</span>&gt; [ x*y | x &lt;- [<span class="number">2</span>,<span class="number">5</span>,<span class="number">10</span>], y &lt;- [<span class="number">8</span>,<span class="number">10</span>,<span class="number">11</span>]]   
-[<span class="number">16</span>,<span class="number">20</span>,<span class="number">22</span>,<span class="number">40</span>,<span class="number">50</span>,<span class="number">55</span>,<span class="number">80</span>,<span class="number">100</span>,<span class="number">110</span>]
-</code></pre><p>这里也没啥好说的, 太简单了.</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; [x*<span class="number">2</span> | x &lt;- [<span class="number">1.</span><span class="number">.10</span>]]   </span><br><span class="line">[<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">10</span>,<span class="number">12</span>,<span class="number">14</span>,<span class="number">16</span>,<span class="number">18</span>,<span class="number">20</span>]</span><br><span class="line"></span><br><span class="line"><span class="title">ghci</span>&gt; [x*<span class="number">2</span> | x &lt;- [<span class="number">1.</span><span class="number">.10</span>], x*<span class="number">2</span> &gt;= <span class="number">12</span>]   </span><br><span class="line">[<span class="number">12</span>,<span class="number">14</span>,<span class="number">16</span>,<span class="number">18</span>,<span class="number">20</span>] </span><br><span class="line"></span><br><span class="line"><span class="title">ghci</span>&gt; [ x | x &lt;- [<span class="number">50.</span><span class="number">.100</span>], x `mod` <span class="number">7</span> == <span class="number">3</span>]   </span><br><span class="line">[<span class="number">52</span>,<span class="number">59</span>,<span class="number">66</span>,<span class="number">73</span>,<span class="number">80</span>,<span class="number">87</span>,<span class="number">94</span>]</span><br><span class="line"></span><br><span class="line"><span class="title">ghci</span>&gt; [ x*y | x &lt;- [<span class="number">2</span>,<span class="number">5</span>,<span class="number">10</span>], y &lt;- [<span class="number">8</span>,<span class="number">10</span>,<span class="number">11</span>]]   </span><br><span class="line">[<span class="number">16</span>,<span class="number">20</span>,<span class="number">22</span>,<span class="number">40</span>,<span class="number">50</span>,<span class="number">55</span>,<span class="number">80</span>,<span class="number">100</span>,<span class="number">110</span>]</span><br></pre></td></tr></table></figure>
+<p>这里也没啥好说的, 太简单了.</p>
 <p>我们使用列表推倒来实现 quicksort.</p>
-<pre><code>quicksort :: [Int] -&gt; [Int]
-quicksort [] = []
-quicksort (x:xs) = quicksort <span class="keyword">ls</span> ++ [x] ++ quicksort <span class="keyword">bs</span>
-  where <span class="keyword">ls</span> = [<span class="keyword">l</span> | <span class="keyword">l</span> &lt;- xs, <span class="keyword">l</span> &lt;= x]
-        <span class="keyword">bs</span> = [b | b &lt;- xs, b &gt; x]
-</code></pre><h4 id="Pattern_Matching">Pattern Matching</h4><p>模式匹配通过检查数据的特定结构来检查其是否匹配, 并按模式从中取得数据. 举一个例子大家就能非常轻松地理解模式匹配.</p>
-<pre><code><span class="label">factorial ::</span> (Integral <span class="literal">a</span>) =&gt; <span class="literal">a</span> -&gt; <span class="literal">a</span>   
-factorial <span class="number">0</span> = <span class="number">1</span>   
-factorial n = n * factorial (n - <span class="number">1</span>)  
-</code></pre><p><code>factorial</code> 是一个递归的函数, <code>factorial</code> 接收一个参数, 当这个参数为 0 的时候, 会匹配到第一种情况直接返回 1, 否则就会匹配到第二种情况, 递归地求解 <code>factorial</code>, 直到参数为 0, 返回结果.</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">quicksort :: [Int] -&gt; [Int]</span><br><span class="line">quicksort [] = []</span><br><span class="line">quicksort (x:xs) = quicksort <span class="keyword">ls</span> ++ [x] ++ quicksort <span class="keyword">bs</span></span><br><span class="line">  where <span class="keyword">ls</span> = [<span class="keyword">l</span> | <span class="keyword">l</span> &lt;- xs, <span class="keyword">l</span> &lt;= x]</span><br><span class="line">        <span class="keyword">bs</span> = [b | b &lt;- xs, b &gt; x]</span><br></pre></td></tr></table></figure>
+<h4 id="Pattern_Matching">Pattern Matching</h4><p>模式匹配通过检查数据的特定结构来检查其是否匹配, 并按模式从中取得数据. 举一个例子大家就能非常轻松地理解模式匹配.</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">factorial ::</span> (Integral <span class="literal">a</span>) =&gt; <span class="literal">a</span> -&gt; <span class="literal">a</span>   </span><br><span class="line">factorial <span class="number">0</span> = <span class="number">1</span>   </span><br><span class="line">factorial n = n * factorial (n - <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p><code>factorial</code> 是一个递归的函数, <code>factorial</code> 接收一个参数, 当这个参数为 0 的时候, 会匹配到第一种情况直接返回 1, 否则就会匹配到第二种情况, 递归地求解 <code>factorial</code>, 直到参数为 0, 返回结果.</p>
 <p>这个函数可以等价为</p>
-<pre><code><span class="label">factorial ::</span> (Integral <span class="literal">a</span>) =&gt; <span class="literal">a</span> -&gt; <span class="literal">a</span>
-factorial n = <span class="keyword">if</span> n == <span class="number">0</span> then <span class="number">1</span> <span class="keyword">else</span> n * factorial (n - <span class="number">1</span>)
-</code></pre><p>不过使用模式匹配的写法对于使用函数式编程的人来说更加具有可读性, 而经过长时间的使用, 相信各位一定会习惯模式匹配的写法.</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">factorial ::</span> (Integral <span class="literal">a</span>) =&gt; <span class="literal">a</span> -&gt; <span class="literal">a</span></span><br><span class="line">factorial n = <span class="keyword">if</span> n == <span class="number">0</span> then <span class="number">1</span> <span class="keyword">else</span> n * factorial (n - <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>不过使用模式匹配的写法对于使用函数式编程的人来说更加具有可读性, 而经过长时间的使用, 相信各位一定会习惯模式匹配的写法.</p>
 <p>有很多命令式语言都提供 <code>case</code> 表达式, 就是取一个变量, 按照对变量的判断选择对应的代码块, 而模式匹配实际上就是 <code>case</code> 表达式的语法糖.</p>
-<pre><code><span class="keyword">case</span> expression <span class="keyword">of</span> pattern -&gt; <span class="literal">result</span>   
-                   pattern -&gt; <span class="literal">result</span>   
-                   pattern -&gt; <span class="literal">result</span> 
-</code></pre><p>我们将阶乘函数转化为 <code>case</code> 形式:</p>
-<pre><code>factorial :: (<span class="type">Integral</span> a) =&gt; a -&gt; a   
-factorial n = <span class="keyword">case</span> n <span class="keyword">of</span> <span class="number">0</span> -&gt; <span class="number">1</span>
-                                 n -&gt; n * factorial (n-<span class="number">1</span>)
-</code></pre><p>好了, 我们已经对模式匹配有了了解, 接下来我们该介绍函数式编程下一个非常有趣的话题.</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> expression <span class="keyword">of</span> pattern -&gt; <span class="literal">result</span>   </span><br><span class="line">                   pattern -&gt; <span class="literal">result</span>   </span><br><span class="line">                   pattern -&gt; <span class="literal">result</span></span><br></pre></td></tr></table></figure>
+<p>我们将阶乘函数转化为 <code>case</code> 形式:</p>
+<figure class="highlight sml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">factorial :: (<span class="type">Integral</span> a) =&gt; a -&gt; a   </span><br><span class="line">factorial n = <span class="keyword">case</span> n <span class="keyword">of</span> <span class="number">0</span> -&gt; <span class="number">1</span></span><br><span class="line">								 n -&gt; n * factorial (n-<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>好了, 我们已经对模式匹配有了了解, 接下来我们该介绍函数式编程下一个非常有趣的话题.</p>
 <h4 id="Currying">Currying</h4><p><a href="http://zh.wikipedia.org/wiki/%E6%9F%AF%E9%87%8C%E5%8C%96" target="_blank" rel="external">柯里化</a> 是把接收多个参数的函数变换成接收一个单一参数的函数.</p>
 <p>比如我们定义一个函数 <code>add</code>:</p>
-<pre><code><span class="keyword">add</span> :: <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span>
-</code></pre><p>在之前的理解中, <code>add</code> 是一个接收两个 <code>Int</code> 类型参数的并返回一个 <code>Int</code> 的函数.</p>
-<pre><code><span class="keyword">add</span> <span class="built_in">x</span> <span class="built_in">y</span> = <span class="built_in">x</span> + <span class="built_in">y</span>
-</code></pre><p>我们直接将两个参数传入这个函数 <code>add 3 4</code> 就会返回 <code>5</code>.</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add</span> :: <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span></span><br></pre></td></tr></table></figure>
+<p>在之前的理解中, <code>add</code> 是一个接收两个 <code>Int</code> 类型参数的并返回一个 <code>Int</code> 的函数.</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add</span> <span class="built_in">x</span> <span class="built_in">y</span> = <span class="built_in">x</span> + <span class="built_in">y</span></span><br></pre></td></tr></table></figure>
+<p>我们直接将两个参数传入这个函数 <code>add 3 4</code> 就会返回 <code>5</code>.</p>
 <p>但是, 现在我们能不能只给他传一个参数呢, 我么来尝试一下:</p>
-<pre><code>ghci&gt;<span class="instruction"> add </span>3
-
-&lt;interactive&gt;:9:1:
-    No<span class="instruction"> instance </span>for<span class="function"> (</span>Show<span class="function"> (</span>a0 -&gt; a0<span class="function">)</span><span class="function">)</span> arising from a use of ‘print’
-    In a stmt of an interactive GHCi command: print it
-</code></pre><p>我们直接在 ghci 中输入 <code>add 3</code> 然后, 编译器报错了, 错误的内容是不能正确的显示这个结果, 说明编译器不理解如何 <code>print</code> 这个结果, 我们换一种方式查看一下类型:</p>
-<pre><code>ghci&gt; :t <span class="keyword">add</span> <span class="number">3</span>
-<span class="keyword">add</span> <span class="number">3</span> :: <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span>
-</code></pre><p>发现这个 <code>add 3</code> 的类型竟然是 <code>Int -&gt; Int</code> 这说明, <code>add</code> 函数接受了一个 <code>Int</code> 返回了一个 <code>Int -&gt; Int</code> 的函数.</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ghci&gt;<span class="instruction"> add </span>3</span><br><span class="line">	</span><br><span class="line">&lt;interactive&gt;:9:1:</span><br><span class="line">    No<span class="instruction"> instance </span>for<span class="function"> (</span>Show<span class="function"> (</span>a0 -&gt; a0<span class="function">)</span><span class="function">)</span> arising from a use of ‘print’</span><br><span class="line">    In a stmt of an interactive GHCi command: print it</span><br></pre></td></tr></table></figure>
+<p>我们直接在 ghci 中输入 <code>add 3</code> 然后, 编译器报错了, 错误的内容是不能正确的显示这个结果, 说明编译器不理解如何 <code>print</code> 这个结果, 我们换一种方式查看一下类型:</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ghci&gt; :t <span class="keyword">add</span> <span class="number">3</span></span><br><span class="line"><span class="keyword">add</span> <span class="number">3</span> :: <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span></span><br></pre></td></tr></table></figure>
+<p>发现这个 <code>add 3</code> 的类型竟然是 <code>Int -&gt; Int</code> 这说明, <code>add</code> 函数接受了一个 <code>Int</code> 返回了一个 <code>Int -&gt; Int</code> 的函数.</p>
 <p>我们接下来为这个函数起一个名字</p>
-<pre><code>ghci&gt; let addThree = <span class="keyword">add</span> <span class="number">3</span>
-ghci&gt; :t <span class="keyword">add</span>
-<span class="keyword">add</span>       addThree
-ghci&gt; :t addThree
-addThree :: <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span>
-</code></pre><p>然后尝试调用这个函数</p>
-<pre><code>ghci&gt; addThree 4
-7
-</code></pre><p>发现这个函数的返回值竟然也是 <code>7</code> 这是为什么呢?</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ghci&gt; let addThree = <span class="keyword">add</span> <span class="number">3</span></span><br><span class="line">ghci&gt; :t <span class="keyword">add</span></span><br><span class="line"><span class="keyword">add</span>       addThree</span><br><span class="line">ghci&gt; :t addThree</span><br><span class="line">addThree :: <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span></span><br></pre></td></tr></table></figure>
+<p>然后尝试调用这个函数</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ghci&gt; addThree 4</span><br><span class="line">7</span><br></pre></td></tr></table></figure>
+<p>发现这个函数的返回值竟然也是 <code>7</code> 这是为什么呢?</p>
 <p>因为在函数式语言的实现中, 函数的定义会被转换为如下的形式:</p>
-<pre><code>add :: Int<span class="function"> -&gt;</span> Int<span class="function"> -&gt;</span> Int
-add = <span class="string">\x</span> <span class="function">-&gt;</span> (<span class="string">\y</span> <span class="function">-&gt;</span> x + y)
-</code></pre><p>它可以每次只接受一个参数, 然后返回一个函数或者值. 这就是函数为什么可以柯里化的原因.</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">add :: Int<span class="function"> -&gt;</span> Int<span class="function"> -&gt;</span> Int</span><br><span class="line">add = <span class="string">\x</span> <span class="function">-&gt;</span> (<span class="string">\y</span> <span class="function">-&gt;</span> x + y)</span><br></pre></td></tr></table></figure>
+<p>它可以每次只接受一个参数, 然后返回一个函数或者值. 这就是函数为什么可以柯里化的原因.</p>
 <p>柯里化又可以做些什么呢, 我们在介绍一个非常重要的函数 <code>map</code>, <code>map</code> 翻译过来就是映射, 他把一个函数映射到一个列表中, 我们简单的举个例子.</p>
-<pre><code><span class="tag">ghci</span>&gt; <span class="tag">map</span> (\<span class="tag">x</span> <span class="tag">-</span>&gt; <span class="tag">x</span> * <span class="tag">x</span>) <span class="attr_selector">[1,2,3,4,5]</span>
-<span class="attr_selector">[1,4,9,16,25]</span>    
-</code></pre><p>它把一个匿名函数依次映射到列表 <code>[1,2,3,4,5]</code> 中, 最后将这些结果连接成一个列表.</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ghci</span>&gt; map (\x -&gt; x * x)<span class="sqbracket"> [1,2,3,4,5]</span><span class="sqbracket"></span><br><span class="line">[1,4,9,16,25]</span></span><br></pre></td></tr></table></figure>
+<p>它把一个匿名函数依次映射到列表 <code>[1,2,3,4,5]</code> 中, 最后将这些结果连接成一个列表.</p>
 <p><code>map</code> 为我们提供了一个高阶的抽象, 它以一个函数和列表作为参数, 返回一个列表.</p>
-<pre><code>map :: <span class="function"><span class="params">(a -&gt; b)</span> -&gt;</span> [a]<span class="function"> -&gt;</span> [b]
-</code></pre><p>我们接下来就可以使用 <code>map</code> 和柯里化构建大量的函数, 减少我们的工作量</p>
-<pre><code>square :: <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span>
-square = \x -&gt; x * x
-
-<span class="keyword">double</span> :: <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span>
-<span class="keyword">double</span> = (+<span class="number">2</span>)
-
-squareList :: [<span class="keyword">Int</span>] -&gt; [<span class="keyword">Int</span>]
-squareList = map square
-
-doubleList :: [<span class="keyword">Int</span>] -&gt; [<span class="keyword">Int</span>]
-doubleList = map <span class="keyword">double</span>
-</code></pre><p>而接下来我们就可以直接使用 <code>squareList</code> 和 <code>doubleList</code> 完成对列表的操作.</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map :: <span class="function"><span class="params">(a -&gt; b)</span> -&gt;</span> [a]<span class="function"> -&gt;</span> [b]</span><br></pre></td></tr></table></figure>
+<p>我们接下来就可以使用 <code>map</code> 和柯里化构建大量的函数, 减少我们的工作量</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">square :: <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span></span><br><span class="line">square = \x -&gt; x * x</span><br><span class="line"></span><br><span class="line"><span class="keyword">double</span> :: <span class="keyword">Int</span> -&gt; <span class="keyword">Int</span></span><br><span class="line"><span class="keyword">double</span> = (+<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">squareList :: [<span class="keyword">Int</span>] -&gt; [<span class="keyword">Int</span>]</span><br><span class="line">squareList = map square</span><br><span class="line"></span><br><span class="line">doubleList :: [<span class="keyword">Int</span>] -&gt; [<span class="keyword">Int</span>]</span><br><span class="line">doubleList = map <span class="keyword">double</span></span><br></pre></td></tr></table></figure>
+<p>而接下来我们就可以直接使用 <code>squareList</code> 和 <code>doubleList</code> 完成对列表的操作.</p>
 <hr>
 <h2 id="Application">Application</h2><p>目前应用到生产环境还是比较少, 不过已经有一些公司, 使用 scala, Erlang 等等语言做一些后端方面的开发. 我对这些语言的了解还是比较少的.</p>
 <p>Lisp 也被用来开发 Emacs 和一些人工智能的领域, 具体戳这里<a href="http://en.wikipedia.org/wiki/Common_Lisp#Applications" target="_blank" rel="external">http://en.wikipedia.org/wiki/Common_Lisp#Applications</a>.</p>
