@@ -1537,105 +1537,44 @@ Content-<span class="string">Type:</span> text/html
     <link href="http://deltax.me/2014/11/28/iOS%E7%BB%84%E5%90%88TabbarController%E5%92%8CNavigationController%20%3CBug02%3E/"/>
     <id>http://deltax.me/2014/11/28/iOS组合TabbarController和NavigationController <Bug02>/</id>
     <published>2014-11-28T12:36:59.000Z</published>
-    <updated>2015-03-24T10:54:14.000Z</updated>
+    <updated>2015-03-24T17:31:56.000Z</updated>
     <content type="html"><![CDATA[<h2 id="TabbarController_and_NavigationController">TabbarController and NavigationController</h2><p><code>UINavigationController</code> and <code>UITabBarController</code> are two kinds of container classes in Cocoa. The two controllers are tremendous important in iOS development, we deal with them every day. Even if you are not a developer, just an iOS device user. Almost every thing you see in an iOS App have some relationship with them.</p>
 <p>Why are they so important, because of they are container classes, they handle many view controllers in an App. And <code>MVC</code> is the basic design patterns in <code>Cocoa</code> and <code>Cocoa touch</code>.</p>
 <p>Personally, I prefer to initialize everything programmingly, not in a storyboard or a nib file. Because I think it is easy to deal with. Sometimes using storyboard or a nib is too simple, but they may cause undetectable crash.</p>
 <h2 id="Use_them_Programatically">Use them Programatically</h2><p>The first thing we start an App is set up the project, and I am used to delete the <code>Main.storyboard</code> file first. And add some code to configure the <code>AppDelegate</code>.</p>
 <p>The common code you add may be this:</p>
-<pre><code>- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions {
-    <span class="comment">// Override point for customization after application launch.</span>
-    <span class="keyword">self</span><span class="variable">.window</span> = [[<span class="built_in">UIWindow</span> alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    <span class="keyword">self</span><span class="variable">.window</span><span class="variable">.rootViewController</span> = [[<span class="built_in">UIViewController</span> alloc] init];
-    [<span class="keyword">self</span><span class="variable">.window</span> makeKeyAndVisible];
-    [[<span class="built_in">UIApplication</span> sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    <span class="keyword">return</span> <span class="literal">YES</span>;
-}
-</code></pre><p>Every project without a <code>storyboard</code> needs to initialize like this. How should we do then?</p>
-<p>What should we do, if we want to set up with a <code>navigationController</code>:</p>
-<pre><code>- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions {
-    <span class="comment">// Override point for customization after application launch.</span>
-    <span class="keyword">self</span><span class="variable">.window</span> = [[<span class="built_in">UIWindow</span> alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    <span class="built_in">UINavigationController</span> *navigationController = [[<span class="built_in">UINavigationController</span> alloc] initWithRootViewController:[[<span class="built_in">UIViewController</span> alloc] init]];
-    <span class="keyword">self</span><span class="variable">.window</span><span class="variable">.rootViewController</span> = navigationController;
-    [<span class="keyword">self</span><span class="variable">.window</span> makeKeyAndVisible];
-    [[<span class="built_in">UIApplication</span> sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    <span class="keyword">return</span> <span class="literal">YES</span>;
-}
-</code></pre><p>It’s quiet simple and easy to understand, what about <code>tabBarController</code>:</p>
-<pre><code>- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions {
-    <span class="comment">// Override point for customization after application launch.</span>
-    <span class="keyword">self</span><span class="variable">.window</span> = [[<span class="built_in">UIWindow</span> alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
-    <span class="built_in">UIViewController</span> *firstViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-    <span class="built_in">UIViewController</span> *secondViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-    <span class="built_in">UIViewController</span> *thirdViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-
-    <span class="built_in">UITabBarController</span> *tabBarController = [[<span class="built_in">UITabBarController</span> alloc] init];        
-    tabBarController<span class="variable">.viewControllers</span> = @[firstViewController, secondViewController, thirdViewController];
-    <span class="keyword">self</span><span class="variable">.window</span><span class="variable">.rootViewController</span> = tabBarController;
-    [<span class="keyword">self</span><span class="variable">.window</span> makeKeyAndVisible];
-    [[<span class="built_in">UIApplication</span> sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    <span class="keyword">return</span> <span class="literal">YES</span>;
-}
-</code></pre><p>Just set <code>tabBarController</code>‘s property <code>viewControllers</code> to proper <code>viewController</code>.</p>
-<h2 id="Why_combine_TabBarController_and_NavigationController">Why combine TabBarController and NavigationController</h2><p>If you want to switch to another view from one of <code>tabBarController</code>, you can not do it with a single <code>tabBarController</code>. Because you need a stack to manage all of your controllers. If you not have one, the system do not know which view controller will display after this view pop from the window.</p>
-<p>So we need to combine them, in my first project, I do this in this way:</p>
-<pre><code>- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions {
-    <span class="comment">// Override point for customization after application launch.</span>
-    <span class="keyword">self</span><span class="variable">.window</span> = [[<span class="built_in">UIWindow</span> alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
-    <span class="built_in">UIViewController</span> *firstViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-    <span class="built_in">UIViewController</span> *secondViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-    <span class="built_in">UIViewController</span> *thirdViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-
-    <span class="built_in">UITabBarController</span> *tabBarController = [[<span class="built_in">UITabBarController</span> alloc] init];        
-    tabBarController<span class="variable">.viewControllers</span> = @[firstViewController, secondViewController, thirdViewController];
-    <span class="built_in">UINavigationController</span> *navigationController = [[UINavigationControlle alloc] initWithRootViewController:tabBarController];
-    <span class="keyword">self</span><span class="variable">.window</span><span class="variable">.rootViewController</span> = tabBarController;
-    [<span class="keyword">self</span><span class="variable">.window</span> makeKeyAndVisible];
-    [[<span class="built_in">UIApplication</span> sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    <span class="keyword">return</span> <span class="literal">YES</span>;
-}
-</code></pre><p>When I did this, I do not consider about other thing, because the apple developer document use this approach: </p>
-<pre><code><span class="built_in">UIViewController</span> *firstViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-<span class="built_in">UIViewController</span> *secondViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-<span class="built_in">UIViewController</span> *thirdViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-<span class="built_in">UIViewController</span> *rootViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-<span class="built_in">UINavigationController</span>* navController = [[<span class="built_in">UINavigationController</span> alloc]
-                        initWithRootViewController:rootViewController];
-
-<span class="built_in">NSArray</span>* controllers = [<span class="built_in">NSArray</span> arrayWithObjects:firstViewController, secondViewController, thirdViewController, navController, <span class="literal">nil</span>];
-
-<span class="built_in">UITabBarController</span> *tabBarController = [[<span class="built_in">UITabBarController</span> alloc] init];
-tabBarController<span class="variable">.viewControllers</span> = controllers;
-
-<span class="keyword">self</span><span class="variable">.window</span><span class="variable">.rootViewController</span> = tabBarController;
-</code></pre><p>I just think this is a silly way. if I imitate this, <strong>Do I need to initialize five navigation controllers each with a view controller?</strong></p>
-<p>The answer is right. I need to do so. Why? After I imitate this approach, my previous approach has some side effects.</p>
-<ol>
-<li>Sometimes you reference <code>navigationController</code> with <code>self</code>, you may get a null. Because the five viewController are bot pushed on the stack.</li>
-<li>If you change <code>navigationBar</code> in one tab, as you swich to another, all the <code>navigationBar</code> are changed. Because they are just one <code>navigationController</code> and it just have only one <code>navigatonBar</code>.</li>
-<li>If you <code>pushViewController</code> from one of <code>tabBarController</code>‘s <code>viewControllers</code>, tab bar will disapper, you will not see it, because <code>tabBarController</code> is not the <code>rootViewController</code>, it just in the stack with its <code>tabBar</code>.</li>
-</ol>
-<p>So the verbose but correct approach is this:</p>
-<pre><code><span class="built_in">UIViewController</span> *firstViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-<span class="built_in">UIViewController</span> *secondViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-<span class="built_in">UIViewController</span> *thirdViewController = [[<span class="built_in">UIViewController</span> alloc] init];
-<span class="built_in">UINavigationController</span> *firstNavigationController = [[<span class="built_in">UINavigationController</span> alloc]
-                        initWithRootViewController:rootViewController];
-<span class="built_in">UINavigationController</span> *secondNavigationController = [[<span class="built_in">UINavigationController</span> alloc]
-                        initWithRootViewController:rootViewController];
-<span class="built_in">UINavigationController</span> *thirdNavigationController = [[<span class="built_in">UINavigationController</span> alloc]
-                        initWithRootViewController:rootViewController];
-
-<span class="built_in">NSArray</span>* controllers = [<span class="built_in">NSArray</span> arrayWithObjects:firstNavigationController, secondNavigationController, thirdNavigationController, <span class="literal">nil</span>];
-
-<span class="built_in">UITabBarController</span> *tabBarController = [[<span class="built_in">UITabBarController</span> alloc] init];
-tabBarController<span class="variable">.viewControllers</span> = controllers;
-
-<span class="keyword">self</span><span class="variable">.window</span><span class="variable">.rootViewController</span> = tabBarController;
-</code></pre><p>PS: <code>navigationBar</code> is damn difficult to use. Hope this help.</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions &#123;</span><br><span class="line">    <span class="comment">// Override point for customization after application launch.</span></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.window</span> = [[<span class="built_in">UIWindow</span> alloc] initWithFrame:[[UIScreen mainScreen] bounds]];</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.window</span><span class="variable">.rootViewController</span> = [[<span class="built_in">UIViewController</span> alloc] init];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.window</span> makeKeyAndVisible];</span><br><span class="line">    [[<span class="built_in">UIApplication</span> sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br><span class="line">```	</span><br><span class="line"></span><br><span class="line">Every project without a `storyboard` needs to initialize like <span class="keyword">this</span>. How should we <span class="keyword">do</span> then?</span><br><span class="line"></span><br><span class="line">What should we <span class="keyword">do</span>, <span class="keyword">if</span> we want to set up with a `navigationController`:</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>(BOOL)application:(UIApplication <em>)application didFinishLaunchingWithOptions:(NSDictionary </em>)launchOptions {<br>  // Override point for customization after application launch.<br>  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];</p>
+<pre><code><span class="built_in">UINavigationController</span> *navigationController = [[<span class="built_in">UINavigationController</span> alloc] initWithRootViewController:[[<span class="built_in">UIViewController</span> alloc] init]];
+</code></pre><p>  self.window.rootViewController = navigationController;<br>  [self.window makeKeyAndVisible];<br>  [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];<br>  return YES;<br>}</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">It's quiet simple <span class="keyword">and</span> easy <span class="keyword">to</span> understand, what <span class="keyword">about</span> `tabBarController`:</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>(BOOL)application:(UIApplication <em>)application didFinishLaunchingWithOptions:(NSDictionary </em>)launchOptions {<br>  // Override point for customization after application launch.<br>  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];</p>
+<p>  UIViewController <em>firstViewController = [[UIViewController alloc] init];<br>  UIViewController </em>secondViewController = [[UIViewController alloc] init];<br>  UIViewController *thirdViewController = [[UIViewController alloc] init];</p>
+<pre><code>UITabBarController <span class="keyword">*</span>tabBarController = [[UITabBarController alloc] init];        
+tabBarController.viewControllers = <span class="comment">@[firstViewController, secondViewController, thirdViewController];</span>
+</code></pre><p>  self.window.rootViewController = tabBarController;<br>  [self.window makeKeyAndVisible];<br>  [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];<br>  return YES;<br>}</p>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Just <span class="keyword">set</span> `tabBarController`<span class="comment">'s property `viewControllers` to proper `viewController`.</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">##Why combine TabBarController and NavigationController</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">If</span> you want <span class="keyword">to</span> switch <span class="keyword">to</span> another view <span class="keyword">from</span> one <span class="keyword">of</span> `tabBarController`, you can <span class="keyword">not</span> <span class="keyword">do</span> it <span class="keyword">with</span> a <span class="built_in">single</span> `tabBarController`. Because you need a stack <span class="keyword">to</span> manage all <span class="keyword">of</span> your controllers. <span class="keyword">If</span> you <span class="keyword">not</span> have one, the system <span class="keyword">do</span> <span class="keyword">not</span> know which view controller will display after this view pop <span class="keyword">from</span> the window.</span><br><span class="line"></span><br><span class="line">So we need <span class="keyword">to</span> combine them, <span class="keyword">in</span> my first project, I <span class="keyword">do</span> this <span class="keyword">in</span> this way:</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>(BOOL)application:(UIApplication <em>)application didFinishLaunchingWithOptions:(NSDictionary </em>)launchOptions {<br>  // Override point for customization after application launch.<br>  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];</p>
+<p>  UIViewController <em>firstViewController = [[UIViewController alloc] init];<br>  UIViewController </em>secondViewController = [[UIViewController alloc] init];<br>  UIViewController *thirdViewController = [[UIViewController alloc] init];</p>
+<pre><code>UITabBarController <span class="keyword">*</span>tabBarController = [[UITabBarController alloc] init];        
+tabBarController.viewControllers = <span class="comment">@[firstViewController, secondViewController, thirdViewController];</span>
+UINavigationController <span class="keyword">*</span>navigationController = [[UINavigationControlle alloc] initWithRootViewController:tabBarController];
+</code></pre><p>  self.window.rootViewController = tabBarController;<br>  [self.window makeKeyAndVisible];<br>  [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];<br>  return YES;<br>}</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">When I did <span class="keyword">this</span>, I <span class="keyword">do</span> <span class="keyword">not</span> consider about other thing, because the apple developer <span class="built_in">document</span> use <span class="keyword">this</span> <span class="attribute">approach</span>:</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>UIViewController <em>firstViewController = [[UIViewController alloc] init];<br>UIViewController </em>secondViewController = [[UIViewController alloc] init];<br>UIViewController <em>thirdViewController = [[UIViewController alloc] init];<br>UIViewController </em>rootViewController = [[UIViewController alloc] init];<br>UINavigationController* navController = [[UINavigationController alloc]                         initWithRootViewController:rootViewController];</p>
+<p>NSArray* controllers = [NSArray arrayWithObjects:firstViewController, secondViewController, thirdViewController, navController, nil];</p>
+<p>UITabBarController *tabBarController = [[UITabBarController alloc] init];<br>tabBarController.viewControllers = controllers;</p>
+<p>self.window.rootViewController = tabBarController;<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">I just think this is a silly way. if I imitate this, **<span class="operator"><span class="keyword">Do</span> I need <span class="keyword">to</span> initialize five navigation controllers <span class="keyword">each</span> <span class="keyword">with</span> a <span class="keyword">view</span> controller?**</span><br><span class="line"></span><br><span class="line">The answer <span class="keyword">is</span> <span class="keyword">right</span>. I need <span class="keyword">to</span> <span class="keyword">do</span> so. Why? <span class="keyword">After</span> I imitate this approach, my previous approach has <span class="keyword">some</span> side effects.</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> Sometimes you reference <span class="string">`navigationController`</span> <span class="keyword">with</span> <span class="string">`self`</span>, you may <span class="keyword">get</span> a <span class="literal">null</span>. Because the five viewController <span class="keyword">are</span> bot pushed <span class="keyword">on</span> the stack.</span><br><span class="line"><span class="number">2.</span> <span class="keyword">If</span> you <span class="keyword">change</span> <span class="string">`navigationBar`</span> <span class="keyword">in</span> one tab, <span class="keyword">as</span> you swich <span class="keyword">to</span> another, <span class="keyword">all</span> the <span class="string">`navigationBar`</span> <span class="keyword">are</span> <span class="keyword">changed</span>. Because they <span class="keyword">are</span> just one <span class="string">`navigationController`</span> <span class="keyword">and</span> it just have <span class="keyword">only</span> one <span class="string">`navigatonBar`</span>.</span><br><span class="line"><span class="number">3.</span> <span class="keyword">If</span> you <span class="string">`pushViewController`</span> <span class="keyword">from</span> one <span class="keyword">of</span> <span class="string">`tabBarController`</span><span class="string">'s `viewControllers`, tab bar will disapper, you will not see it, because `tabBarController` is not the `rootViewController`, it just in the stack with its `tabBar`.</span><br><span class="line"></span><br><span class="line">So the verbose but correct approach is this:</span></span></span><br></pre></td></tr></table></figure></p>
+<p>UIViewController <em>firstViewController = [[UIViewController alloc] init];<br>UIViewController </em>secondViewController = [[UIViewController alloc] init];<br>UIViewController <em>thirdViewController = [[UIViewController alloc] init];<br>UINavigationController </em>firstNavigationController = [[UINavigationController alloc]<br>                     initWithRootViewController:rootViewController];<br>UINavigationController <em>secondNavigationController = [[UINavigationController alloc]<br>                     initWithRootViewController:rootViewController];<br>UINavigationController </em>thirdNavigationController = [[UINavigationController alloc]<br>                     initWithRootViewController:rootViewController];</p>
+<p>NSArray* controllers = [NSArray arrayWithObjects:firstNavigationController, secondNavigationController, thirdNavigationController, nil];</p>
+<p>UITabBarController *tabBarController = [[UITabBarController alloc] init];<br>tabBarController.viewControllers = controllers;</p>
+<p>self.window.rootViewController = tabBarController;<br>```</p>
+<p>PS: <code>navigationBar</code> is damn difficult to use. Hope this help.</p>
 ]]></content>
     <summary type="html">
     <![CDATA[<h2 id="TabbarController_and_NavigationController">TabbarController and NavigationController</h2><p><code>UINavigationController</code> and ]]>
