@@ -4,7 +4,7 @@
   <subtitle><![CDATA[为了成为牛逼闪闪的工程师]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
-  <updated>2015-03-24T10:53:06.000Z</updated>
+  <updated>2015-03-24T10:56:49.000Z</updated>
   <id>http://deltax.me/</id>
   
   <author>
@@ -19,9 +19,10 @@
     <link href="http://deltax.me/2015/03/24/Inheritence-in-Object-Oriented-Programming/"/>
     <id>http://deltax.me/2015/03/24/Inheritence-in-Object-Oriented-Programming/</id>
     <published>2015-03-24T01:07:46.000Z</published>
-    <updated>2015-03-24T10:53:06.000Z</updated>
+    <updated>2015-03-24T10:56:49.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Introduction">Introduction</h2><p>The main addition that <strong>OOP</strong> adds to component-based programming is inheritence. OOP allows defining a class incrementally by extending existing classes.</p>
 <p>While using inheritence, it must be taken good care of. It may lost control if your application doesn’t use good design patterns.</p>
+<a id="more"></a>
 <h2 id="Inheritence_Graph">Inheritence Graph</h2><p>Inheritence is a way to construct new classes from existing classes. </p>
 <ul>
 <li>A method in <code>class C</code> overrrdes any method with the same label in all of <code>C</code>‘s superclass.</li>
@@ -210,7 +211,9 @@ in {<span class="keyword">New</span> Tracer TInit} <span class="keyword">end</sp
 <h3 id="Reflection_of_object_state">Reflection of object state</h3><p>We would like to ba able to read and write the whole state of an object, independant of the object’s class.</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<h2 id="Introduction">Introduction</h2><p>The main addition that <strong>OOP</strong> adds to component-based programming is inheritence. OO]]>
+    <![CDATA[<h2 id="Introduction">Introduction</h2><p>The main addition that <strong>OOP</strong> adds to component-based programming is inheritence. OOP allows defining a class incrementally by extending existing classes.</p>
+<p>While using inheritence, it must be taken good care of. It may lost control if your application doesn’t use good design patterns.</p>]]>
+    
     </summary>
     
       <category term="Oz" scheme="http://deltax.me/tags/Oz/"/>
