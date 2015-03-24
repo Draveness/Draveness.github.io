@@ -111,9 +111,8 @@ It is the basic f">
 <li>It lends itself well to building highly reliable systems.</li>
 </ul>
 <h2 id="Message-passing_concurrent_model">Message-passing concurrent model</h2><p>The message-passing concurrent model extends the declarative concurrent model by adding ports. We add two operions to manipulate ports.</p>
-<pre><code>{NewPort &lt;y&gt; &lt;x&gt;}  Port creation: <span class="built_in">create</span> <span class="operator">a</span> <span class="built_in">new</span> port <span class="operator">with</span> entry point &lt;x&gt; <span class="operator">and</span> stream &lt;y&gt;
-{Send &lt;x&gt; &lt;y&gt;}     Port <span class="built_in">send</span>: append &lt;y&gt; <span class="built_in">to</span> he stream corresponding <span class="built_in">to</span> <span class="operator">the</span> entry point &lt;x&gt;
-</code></pre><h2 id="Port_Objects">Port Objects</h2><p>A <code>port object</code> is a combination of one or more ports and a stream object. This extends stream objects in two ways.</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;NewPort &lt;y&gt; &lt;x&gt;&#125;  Port creation: <span class="built_in">create</span> <span class="operator">a</span> <span class="built_in">new</span> port <span class="operator">with</span> entry point &lt;x&gt; <span class="operator">and</span> stream &lt;y&gt;</span><br><span class="line">&#123;Send &lt;x&gt; &lt;y&gt;&#125;     Port <span class="built_in">send</span>: append &lt;y&gt; <span class="built_in">to</span> he stream corresponding <span class="built_in">to</span> <span class="operator">the</span> entry point &lt;x&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="Port_Objects">Port Objects</h2><p>A <code>port object</code> is a combination of one or more ports and a stream object. This extends stream objects in two ways.</p>
 <ol>
 <li><strong>Many-to-one communication</strong> is possible, many threads can reference a given port object and send message to it independently.</li>
 <li>Port objects can be <strong>embedded inside data structures</strong>.</li>
@@ -124,180 +123,30 @@ It is the basic f">
 <li>Port objects can send messages containing references to other port objects.</li>
 </ul>
 <h3 id="NewPortObject_abstraction">NewPortObject abstraction</h3><p>We can define an abstraction to make it easier to program with port objects.</p>
-<pre><code>fun {NewPortObject Init Fun}
-<span class="built_in">Sin</span> Sout <span class="keyword">in</span>
-    thread {FoldL <span class="built_in">Sin</span> FUn Init Sout} <span class="keyword">end</span>
-    {NewPort <span class="built_in">Sin</span>}
-<span class="keyword">end</span>
-fun {NewPortObject2 Proc}
-<span class="built_in">Sin</span> <span class="keyword">in</span>
-    thread <span class="keyword">for</span> Msg <span class="keyword">in</span> <span class="built_in">Sin</span> <span class="keyword">do</span> {Proc Msg} <span class="keyword">end</span> <span class="keyword">end</span>
-    {NewPort <span class="built_in">Sin</span>}
-<span class="keyword">end</span>
-</code></pre><h2 id="Message_Protocol">Message Protocol</h2><p>We can use message-passing paradigm to model simple message protocol.</p>
+<figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">fun &#123;NewPortObject Init Fun&#125;</span><br><span class="line"><span class="built_in">Sin</span> Sout <span class="keyword">in</span></span><br><span class="line">	thread &#123;FoldL <span class="built_in">Sin</span> FUn Init Sout&#125; <span class="keyword">end</span></span><br><span class="line">	&#123;NewPort <span class="built_in">Sin</span>&#125;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">fun &#123;NewPortObject2 Proc&#125;</span><br><span class="line"><span class="built_in">Sin</span> <span class="keyword">in</span></span><br><span class="line">	thread <span class="keyword">for</span> Msg <span class="keyword">in</span> <span class="built_in">Sin</span> <span class="keyword">do</span> &#123;Proc Msg&#125; <span class="keyword">end</span> <span class="keyword">end</span></span><br><span class="line">	&#123;NewPort <span class="built_in">Sin</span>&#125;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2 id="Message_Protocol">Message Protocol</h2><p>We can use message-passing paradigm to model simple message protocol.</p>
 <h3 id="RMI">RMI</h3><p><code>RMI</code> is the most popular of the simple protocols. It allows to call another object in a different operating system process.</p>
-<pre><code><span class="keyword">proc</span> {<span class="type">ServerProc</span> <span class="type">Msg</span>}
-    <span class="keyword">case</span> <span class="type">Msg</span>
-    <span class="keyword">of</span> calc(X Y) then
-        Y=X*X+<span class="number">2</span>.<span class="number">0</span>*X+<span class="number">2</span>.<span class="number">0</span>
-    <span class="keyword">end</span>
-<span class="keyword">end</span>
-<span class="type">Server</span>={<span class="type">NewPortObject2</span> <span class="type">ServerProc</span>}
-
-<span class="keyword">proc</span> {<span class="type">ClientProc</span> <span class="type">Msg</span>}
-    <span class="keyword">case</span> <span class="type">Msg</span>
-    <span class="keyword">of</span> work(Y) then <span class="type">Y1</span> <span class="type">Y2</span> <span class="keyword">in</span>
-        {<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">1</span>.<span class="number">0</span> <span class="type">Y1</span>)}
-        {<span class="type">Wait</span> <span class="type">Y1</span>}
-        {<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">2</span>.<span class="number">0</span> <span class="type">Y1</span>)}
-        {<span class="type">Wait</span> <span class="type">Y2</span>}
-        Y=<span class="type">Y1</span>+<span class="type">Y2</span>
-    <span class="keyword">end</span>
-<span class="keyword">end</span>
-<span class="type">Client</span>={<span class="type">NewPortObject2</span> <span class="type">ClientProc</span>}
-{<span class="type">Browse</span> {<span class="type">Send</span> <span class="type">Client</span> work($)}}
-
-// <span class="number">15</span>
-</code></pre><h3 id="Asynchronous_RMI">Asynchronous RMI</h3><p>This protocol is similar to <code>RMI</code>, except that the client continues immediately after sending the request. The client is informed when the reply arrives. Multiple requests can be handled in rapid succession.</p>
-<pre><code><span class="keyword">proc</span> {<span class="type">ClientProc</span> <span class="type">Msg</span>}
-    <span class="keyword">case</span> <span class="type">Msg</span>
-    <span class="keyword">of</span> work(?Y) then <span class="type">Y1</span> <span class="type">Y2</span> <span class="keyword">in</span>
-        {<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">1</span>.<span class="number">0</span> <span class="type">Y1</span>)}
-        {<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">2</span>.<span class="number">0</span> <span class="type">Y1</span>)}
-        Y=<span class="type">Y1</span>+<span class="type">Y2</span>
-    <span class="keyword">end</span>
-<span class="keyword">end</span>
-<span class="type">Client</span>={<span class="type">NewPortObject2</span> <span class="type">ClientProc</span>}
-{<span class="type">Browse</span> {<span class="type">Send</span> <span class="type">Client</span> work($)}}
-// <span class="number">15</span>
-</code></pre><p>Requests are handled by the server the same order as they are sent and replies arrive in that order as well.</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span> &#123;<span class="type">ServerProc</span> <span class="type">Msg</span>&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="type">Msg</span></span><br><span class="line">	<span class="keyword">of</span> calc(X Y) then</span><br><span class="line">		Y=X*X+<span class="number">2</span>.<span class="number">0</span>*X+<span class="number">2</span>.<span class="number">0</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="type">Server</span>=&#123;<span class="type">NewPortObject2</span> <span class="type">ServerProc</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">proc</span> &#123;<span class="type">ClientProc</span> <span class="type">Msg</span>&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="type">Msg</span></span><br><span class="line">	<span class="keyword">of</span> work(Y) then <span class="type">Y1</span> <span class="type">Y2</span> <span class="keyword">in</span></span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">1</span>.<span class="number">0</span> <span class="type">Y1</span>)&#125;</span><br><span class="line">		&#123;<span class="type">Wait</span> <span class="type">Y1</span>&#125;</span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">2</span>.<span class="number">0</span> <span class="type">Y1</span>)&#125;</span><br><span class="line">		&#123;<span class="type">Wait</span> <span class="type">Y2</span>&#125;</span><br><span class="line">		Y=<span class="type">Y1</span>+<span class="type">Y2</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="type">Client</span>=&#123;<span class="type">NewPortObject2</span> <span class="type">ClientProc</span>&#125;</span><br><span class="line">&#123;<span class="type">Browse</span> &#123;<span class="type">Send</span> <span class="type">Client</span> work($)&#125;&#125;</span><br><span class="line"></span><br><span class="line">// <span class="number">15</span></span><br></pre></td></tr></table></figure>
+<h3 id="Asynchronous_RMI">Asynchronous RMI</h3><p>This protocol is similar to <code>RMI</code>, except that the client continues immediately after sending the request. The client is informed when the reply arrives. Multiple requests can be handled in rapid succession.</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span> &#123;<span class="type">ClientProc</span> <span class="type">Msg</span>&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="type">Msg</span></span><br><span class="line">	<span class="keyword">of</span> work(?Y) then <span class="type">Y1</span> <span class="type">Y2</span> <span class="keyword">in</span></span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">1</span>.<span class="number">0</span> <span class="type">Y1</span>)&#125;</span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">2</span>.<span class="number">0</span> <span class="type">Y1</span>)&#125;</span><br><span class="line">		Y=<span class="type">Y1</span>+<span class="type">Y2</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="type">Client</span>=&#123;<span class="type">NewPortObject2</span> <span class="type">ClientProc</span>&#125;</span><br><span class="line">&#123;<span class="type">Browse</span> &#123;<span class="type">Send</span> <span class="type">Client</span> work($)&#125;&#125;</span><br><span class="line">// <span class="number">15</span></span><br></pre></td></tr></table></figure>
+<p>Requests are handled by the server the same order as they are sent and replies arrive in that order as well.</p>
 <h3 id="RMI_with_callback">RMI with callback</h3><p>Here is a server that does a callback to find the value of a special value <code>delta</code> only known by the client.</p>
-<pre><code><span class="keyword">proc</span> {<span class="type">ServerProc</span> <span class="type">Msg</span>}
-    <span class="keyword">case</span> <span class="type">Msg</span>
-    <span class="keyword">of</span> calc(X ?Y <span class="type">Client</span>) then <span class="type">X1</span> D <span class="keyword">in</span>
-        {<span class="type">Send</span> <span class="type">Client</span> delta(D)}
-        <span class="type">X1</span>=X+D
-        Y=<span class="type">X1</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span>
-    <span class="keyword">end</span>
-<span class="keyword">end</span>
-<span class="type">Server</span>={<span class="type">NewPortObject2</span> <span class="type">ServerProc</span>}
-
-<span class="keyword">proc</span> {<span class="type">ClientProc</span> <span class="type">Msg</span>}
-    <span class="keyword">case</span> <span class="type">Msg</span>
-    <span class="keyword">of</span> work(?Z) then Y <span class="keyword">in</span>
-        {<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">10</span>.<span class="number">0</span> Y <span class="type">Client</span>)}
-        Z=Y+<span class="number">100</span>.<span class="number">0</span>
-    [] delta(?D) then
-        D=<span class="number">1</span>.<span class="number">0</span>
-    <span class="keyword">end</span>
-<span class="keyword">end</span>
-<span class="type">Client</span>={<span class="type">NewPortObject2</span> <span class="type">ClientProc</span>}
-{<span class="type">Browse</span> {<span class="type">Send</span> <span class="type">Client</span> work($)}}
-
-// _
-</code></pre><p>This solution not work, because the client suspends when it calls th server, so that the server cannot call the client.</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span> &#123;<span class="type">ServerProc</span> <span class="type">Msg</span>&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="type">Msg</span></span><br><span class="line">	<span class="keyword">of</span> calc(X ?Y <span class="type">Client</span>) then <span class="type">X1</span> D <span class="keyword">in</span></span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Client</span> delta(D)&#125;</span><br><span class="line">		<span class="type">X1</span>=X+D</span><br><span class="line">		Y=<span class="type">X1</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="type">Server</span>=&#123;<span class="type">NewPortObject2</span> <span class="type">ServerProc</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">proc</span> &#123;<span class="type">ClientProc</span> <span class="type">Msg</span>&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="type">Msg</span></span><br><span class="line">	<span class="keyword">of</span> work(?Z) then Y <span class="keyword">in</span></span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">10</span>.<span class="number">0</span> Y <span class="type">Client</span>)&#125;</span><br><span class="line">		Z=Y+<span class="number">100</span>.<span class="number">0</span></span><br><span class="line">	[] delta(?D) then</span><br><span class="line">		D=<span class="number">1</span>.<span class="number">0</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="type">Client</span>=&#123;<span class="type">NewPortObject2</span> <span class="type">ClientProc</span>&#125;</span><br><span class="line">&#123;<span class="type">Browse</span> &#123;<span class="type">Send</span> <span class="type">Client</span> work($)&#125;&#125;</span><br><span class="line">	</span><br><span class="line">// _</span><br></pre></td></tr></table></figure>
+<p>This solution not work, because the client suspends when it calls th server, so that the server cannot call the client.</p>
 <h4 id="Using_thread">Using thread</h4><p>First, we use concurrency to solve this problem.</p>
-<pre><code>proc {ClientProc Msg}
-    <span class="keyword">case</span> Msg
-    <span class="operator">of</span> work(?Z) <span class="keyword">then</span> Y <span class="operator">in</span>
-        {Send Server calc(<span class="number">10.0</span> Y Client)}
-        thread Z=Y+<span class="number">100.0</span> <span class="function"><span class="keyword">end</span></span>
-    [] delta(?D) <span class="keyword">then</span>
-        D=<span class="number">1.0</span>
-    <span class="function"><span class="keyword">end</span></span>
-<span class="function"><span class="keyword">end</span></span>
-<span class="comment">
-// 245.0</span>
-</code></pre><p>After the client sent a message to the server, it does not suspend, because the <code>thread</code> creates a new thread and execute it on it.</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">proc &#123;ClientProc Msg&#125;</span><br><span class="line">	<span class="keyword">case</span> Msg</span><br><span class="line">	<span class="operator">of</span> work(?Z) <span class="keyword">then</span> Y <span class="operator">in</span></span><br><span class="line">		&#123;Send Server calc(<span class="number">10.0</span> Y Client)&#125;</span><br><span class="line">		thread Z=Y+<span class="number">100.0</span> <span class="function"><span class="keyword">end</span></span></span><br><span class="line">	[] delta(?D) <span class="keyword">then</span></span><br><span class="line">		D=<span class="number">1.0</span></span><br><span class="line">	<span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="comment"></span><br><span class="line">// 245.0</span></span><br></pre></td></tr></table></figure>
+<p>After the client sent a message to the server, it does not suspend, because the <code>thread</code> creates a new thread and execute it on it.</p>
 <h4 id="Using_record_continuation">Using record continuation</h4><p>Instead of using thread, we can use record to solve this issue. In this way, the client never waits and deadlock is avoiding.</p>
-<pre><code><span class="keyword">proc</span> {<span class="type">ServerProc</span> <span class="type">Msg</span>}
-    <span class="keyword">case</span> <span class="type">Msg</span>
-    <span class="keyword">of</span> calc(X <span class="type">Client</span> <span class="type">Cont</span>) then <span class="type">X1</span> D Y <span class="keyword">in</span>
-        {<span class="type">Send</span> <span class="type">Client</span> delta(D)}
-        <span class="type">X1</span>=X+D
-        Y=<span class="type">X1</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span>
-        {<span class="type">Send</span> <span class="type">Client</span> <span class="type">Cont</span><span class="comment">#Y}</span>
-    <span class="keyword">end</span>
-<span class="keyword">end</span>
-<span class="type">Server</span>={<span class="type">NewPortObject2</span> <span class="type">ServerProc</span>}
-
-<span class="keyword">proc</span> {<span class="type">ClientProc</span> <span class="type">Msg</span>}
-    <span class="keyword">case</span> <span class="type">Msg</span>
-    <span class="keyword">of</span> work(?Z) then Y <span class="keyword">in</span>
-        {<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">10</span>.<span class="number">0</span> <span class="type">Client</span> cont(Z))}
-    [] cont(Z)<span class="comment">#Y then</span>
-        Z=Y+<span class="number">100</span>.<span class="number">0</span>
-    [] delta(?D) then
-        D=<span class="number">1</span>.<span class="number">0</span>
-    <span class="keyword">end</span>
-<span class="keyword">end</span>
-<span class="type">Client</span>={<span class="type">NewPortObject2</span> <span class="type">ClientProc</span>}
-{<span class="type">Browse</span> {<span class="type">Send</span> <span class="type">Client</span> work($)}}
-
-// <span class="number">245</span>.<span class="number">0</span>
-</code></pre><p>When we pass <code>work</code> message to <code>client</code> it immediately send <code>server</code> message <code>calc</code>. After the server execute <code>calc</code>, it pass back <code>Cont#Y</code> back to the client, then client finishes the calculation.</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span> &#123;<span class="type">ServerProc</span> <span class="type">Msg</span>&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="type">Msg</span></span><br><span class="line">	<span class="keyword">of</span> calc(X <span class="type">Client</span> <span class="type">Cont</span>) then <span class="type">X1</span> D Y <span class="keyword">in</span></span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Client</span> delta(D)&#125;</span><br><span class="line">		<span class="type">X1</span>=X+D</span><br><span class="line">		Y=<span class="type">X1</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span></span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Client</span> <span class="type">Cont</span><span class="comment">#Y&#125;</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="type">Server</span>=&#123;<span class="type">NewPortObject2</span> <span class="type">ServerProc</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">proc</span> &#123;<span class="type">ClientProc</span> <span class="type">Msg</span>&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="type">Msg</span></span><br><span class="line">	<span class="keyword">of</span> work(?Z) then Y <span class="keyword">in</span></span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">10</span>.<span class="number">0</span> <span class="type">Client</span> cont(Z))&#125;</span><br><span class="line">	[] cont(Z)<span class="comment">#Y then</span></span><br><span class="line">		Z=Y+<span class="number">100</span>.<span class="number">0</span></span><br><span class="line">	[] delta(?D) then</span><br><span class="line">		D=<span class="number">1</span>.<span class="number">0</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="type">Client</span>=&#123;<span class="type">NewPortObject2</span> <span class="type">ClientProc</span>&#125;</span><br><span class="line">&#123;<span class="type">Browse</span> &#123;<span class="type">Send</span> <span class="type">Client</span> work($)&#125;&#125;</span><br><span class="line"></span><br><span class="line">// <span class="number">245</span>.<span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>When we pass <code>work</code> message to <code>client</code> it immediately send <code>server</code> message <code>calc</code>. After the server execute <code>calc</code>, it pass back <code>Cont#Y</code> back to the client, then client finishes the calculation.</p>
 <h4 id="Using_procedure_continuation">Using procedure continuation</h4><p>The previous example can be generalized in a powerful way by passing a precedure instead of a record.</p>
-<pre><code><span class="keyword">proc</span> {<span class="type">ClientProc</span> <span class="type">Msg</span>}
-    <span class="keyword">case</span> <span class="type">Msg</span>
-    <span class="keyword">of</span> work(?Z) then
-        C=<span class="keyword">proc</span> {$ Y} Z=Y+<span class="number">100</span>.<span class="number">0</span> <span class="keyword">end</span>
-    <span class="keyword">in</span>
-        {<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">10</span>.<span class="number">0</span> <span class="type">Client</span> cont(C))}
-    [] cont(C)<span class="comment">#Y then</span>
-        {C Y}
-    [] delta(?D) then
-        D=<span class="number">1</span>.<span class="number">0</span>
-    <span class="keyword">end</span>
-<span class="keyword">end</span>
-</code></pre><p>The continuation contains the work that the client has to do after the server returns. Since the continuation is a procedure value, it is self-contained, it can be executed by anyone without knowing anything inside it.    </p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span> &#123;<span class="type">ClientProc</span> <span class="type">Msg</span>&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="type">Msg</span></span><br><span class="line">	<span class="keyword">of</span> work(?Z) then</span><br><span class="line">		C=<span class="keyword">proc</span> &#123;$ Y&#125; Z=Y+<span class="number">100</span>.<span class="number">0</span> <span class="keyword">end</span></span><br><span class="line">	<span class="keyword">in</span></span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">10</span>.<span class="number">0</span> <span class="type">Client</span> cont(C))&#125;</span><br><span class="line">	[] cont(C)<span class="comment">#Y then</span></span><br><span class="line">		&#123;C Y&#125;</span><br><span class="line">	[] delta(?D) then</span><br><span class="line">		D=<span class="number">1</span>.<span class="number">0</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>The continuation contains the work that the client has to do after the server returns. Since the continuation is a procedure value, it is self-contained, it can be executed by anyone without knowing anything inside it.    </p>
 <h4 id="Asynchronous_RMI_with_callback">Asynchronous RMI with callback</h4><p>We might want to do two asynchronous RMIs where each <code>RMI</code> does a callback.</p>
-<pre><code><span class="keyword">proc</span> {<span class="type">ServerProc</span> <span class="type">Msg</span>}
-    <span class="keyword">case</span> <span class="type">Msg</span>
-    <span class="keyword">of</span> calc(X ?Y <span class="type">Client</span>) then <span class="type">X1</span> D <span class="keyword">in</span>
-        {<span class="type">Send</span> <span class="type">Client</span> delta(D)}
-        thread 
-            <span class="type">X1</span>=X+D
-            Y=<span class="type">X1</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span>
-        <span class="keyword">end</span>
-    <span class="keyword">end</span>
-<span class="keyword">end</span>
-
-<span class="keyword">proc</span> {<span class="type">ClientProc</span> <span class="type">Msg</span>}
-    <span class="keyword">case</span> <span class="type">Msg</span>
-    <span class="keyword">of</span> work(?Z) then <span class="type">Y1</span> <span class="type">Y2</span> <span class="keyword">in</span>
-        {<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">10</span>.<span class="number">0</span> <span class="type">Y1</span> <span class="type">Client</span>)}
-        {<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">20</span>.<span class="number">0</span> <span class="type">Y2</span> <span class="type">Client</span>)}
-        thread Y=<span class="type">Y1</span>+<span class="type">Y2</span> <span class="keyword">end</span>
-    [] delta(?D) then
-        D=<span class="number">1</span>.<span class="number">0</span>
-    <span class="keyword">end</span>
-<span class="keyword">end</span>
-</code></pre><h4 id="Double_callback">Double callback</h4><p>When the server does a first callback to client, and which itself calls a second callback to the server. To handle this, both the client and the server should response immediately and not wait until the result come back.</p>
-<pre><code>proc {ServerProc Msg}
-    <span class="keyword">case</span> Msg
-    <span class="operator">of</span> calc(X ?Y Client) <span class="keyword">then</span> X1 D <span class="operator">in</span>
-        {Send Client delta(D)}
-        thread 
-            X1=X+D
-            Y=X1*X1+<span class="number">2.0</span>*X1+<span class="number">2.0</span>
-        <span class="function"><span class="keyword">end</span></span>
-    <span class="function"><span class="keyword">end</span></span>
-    [] serverdelta(?S) <span class="keyword">then</span>
-        S=<span class="number">0.01</span>
-    <span class="function"><span class="keyword">end</span></span>
-<span class="function"><span class="keyword">end</span></span>
-
-proc {ClientProc Msg}
-    <span class="keyword">case</span> Msg
-    <span class="operator">of</span> work(?Z) <span class="keyword">then</span> Y <span class="operator">in</span>
-        {Send Server calc(<span class="number">10.0</span> Y Client)}
-        thread Z=Y+<span class="number">100.0</span> <span class="function"><span class="keyword">end</span></span>
-    [] delta(?D) <span class="keyword">then</span> S <span class="operator">in</span>
-        {Send Server serverdelta(S)}
-        thread D=<span class="number">1.0</span>+S <span class="function"><span class="keyword">end</span></span>
-    <span class="function"><span class="keyword">end</span></span>
-<span class="function"><span class="keyword">end</span></span>
-</code></pre><p>Calling <code>{Send Client work(Z)}</code> calls the server, which calls the client method <code>delta(D)</code>, which iteself calls the server method <code>serverdelta(?S)</code>.</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span> &#123;<span class="type">ServerProc</span> <span class="type">Msg</span>&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="type">Msg</span></span><br><span class="line">	<span class="keyword">of</span> calc(X ?Y <span class="type">Client</span>) then <span class="type">X1</span> D <span class="keyword">in</span></span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Client</span> delta(D)&#125;</span><br><span class="line">		thread </span><br><span class="line">			<span class="type">X1</span>=X+D</span><br><span class="line">			Y=<span class="type">X1</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span></span><br><span class="line">		<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">proc</span> &#123;<span class="type">ClientProc</span> <span class="type">Msg</span>&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="type">Msg</span></span><br><span class="line">	<span class="keyword">of</span> work(?Z) then <span class="type">Y1</span> <span class="type">Y2</span> <span class="keyword">in</span></span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">10</span>.<span class="number">0</span> <span class="type">Y1</span> <span class="type">Client</span>)&#125;</span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">20</span>.<span class="number">0</span> <span class="type">Y2</span> <span class="type">Client</span>)&#125;</span><br><span class="line">		thread Y=<span class="type">Y1</span>+<span class="type">Y2</span> <span class="keyword">end</span></span><br><span class="line">	[] delta(?D) then</span><br><span class="line">		D=<span class="number">1</span>.<span class="number">0</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h4 id="Double_callback">Double callback</h4><p>When the server does a first callback to client, and which itself calls a second callback to the server. To handle this, both the client and the server should response immediately and not wait until the result come back.</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">proc &#123;ServerProc Msg&#125;</span><br><span class="line">	<span class="keyword">case</span> Msg</span><br><span class="line">	<span class="operator">of</span> calc(X ?Y Client) <span class="keyword">then</span> X1 D <span class="operator">in</span></span><br><span class="line">		&#123;Send Client delta(D)&#125;</span><br><span class="line">		thread </span><br><span class="line">			X1=X+D</span><br><span class="line">			Y=X1*X1+<span class="number">2.0</span>*X1+<span class="number">2.0</span></span><br><span class="line">		<span class="function"><span class="keyword">end</span></span></span><br><span class="line">	<span class="function"><span class="keyword">end</span></span></span><br><span class="line">	[] serverdelta(?S) <span class="keyword">then</span></span><br><span class="line">		S=<span class="number">0.01</span></span><br><span class="line">	<span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br><span class="line"></span><br><span class="line">proc &#123;ClientProc Msg&#125;</span><br><span class="line">	<span class="keyword">case</span> Msg</span><br><span class="line">	<span class="operator">of</span> work(?Z) <span class="keyword">then</span> Y <span class="operator">in</span></span><br><span class="line">		&#123;Send Server calc(<span class="number">10.0</span> Y Client)&#125;</span><br><span class="line">		thread Z=Y+<span class="number">100.0</span> <span class="function"><span class="keyword">end</span></span></span><br><span class="line">	[] delta(?D) <span class="keyword">then</span> S <span class="operator">in</span></span><br><span class="line">		&#123;Send Server serverdelta(S)&#125;</span><br><span class="line">		thread D=<span class="number">1.0</span>+S <span class="function"><span class="keyword">end</span></span></span><br><span class="line">	<span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br></pre></td></tr></table></figure>
+<p>Calling <code>{Send Client work(Z)}</code> calls the server, which calls the client method <code>delta(D)</code>, which iteself calls the server method <code>serverdelta(?S)</code>.</p>
   
 	</div>
 		<footer class="article-footer clearfix">
