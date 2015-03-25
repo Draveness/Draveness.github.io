@@ -4,7 +4,7 @@
   <subtitle><![CDATA[为了成为牛逼闪闪的工程师]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
-  <updated>2015-03-25T12:18:48.000Z</updated>
+  <updated>2015-03-25T12:19:48.000Z</updated>
   <id>http://deltax.me/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://deltax.me/2015/03/25/%E7%BA%BF%E6%80%A7%E6%97%B6%E9%97%B4%E6%8E%92%E5%BA%8F/"/>
     <id>http://deltax.me/2015/03/25/线性时间排序/</id>
     <published>2015-03-25T08:20:40.000Z</published>
-    <updated>2015-03-25T12:18:48.000Z</updated>
+    <updated>2015-03-25T12:19:48.000Z</updated>
     <content type="html"><![CDATA[<p>我们把在排序的最终结果中, 各元素的次序依赖于它们的比较的排序算法称为<strong>比较排序</strong>. 而我们在这里介绍的排序将不依赖于元素之间的比较.</p>
 <p>第一次听到这种说法感觉非常的神奇和震惊, 而在以前的认识中, 排序都是基于比较的. 不经过比较怎么排序, 而这一章线性时间排序就改变了我过去对排序的浅显的认识.</p>
 <h1 id="比较排序算法的下届">比较排序算法的下届</h1><p>我们如何才能使排序的时间复杂度达到线性呢, 能否通过元素之间的比较产生一种排序时间复杂度为线性的算法呢.</p>
@@ -59,8 +59,7 @@
 <p><img src="http://deltax.qiniudn.com/bucket-sort.png?attname=&e=1427371034&token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:D0HE4QlDxJZ455IPQX7uhNNJ_aA" style="display:block;margin:auto"></p>
 <p>假设输入数据分布在 $[0..1)$ 区间中, 我们需要一个临时数组 <code>B[0..n-1]</code> 来存放链表. 我们接下来将实现桶排序.</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bucket_sort</span><span class="params">(<span class="keyword">int</span> A[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = length(A);</span><br><span class="line">    <span class="keyword">int</span> B[n];</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        B[i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        append(B[<span class="keyword">int</span>(n * A[i])], A[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        insertion_sort(B[i]);</span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">while</span> (B[i].head) &#123;</span><br><span class="line">            A[j] = B[i].head;</span><br><span class="line">            <span class="keyword">delete</span>(B[i]);</span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>因为插入排序的时间代价是 $\Theta(n^2)$, 所以桶排序的时间代价为:</p>
-<p>$$T(n) = \Theta(n) + \sum<em>{i=0}^{n-1}O({n}</em>{i}^2)$$</p>
+<p>因为插入排序的时间代价是 $\Theta(n^2)$, 所以桶排序的时间代价为: $T(n) = \Theta(n) + \sum<em>{i=0}^{n-1}O({n}</em>{i}^2)$</p>
 <p>其中 ${n}_{i}$ 表示桶 <code>B[i]</code> 中元素个数的随机变量.</p>
 <p>桶排序可以在线性时间内完成, 只要所有桶的大小平方和与总元素数呈线性关系.</p>
 ]]></content>
