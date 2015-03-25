@@ -4,7 +4,7 @@
   <subtitle><![CDATA[为了成为牛逼闪闪的工程师]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
-  <updated>2015-03-25T08:41:59.000Z</updated>
+  <updated>2015-03-25T08:43:06.000Z</updated>
   <id>http://deltax.me/</id>
   
   <author>
@@ -19,12 +19,14 @@
     <link href="http://deltax.me/2015/03/25/%E7%BA%BF%E6%80%A7%E6%97%B6%E9%97%B4%E6%8E%92%E5%BA%8F/"/>
     <id>http://deltax.me/2015/03/25/线性时间排序/</id>
     <published>2015-03-25T08:20:40.000Z</published>
-    <updated>2015-03-25T08:41:59.000Z</updated>
+    <updated>2015-03-25T08:43:06.000Z</updated>
     <content type="html"><![CDATA[<p>我们把在排序的最终结果中, 各元素的次序依赖于它们的比较的排序算法称为<strong>比较排序</strong>. 而我们在这里介绍的排序将不依赖于元素之间的比较.</p>
 <p>第一次听到这种说法感觉非常的神奇和震惊, 而在以前的认识中, 排序都是基于比较的. 不经过比较怎么排序, 而这一章线性时间排序就改变了我过去对排序的浅显的认识.</p>
 <h1 id="排序算法的下届">排序算法的下届</h1><p>我们如何才能使排序的时间复杂度达到线性呢, 能否通过元素之间的比较产生一种排序时间复杂度为线性的算法呢.</p>
 <p>结论是: 不可能, 比较排序的算法的时间复杂度的下届为 $\Theta\left(n\lg n\right)</p>
 <p>\Theta\left( {n}^{2} \right)</p>
+<p>$$\Theta\left( {n}^{2} \right)</p>
+<p>$\Theta\left( {n}^{2} \right)</p>
 ]]></content>
     <summary type="html">
     <![CDATA[我们把在排序的最终结果中, 各元素的次序依赖于它们的比较的排序算法称为比较排序. 而我们在这里介绍的排序将不依赖于元素之间的比较.]]>
