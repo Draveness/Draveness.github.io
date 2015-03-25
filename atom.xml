@@ -4,7 +4,7 @@
   <subtitle><![CDATA[为了成为牛逼闪闪的工程师]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
-  <updated>2015-03-24T17:26:19.000Z</updated>
+  <updated>2015-03-25T08:31:21.000Z</updated>
   <id>http://deltax.me/</id>
   
   <author>
@@ -13,6 +13,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[线性时间排序]]></title>
+    <link href="http://deltax.me/2015/03/25/%E7%BA%BF%E6%80%A7%E6%97%B6%E9%97%B4%E6%8E%92%E5%BA%8F/"/>
+    <id>http://deltax.me/2015/03/25/线性时间排序/</id>
+    <published>2015-03-25T08:20:40.000Z</published>
+    <updated>2015-03-25T08:31:21.000Z</updated>
+    <content type="html"><![CDATA[<p>我们把在排序的最终结果中, 各元素的次序依赖于它们的比较的排序算法称为<strong>比较排序</strong>. 而我们在这里介绍的排序将不依赖于元素之间的比较.</p>
+<p>第一次听到这种说法感觉非常的神奇和震惊, 而在以前的认识中, 排序都是基于比较的. 不经过比较怎么排序, 而这一章线性时间排序就改变了我过去对排序的浅显的认识.</p>
+<h1 id="排序算法的下届">排序算法的下届</h1><p>我们如何才能使排序的时间复杂度达到线性呢, 能否通过元素之间的比较产生一种排序时间复杂度为线性的算法呢.</p>
+<p>结论是: 不可能, 比较排序的算法的时间复杂度的下届为 \Theta \left(n\lg n \right)</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[我们把在排序的最终结果中, 各元素的次序依赖于它们的比较的排序算法称为比较排序. 而我们在这里介绍的排序将不依赖于元素之间的比较.]]>
+    
+    </summary>
+    
+      <category term="Algorithm" scheme="http://deltax.me/tags/Algorithm/"/>
+    
+      <category term="clrs" scheme="http://deltax.me/categories/clrs/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Inheritence in Object-Oriented-Programming]]></title>
@@ -116,7 +138,7 @@
     <link href="http://deltax.me/2015/03/23/Class-as-Data-Abstraction-in-OOP/"/>
     <id>http://deltax.me/2015/03/23/Class-as-Data-Abstraction-in-OOP/</id>
     <published>2015-03-23T02:28:07.000Z</published>
-    <updated>2015-03-24T17:17:26.000Z</updated>
+    <updated>2015-03-24T17:17:32.000Z</updated>
     <content type="html"><![CDATA[<p>The heart of the object concept is controlled access to encapsulated data. The behaviour of an object is specified by a <strong>class</strong> which is an incremental definition of a data abstraction.</p>
 <ul>
 <li>Complete data abstraction<ul>
@@ -323,7 +345,7 @@
     <link href="http://deltax.me/2015/03/20/Stateful-Collections/"/>
     <id>http://deltax.me/2015/03/20/Stateful-Collections/</id>
     <published>2015-03-20T15:51:23.000Z</published>
-    <updated>2015-03-24T11:05:40.000Z</updated>
+    <updated>2015-03-24T17:39:45.000Z</updated>
     <content type="html"><![CDATA[<p>There are different kinds of collection depending on what operations are provided. We discuss in two axises about collections.</p>
 <ol>
 <li>Indexed collections and unindexed collections, depending on whether or not thereis rapid access to individual elements.</li>
@@ -417,7 +439,7 @@
     <link href="http://deltax.me/2015/03/20/Incredible%20Functional%20Programming/"/>
     <id>http://deltax.me/2015/03/20/Incredible Functional Programming/</id>
     <published>2015-03-19T16:40:16.000Z</published>
-    <updated>2015-03-24T17:24:28.000Z</updated>
+    <updated>2015-03-24T17:24:39.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Experience">Experience</h2><p>这一次我为大家分享的主题是, <code>Incredible Functional Programming</code>. 分享的主要的内容是<strong>函数式编程</strong>的一些非常基础的东西, 这与我们平时所使用的<strong>面向对象编程</strong>这种编程范式有着极大的不同. 也希望能给今天的各位带来一些收获或者启发, 而我也能为 <code>Function Programming</code> 的传播与壮大做出自己的一份贡献.</p>
 <h3 id="Encounter_Functinol_Programming">Encounter Functinol Programming</h3><p>首先呢, 我想说一下我是如何接触到函数式编程这一编程范式的, 在大一下学期的时候, 有几位 Thoughtworks 的工程师, 来为我们讲解如何使用 Rails 建站. 我个人对这几位工程师也是非常的尊敬的, 在一次偶然的交流中, 他多次提出 Functional Programming 这一编程范式, 当时我对它的第一感觉是很好奇, 而且哪位工程师说过一句话, 我只能记住大概的意思:</p>
 <blockquote>
@@ -1361,78 +1383,6 @@ UINavigationController <span class="keyword">*</span>navigationController = [[UI
       <category term="iOS" scheme="http://deltax.me/tags/iOS/"/>
     
       <category term="iOS" scheme="http://deltax.me/categories/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Subtype]]></title>
-    <link href="http://deltax.me/2014/11/22/subtype/"/>
-    <id>http://deltax.me/2014/11/22/subtype/</id>
-    <published>2014-11-22T12:26:08.000Z</published>
-    <updated>2015-03-24T17:40:48.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="Subtyping">Subtyping</h2><ul>
-<li>While languages like <code>Java</code> and <code>C#</code> have generics these days, the source of type-system expressiveness most fundamental to object-oriented style is <em>subtype polymorphism</em>, also known as <em>subtyping</em>.</li>
-</ul>
-<p>We need a type system, with a form of types for records and typing rules for each of our expressions.</p>
-<ul>
-<li>If <code>e1</code> has type <code>t1</code>, <code>e2</code> has type <code>t2</code>, …, <code>en</code> has type <code>tn</code>, then <code>{f1=e1, f2=e2, ..., fn=en}</code> has type <code>{f1:t1, f2:t2, ..., fn:tn}</code>.</li>
-<li>If <code>e</code> has a record type containing <code>f : t</code>, then <code>e.f</code> has type <code>t</code> (else <code>e.f</code> does not type-check).</li>
-<li>If <code>e1</code> has a record type containing <code>f : t</code> and <code>e2</code> has type <code>t</code>,then <code>e1.f = e2</code> has type <code>t</code> (else <code>e1.f = e2</code> does not type-check).</li>
-<li>“Width” subtyping: A supertype can have a subset of fields with the same types, i.e., a subtype can have <strong>“extra”</strong> fields</li>
-<li>“Permutation” subtyping: A supertype can have the same set of fields with the same types in a different order.</li>
-<li>Transitivity: If <code>t1 &lt;: t2</code> and <code>t2 &lt;: t3</code>, then <code>t1 &lt;: t3</code>.</li>
-<li>Reflexivity: Every type is a subtype of itself: <code>t &lt;: t</code>.</li>
-</ul>
-<hr>
-<h2 id="Depth_Subtyping">Depth Subtyping</h2><ul>
-<li>“Depth” subtyping: If <code>ta &lt;: tb</code>, then <code>{f1:t1,...,f:ta,...,fn:tn} &lt;: {f1:t1,...,f:tb,...,fn:tn}</code>.</li>
-</ul>
-<p>This rule breaks out type system, allowing programs that we do not want to allow to type-check!</p>
-<p>Another way to look at the issue is that given the three features of (1) setting a field, (2) letting depth subtyping change the type of a field, and (3) having a type system actually prevent field-missing errors, you can have any two of the three.</p>
-<hr>
-<h2 id="Function_Subtyping">Function Subtyping</h2><p> The rules for when one function tyoe is a subtype of another function type are even less intuitive than the issue of depth subtyping for records, but we should understand them to safely override methods in <code>OOP</code> languages.</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ((&#123;x:real,y:real&#125;-&gt;&#123;x:real,y:real&#125;) * &#123;x:real,y:real&#125;) -&gt; real</span></span><br><span class="line"></span><br><span class="line">fun distMoved (<span class="string">f :</span> &#123;<span class="string">x:</span>real,<span class="string">y:</span>real&#125;-&gt;&#123;<span class="string">x:</span>real,<span class="string">y:</span>real&#125;,              <span class="string">p :</span> &#123;<span class="string">x:</span>real,<span class="string">y:</span>real&#125;) =   let val <span class="string">p2 :</span> &#123;<span class="string">x:</span>real,<span class="string">y:</span>real&#125; = f p       val <span class="string">dx :</span> real = p2.x - p.x       val <span class="string">dy :</span> real = p2.y - p.y   <span class="keyword">in</span> Math.sqrt(dx*dx + dy*dy) end</span><br><span class="line">fun flip p = &#123;x=~p.x, y=~p.y&#125;val d = distMoved(flip, &#123;x=<span class="number">3.0</span>, y=<span class="number">4.0</span>&#125;)</span><br></pre></td></tr></table></figure>
-<p>It is safe to pass in a function with a return type that promises more, such as return a <code>subtype</code> of the needed reuturn type.</p>
-<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// &#123;x:real,y:real&#125; -&gt; &#123;x:real,y:real,color:string&#125;</span><br><span class="line">fun flipGreen <span class="variable">p =</span> &#123;<span class="variable">x=</span>~p.x, <span class="variable">y=</span>~p.y, <span class="variable">color=</span><span class="string">"green"</span>&#125;val <span class="variable">d =</span> distMoved(flipGreen, &#123;<span class="variable">x=</span><span class="number">3.0</span>, <span class="variable">y=</span><span class="number">4.0</span>&#125;)</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>In general, the rule is that if <code>ta &lt;: tb</code>, then t -&gt;ta &lt;: t -&gt; tb</p>
-</blockquote>
-<p>But it turns out it works just fine to use a function that “need less of its argument” in place of that “need more of its argument”.</p>
-<pre><code>// {x:real} -&gt; {x:real,y:real}
-
-fun flipX_Y0 p = {x=~p.x, y=<span class="number">0.0</span>}
-val d = distMoved(flipX_Y0, {x=<span class="number">3.0</span>, y=<span class="number">4.0</span>})
-&lt;!<span class="comment">--￼2--&gt;</span>
-<span class="comment">
-// {x:real} -&gt; {x:real,y:real,color:string}</span>
-
-fun flipXMakeGreen p = {x=~p.x, y=<span class="number">0.0</span>, color=<span class="string">"green"</span>}
-val d = distMoved(flipXMakeGreen, {x=<span class="number">3.0</span>, y=<span class="number">4.0</span>})
-&lt;!<span class="comment">--￼3--&gt;</span>
-
-val compose : (’b -&gt; ’c) * (’<span class="operator">a</span> -&gt; ’b) -&gt; (’<span class="operator">a</span> -&gt; ’c)
-&lt;!<span class="comment">--￼4--&gt;</span>
-
-
-Subtyping does <span class="operator">not</span> work that way, <span class="operator">the</span> type-checker only knows that <span class="operator">the</span> field holds <span class="operator">an</span> `Object`. So we have <span class="built_in">to</span> use <span class="operator">a</span> `downcast`, cast <span class="operator">the</span> `Object` type <span class="built_in">to</span> `String`. Such `downcast` costs <span class="operator">in</span> terms <span class="operator">of</span> performance, but may cause <span class="operator">a</span> failure.
-
-<span class="comment">###What is Subtyping Good For?</span>
-
-A generally agreed upon example where subtyping works well is graphical user interfaces. Much <span class="operator">of</span> <span class="operator">the</span> code <span class="keyword">for</span> graphics libraries works fine <span class="keyword">for</span> <span class="keyword">any</span> <span class="built_in">sort</span> <span class="operator">of</span> graphical <span class="keyword">element</span> (“paint <span class="keyword">it</span> <span class="command"><span class="keyword">on</span> <span class="title">the</span> <span class="title">screen</span>,” “<span class="title">change</span> <span class="title">the</span> <span class="title">background</span> <span class="title">color</span>,” “<span class="title">report</span> <span class="title">if</span> <span class="title">the</span> <span class="title">mouse</span> <span class="title">is</span> <span class="title">clicked</span> <span class="title">on</span> <span class="title">it</span>,” <span class="title">etc</span>.) <span class="title">where</span> <span class="title">different</span> <span class="title">elements</span> <span class="title">such</span> <span class="title">as</span> <span class="title">buttons</span>, <span class="title">slider</span> <span class="title">bars</span>, <span class="title">or</span> <span class="title">text</span> <span class="title">boxes</span> <span class="title">can</span> <span class="title">then</span> <span class="title">be</span> <span class="title">subtypes</span>.</span>
-
-<span class="comment">###Generics are a Bad Substitute for Subtyping</span>
-
-In <span class="operator">a</span> language <span class="operator">with</span> generics instead <span class="operator">of</span> subtyping, you can code up your own code reuse <span class="operator">with</span> higher-order functions, but <span class="keyword">it</span> can be quite <span class="operator">a</span> bit <span class="operator">of</span> trouble <span class="keyword">for</span> <span class="operator">a</span> simple idea.
-</code></pre><p>fun distToOrigin2(getx,gety,v) =<br>   let<br>    val x = getx v<br>       val y = gety v<br>   in<br>       Math.sqrt (x<em>x + y</em>y)<br>   end<br>fun distToOriginPt (p : {x:real,y:real}) =<br>    distToOrigin2(fn v =&gt; #x v,<br>                  fn v =&gt; #y v, p)<br>fun distToOriginColorPt (p : {x:real,y:real,color:string}) =<br>    distToOrigin2(fn v =&gt; #x v,<br>                   fn v =&gt; #y v,<br>                   p)<br>```</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="Subtyping">Subtyping</h2><ul>
-<li>While languages like <code>Java</code> and <code>C#</code> have generics these days, the source of]]>
-    </summary>
-    
-      <category term="ML" scheme="http://deltax.me/tags/ML/"/>
-    
-      <category term="Programming Paradigm" scheme="http://deltax.me/categories/Programming-Paradigm/"/>
     
   </entry>
   

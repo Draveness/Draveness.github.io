@@ -4,25 +4,22 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Parameter Passing Mechanisms | DeltaX</title>
+    <title>线性时间排序 | DeltaX</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Draven">
     
 
     
-    <meta name="description" content="The operation of a data abstraction can have arguments and results. Many different mechanisms have been divised to pass the arguments and results between a calling program and an abstraction.
-Call by">
+    <meta name="description" content="我们把在排序的最终结果中, 各元素的次序依赖于它们的比较的排序算法称为比较排序. 而我们在这里介绍的排序将不依赖于元素之间的比较.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Parameter Passing Mechanisms">
-<meta property="og:url" content="http://deltax.me/2015/03/18/Parameter-Passing-Mechanisms/index.html">
+<meta property="og:title" content="线性时间排序">
+<meta property="og:url" content="http://deltax.me/2015/03/25/线性时间排序/index.html">
 <meta property="og:site_name" content="DeltaX">
-<meta property="og:description" content="The operation of a data abstraction can have arguments and results. Many different mechanisms have been divised to pass the arguments and results between a calling program and an abstraction.
-Call by">
+<meta property="og:description" content="我们把在排序的最终结果中, 各元素的次序依赖于它们的比较的排序算法称为比较排序. 而我们在这里介绍的排序将不依赖于元素之间的比较.">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Parameter Passing Mechanisms">
-<meta name="twitter:description" content="The operation of a data abstraction can have arguments and results. Many different mechanisms have been divised to pass the arguments and results between a calling program and an abstraction.
-Call by">
+<meta name="twitter:title" content="线性时间排序">
+<meta name="twitter:description" content="我们把在排序的最终结果中, 各元素的次序依赖于它们的比较的排序算法称为比较排序. 而我们在这里介绍的排序将不依赖于元素之间的比较.">
 
     
     <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
@@ -81,14 +78,14 @@ Call by">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/18/Parameter-Passing-Mechanisms/" title="Parameter Passing Mechanisms" itemprop="url">Parameter Passing Mechanisms</a>
+      <a href="/2015/03/25/线性时间排序/" title="线性时间排序" itemprop="url">线性时间排序</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
 		
   <p class="article-time">
-    <time datetime="2015-03-18T08:47:50.000Z" itemprop="datePublished"> 发表于 2015-03-18</time>
+    <time datetime="2015-03-25T08:20:40.000Z" itemprop="datePublished"> 发表于 2015-03-25</time>
     
   </p>
 </header>
@@ -97,45 +94,28 @@ Call by">
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Reference"><span class="toc-number">1.</span> <span class="toc-text">Call by Reference</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Variable"><span class="toc-number">2.</span> <span class="toc-text">Call by Variable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Value"><span class="toc-number">3.</span> <span class="toc-text">Call by Value</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Value-result"><span class="toc-number">4.</span> <span class="toc-text">Call by Value-result</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Name"><span class="toc-number">5.</span> <span class="toc-text">Call by Name</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Need"><span class="toc-number">6.</span> <span class="toc-text">Call by Need</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#排序算法的下届"><span class="toc-number">1.</span> <span class="toc-text">排序算法的下届</span></a></li></ol>
 		
 		</div>
 		
-		<p>The operation of a data abstraction can have arguments and results. Many different mechanisms have been divised to pass the arguments and results between a calling program and an abstraction.</p>
-<h3 id="Call_by_Reference">Call by Reference</h3><p>The identity of a <strong>language entity is passed to the procedure</strong>. The procedure can then use this language entity freely. This is the primitive mechanism used by the computation models of the book for all language entities including dataflow variables and cells.</p>
-<h3 id="Call_by_Variable">Call by Variable</h3><p>This is a special case of call by reference. <strong>The identity of a cell is passed to the procedure</strong>.</p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span> &#123;<span class="type">Sqr</span> A&#125;</span><br><span class="line">	A:=@A*@A</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">local</span><br><span class="line">	C=&#123;<span class="type">NewCell</span> <span class="number">0</span>&#125;</span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">	C:=<span class="number">25</span></span><br><span class="line">	&#123;<span class="type">Sqr</span> C&#125;</span><br><span class="line">	&#123;<span class="type">Browse</span> @C&#125;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h3 id="Call_by_Value">Call by Value</h3><p>A value is passed to the procedure and put into a cell local to the procedure.</p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span> &#123;<span class="type">Sqr</span> D&#125;</span><br><span class="line">	A=&#123;<span class="type">NewCell</span> D&#125;</span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">	A:=@A+<span class="number">1</span></span><br><span class="line">	&#123;<span class="type">Browse</span> @A*@A&#125;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">&#123;<span class="type">Sqrt</span> <span class="number">25</span>&#125;</span><br></pre></td></tr></table></figure>
-<p>The cell a is initialized with the arguement of <code>Sqr</code>.</p>
-<h3 id="Call_by_Value-result">Call by Value-result</h3><p>This is a modification of call by variable. When the procedure is called, the content of a cell is put into another mutable variable local to the procedure. When the procedure returns, the content of the latter cell is put into the former cell.</p>
-<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">proc <span class="list">&#123;Sqr A&#125;</span></span><br><span class="line">	<span class="keyword">D</span>=<span class="list">&#123;NewCell @A&#125;</span></span><br><span class="line">in</span><br><span class="line">	<span class="keyword">D</span>:=@<span class="keyword">D</span>*@<span class="keyword">D</span></span><br><span class="line">	A:=@<span class="keyword">D</span></span><br><span class="line">end</span><br><span class="line">local</span><br><span class="line">	<span class="keyword">C</span>=<span class="list">&#123;NewCell 0&#125;</span></span><br><span class="line">in</span><br><span class="line">	<span class="keyword">C</span>:=<span class="number">25</span></span><br><span class="line">	<span class="list">&#123;Sqr C&#125;</span></span><br><span class="line">	<span class="list">&#123;Browse @C&#125;</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-<p>When entering the <code>Sqr</code>, <code>D</code> is assigned to the content of <code>A</code>. After computation, assigned the content of <code>D</code> back to the <code>C</code>. And we can reference <code>C</code> from outside.</p>
-<h3 id="Call_by_Name">Call by Name</h3><p>This mechanism creates a function to wrap each argument which is called thunk. And each time argument is needed, call it as a function, and this returns an unwrapped argument.</p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span> &#123;<span class="type">Sqr</span> A&#125;</span><br><span class="line">	&#123;A&#125;:=@&#123;A&#125;*@&#123;A&#125;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">local C=&#123;<span class="type">NewCell</span> <span class="number">0</span>&#125; <span class="keyword">in</span></span><br><span class="line">	C:=<span class="number">25</span></span><br><span class="line">	&#123;<span class="type">Sqr</span> fun &#123;$&#125; C <span class="keyword">end</span>&#125;</span><br><span class="line">	&#123;<span class="type">Browse</span> @C&#125;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>The function wrapped in thunk is called each time, the argument is needed.</p>
-<h3 id="Call_by_Need">Call by Need</h3><p>This is a modification and improve of call by name, which the function is called at most once. When the function is first called, its result stored and used for subsequent evaluations.</p>
-<pre><code><span class="keyword">proc</span> {<span class="type">Sqr</span> A}
-    B={A}
-<span class="keyword">in</span>
-    B:=@B*@B
-<span class="keyword">end</span>
-local C={<span class="type">NewCell</span> <span class="number">0</span>} <span class="keyword">in</span>
-    C:=<span class="number">25</span>
-    {<span class="type">Sqr</span> fun {$} C <span class="keyword">end</span>}
-    {<span class="type">Browse</span> @C}
-<span class="keyword">end</span>
-</code></pre><p>The argument <code>A</code> is evaluated when it is needed, and after first evaluate, it stored in the variable <code>B</code>, and then every time <code>A</code> is needed, just use <code>B</code> instead.</p>
-<p>This approach is exactly the same concept as lazy evalution.</p>
+		<p>我们把在排序的最终结果中, 各元素的次序依赖于它们的比较的排序算法称为<strong>比较排序</strong>. 而我们在这里介绍的排序将不依赖于元素之间的比较.</p>
+<p>第一次听到这种说法感觉非常的神奇和震惊, 而在以前的认识中, 排序都是基于比较的. 不经过比较怎么排序, 而这一章线性时间排序就改变了我过去对排序的浅显的认识.</p>
+<h1 id="排序算法的下届">排序算法的下届</h1><p>我们如何才能使排序的时间复杂度达到线性呢, 能否通过元素之间的比较产生一种排序时间复杂度为线性的算法呢.</p>
+<p>结论是: 不可能, 比较排序的算法的时间复杂度的下届为 \Theta \left(n\lg n \right)</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/clrs/">clrs</a>
+</div>
+
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/CTMCP/">CTMCP</a><a href="/tags/Oz/">Oz</a>
+  <span></span> <a href="/tags/Algorithm/">Algorithm</a>
   </div>
 
 </div>
@@ -144,7 +124,7 @@ local C={<span class="type">NewCell</span> <span class="number">0</span>} <span 
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://deltax.me/2015/03/18/Parameter-Passing-Mechanisms/" data-title="Parameter Passing Mechanisms | DeltaX" data-tsina="null" class="share clearfix">
+	  <div data-url="http://deltax.me/2015/03/25/线性时间排序/" data-title="线性时间排序 | DeltaX" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -157,19 +137,11 @@ local C={<span class="type">NewCell</span> <span class="number">0</span>} <span 
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/03/19/堆排序/" title="堆排序">
-  <strong>上一篇：</strong><br/>
-  <span>
-  堆排序</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/03/18/Explicit-State/"  title="Explicit State">
+<a href="/2015/03/24/Inheritence-in-Object-Oriented-Programming/"  title="Inheritence in Object-Oriented-Programming">
  <strong>下一篇：</strong><br/> 
- <span>Explicit State
+ <span>Inheritence in Object-Oriented-Programming
 </span>
 </a>
 </div>
@@ -178,7 +150,7 @@ local C={<span class="type">NewCell</span> <span class="number">0</span>} <span 
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/03/18/Parameter-Passing-Mechanisms/" data-title="Parameter Passing Mechanisms" data-url="http://deltax.me/2015/03/18/Parameter-Passing-Mechanisms/"></div>
+	<div class="ds-thread" data-thread-key="2015/03/25/线性时间排序/" data-title="线性时间排序" data-url="http://deltax.me/2015/03/25/线性时间排序/"></div>
 </section>
 
 
@@ -188,7 +160,7 @@ local C={<span class="type">NewCell</span> <span class="number">0</span>} <span 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Reference"><span class="toc-number">1.</span> <span class="toc-text">Call by Reference</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Variable"><span class="toc-number">2.</span> <span class="toc-text">Call by Variable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Value"><span class="toc-number">3.</span> <span class="toc-text">Call by Value</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Value-result"><span class="toc-number">4.</span> <span class="toc-text">Call by Value-result</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Name"><span class="toc-number">5.</span> <span class="toc-text">Call by Name</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Need"><span class="toc-number">6.</span> <span class="toc-text">Call by Need</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#排序算法的下届"><span class="toc-number">1.</span> <span class="toc-text">排序算法的下届</span></a></li></ol>
  
   </div>
 
@@ -535,6 +507,35 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <!-- MathJax Begin -->
 <!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
 
 <!-- MathJax End -->
