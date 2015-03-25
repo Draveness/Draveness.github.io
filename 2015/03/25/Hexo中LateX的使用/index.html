@@ -112,7 +112,8 @@
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">themes<span class="regexp">/jacman/</span>layout<span class="regexp">/_partial/m</span>athjax.ejs</span><br></pre></td></tr></table></figure>
 <p>也就是这个文件, 删除掉第一行和最后一行, 也就是下面这两行.</p>
 <figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="preprocessor">%</span> <span class="keyword">if</span> <span class="comment">(theme.mathjax || page.mathjax)</span>&#123; <span class="preprocessor">%</span>&gt;</span><br><span class="line">&lt;<span class="preprocessor">%</span> &#125; <span class="preprocessor">%</span>&gt;</span><br></pre></td></tr></table></figure>
-<p>然后, 你就不要在每次添加 <code>mathjax: true</code> 了, 你也可以去更改你的模板 <code>scaffolds/post.md</code> 在其中加入 <code>mathjax: true</code>, 也可以省去每次添加的麻烦.</p>
+<p>然后, 你就不要在每次添加 <code>mathjax: true</code> 了, 你也可以去更改你的模板 <code>scaffolds/post.md</code> 在其中加入以下代码, 也可以省去每次添加的麻烦.</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">mathjax:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 <h1 id="LaTeX使用">LaTeX使用</h1><p>做好了准备工作之后, 我们就可以尝试在 post 中添加 <code>LaTeX</code> 公式了, 你可以上网找一些在线的 editor 帮助你写 <code>LaTeX</code> 公式.</p>
 <p>我们做几个简单的演示:</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$T</span>(n) = \<span class="function"><span class="title">Theta</span><span class="params">(n)</span></span>$</span><br></pre></td></tr></table></figure>
