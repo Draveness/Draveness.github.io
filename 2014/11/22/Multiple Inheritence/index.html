@@ -155,8 +155,20 @@
 <p>We can define Ruby <code>mixin</code> with keyword <code>module</code> instead of <code>class</code>.</p>
 <figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// This mixins defines <span class="constant">three</span> methods, color, color=, <span class="operator">and</span> darken</span><br><span class="line">module Color  attr_accessor :color  def darken    self.color = <span class="string">"dark "</span> + self.color  <span class="function"><span class="keyword">end</span></span><span class="function"><span class="keyword">end</span></span></span><br></pre></td></tr></table></figure>
 <p>Use <code>include</code> keyword to include the <code>mixin</code>, like this.</p>
-<p>```<br>class ColorPt &lt; Pt<br>  include Color<br>end<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Mixins</span> are just a bunch <span class="keyword">of</span> methods, <span class="keyword">not</span> instance variables, `attr_accessor` just create two <span class="keyword">method</span>.</span><br><span class="line"><span class="type">Now</span> it's time to reconsider our <span class="keyword">method</span> lookup rules. <span class="type">We</span> have to choose something <span class="keyword">and</span> this <span class="keyword">is</span> what <span class="type">Ruby</span> chooses: <span class="type">If</span> `obj` <span class="keyword">is</span> an instance <span class="keyword">of</span> class `C` <span class="keyword">and</span> we send message `m` to `obj`.</span><br><span class="line">	C -&gt; C.mixins -&gt; C.superclass -&gt; C.superclass.mixins -&gt; C.supersuperclass -&gt; <span class="type">Etc</span></span><br><span class="line"></span><br><span class="line"><span class="type">Many</span> <span class="keyword">of</span> the elegant uses <span class="keyword">of</span> `mixins` <span class="keyword">do</span> this things, call other methods on `self` that are <span class="keyword">not</span> defined by the `<span class="keyword">mixin</span>`. <span class="type">For</span> example, the below code needs the class <span class="keyword">include</span> this module implements `+` <span class="keyword">method</span>.</span><br></pre></td></tr></table></figure></p>
-<p>module Doubler<br>  def double<br>    self + self # uses self’s + message, not defined in Doubler<br>  end<br>end<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> we want to <span class="keyword">include</span> this `<span class="keyword">mixin</span>`, we should implement `+` <span class="keyword">method</span>:</span><br><span class="line"></span><br><span class="line">```class <span class="type">Point</span></span><br><span class="line">	attr_accessor :x, :y</span><br><span class="line">	<span class="keyword">include</span> <span class="type">Doubler</span></span><br><span class="line">	def + other</span><br><span class="line">		<span class="literal">result</span> = <span class="type">Point</span>.new</span><br><span class="line">		<span class="literal">result</span>.x = self.x + other.x</span><br><span class="line">		<span class="literal">result</span>.y = self.y + other.y</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">class <span class="type">String</span></span><br><span class="line">	<span class="keyword">include</span> <span class="type">Doubler</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></p>
+<pre><code>class <span class="type">ColorPt</span> &lt; <span class="type">Pt</span>
+  <span class="keyword">include</span> <span class="type">Color</span>
+<span class="keyword">end</span>
+&lt;!--￼<span class="number">1</span>--&gt;
+
+<span class="type">Many</span> <span class="keyword">of</span> the elegant uses <span class="keyword">of</span> `mixins` <span class="keyword">do</span> this things, call other methods on `self` that are <span class="keyword">not</span> defined by the `<span class="keyword">mixin</span>`. <span class="type">For</span> example, the below code needs the class <span class="keyword">include</span> this module implements `+` <span class="keyword">method</span>.
+
+
+&lt;!--￼<span class="number">2</span>--&gt;
+
+
+<span class="keyword">if</span> we want to <span class="keyword">include</span> this `<span class="keyword">mixin</span>`, we should implement `+` <span class="keyword">method</span>:
+</code></pre><p>class Point<br>    attr_accessor :x, :y<br>    include Doubler<br>    def + other<br>        result = Point.new<br>        result.x = self.x + other.x<br>        result.y = self.y + other.y<br>    end<br>end</p>
+<p>class String<br>    include Doubler<br>end<br>```</p>
 <p>The same idea in Ruby with two mixins named <code>Enumerable</code> and <code>Comparable</code>.</p>
 <ul>
 <li>Enumerable <code>each</code> method.</li>
@@ -267,7 +279,7 @@
 		  
 		
 		  
-			<li><a href="/categories/Programming-Paradigm/" title="Programming Paradigm">Programming Paradigm<sup>7</sup></a></li>
+			<li><a href="/categories/Programming-Paradigm/" title="Programming Paradigm">Programming Paradigm<sup>8</sup></a></li>
 		  
 		
 		  
@@ -296,15 +308,19 @@
 			
 		
 			
-				<li><a href="/tags/CTMCP/" title="CTMCP">CTMCP<sup>6</sup></a></li>
+				<li><a href="/tags/CTMCP/" title="CTMCP">CTMCP<sup>7</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Oz/" title="Oz">Oz<sup>6</sup></a></li>
+				<li><a href="/tags/Oz/" title="Oz">Oz<sup>7</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/Algorithm/" title="Algorithm">Algorithm<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/OOP/" title="OOP">OOP<sup>4</sup></a></li>
 			
 		
 			
@@ -321,10 +337,6 @@
 		
 			
 				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/OOP/" title="OOP">OOP<sup>2</sup></a></li>
 			
 		
 			

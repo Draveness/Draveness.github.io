@@ -11,15 +11,24 @@
     
 
     
-    <meta name="description">
+    <meta name="description" content="How to use InheritanceThere are two ways to view inheritance. 
+
+The type view
+Classes are types and subclasses are subtypes. The type view is consistent with the principle that classes should model re">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Programming with Inheritance">
 <meta property="og:url" content="http://deltax.me/2015/03/26/Programming-with-Inheritance/index.html">
 <meta property="og:site_name" content="DeltaX">
-<meta property="og:description">
+<meta property="og:description" content="How to use InheritanceThere are two ways to view inheritance. 
+
+The type view
+Classes are types and subclasses are subtypes. The type view is consistent with the principle that classes should model re">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Programming with Inheritance">
-<meta name="twitter:description">
+<meta name="twitter:description" content="How to use InheritanceThere are two ways to view inheritance. 
+
+The type view
+Classes are types and subclasses are subtypes. The type view is consistent with the principle that classes should model re">
 
     
     <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
@@ -94,15 +103,79 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#How_to_use_Inheritance"><span class="toc-number">1.</span> <span class="toc-text">How to use Inheritance</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Desin_by_Contract"><span class="toc-number">1.1.</span> <span class="toc-text">Desin by Contract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Things_should_Prevented"><span class="toc-number">1.2.</span> <span class="toc-text">Things should Prevented</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reengineering"><span class="toc-number">1.3.</span> <span class="toc-text">Reengineering</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Generic_Classes"><span class="toc-number">2.</span> <span class="toc-text">Generic Classes</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Using_Inheritance"><span class="toc-number">2.1.</span> <span class="toc-text">Using Inheritance</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using_Higher-order_Programming"><span class="toc-number">2.2.</span> <span class="toc-text">Using Higher-order Programming</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Discussion"><span class="toc-number">2.3.</span> <span class="toc-text">Discussion</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mutiple_Inheritance"><span class="toc-number">3.</span> <span class="toc-text">Mutiple Inheritance</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Rules_about_Mutiple_Inheritance"><span class="toc-number">3.1.</span> <span class="toc-text">Rules about Mutiple Inheritance</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		  
+		<h1 id="How_to_use_Inheritance">How to use Inheritance</h1><p>There are two ways to view inheritance. </p>
+<ul>
+<li>The <strong>type</strong> view<blockquote>
+<p>Classes are types and subclasses are subtypes. The type view is consistent with the principle that classes should model real-world entities or some abstract versions of them. In type view, classes satisfy the substitution property: every operation works on class <code>C</code> also works on subclass of <code>C</code>.</p>
+</blockquote>
+</li>
+<li>The <strong>structure</strong> view<blockquote>
+<p>Inheritance is just another programming tool that is used to structure programs. This view is strongly discouraged bacause classes no longer satisfy the substituion property.</p>
+</blockquote>
+</li>
+</ul>
+<p>In the type view, each class stands on its own two feet. And in the structure view, classes are sometimes just scaffolding, which exists only for its role in structuring he program.</p>
+<p>In the vast majority of cases, inheritance shuld respect the type view. And the rest of this blog is mainly consider the type view.</p>
+<h2 id="Desin_by_Contract">Desin by Contract</h2><p>Based on the teniques such as using aximatic semantics of the formal semantics, Bertrand Mayer has developed a method for designing correct programs called <strong>design by contract</strong> and implement it.</p>
+<p>The principle idea of design by contract is that a data abstraction implies a contract between the abstraciton’s designer and its users.</p>
+<ul>
+<li>The user must guarantee that an abstraction is called in the right way.</li>
+<li>The designer must guarantee that the right value is returned after the procedure executed.</li>
+</ul>
+<p>The user is responsible for the preconditions and the disigner is responsible for the postconditions.</p>
+<p>In the data abstraction, we should check if the precondition is valid and the user followed the contract. This is checked at boundary when the data abstraction is called which can be in either runtime or compile time.</p>
+<h2 id="Things_should_Prevented">Things should Prevented</h2><p>There are such things that we should not use when dealing with inheritance.</p>
+<ul>
+<li>The subsitution property was regularly violated.</li>
+<li>Classes were subclassed to fix small problems.</li>
+</ul>
+<p>The most important principle using inheritance is to use it add new functionality and not to patch a broken class.</p>
+<h2 id="Reengineering">Reengineering</h2><p>The general goal of reengnnering is to take an exisinting system and attempt to improve some of its property by changing the source code. However reengineering cannot resurrect a failed project.</p>
+<h1 id="Generic_Classes">Generic Classes</h1><p>A generic class is one that only defines part of the functionality of a data abstraction. It has to be completely before it can be used to create objects. How can we define generic class, there are two ways for us to make it.</p>
+<h2 id="Using_Inheritance">Using Inheritance</h2><p>A common way to use generic class is to use abstract classes. </p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GenericSort</span></span></span><br><span class="line">   meth init skip <span class="keyword">end</span></span><br><span class="line">   meth qsort(<span class="constant">Xs</span> <span class="constant">Ys</span>)</span><br><span class="line">      <span class="keyword">case</span> <span class="constant">Xs</span></span><br><span class="line">      of <span class="keyword">nil</span> <span class="keyword">then</span> <span class="constant">Ys</span>=<span class="keyword">nil</span></span><br><span class="line">      [] <span class="constant">P</span>|<span class="constant">Xr</span> <span class="keyword">then</span> <span class="constant">S</span> <span class="constant">L</span> <span class="keyword">in</span></span><br><span class="line">	 &#123;<span class="keyword">self</span> partition(<span class="constant">Xr</span> <span class="constant">P</span> <span class="constant">S</span> <span class="constant">L</span>)&#125;</span><br><span class="line">	 &#123;<span class="constant">Append</span> &#123;<span class="keyword">self</span> qsort(<span class="constant">S</span> <span class="variable">$)</span>&#125;</span><br><span class="line">	  <span class="constant">P</span>|&#123;<span class="keyword">self</span> qsort(<span class="constant">L</span> <span class="variable">$)</span>&#125; <span class="constant">Ys</span>&#125;</span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line">   meth partition(<span class="constant">Xs</span> <span class="constant">P</span> <span class="constant">Ss</span> <span class="constant">Ls</span>)</span><br><span class="line">      <span class="keyword">case</span> <span class="constant">Xs</span></span><br><span class="line">      of <span class="keyword">nil</span> <span class="keyword">then</span> <span class="constant">Ss</span>=<span class="keyword">nil</span> <span class="constant">Ls</span>=<span class="keyword">nil</span></span><br><span class="line">      [] <span class="constant">X</span>|<span class="constant">Xr</span> <span class="keyword">then</span> <span class="constant">Sr</span> <span class="constant">Lr</span> <span class="keyword">in</span></span><br><span class="line">	 <span class="keyword">if</span> &#123;<span class="keyword">self</span> less(<span class="constant">X</span> <span class="constant">P</span> <span class="variable">$)</span>&#125; <span class="keyword">then</span></span><br><span class="line">	    <span class="constant">Ss</span>=<span class="constant">X</span>|<span class="constant">Xr</span> <span class="constant">Ls</span>=<span class="constant">Lr</span></span><br><span class="line">	 <span class="keyword">else</span></span><br><span class="line">	    <span class="constant">Ss</span>=<span class="constant">Sr</span> <span class="constant">Ls</span>=<span class="constant">X</span>|<span class="constant">Lr</span></span><br><span class="line">	 <span class="keyword">end</span></span><br><span class="line">	 &#123;<span class="keyword">self</span> partition(<span class="constant">Xr</span> <span class="constant">P</span> <span class="constant">Sr</span> <span class="constant">Lr</span>)&#125;</span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>This block of codes define an abstract class <code>GenericSort</code> which remains the method <code>less</code> undefined for subclasses.</p>
+<p>So we define this method is subclass <code>IntegerSort</code> and <code>RationalSort</code>.</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="type">IntegerSort</span> from <span class="type">GenericSort</span></span><br><span class="line">   meth less<span class="container">(<span class="type">X</span> <span class="type">Y</span> <span class="type">B</span>)</span></span><br><span class="line">      <span class="type">B</span>=<span class="container">(<span class="type">X</span>&lt;<span class="type">Y</span>)</span></span><br><span class="line">   end</span><br><span class="line">end</span><br><span class="line"><span class="keyword">class</span> <span class="type">RationalSort</span> from <span class="type">GenericSort</span></span><br><span class="line">   meth less<span class="container">(<span class="type">X</span> <span class="type">Y</span> <span class="type">B</span>)</span></span><br><span class="line">      '/'<span class="container">(<span class="type">P</span> <span class="type">Q</span>)</span>=<span class="type">X</span></span><br><span class="line">      '/'<span class="container">(<span class="type">R</span> <span class="type">S</span>)</span>=<span class="type">Y</span></span><br><span class="line">   in <span class="type">B</span>=<span class="container">(<span class="type">P</span>*<span class="type">S</span>&lt;<span class="type">Q</span>*<span class="type">R</span>)</span> end</span><br><span class="line">end</span></span><br></pre></td></tr></table></figure>
+<p>The abstraction is really powerful, we can subclass <code>GenericSort</code> and implement <code>less</code> method to sort any kinds of data we want.</p>
+<p>But this is just a syntactic sugar for high-order programming.</p>
+<h2 id="Using_Higher-order_Programming">Using Higher-order Programming</h2><p>There is a second natual way to create generic classes, namely by using higher-order programming directly. Now we can define a function which takes some arguments and returns a class that is specialized with these arguments.</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">fun &#123;<span class="constant">MakeSort</span> <span class="constant">Less</span>&#125;</span><br><span class="line">   <span class="class"><span class="keyword">class</span> $</span></span><br><span class="line">      meth init skip <span class="keyword">end</span></span><br><span class="line">      meth qsort(<span class="constant">Xs</span> <span class="constant">Ys</span>)</span><br><span class="line">	 <span class="keyword">case</span> <span class="constant">Xs</span></span><br><span class="line">	 of <span class="keyword">nil</span> <span class="keyword">then</span> <span class="constant">Ys</span>=<span class="keyword">nil</span></span><br><span class="line">	 [] <span class="constant">P</span>|<span class="constant">Xr</span> <span class="keyword">then</span> <span class="constant">S</span> <span class="constant">L</span> <span class="keyword">in</span></span><br><span class="line">	    &#123;<span class="keyword">self</span> partition(<span class="constant">Xr</span> <span class="constant">P</span> <span class="constant">S</span> <span class="constant">L</span>)&#125;</span><br><span class="line">	    &#123;<span class="constant">Append</span> &#123;<span class="keyword">self</span> qsort(<span class="constant">S</span> <span class="variable">$)</span>&#125;</span><br><span class="line">	     <span class="constant">P</span>|&#123;<span class="keyword">self</span> qsort(<span class="constant">L</span> <span class="variable">$)</span>&#125; <span class="constant">Ys</span>&#125;</span><br><span class="line">	 <span class="keyword">end</span></span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">      meth partition(<span class="constant">Xs</span> <span class="constant">P</span> <span class="constant">Ss</span> <span class="constant">Ls</span>)</span><br><span class="line">	 <span class="keyword">case</span> <span class="constant">Xs</span></span><br><span class="line">	 of <span class="keyword">nil</span> <span class="keyword">then</span> <span class="constant">Ss</span>=<span class="keyword">nil</span> <span class="constant">Ls</span>=<span class="keyword">nil</span></span><br><span class="line">	 [] <span class="constant">X</span>|<span class="constant">Xr</span> <span class="keyword">then</span> <span class="constant">Sr</span> <span class="constant">Lr</span> <span class="keyword">in</span></span><br><span class="line">	    <span class="keyword">if</span> &#123;<span class="constant">Less</span> <span class="constant">X</span> <span class="constant">P</span>&#125; <span class="keyword">then</span></span><br><span class="line">	       <span class="constant">Ss</span>=<span class="constant">X</span>|<span class="constant">Sr</span> <span class="constant">Ls</span>=<span class="constant">Lr</span></span><br><span class="line">	    <span class="keyword">else</span></span><br><span class="line">	       <span class="constant">Ss</span>=<span class="constant">Sr</span> <span class="constant">Ls</span>=<span class="constant">X</span>|<span class="constant">Lr</span></span><br><span class="line">	    <span class="keyword">end</span></span><br><span class="line">	    &#123;<span class="keyword">self</span> partition(<span class="constant">Xr</span> <span class="constant">P</span> <span class="constant">Sr</span> <span class="constant">Lr</span>)&#125;</span><br><span class="line">	 <span class="keyword">end</span></span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>The function <code>MakeSort</code> take an argument <code>Less</code> which compares two elements and returns a bool value. And the function returns a class, that can sort different kinds of element.</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">IntegerSort</span>=<span class="tuple">&#123;<span class="variable">MakeSort</span> <span class="keyword">fun</span> <span class="tuple">&#123;$ <span class="variable">X</span> <span class="variable">Y</span>&#125;</span> <span class="variable">X</span>&lt;<span class="variable">Y</span> <span class="keyword">end</span>&#125;</span></span><br><span class="line"><span class="variable">RationalSort</span>=<span class="tuple">&#123;<span class="variable">MakeSort</span> <span class="keyword">fun</span> <span class="tuple">&#123;$ <span class="variable">X</span> <span class="variable">Y</span>&#125;</span></span><br><span class="line">						'/'(<span class="variable">P</span> <span class="variable">Q</span>)=<span class="variable">X</span></span><br><span class="line">						'/'(<span class="variable">R</span> <span class="variable">S</span>)=<span class="variable">Y</span></span><br><span class="line">					   in <span class="variable">P</span>*<span class="variable">S</span>&lt;<span class="variable">Q</span>*<span class="variable">R</span> <span class="keyword">end</span>&#125;</span></span><br></pre></td></tr></table></figure>
+<p>And then we can use these as this:</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ISort=<span class="list">&#123;New IntegerSort init&#125;</span></span><br><span class="line"><span class="list">&#123;Browse &#123;ISort qsort([1 2 4 5 6 3] $)&#125;</span>&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Discussion">Discussion</h2><p>What is the different between the two techniques? </p>
+<ul>
+<li>In most programming languags, the inheritance must be defined at compile time. This gives static genericity. So the compiler can generate better code or do more checking.</li>
+<li>High-order programming, when it is possible lets us define dynamic genericity which is much more flexible.</li>
+</ul>
+<h1 id="Mutiple_Inheritance">Mutiple Inheritance</h1><p>Mutiple inheritance is useful when an object has to be two different things in the same program.</p>
+<h2 id="Rules_about_Mutiple_Inheritance">Rules about Mutiple Inheritance</h2><p>Mutiple inheritance is powerful technique that has to be used care.</p>
+<ul>
+<li>Mutiple inheritance works well when combing two <strong>completely independant abstraction</strong>.</li>
+<li>Mutiple inheritance is much harder to use correctly when the abstraction has much in common, this always causes name label conflicts.</li>
+</ul>
+<p>See more in this post: <a href="http://deltax.me/2014/11/22/Multiple%20Inheritence/" target="_blank" rel="external">Mutiple Inheritance</a></p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Programming-Paradigm/">Programming Paradigm</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/CTMCP/">CTMCP</a><a href="/tags/OOP/">OOP</a><a href="/tags/Oz/">Oz</a>
+  </div>
 
 </div>
 
@@ -146,7 +219,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#How_to_use_Inheritance"><span class="toc-number">1.</span> <span class="toc-text">How to use Inheritance</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Desin_by_Contract"><span class="toc-number">1.1.</span> <span class="toc-text">Desin by Contract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Things_should_Prevented"><span class="toc-number">1.2.</span> <span class="toc-text">Things should Prevented</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reengineering"><span class="toc-number">1.3.</span> <span class="toc-text">Reengineering</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Generic_Classes"><span class="toc-number">2.</span> <span class="toc-text">Generic Classes</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Using_Inheritance"><span class="toc-number">2.1.</span> <span class="toc-text">Using Inheritance</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using_Higher-order_Programming"><span class="toc-number">2.2.</span> <span class="toc-text">Using Higher-order Programming</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Discussion"><span class="toc-number">2.3.</span> <span class="toc-text">Discussion</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mutiple_Inheritance"><span class="toc-number">3.</span> <span class="toc-text">Mutiple Inheritance</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Rules_about_Mutiple_Inheritance"><span class="toc-number">3.1.</span> <span class="toc-text">Rules about Mutiple Inheritance</span></a></li></ol></li></ol>
  
   </div>
 
@@ -176,7 +249,7 @@
 		  
 		
 		  
-			<li><a href="/categories/Programming-Paradigm/" title="Programming Paradigm">Programming Paradigm<sup>7</sup></a></li>
+			<li><a href="/categories/Programming-Paradigm/" title="Programming Paradigm">Programming Paradigm<sup>8</sup></a></li>
 		  
 		
 		  
@@ -205,15 +278,19 @@
 			
 		
 			
-				<li><a href="/tags/CTMCP/" title="CTMCP">CTMCP<sup>6</sup></a></li>
+				<li><a href="/tags/CTMCP/" title="CTMCP">CTMCP<sup>7</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Oz/" title="Oz">Oz<sup>6</sup></a></li>
+				<li><a href="/tags/Oz/" title="Oz">Oz<sup>7</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/Algorithm/" title="Algorithm">Algorithm<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/OOP/" title="OOP">OOP<sup>4</sup></a></li>
 			
 		
 			
@@ -230,10 +307,6 @@
 		
 			
 				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/OOP/" title="OOP">OOP<sup>2</sup></a></li>
 			
 		
 			
