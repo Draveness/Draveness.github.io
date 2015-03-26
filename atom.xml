@@ -4,7 +4,7 @@
   <subtitle><![CDATA[为了成为牛逼闪闪的工程师]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
-  <updated>2015-03-26T07:22:46.000Z</updated>
+  <updated>2015-03-26T13:29:00.000Z</updated>
   <id>http://deltax.me/</id>
   
   <author>
@@ -13,6 +13,102 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Object-Oriented-Programming and Other Programming Paradigms]]></title>
+    <link href="http://deltax.me/2015/03/26/Object-Oriented-Programming-and-Other-Programming-Paradigms/"/>
+    <id>http://deltax.me/2015/03/26/Object-Oriented-Programming-and-Other-Programming-Paradigms/</id>
+    <published>2015-03-26T11:09:33.000Z</published>
+    <updated>2015-03-26T13:29:00.000Z</updated>
+    <content type="html"><![CDATA[<p>Object-Oriented Programming is one way to structure programs which is most often used together with explicit state. The main difference between this computational model to other is <strong>polymorphism</strong> and <strong>inheritance</strong>.</p>
+<p>In my opinion, this computational model is important but not magic. There are many opponents and different ideas.</p>
+<p><a href="https://www.quora.com/Was-object-oriented-programming-a-failure" target="_blank" rel="external">Was object-oriented programming a failure?</a></p>
+<p><a href="https://www.quora.com/What-are-some-programming-paradigms-other-than-Object-Oriented" target="_blank" rel="external">What are some programming paradigms other than Object Oriented?</a></p>
+<h1 id="Higher-order_Programming">Higher-order Programming</h1><p>Object-oriented programming and high-order programming are closely related. A new sorting routine can be created by giving a particular order function.</p>
+<p>We can write this in high-order programming:</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span> &#123;<span class="type">NewSortRoutine</span> <span class="type">Order</span> ?<span class="type">SortRoutine</span>&#125;</span><br><span class="line">	<span class="keyword">proc</span> &#123;<span class="type">SortRoutine</span> <span class="type">InL</span> <span class="type">OutL</span>&#125;</span><br><span class="line">		% ... &#123;<span class="type">Order</span> X Y&#125; calculates order</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">proc</span> &#123;<span class="type">Order</span> X Y ?B&#125;</span><br><span class="line">	B=(X&lt;Y)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="type">SortRoutine</span>=&#123;<span class="type">NewSortRoutine</span> <span class="type">Order</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>In <code>OOP</code>, this can be written as follows:</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="type">SortRoutineClass</span></span><br><span class="line">	attr ord</span><br><span class="line">	meth init<span class="container">(<span class="type">Order</span>)</span></span><br><span class="line">		ord:=<span class="type">Order</span></span><br><span class="line">	end</span><br><span class="line">	meth sort<span class="container">(<span class="type">InL</span> <span class="type">OutL</span>)</span></span><br><span class="line">		% ... &#123;@ord order<span class="container">(<span class="type">X</span> <span class="type">Y</span> $)</span>&#125; calculates order</span><br><span class="line">	end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="type">OrderClass</span></span><br><span class="line">	meth init skip end</span><br><span class="line">	meth order<span class="container">(<span class="type">X</span> <span class="type">Y</span> <span class="type">B</span>)</span></span><br><span class="line">		<span class="type">B</span>=<span class="container">(<span class="type">X</span>&lt;<span class="type">Y</span>)</span></span><br><span class="line">	end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"><span class="type">SortRoutine</span>=&#123;<span class="type">New</span> <span class="type">SortRoutineClass</span> init<span class="container">(&#123;<span class="type">New</span> <span class="type">OrderClass</span> <span class="title">init</span>&#125;)</span>&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Embellishments">Embellishments</h2><p>Procedure values and objects are closed related. Let us now compare higher-order and object-oriented programming more carefully.</p>
+<p>The main difference is that <code>OOP</code> embellishes high-order programming. With embellishments, object-oriented provides a collection of additional idioms beyond procedural abstraction:</p>
+<ul>
+<li>Explicit state can be defined and used easily.</li>
+<li>Multiple methods that share the same explicit state can be defined easily.</li>
+<li>Classes are provided, which define a set of methods and can be instantiated. If objects are like procedures, then classes are like procedures that return procedures.</li>
+<li>Inheritance is provided, to define new sets of methods from existing sets.</li>
+<li>Different degrees of encapsulation can be defined between classes and obejcts.</li>
+</ul>
+<p>These mechanisms do not provide any fundamentally new ability. All these things can be implemented with high-order programming, explicit state and name values.</p>
+<p><code>OOP</code> is an abstraction that provides a rich notation to use any or all of these mechanisms together. But this is a double-edged sword.</p>
+<ul>
+<li>It makes the abstraction particularly useful for many programming tasks.</li>
+<li>The abstraction has a complex semantics and is hard to reason about.</li>
+</ul>
+<h2 id="Common_Limitations">Common Limitations</h2><p>The object system defined here is particularly close to high-order programming. But not all the object system is so close. In common use, the following characteristics are aften absent or cumbersome to use:</p>
+<ul>
+<li>Classes are values<ul>
+<li>Classes can be created at run time, passed as arguments, and stored in data structures.</li>
+</ul>
+</li>
+<li>Full lexical scoping<ul>
+<li>Language supports procedure values with external references.</li>
+</ul>
+</li>
+<li>First-class messages<ul>
+<li>Allow messages to be values in the languages.</li>
+</ul>
+</li>
+</ul>
+<p>There are also some object-oriented languages do not support high-order programming because they define procedure values with lexical scoping at run time. Many of the mechanisms can be obtained through inheritanceand encapsulation.</p>
+<ul>
+<li>A procedure value can be encoded as object.<ul>
+<li>The object’s attributes represent the procedure value’s external references and the method arguments are the procedure value’s arguments.</li>
+</ul>
+</li>
+<li>A generic procedure can be encoded as an abstract class.<ul>
+<li>A generic procedure is one that tkes procedure arguments and return a specific procedure. An abstract class is a class with undefined methods. And the methods are implemented in subclasses.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Should_everything_be_an_object?">Should everything be an object?</h2><p>Now, let us discover the practical of everything is object.</p>
+<h3 id="String_Objects">String Objects</h3><p>A sensible way to define the principle is as “all language entities should be instances of data abstractions with as many generic properties as possible.” There are six properties this principle implies.</p>
+<ul>
+<li>All language entities should be defined with the object style.</li>
+<li>All language entities should be defined in the terms of classes can be instantiated.</li>
+<li>All language entities should be extensible with inheritance.</li>
+<li>All language entities should have a unique identity.</li>
+<li>All language entities should excapsulate a state.</li>
+<li>All language entities should be accessed with a uniform syntax.</li>
+</ul>
+<p>In most languages, not all entities are strong objects. An integer in Objective-C is a pure value in the <code>ADT</code> style. It is not defined by a class or encapsulate a state. </p>
+<p>And there is not any language only have strong objects.</p>
+<ol>
+<li>The ADT style is sometimes essential.</li>
+<li>Stateless entities can play an important role.</li>
+<li>Not all entities need a unique identity.</li>
+<li>The simplicity of a uniform syntax is illusory.</li>
+</ol>
+<p>With them, the powerful reasoning techniques of declarative programming become possible.</p>
+<h3 id="Objects_and_program_complexity">Objects and program complexity</h3><p>How can one predict a particular object’s behavior. It depends on two factor:</p>
+<ol>
+<li>Its internal state, which potentially depends on all past calls. These calls can be done from many parts of the program.</li>
+<li>Its textual definiation, which depends on all classes it inherits from. These classes can be defined in many places in the program text.</li>
+</ol>
+<h3 id="Uniform_object_syntax">Uniform object syntax</h3><p>A language’s syntax should help and not hinder programmers in designing, writing and reasoning about programs. An important principle  in syntax design is form mirrors content.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Object-Oriented Programming is one way to structure programs which is most often used together with explicit state. The main difference b]]>
+    </summary>
+    
+      <category term="CTMCP" scheme="http://deltax.me/tags/CTMCP/"/>
+    
+      <category term="OOP" scheme="http://deltax.me/tags/OOP/"/>
+    
+      <category term="Oz" scheme="http://deltax.me/tags/Oz/"/>
+    
+      <category term="Programming Paradigm" scheme="http://deltax.me/categories/Programming-Paradigm/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Programming with Inheritance]]></title>
@@ -1346,58 +1442,6 @@ UINavigationController <span class="keyword">*</span>navigationController = [[UI
       <category term="iOS" scheme="http://deltax.me/tags/iOS/"/>
     
       <category term="iOS" scheme="http://deltax.me/categories/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Lists and Patterns Matching]]></title>
-    <link href="http://deltax.me/2014/11/26/Lists-and-Patterns-Matching/"/>
-    <id>http://deltax.me/2014/11/26/Lists-and-Patterns-Matching/</id>
-    <published>2014-11-26T07:57:59.000Z</published>
-    <updated>2015-03-24T17:34:55.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="Recursive_computations">Recursive computations</h2><p>递归的计算模型是声明式编程的核心, 有些人可能并不知道, 类型也是可以递归的. 比如说列表.</p>
-<h3 id="List">List</h3><p>列表是在函数式编程中是很有趣的, 也是很强大的, 大多数函数式编程语言都支持列表, 比如<code>Haskell</code>, <code>ML</code>, <code>Scheme</code>. 列表. 列表与<code>C</code>, <code>Java</code>, <code>Objective-C</code> 语言中的<code>array</code>非常的相似, 但是却有着很大的不同. </p>
-<p>列表是一种递归的数据类型:</p>
-<figure class="highlight sml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">% <span class="type">Xs</span> <span class="type">Xr</span> 是列表</span><br><span class="line"><span class="type">Xs</span> =&gt; <span class="literal">nil</span></span><br><span class="line"><span class="type">Xr</span> =&gt; <span class="type">X</span>|<span class="type">Xr</span></span><br></pre></td></tr></table></figure>
-<p>我们使用上下文无关文案表示列表在核心语言中的语法的表示.</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">List</span>&gt;</span> ::=  nil</span><br><span class="line">		 	|   <span class="tag">&lt;<span class="title">T</span>&gt;</span> `|` <span class="tag">&lt;<span class="title">List</span> <span class="attribute">T</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>列表可以由<code>nil</code>开始, 不挺的重复自己, 直到列表结束<code>&lt;List&gt; =&gt; nil</code>.</p>
-<p>我们也可以使用这种方式表示其他更复杂的数据类型, 比如说<code>binary tree</code></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">BTree</span> <span class="attribute">T</span>&gt;</span>  ::= leaf</span><br><span class="line">			|  tree(key: <span class="tag">&lt;<span class="title">Literal</span>&gt;</span> value: T</span><br><span class="line">					left: <span class="tag">&lt;<span class="title">BTree</span> <span class="attribute">T</span>&gt;</span> right: <span class="tag">&lt;<span class="title">BTree</span> <span class="attribute">T</span>&gt;</span>)</span><br></pre></td></tr></table></figure>
-<h4 id="Haskell">Haskell</h4><p>在<code>Haskell</code>中, 列表是一种单类型的数据结构, 可以用来存储多个类型的东西, 同时它还可以嵌套. 简单展示一下<code>Haskell</code>中的列表吧:</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr_selector">[1,2,3,4,5]</span></span><br><span class="line">	</span><br><span class="line"><span class="comment">//嵌套列表</span></span><br><span class="line"><span class="attr_selector">[[1,2,3,4]</span>,<span class="attr_selector">[5,6,7,8]</span>,<span class="attr_selector">[9,10,11,12]</span>]</span><br></pre></td></tr></table></figure>
-<p>访问列表中的元素, 有两种基本的方法, 在<code>Haskell</code>中一种是<code>head</code>访问数组的头部, 一种的<code>tail</code>返回列表的尾部.</p>
-<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">head [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]  =&gt; <span class="number">1</span></span><br><span class="line">	tail [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]  =&gt; [<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line"></span><br><span class="line">head [<span class="number">1</span>,<span class="number">2</span>] =&gt; <span class="number">1</span></span><br><span class="line">tail [<span class="number">1</span>,<span class="number">2</span>] =&gt; [<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">head [<span class="number">2</span>] =&gt; <span class="number">2</span></span><br><span class="line">tail [<span class="number">2</span>] =&gt; <span class="literal">[]</span></span><br></pre></td></tr></table></figure>
-<p>有几点注意的是, 这两个函数都只能对列表进行操作, <code>head</code>返回的是列表中的一个元素, 而<code>tail</code>返回的是一个<strong>列表</strong>. 尤其注意后面的两种情况.</p>
-<p>在<code>Haskell</code>中呢, 有一种更强大过滤组合列表的方式, 叫做<code>list comprehension</code>列表推导, 我们可以使用列表推导轻松的完成快速排序的实现.</p>
-<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">quicksort ::</span> (Ord <span class="literal">a</span>) =&gt; [<span class="literal">a</span>] -&gt; [<span class="literal">a</span>]  </span><br><span class="line">quicksort [] = []  </span><br><span class="line"><span class="label">quicksort (x:</span>xs) =   </span><br><span class="line">    let smallerSorted = quicksort [<span class="literal">a</span> | <span class="literal">a</span> &lt;- xs, <span class="literal">a</span> &lt;= x]  </span><br><span class="line">        biggerSorted = quicksort [<span class="literal">a</span> | <span class="literal">a</span> &lt;- xs, <span class="literal">a</span> &gt; x]  </span><br><span class="line">    in  smallerSorted ++ [x] ++ biggerSorted</span><br></pre></td></tr></table></figure>
-<p>这段代码就是用列表推导完成了使用其他语言需要几倍代码量才能完成的快速排序.</p>
-<h4 id="Scheme">Scheme</h4><p><code>Scheme</code>是<code>Lisp</code>主要的两种方言之一. 它与<code>lambda</code>演算的关系相当的密切, <code>Scheme</code>中的有两种方式构造一个列表.</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">list</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">; This is just a syntax sugar</span></span><br><span class="line"><span class="quoted">'(<span class="number">1</span> <span class="number">2</span> <span class="number">3</span>)</span></span><br></pre></td></tr></table></figure>
-<p><code>Scheme</code>中对列表的操作, 使用<code>car</code>和<code>cdr</code>, 用法基本与<code>Haskell</code>中的<code>head</code>和<code>tail</code>一样.</p>
-<h4 id="Oz">Oz</h4><p><code>Oz</code>是在<code>CTMCP</code>一书中提到的用于研究的语言, 我们使用它来展示列表是如何工作和使用的.</p>
-<figure class="highlight erlang-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">% 列表的声明</span></span><br><span class="line">	<span class="variable">L</span> = [<span class="number">5</span> <span class="number">6</span> <span class="number">7</span> <span class="number">8</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">% car 方法</span></span><br><span class="line"><span class="variable">L</span>.<span class="number">1</span> = <span class="number">5</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% cdr 方法</span></span><br><span class="line"><span class="variable">L</span>.<span class="number">2</span> = [<span class="number">6</span> <span class="number">7</span> <span class="number">8</span>]</span><br></pre></td></tr></table></figure>
-<p>我们也可以使用<code>|</code>操作符创建列表</p>
-<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">L = <span class="number">5</span><span class="string">|6|7|8|nil</span></span><br></pre></td></tr></table></figure>
-<h2 id="Programming_with_Lists">Programming with Lists</h2><p>因为列表简单的结构, 使用它们进行声明式编程是非常简单和强大的.</p>
-<ul>
-<li>递归式的思考, 解决问题的更小一部分.</li>
-<li>将递归式的计算模型转化为迭代式的计算模型.</li>
-<li>校正迭代式的计算模型.</li>
-<li>遵循类型来构建程序.</li>
-</ul>
-<h3 id="Pattern_Matching">Pattern Matching</h3><p>模式匹配同样是<code>FP</code>中强大的特性, 我们可以使用它来代替<code>car</code>和<code>cdr</code>方法同时获取列表的头部和尾部, 避免使用<code>if</code>条件.</p>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">% <span class="keyword">display</span> 5 and [6 7 8]</span><br><span class="line">declare<span class="keyword">L</span>=[5 6 7 8]case <span class="keyword">L</span> of <span class="keyword">H</span>|T then &#123;<span class="keyword">Browse</span> <span class="keyword">H</span>&#125; &#123;<span class="keyword">Browse</span> T&#125; end</span><br></pre></td></tr></table></figure>]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="Recursive_computations">Recursive computations</h2><p>递归的计算模型是声明式编程的核心, 有些人可能并不知道, 类型也是可以递归的. 比如说列表.</p>
-<h3 id="List">List</h3><p>列]]>
-    </summary>
-    
-      <category term="Haskell" scheme="http://deltax.me/tags/Haskell/"/>
-    
-      <category term="ML" scheme="http://deltax.me/tags/ML/"/>
-    
-      <category term="Functional Programming" scheme="http://deltax.me/categories/Functional-Programming/"/>
     
   </entry>
   
