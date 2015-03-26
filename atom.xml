@@ -4,7 +4,7 @@
   <subtitle><![CDATA[为了成为牛逼闪闪的工程师]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
-  <updated>2015-03-25T12:45:14.000Z</updated>
+  <updated>2015-03-26T04:03:48.000Z</updated>
   <id>http://deltax.me/</id>
   
   <author>
@@ -13,6 +13,19 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Programming with Inheritance]]></title>
+    <link href="http://deltax.me/2015/03/26/Programming-with-Inheritance/"/>
+    <id>http://deltax.me/2015/03/26/Programming-with-Inheritance/</id>
+    <published>2015-03-26T04:03:48.000Z</published>
+    <updated>2015-03-26T04:03:48.000Z</updated>
+    <content type="html"></content>
+    <summary type="html">
+    
+    </summary>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Hexo中LateX的使用]]></title>
@@ -1317,55 +1330,6 @@ UINavigationController <span class="keyword">*</span>navigationController = [[UI
       <category term="Haskell" scheme="http://deltax.me/tags/Haskell/"/>
     
       <category term="ML" scheme="http://deltax.me/tags/ML/"/>
-    
-      <category term="Functional Programming" scheme="http://deltax.me/categories/Functional-Programming/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Iteration versus Recursion]]></title>
-    <link href="http://deltax.me/2014/11/24/Iterative-versus-Recursive/"/>
-    <id>http://deltax.me/2014/11/24/Iterative-versus-Recursive/</id>
-    <published>2014-11-24T13:25:57.000Z</published>
-    <updated>2015-03-24T17:33:17.000Z</updated>
-    <content type="html"><![CDATA[<p><code>Iteration</code> 和 <code>Recursion</code> 在我们所有的编程语言中都是非常重要的概念, 尤其是在声明式的编程模型中.</p>
-<h2 id="Iteraive_computation">Iteraive computation</h2><p>迭代的计算模型是一个<code>stack</code>大小为<code>constant</code>并且大小保持不变的循环.</p>
-<p>非常重要的地方就是, 迭代的计算模型拥有一个初始的状态<code>S 0</code>, 在经过多次的转换最后会得到<code>S final</code>:</p>
-<pre><code>S0 -&gt; S1 -&gt; <span class="keyword">...</span> -&gt; Sfinal
-</code></pre><p>这种思想的通用的表示可以被总结为如下的形式:</p>
-<figure class="highlight clojure"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">define</span> <span class="list">(<span class="keyword">iter</span> state)</span></span><br><span class="line">	<span class="list">(<span class="keyword"><span class="built_in">if</span></span> <span class="list">(<span class="keyword">good-enough?</span> state)</span></span><br><span class="line">		state</span><br><span class="line">		<span class="list">(<span class="keyword">iter</span> <span class="list">(<span class="keyword"><span class="built_in">next</span></span> state)</span>)</span>)</span>)</span></span><br></pre></td></tr></table></figure>
-<p>在这个模式中, 函数<code>good-enough?</code>和<code>next</code>依赖于相应的问题. 我们使用<code>Newton&#39;s method</code>求平方根来验证这个迭代的计算模型.</p>
-<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword"><span class="built_in">sqrt</span></span> x)</span></span><br><span class="line">	<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">iter</span> guess x)</span></span><br><span class="line">		<span class="list">(<span class="keyword"><span class="built_in">if</span></span> <span class="list">(<span class="keyword">good-enough?</span> guess x)</span></span><br><span class="line">			guess</span><br><span class="line">			<span class="list">(<span class="keyword">iter</span> <span class="list">(<span class="keyword">improve</span> guess x)</span> x)</span>)</span>)</span></span><br><span class="line">	<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">improve</span> guess x)</span></span><br><span class="line">		<span class="list">(<span class="keyword"><span class="built_in">/</span></span> <span class="list">(<span class="keyword"><span class="built_in">+</span></span> guess <span class="list">(<span class="keyword"><span class="built_in">/</span></span> x guess)</span>)</span> <span class="number">2</span>)</span>)</span></span><br><span class="line">	<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">good-enough?</span> guess x)</span></span><br><span class="line">		<span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> <span class="list">(<span class="keyword"><span class="built_in">abs</span></span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> x <span class="list">(<span class="keyword"><span class="built_in">*</span></span> guess guess)</span>)</span>)</span> <span class="number">0.00001</span>)</span>)</span></span><br><span class="line">	<span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword"><span class="built_in">abs</span></span> x)</span> <span class="list">(<span class="keyword"><span class="built_in">if</span></span> <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> x <span class="number">0</span>)</span> <span class="list">(<span class="keyword">-x</span>)</span> x)</span>)</span></span><br><span class="line">	<span class="list">(<span class="keyword">iter</span> <span class="number">1.0</span> x)</span>)</span></span><br></pre></td></tr></table></figure>
-<p>这就是我们使用迭代式的计算模型使用<code>Newton&#39;s method</code>求平方根的方法.</p>
-<h3 id="Control_abstraction">Control abstraction</h3><p>上面所提到的帮助我们设计高效的程序, 但是它并不是一种计算模型, 我们接下来提供一种通用的表示作为其他程序组成的一部分, 通过将其中的两部分提取出来, 然后作为函数的参数, 把这种通用的模式转化成一种控制的抽象.</p>
-<figure class="highlight clojure"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">define</span> <span class="list">(<span class="keyword">iter</span> state good-enough? next)</span></span><br><span class="line">	<span class="list">(<span class="keyword"><span class="built_in">if</span></span> <span class="list">(<span class="keyword">good-enough?</span> state)</span></span><br><span class="line">		state</span><br><span class="line">		<span class="list">(<span class="keyword">iter</span> <span class="list">(<span class="keyword"><span class="built_in">next</span></span> state)</span>)</span>)</span>)</span></span><br></pre></td></tr></table></figure>
-<p>当我们使用这种控制抽象的时候, 需要为他提供<code>good-enough?</code>和<code>next</code>这两个函数, 每个函数带有一个参数. 将函数像参数一样传递给其他函数的技术叫做<code>higher-order programming</code>.</p>
-<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword"><span class="built_in">sqrt</span></span> x)</span></span><br><span class="line">	<span class="list">(<span class="keyword">iter</span> <span class="number">1.0</span> </span><br><span class="line">		  <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">guess</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">&lt;</span></span> <span class="list">(<span class="keyword"><span class="built_in">/</span></span> <span class="list">(<span class="keyword"><span class="built_in">abs</span></span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> x <span class="list">(<span class="keyword"><span class="built_in">*</span></span> guess guess)</span>)</span>)</span> x)</span> <span class="number">0.00001</span>)</span>)</span></span><br><span class="line">		  <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">guess</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">/</span></span> <span class="list">(<span class="keyword"><span class="built_in">+</span></span> guess <span class="list">(<span class="keyword"><span class="built_in">/</span></span> x guess)</span>)</span> <span class="number">2</span>)</span>)</span>)</span>)</span></span><br></pre></td></tr></table></figure>
-<p>使用两个匿名函数作为参数传给<code>iter</code>. 这是一种非常强大的组织程序的方式, 因为它把通用的控制流和特殊用法分离. 如果一种抽象经常使用, 我们可以将它更近一步, 将它转化为语言抽象.</p>
-<hr>
-<h2 id="Recursive_computation">Recursive computation</h2><p>迭代式的计算模型实际上是特殊的递归抽象模型. 递归函数可以在自己的函数体内部的任何地方多次调用自己. 在编程中, 递归多出现在函数以及数据类型中.</p>
-<p>递归函数在调用时, 本身的<code>stack</code>大小会越来越大, 然后随着达到临界条件, <code>stack</code>的大小才会缩小, 直至返回结果. 我们使用最经典的例子<code>factorical</code>来演示递归函数<code>stack</code>的大小是如何改变的.</p>
-<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 当计算(factorical 4)时</span><br><span class="line">(factorical 4)</span><br><span class="line">(<span class="keyword">*</span> 4 (factorical 3))</span><br><span class="line">(<span class="keyword">*</span> 4 (<span class="keyword">*</span> 3 (factorical 2)))</span><br><span class="line">(<span class="keyword">*</span> 4 (<span class="keyword">*</span> 3 (<span class="keyword">*</span> 2 (factorical 1))))</span><br><span class="line">(<span class="keyword">*</span> 4 (<span class="keyword">*</span> 3 (<span class="keyword">*</span> 2 (<span class="keyword">*</span> 1 (factorical 0)))))</span><br><span class="line">(<span class="keyword">*</span> 4 (<span class="keyword">*</span> 3 (<span class="keyword">*</span> 2 (<span class="keyword">*</span> 1 1))))</span><br><span class="line">(<span class="keyword">*</span> 4 (<span class="keyword">*</span> 3 (<span class="keyword">*</span> 2 1)))</span><br><span class="line">(<span class="keyword">*</span> 4 (<span class="keyword">*</span> 3 2))</span><br><span class="line">(<span class="keyword">*</span> 4 6)</span><br><span class="line">(24)</span><br></pre></td></tr></table></figure>
-<p>我们可以从代码所占的大小中就可以轻易的看出当调用递归函数时<code>stack</code>大小的变化. 当我们使用迭代式的<code>factorical</code>时:</p>
-<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 当计算(factorical 4 1)时</span></span><br><span class="line"><span class="comment">(factorical 4 1)</span></span><br><span class="line"><span class="comment">(factorical 3 4)</span></span><br><span class="line"><span class="comment">(factorical 2 12)</span></span><br><span class="line"><span class="comment">(factorical 1 24)</span></span><br><span class="line"><span class="comment">(factorical 0 24)</span></span><br><span class="line"><span class="comment">(24)</span></span><br></pre></td></tr></table></figure>
-<p>迭代式的函数的调用所占用的空间是<strong>线性</strong>的. 但是迭代函数的定义相对递归函数表达的意思并不清楚, 需要理解, 递归函数的定义非常清楚.</p>
-<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> <span class="list">(<span class="keyword">factorical</span> n)</span></span><br><span class="line">	<span class="list">(<span class="keyword"><span class="built_in">if</span></span> <span class="list">(<span class="keyword"><span class="built_in">=</span></span> n <span class="number">0</span>)</span></span><br><span class="line">		<span class="number">1</span></span><br><span class="line">		<span class="list">(<span class="keyword"><span class="built_in">*</span></span> n <span class="list">(<span class="keyword">factorical</span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> n <span class="number">1</span>)</span>)</span>)</span>)</span>)</span></span><br></pre></td></tr></table></figure>
-<p>与数学上的定义是完全相同的.</p>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fact</span> 0 = 1</span><br><span class="line"><span class="keyword">fact</span> <span class="keyword">n</span> = <span class="keyword">n</span> * <span class="keyword">fact</span> <span class="keyword">n</span>-1</span><br></pre></td></tr></table></figure>
-<h3 id="Converting_a_recursive_to_an_iterative_computation">Converting a recursive to an iterative computation</h3><p>虽然递归有着更好的表达能力, 但是当有性能(时间和空间)上的需求时, 我们通常使用迭代式的计算模型代替递归式的计算模型. 其实就是做如下的转换:</p>
-<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">R = (5<span class="keyword">*</span>(4<span class="keyword">*</span>(3<span class="keyword">*</span>(2<span class="keyword">*</span>(1<span class="keyword">*</span>1))))) =&gt; R = (((((1<span class="keyword">*</span>5)<span class="keyword">*</span>4)<span class="keyword">*</span>3)<span class="keyword">*</span>2)<span class="keyword">*</span>1)</span><br><span class="line"></span><br><span class="line">(define (factorical n)</span><br><span class="line">	(define (iter n acc)</span><br><span class="line">		(if (= n 0)</span><br><span class="line">			acc</span><br><span class="line">			(iter (- n 1) (<span class="keyword">*</span> acc n)))))</span><br><span class="line">	(iter n 1))</span><br></pre></td></tr></table></figure>
-<p>以上重构的函数就是使用迭代的思想, 通常将递归转化为迭代遵循以下的规律:</p>
-<ol>
-<li>需要一个辅助函数, 这里就是<code>iter</code>.</li>
-<li>需要一个或多个<code>accumulator</code>来保存函数调用过程中需要保存的状态, 在这里就是<code>acc</code>保存了每次调用<code>*</code>之后的值.</li>
-</ol>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p><code>Iteration</code> 和 <code>Recursion</code> 在我们所有的编程语言中都是非常重要的概念, 尤其是在声明式的编程模型中.</p>
-<h2 id="Iteraive_computation">Iteraive computati]]>
-    </summary>
-    
-      <category term="Scheme" scheme="http://deltax.me/tags/Scheme/"/>
     
       <category term="Functional Programming" scheme="http://deltax.me/categories/Functional-Programming/"/>
     
