@@ -108,47 +108,12 @@
 <li>Languages with <code>multiple inheritance</code> let one class extend multiple other classes. It is the most powerful idea among those three.</li>
 </ul>
 <p>Let us give you one example to show why <code>mutiple inheritance</code> is very powerful.</p>
-<h2 id="Point_Example">Point Example</h2><pre><code>      -<span class="ruby">----------
-</span>      | Point2D |
-      -<span class="ruby">----------
-</span>           ^
-<span class="comment">          / \</span>
-<span class="comment">         /   \</span>
-<span class="comment">        /     \</span>
-<span class="comment">       /       \</span>
--<span class="ruby">----------    --------------
-</span>| Point3D |    | ColorPoint |
--<span class="ruby">----------    --------------
-</span>    ^              ^
-     \            /
-      \          /
-       \        /
-        \      /
-         \    /
-          \  /
-    -<span class="ruby">---------------
-</span>    | ColorPoint3D |
-    -<span class="ruby">---------------</span>
-</code></pre><p>Without <code>multiple inheritance</code>, you may copy the code from <code>Point3D</code> and <code>ColorPoint</code>, but if we have <code>multiple inheritance</code>, we might say that the new class has all the methods od all the superclasses. </p>
+<h2 id="Point_Example">Point Example</h2><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">      -<span class="ruby">----------</span><br><span class="line"></span>      | Point2D |</span><br><span class="line">      -<span class="ruby">----------</span><br><span class="line"></span>           ^</span><br><span class="line"><span class="comment">          / \</span></span><br><span class="line"><span class="comment">         /   \</span></span><br><span class="line"><span class="comment">        /     \</span></span><br><span class="line"><span class="comment">       /       \</span></span><br><span class="line">-<span class="ruby">----------    --------------</span><br><span class="line"></span>| Point3D |    | ColorPoint |</span><br><span class="line">-<span class="ruby">----------    --------------</span><br><span class="line"></span>    ^              ^</span><br><span class="line">     \            /</span><br><span class="line">      \          /</span><br><span class="line">       \        /</span><br><span class="line">        \      /</span><br><span class="line">         \    /</span><br><span class="line">          \  /</span><br><span class="line">    -<span class="ruby">---------------</span><br><span class="line"></span>    | ColorPoint3D |</span><br><span class="line">    -<span class="ruby">---------------</span></span><br></pre></td></tr></table></figure>
+<p>Without <code>multiple inheritance</code>, you may copy the code from <code>Point3D</code> and <code>ColorPoint</code>, but if we have <code>multiple inheritance</code>, we might say that the new class has all the methods od all the superclasses. </p>
 <p>But <code>multiple inheritance</code> has some serius problem, if two of the supclasses have the same property or methods, what does that mean? This is diamond problem.</p>
 <p>With single <code>inheritance</code>, the class hierarchy is a tree. With <code>multiple inheritance</code>, class hierarchy may not be a tree, like the class hierarchy above.</p>
-<pre><code>   -<span class="ruby">------
-</span>   |  A  |
-   -<span class="ruby">------
-</span>      ^
-      |
-      |
-   -<span class="ruby">------
-</span>   |  B  |
-   -<span class="ruby">------
-</span>      ^
-<span class="comment">     / \</span>
-<span class="comment">    /   \</span>
-<span class="comment">   /     \</span>
--<span class="ruby">------ -------
-</span>|  C  | |  D  |
--<span class="ruby">------ -------</span>
-</code></pre><h1 id="Mixins">Mixins</h1><ul>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">-------</span><br><span class="line">|  A  |</span><br><span class="line">-------</span></span><br><span class="line"><span class="code">   ^</span></span><br><span class="line"><span class="code">   |</span></span><br><span class="line"><span class="header">   |</span><br><span class="line">-------</span></span><br><span class="line"><span class="header">|  B  |</span><br><span class="line">-------</span></span><br><span class="line"><span class="code">   ^</span></span><br><span class="line"><span class="code">  / \</span></span><br><span class="line"><span class="code"> /   \</span></span><br><span class="line">/     \</span><br><span class="line"><span class="bullet">------- </span>-------</span><br><span class="line">|  C  | |  D  |</span><br><span class="line"><span class="bullet">------- </span>-------</span><br></pre></td></tr></table></figure>
+<h1 id="Mixins">Mixins</h1><ul>
 <li>Ruby has mixins, which is a very elegant feature and a wise approach to solve <code>multiple inheritance</code> problem. It is between <code>multiple inheritance</code> and <code>interfaces</code>.</li>
 </ul>
 <p>Mixins provide actual code to classes that include them, but <strong>they are not class</strong>, we cannot create a instance of it.</p>
@@ -158,12 +123,12 @@
 <pre><code>class <span class="type">ColorPt</span> &lt; <span class="type">Pt</span>
   <span class="keyword">include</span> <span class="type">Color</span>
 <span class="keyword">end</span>
-&lt;!--￼<span class="number">1</span>--&gt;
+&lt;!--￼<span class="number">3</span>--&gt;
 
 <span class="type">Many</span> <span class="keyword">of</span> the elegant uses <span class="keyword">of</span> `mixins` <span class="keyword">do</span> this things, call other methods on `self` that are <span class="keyword">not</span> defined by the `<span class="keyword">mixin</span>`. <span class="type">For</span> example, the below code needs the class <span class="keyword">include</span> this module implements `+` <span class="keyword">method</span>.
 
 
-&lt;!--￼<span class="number">2</span>--&gt;
+&lt;!--￼<span class="number">4</span>--&gt;
 
 
 <span class="keyword">if</span> we want to <span class="keyword">include</span> this `<span class="keyword">mixin</span>`, we should implement `+` <span class="keyword">method</span>:
