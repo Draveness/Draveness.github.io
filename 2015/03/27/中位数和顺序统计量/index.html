@@ -144,8 +144,16 @@
 <h1 id="最坏情况为线性时间的选择算法">最坏情况为线性时间的选择算法</h1><p>我们现在来介绍一个最坏情况的运行时间 $O(n)$ 的选择算法. 像 <code>randomized_select</code> 算法一样, <code>select</code> 算法通过对输入数组的递归划分来找出所需的元素. 它使用的也是来自快速排序的确定性划分算法, <code>partition</code>.</p>
 <p>通过执行一下步骤, 算法可以确定一个有 $n&gt;1$ 个不同元素的输入数组中第 $i$ 小的元素:</p>
 <ol>
-<li>将输入数组的 $n$ 个元素划分成 $\left \lceil{x/5}\right \rceil $</li>
+<li>将输入数组的 $n$ 个元素划分成 $\left \lceil{x/5}\right \rceil$ , 每组 $5$ 个元素, 且至多由剩下的 $n mod 5$ 个元素组成.</li>
+<li>寻找这 $\left \lfloor{x/5}\right \rfloor$ 组中每一组饿中位数: 首先对每组元素进行插入排序, 然后确定中位数.</li>
+<li>对第 $2$ 步中找出的 $\left \lceil{x/5}\right \rceil$ 个中位数, 递归调用 <code>select</code> 以找出其中位数 $x$.</li>
+<li>利用修改过的 <code>partition</code> 版本, 按中位数的中位数 $x$ 对输入数组进行划分. 让 $k$ 比划分的低区中的元素数目多 $1$. 因此 $x$ 是第 $k$ 小的元素, 并且有 $n-k$ 个元素在划分的高区.</li>
+<li>如果 $i=k$, 则返回 $x$. 如果 $i<k$, 则在低区递归调用="" `select`="" 已找出第="" $i$="" 小的元素.="" 如果="" $i="">k$ 小的元素.</k$,></li>
 </ol>
+<p>如果划分的主元素为 $x$, 至少有一半大于或等于中位数的中位数 $x$. 只要有一半的组中有 $3$ 个元素大于 $x$, 不算中间这个组, 大于 $x$ 的元素个数只要为:</p>
+<p>$$3(\left \lceil \frac{1}{2}\left \lceil{\frac{n}{5}}\right \rceil \right \rceil) \geq \frac{3n}{10}$$</p>
+<p>所以我们现在有一个递归式来推导 <code>select</code> 算法的最坏情况的运行时间 $T(n)$了.</p>
+<p>$$T(n) \leq \begin{cases}<br> &amp; O(1) &amp; \text{ if } n &lt; 140 \<br> &amp; T(\left \lceil{x/5}\right \rceil) + T(7n/10+6) + O(n) &amp; \text { if } n \geq 140<br>\end{cases}$$</p>
   
 	</div>
 		<footer class="article-footer clearfix">
