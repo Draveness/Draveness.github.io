@@ -4,7 +4,7 @@
   <subtitle><![CDATA[为了成为牛逼闪闪的工程师]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
-  <updated>2015-03-27T14:07:28.000Z</updated>
+  <updated>2015-03-27T14:10:29.000Z</updated>
   <id>http://deltax.me/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://deltax.me/2015/03/27/%E4%B8%AD%E4%BD%8D%E6%95%B0%E5%92%8C%E9%A1%BA%E5%BA%8F%E7%BB%9F%E8%AE%A1%E9%87%8F/"/>
     <id>http://deltax.me/2015/03/27/中位数和顺序统计量/</id>
     <published>2015-03-27T10:34:48.000Z</published>
-    <updated>2015-03-27T14:07:28.000Z</updated>
+    <updated>2015-03-27T14:10:29.000Z</updated>
     <content type="html"><![CDATA[<h1 id="顺序统计量">顺序统计量</h1><p>在一个由 $n$ 个元素组成的集合中, 第 $i$ 个顺序统计量 (order statistic) 是该集合中第 $i$ 小的元素.</p>
 <ul>
 <li><strong>最小值</strong>是第 $1$ 个顺序统计量 $i=1$.</li>
@@ -35,30 +35,31 @@
 <p>输入: 一个包含 $n$ 个(互异的)数的集合 $A$ 和一个整数 $i$, 其中 $1 \leq i \leq n$<br>输出: 元素 $x \in A$, 且 $A$ 中恰好有 $i-1$个其它元素小于它.</p>
 </blockquote>
 <h1 id="期望为线性时间的选择算法">期望为线性时间的选择算法</h1><p>我们将介绍一种解决选择问题的算法, 渐进时间为 $\Theta (n)$. 与快速排序一样, 我们将输入数组进行递归划分. 但与快速排序不同的是, 我们只会处理划分的一边. 所以快速排序的期望运行复杂度为 $\Theta (n \lg n)$, 而在这里选择算法的期望运行时间为 $\Theta (n)$</p>
-<p><code>randomized_select</code> 利用了 <code>randomized_partition</code> 过程, 它也是一个随机算法.</p>
+<p><code>RANDOMIZED_SELECT</code> 利用了 <code>randomized_partition</code> 过程, 它也是一个随机算法.</p>
 <figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">#define EXCHANGE(a, b) tmp = a; a = b; b = tmp;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">randomized_select</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> p, <span class="keyword">int</span> r, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> q, k;</span><br><span class="line">    <span class="keyword">if</span> (p == r) &#123;</span><br><span class="line">        <span class="keyword">return</span> A[p];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    q = randomized_partition(A, p, r);</span><br><span class="line">    k = q - p + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (i == k) &#123;</span><br><span class="line">        <span class="keyword">return</span> A[q];</span><br><span class="line">    &#125; <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(i &lt; k)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">return</span> <span class="title">randomized_select</span><span class="params">(A, p, q - <span class="number">1</span>, i)</span></span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="function"><span class="keyword">return</span> <span class="title">randomized_select</span><span class="params">(A, q + <span class="number">1</span>, r, i - k)</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">randomized_partition</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> p, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = rand() % (r - p) + p,</span><br><span class="line">        tmp;</span><br><span class="line"></span><br><span class="line">    EXCHANGE(A[i], A[r - <span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">return</span> <span class="title">partition</span><span class="params">(A, p, r)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">partition</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> p, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x = A[r - <span class="number">1</span>],</span><br><span class="line">        i = p - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = p; j &lt; r; j++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (A[j] &lt;= x) &#123;</span><br><span class="line">            i++;</span><br><span class="line">            EXCHANGE(A[j], A[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    EXCHANGE(A[r], A[i + <span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">return</span> i + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>randomized_select</code> 的运行过程如下:</p>
+<p><code>RANDOMIZED_SELECT</code> 的运行过程如下:</p>
 <ul>
 <li><code>if (p == r)</code> 检查递归的基本情况, 即数组 $A[p..r]$ 中只包含一个元素.</li>
 <li><code>randomized_partition(A, p, r)</code> 将数组 $A[p..r]$ 划分为两个可能为空的子数组 $A[p..q - 1]$ 和  $A[q + 1..r]$, 使得前者中每个元素都小于 $A[p]$, 后者大于 $A[p]$, 其中  $A[q]$ 为主元.</li>
 <li><code>k = q - p + 1</code> 计算子数组 $A[p..q]$ 中的元素个数, 及处于划分的低区的元素的个数加 $1$, $1$ 为主元素..</li>
-<li><code>if (i == k)</code> 检查 $A[q]$ 是否是第 $i$ 小的元素, 如果是就返回 <code>randomized_select(A, p, q - 1, i)</code>, 如果是直接返回 $A[q]$, 否则返回 <code>randomized_select(A, q + 1, r, i - k)</code>, 其中 $i-k$ 为元素在高区的相对位置.</li>
+<li><code>if (i == k)</code> 检查 $A[q]$ 是否是第 $i$ 小的元素, 如果是就返回 <code>RANDOMIZED_SELECT(A, p, q - 1, i)</code>, 如果是直接返回 $A[q]$, 否则返回 <code>RANDOMIZED_SELECT(A, q + 1, r, i - k)</code>, 其中 $i-k$ 为元素在高区的相对位置.</li>
 </ul>
-<p><code>randomized_select</code> 的最坏情况的运行时间为 $\Theta (n^2)$. 这样的运行时间并不是我们需要的, 下面我们将介绍一种效率更高的选择算法.</p>
-<h1 id="最坏情况为线性时间的选择算法">最坏情况为线性时间的选择算法</h1><p>我们现在来介绍一个最坏情况的运行时间 $O(n)$ 的选择算法. 像 <code>randomized_select</code> 算法一样, <code>select</code> 算法通过对输入数组的递归划分来找出所需的元素. 它使用的也是来自快速排序的确定性划分算法, <code>partition</code>.</p>
+<p><code>RANDOMIZED_SELECT</code> 的最坏情况的运行时间为 $\Theta (n^2)$. 这样的运行时间并不是我们需要的, 下面我们将介绍一种效率更高的选择算法.</p>
+<h1 id="最坏情况为线性时间的选择算法">最坏情况为线性时间的选择算法</h1><p>我们现在来介绍一个最坏情况的运行时间 $O(n)$ 的选择算法. 像 <code>RANDOMIZED_SELECT</code> 算法一样, <code>SELECT</code> 算法通过对输入数组的递归划分来找出所需的元素. 它使用的也是来自快速排序的确定性划分算法, <code>PARTITION</code>.</p>
 <p>通过执行一下步骤, 算法可以确定一个有 $n&gt;1$ 个不同元素的输入数组中第 $i$ 小的元素:</p>
 <ol>
 <li>将输入数组的 $n$ 个元素划分成 $\left \lceil{x/5}\right \rceil$ , 每组 $5$ 个元素, 且至多由剩下的 $n mod 5$ 个元素组成.</li>
 <li>寻找这 $\left \lfloor{x/5}\right \rfloor$ 组中每一组饿中位数: 首先对每组元素进行插入排序, 然后确定中位数.</li>
-<li>对第 $2$ 步中找出的 $\left \lceil{x/5}\right \rceil$ 个中位数, 递归调用 <code>select</code> 以找出其中位数 $x$.</li>
+<li>对第 $2$ 步中找出的 $\left \lceil{x/5}\right \rceil$ 个中位数, 递归调用 <code>SELECT</code> 以找出其中位数 $x$.</li>
 <li>利用修改过的 <code>partition</code> 版本, 按中位数的中位数 $x$ 对输入数组进行划分. 让 $k$ 比划分的低区中的元素数目多 $1$. 因此 $x$ 是第 $k$ 小的元素, 并且有 $n-k$ 个元素在划分的高区.</li>
 <li>如果 $i=k$, 则返回 $x$. 如果 $i<k$, 则在低区递归调用="" `select`="" 已找出第="" $i$="" 小的元素.="" 如果="" $i="">k$ 小的元素.</k$,></li>
 </ol>
 <p>如果划分的主元素为 $x$, 至少有一半大于或等于中位数的中位数 $x$. 只要有一半的组中有 $3$ 个元素大于 $x$, 不算中间这个组, 大于 $x$ 的元素个数只要为:</p>
 <p>$$3(\left \lceil \frac{1}{2}\left \lceil{\frac{n}{5}}\right \rceil \right \rceil) \geq \frac{3n}{10}$$</p>
-<p>所以我们现在有一个递归式来推导 <code>select</code> 算法的最坏情况的运行时间 $T(n)$了.</p>
+<p>所以我们现在有一个递归式来推导 <code>SELECT</code> 算法的最坏情况的运行时间 $T(n)$了.</p>
 <p>$$T(n) \leq \begin{cases}<br> &amp; O(1) &amp; \text{ if } n &lt; 140 \\<br> &amp; T(\left \lceil{x/5}\right \rceil) + T(7n/10+6) + O(n) &amp; \text { if } n \geq 140<br>\end{cases}$$</p>
 <p>所以, 可以得到 $T(n) = O(n)$.</p>
+<p>与比较排序一样, <code>SELECT</code> 和 <code>RANDOMIZED_SELECT</code> 也是通过元素之间的比较来确定它们之间的相对次序的.</p>
 ]]></content>
     <summary type="html">
     <![CDATA[<h1 id="顺序统计量">顺序统计量</h1><p>在一个由 $n$ 个元素组成的集合中, 第 $i$ 个顺序统计量 (order statistic) 是该集合中第 $i$ 小的元素.</p>
