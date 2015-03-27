@@ -4,7 +4,7 @@
   <subtitle><![CDATA[为了成为牛逼闪闪的工程师]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
-  <updated>2015-03-26T13:29:00.000Z</updated>
+  <updated>2015-03-27T12:50:36.000Z</updated>
   <id>http://deltax.me/</id>
   
   <author>
@@ -13,6 +13,55 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[中位数和顺序统计量]]></title>
+    <link href="http://deltax.me/2015/03/27/%E4%B8%AD%E4%BD%8D%E6%95%B0%E5%92%8C%E9%A1%BA%E5%BA%8F%E7%BB%9F%E8%AE%A1%E9%87%8F/"/>
+    <id>http://deltax.me/2015/03/27/中位数和顺序统计量/</id>
+    <published>2015-03-27T10:34:48.000Z</published>
+    <updated>2015-03-27T12:50:36.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="顺序统计量">顺序统计量</h1><p>在一个由 $n$ 个元素组成的集合中, 第 $i$ 个顺序统计量 (order statistic) 是该集合中第 $i$ 小的元素.</p>
+<ul>
+<li><strong>最小值</strong>是第 $1$ 个顺序统计量 $i=1$.</li>
+<li><strong>最大值</strong>是第 $n$ 个顺序统计量 $i=n$.</li>
+<li><strong>中位数</strong>是所属集合的中点元素.<ul>
+<li>当 $n$ 为偶数时, 存在两个中位数, 分别位于 $i=n/2$ 和 $i=n/2+1$.</li>
+<li>当 $n$ 为奇数时, 中位数是唯一的, 位于 $i=(n+1)/2$.</li>
+</ul>
+</li>
+</ul>
+<h1 id="选择问题">选择问题</h1><p>我们将讨论从一个由 $n$ 个元素互异的集合中选择第 $i$ 个顺序统计量的问题, 把这一类问题形式化定义为如下的<strong>选择问题</strong>.</p>
+<blockquote>
+<p>输入: 一个包含 $n$ 个(互异的)数的集合 $A$ 和一个整数 $i$, 其中 $1 \leq i \leq n$<br>输出: 元素 $x \in A$, 且 $A$ 中恰好有 $i-1$个其它元素小于它.</p>
+</blockquote>
+<h1 id="期望为线性时间的选择算法">期望为线性时间的选择算法</h1><p>我们将介绍一种解决选择问题的算法, 渐进时间为 $\Theta (n)$. 与快速排序一样, 我们将输入数组进行递归划分. 但与快速排序不同的是, 我们只会处理划分的一边. 所以快速排序的期望运行复杂度为 $\Theta (n \lg n)$, 而在这里选择算法的期望运行时间为 $\Theta (n)$</p>
+<p><code>randomized_select</code> 利用了 <code>randomized_partition</code> 过程, 它也是一个随机算法.</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">#define EXCHANGE(a, b) tmp = a; a = b; b = tmp;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">randomized_select</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> p, <span class="keyword">int</span> r, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> q, k;</span><br><span class="line">    <span class="keyword">if</span> (p == r) &#123;</span><br><span class="line">        <span class="keyword">return</span> A[p];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    q = randomized_partition(A, p, r);</span><br><span class="line">    k = q - p + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (i == k) &#123;</span><br><span class="line">        <span class="keyword">return</span> A[q];</span><br><span class="line">    &#125; <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(i &lt; k)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">return</span> <span class="title">randomized_select</span><span class="params">(A, p, q - <span class="number">1</span>, i)</span></span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="function"><span class="keyword">return</span> <span class="title">randomized_select</span><span class="params">(A, q + <span class="number">1</span>, r, i - k)</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">randomized_partition</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> p, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = rand() % (r - p) + p,</span><br><span class="line">        tmp;</span><br><span class="line"></span><br><span class="line">    EXCHANGE(A[i], A[r - <span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">return</span> <span class="title">partition</span><span class="params">(A, p, r)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">partition</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> p, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x = A[r - <span class="number">1</span>],</span><br><span class="line">        i = p - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = p; j &lt; r; j++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (A[j] &lt;= x) &#123;</span><br><span class="line">            i++;</span><br><span class="line">            EXCHANGE(A[j], A[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    EXCHANGE(A[r], A[i + <span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">return</span> i + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>randomized_select</code> 的运行过程如下:</p>
+<ul>
+<li><code>if (p == r)</code> 检查递归的基本情况, 即数组 $A[p..r]$ 中只包含一个元素.</li>
+<li><code>randomized_partition(A, p, r)</code> 将数组 $A[p..r]$ 划分为两个可能为空的子数组 $A[p..q - 1]$ 和  $A[q + 1..r]$, 使得前者中每个元素都小于 $A[p]$, 后者大于 $A[p]$, 其中  $A[q]$ 为主元.</li>
+<li><code>k = q - p + 1</code> 计算子数组 $A[p..q]$ 中的元素个数, 及处于划分的低区的元素的个数加 $1$, $1$ 为主元素..</li>
+<li><code>if (i == k)</code> 检查 $A[q]$ 是否是第 $i$ 小的元素, 如果是就返回 <code>randomized_select(A, p, q - 1, i)</code>, 如果是直接返回 $A[q]$, 否则返回 <code>randomized_select(A, q + 1, r, i - k)</code>, 其中 $i-k$ 为元素在高区的相对位置.</li>
+</ul>
+<p><code>randomized_select</code> 的最坏情况的运行时间为 $\Theta (n^2)$. 这样的运行时间并不是我们需要的, 下面我们将介绍一种效率更高的选择算法.</p>
+<h1 id="最坏情况为线性时间的选择算法">最坏情况为线性时间的选择算法</h1><p>我们现在来介绍一个最坏情况的运行时间 $O(n)$ 的选择算法. 像 <code>randomized_select</code> 算法一样, <code>select</code> 算法通过对输入数组的递归划分来找出所需的元素. 它使用的也是来自快速排序的确定性划分算法, <code>partition</code>.</p>
+<p>通过执行一下步骤, 算法可以确定一个有 $n&gt;1$ 个不同元素的输入数组中第 $i$ 小的元素:</p>
+<ol>
+<li>将输入数组的 $n$ 个元素划分成 $\left \lceil{x/5}\right \rceil $</li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="顺序统计量">顺序统计量</h1><p>在一个由 $n$ 个元素组成的集合中, 第 $i$ 个顺序统计量 (order statistic) 是该集合中第 $i$ 小的元素.</p>
+<ul>
+<li><strong>最小值</strong>是第 $1$ 个顺序统]]>
+    </summary>
+    
+      <category term="Algorithm" scheme="http://deltax.me/tags/Algorithm/"/>
+    
+      <category term="clrs" scheme="http://deltax.me/categories/clrs/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Object-Oriented-Programming and Other Programming Paradigms]]></title>
@@ -1379,62 +1428,6 @@ Content-<span class="string">Type:</span> text/html
 ]]></content>
     <summary type="html">
     <![CDATA[<p>During these days development, when I connect our iOS App to Python <code>back-end</code> using <code>AFNetworking</code>, I met an error]]>
-    </summary>
-    
-      <category term="Objective-C" scheme="http://deltax.me/tags/Objective-C/"/>
-    
-      <category term="iOS" scheme="http://deltax.me/tags/iOS/"/>
-    
-      <category term="iOS" scheme="http://deltax.me/categories/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[iOS Combine TabbarController and NavigationController<Bug02>]]></title>
-    <link href="http://deltax.me/2014/11/28/iOS%E7%BB%84%E5%90%88TabbarController%E5%92%8CNavigationController%20%3CBug02%3E/"/>
-    <id>http://deltax.me/2014/11/28/iOS组合TabbarController和NavigationController <Bug02>/</id>
-    <published>2014-11-28T12:36:59.000Z</published>
-    <updated>2015-03-24T17:31:56.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="TabbarController_and_NavigationController">TabbarController and NavigationController</h2><p><code>UINavigationController</code> and <code>UITabBarController</code> are two kinds of container classes in Cocoa. The two controllers are tremendous important in iOS development, we deal with them every day. Even if you are not a developer, just an iOS device user. Almost every thing you see in an iOS App have some relationship with them.</p>
-<p>Why are they so important, because of they are container classes, they handle many view controllers in an App. And <code>MVC</code> is the basic design patterns in <code>Cocoa</code> and <code>Cocoa touch</code>.</p>
-<p>Personally, I prefer to initialize everything programmingly, not in a storyboard or a nib file. Because I think it is easy to deal with. Sometimes using storyboard or a nib is too simple, but they may cause undetectable crash.</p>
-<h2 id="Use_them_Programatically">Use them Programatically</h2><p>The first thing we start an App is set up the project, and I am used to delete the <code>Main.storyboard</code> file first. And add some code to configure the <code>AppDelegate</code>.</p>
-<p>The common code you add may be this:</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions &#123;</span><br><span class="line">    <span class="comment">// Override point for customization after application launch.</span></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.window</span> = [[<span class="built_in">UIWindow</span> alloc] initWithFrame:[[UIScreen mainScreen] bounds]];</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.window</span><span class="variable">.rootViewController</span> = [[<span class="built_in">UIViewController</span> alloc] init];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.window</span> makeKeyAndVisible];</span><br><span class="line">    [[<span class="built_in">UIApplication</span> sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br><span class="line">```	</span><br><span class="line"></span><br><span class="line">Every project without a `storyboard` needs to initialize like <span class="keyword">this</span>. How should we <span class="keyword">do</span> then?</span><br><span class="line"></span><br><span class="line">What should we <span class="keyword">do</span>, <span class="keyword">if</span> we want to set up with a `navigationController`:</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>(BOOL)application:(UIApplication <em>)application didFinishLaunchingWithOptions:(NSDictionary </em>)launchOptions {<br>  // Override point for customization after application launch.<br>  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];</p>
-<pre><code><span class="built_in">UINavigationController</span> *navigationController = [[<span class="built_in">UINavigationController</span> alloc] initWithRootViewController:[[<span class="built_in">UIViewController</span> alloc] init]];
-</code></pre><p>  self.window.rootViewController = navigationController;<br>  [self.window makeKeyAndVisible];<br>  [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];<br>  return YES;<br>}</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">It's quiet simple <span class="keyword">and</span> easy <span class="keyword">to</span> understand, what <span class="keyword">about</span> `tabBarController`:</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>(BOOL)application:(UIApplication <em>)application didFinishLaunchingWithOptions:(NSDictionary </em>)launchOptions {<br>  // Override point for customization after application launch.<br>  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];</p>
-<p>  UIViewController <em>firstViewController = [[UIViewController alloc] init];<br>  UIViewController </em>secondViewController = [[UIViewController alloc] init];<br>  UIViewController *thirdViewController = [[UIViewController alloc] init];</p>
-<pre><code>UITabBarController <span class="keyword">*</span>tabBarController = [[UITabBarController alloc] init];        
-tabBarController.viewControllers = <span class="comment">@[firstViewController, secondViewController, thirdViewController];</span>
-</code></pre><p>  self.window.rootViewController = tabBarController;<br>  [self.window makeKeyAndVisible];<br>  [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];<br>  return YES;<br>}</p>
-<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Just <span class="keyword">set</span> `tabBarController`<span class="comment">'s property `viewControllers` to proper `viewController`.</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">##Why combine TabBarController and NavigationController</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">If</span> you want <span class="keyword">to</span> switch <span class="keyword">to</span> another view <span class="keyword">from</span> one <span class="keyword">of</span> `tabBarController`, you can <span class="keyword">not</span> <span class="keyword">do</span> it <span class="keyword">with</span> a <span class="built_in">single</span> `tabBarController`. Because you need a stack <span class="keyword">to</span> manage all <span class="keyword">of</span> your controllers. <span class="keyword">If</span> you <span class="keyword">not</span> have one, the system <span class="keyword">do</span> <span class="keyword">not</span> know which view controller will display after this view pop <span class="keyword">from</span> the window.</span><br><span class="line"></span><br><span class="line">So we need <span class="keyword">to</span> combine them, <span class="keyword">in</span> my first project, I <span class="keyword">do</span> this <span class="keyword">in</span> this way:</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>(BOOL)application:(UIApplication <em>)application didFinishLaunchingWithOptions:(NSDictionary </em>)launchOptions {<br>  // Override point for customization after application launch.<br>  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];</p>
-<p>  UIViewController <em>firstViewController = [[UIViewController alloc] init];<br>  UIViewController </em>secondViewController = [[UIViewController alloc] init];<br>  UIViewController *thirdViewController = [[UIViewController alloc] init];</p>
-<pre><code>UITabBarController <span class="keyword">*</span>tabBarController = [[UITabBarController alloc] init];        
-tabBarController.viewControllers = <span class="comment">@[firstViewController, secondViewController, thirdViewController];</span>
-UINavigationController <span class="keyword">*</span>navigationController = [[UINavigationControlle alloc] initWithRootViewController:tabBarController];
-</code></pre><p>  self.window.rootViewController = tabBarController;<br>  [self.window makeKeyAndVisible];<br>  [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];<br>  return YES;<br>}</p>
-<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">When I did <span class="keyword">this</span>, I <span class="keyword">do</span> <span class="keyword">not</span> consider about other thing, because the apple developer <span class="built_in">document</span> use <span class="keyword">this</span> <span class="attribute">approach</span>:</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>UIViewController <em>firstViewController = [[UIViewController alloc] init];<br>UIViewController </em>secondViewController = [[UIViewController alloc] init];<br>UIViewController <em>thirdViewController = [[UIViewController alloc] init];<br>UIViewController </em>rootViewController = [[UIViewController alloc] init];<br>UINavigationController* navController = [[UINavigationController alloc]                         initWithRootViewController:rootViewController];</p>
-<p>NSArray* controllers = [NSArray arrayWithObjects:firstViewController, secondViewController, thirdViewController, navController, nil];</p>
-<p>UITabBarController *tabBarController = [[UITabBarController alloc] init];<br>tabBarController.viewControllers = controllers;</p>
-<p>self.window.rootViewController = tabBarController;<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">I just think this is a silly way. if I imitate this, **<span class="operator"><span class="keyword">Do</span> I need <span class="keyword">to</span> initialize five navigation controllers <span class="keyword">each</span> <span class="keyword">with</span> a <span class="keyword">view</span> controller?**</span><br><span class="line"></span><br><span class="line">The answer <span class="keyword">is</span> <span class="keyword">right</span>. I need <span class="keyword">to</span> <span class="keyword">do</span> so. Why? <span class="keyword">After</span> I imitate this approach, my previous approach has <span class="keyword">some</span> side effects.</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> Sometimes you reference <span class="string">`navigationController`</span> <span class="keyword">with</span> <span class="string">`self`</span>, you may <span class="keyword">get</span> a <span class="literal">null</span>. Because the five viewController <span class="keyword">are</span> bot pushed <span class="keyword">on</span> the stack.</span><br><span class="line"><span class="number">2.</span> <span class="keyword">If</span> you <span class="keyword">change</span> <span class="string">`navigationBar`</span> <span class="keyword">in</span> one tab, <span class="keyword">as</span> you swich <span class="keyword">to</span> another, <span class="keyword">all</span> the <span class="string">`navigationBar`</span> <span class="keyword">are</span> <span class="keyword">changed</span>. Because they <span class="keyword">are</span> just one <span class="string">`navigationController`</span> <span class="keyword">and</span> it just have <span class="keyword">only</span> one <span class="string">`navigatonBar`</span>.</span><br><span class="line"><span class="number">3.</span> <span class="keyword">If</span> you <span class="string">`pushViewController`</span> <span class="keyword">from</span> one <span class="keyword">of</span> <span class="string">`tabBarController`</span><span class="string">'s `viewControllers`, tab bar will disapper, you will not see it, because `tabBarController` is not the `rootViewController`, it just in the stack with its `tabBar`.</span><br><span class="line"></span><br><span class="line">So the verbose but correct approach is this:</span></span></span><br></pre></td></tr></table></figure></p>
-<p>UIViewController <em>firstViewController = [[UIViewController alloc] init];<br>UIViewController </em>secondViewController = [[UIViewController alloc] init];<br>UIViewController <em>thirdViewController = [[UIViewController alloc] init];<br>UINavigationController </em>firstNavigationController = [[UINavigationController alloc]<br>                     initWithRootViewController:rootViewController];<br>UINavigationController <em>secondNavigationController = [[UINavigationController alloc]<br>                     initWithRootViewController:rootViewController];<br>UINavigationController </em>thirdNavigationController = [[UINavigationController alloc]<br>                     initWithRootViewController:rootViewController];</p>
-<p>NSArray* controllers = [NSArray arrayWithObjects:firstNavigationController, secondNavigationController, thirdNavigationController, nil];</p>
-<p>UITabBarController *tabBarController = [[UITabBarController alloc] init];<br>tabBarController.viewControllers = controllers;</p>
-<p>self.window.rootViewController = tabBarController;<br>```</p>
-<p>PS: <code>navigationBar</code> is damn difficult to use. Hope this help.</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="TabbarController_and_NavigationController">TabbarController and NavigationController</h2><p><code>UINavigationController</code> and ]]>
     </summary>
     
       <category term="Objective-C" scheme="http://deltax.me/tags/Objective-C/"/>

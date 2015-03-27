@@ -4,52 +4,40 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>简单的HTTP协议 | DeltaX</title>
+    <title>中位数和顺序统计量 | DeltaX</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Draven">
     
 
     
-    <meta name="description" content="HTTP协议HTTP协议主要用于客户端和服务端之间的通信, 应用HTTP协议时必须是一端担任客户端角色, 一端担任服务端角色
+    <meta name="description" content="顺序统计量在一个由 $n$ 个元素组成的集合中, 第 $i$ 个顺序统计量 (order statistic) 是该集合中第 $i$ 小的元素.
 
-客户端发送HTTP请求
-服务端进行响应回复
-
-请求报文请求报文 = 请求方法 + URI + 协议版本 + (请求首部) + (内容实体)
-
-GET /index.htm HTTP/1.1
-HOST: DeltaX.me
-
-GET表示访问服务器的类型, 也就是Method">
+最小值是第 $1$ 个顺序统计量 $i=1$.
+最大值是第 $n$ 个顺序统计量 $i=n$.
+中位数是所属集合的中点元素.
+当 $n$ 为偶数时, 存在两个中位数, 分别位于 $i=n/2$ 和 $i=n/2+1$.
+当 $n$ 为奇数时, 中位数是">
 <meta property="og:type" content="article">
-<meta property="og:title" content="简单的HTTP协议">
-<meta property="og:url" content="http://deltax.me/2015/01/24/简单的HTTP协议/index.html">
+<meta property="og:title" content="中位数和顺序统计量">
+<meta property="og:url" content="http://deltax.me/2015/03/27/中位数和顺序统计量/index.html">
 <meta property="og:site_name" content="DeltaX">
-<meta property="og:description" content="HTTP协议HTTP协议主要用于客户端和服务端之间的通信, 应用HTTP协议时必须是一端担任客户端角色, 一端担任服务端角色
+<meta property="og:description" content="顺序统计量在一个由 $n$ 个元素组成的集合中, 第 $i$ 个顺序统计量 (order statistic) 是该集合中第 $i$ 小的元素.
 
-客户端发送HTTP请求
-服务端进行响应回复
-
-请求报文请求报文 = 请求方法 + URI + 协议版本 + (请求首部) + (内容实体)
-
-GET /index.htm HTTP/1.1
-HOST: DeltaX.me
-
-GET表示访问服务器的类型, 也就是Method">
+最小值是第 $1$ 个顺序统计量 $i=1$.
+最大值是第 $n$ 个顺序统计量 $i=n$.
+中位数是所属集合的中点元素.
+当 $n$ 为偶数时, 存在两个中位数, 分别位于 $i=n/2$ 和 $i=n/2+1$.
+当 $n$ 为奇数时, 中位数是">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="简单的HTTP协议">
-<meta name="twitter:description" content="HTTP协议HTTP协议主要用于客户端和服务端之间的通信, 应用HTTP协议时必须是一端担任客户端角色, 一端担任服务端角色
+<meta name="twitter:title" content="中位数和顺序统计量">
+<meta name="twitter:description" content="顺序统计量在一个由 $n$ 个元素组成的集合中, 第 $i$ 个顺序统计量 (order statistic) 是该集合中第 $i$ 小的元素.
 
-客户端发送HTTP请求
-服务端进行响应回复
-
-请求报文请求报文 = 请求方法 + URI + 协议版本 + (请求首部) + (内容实体)
-
-GET /index.htm HTTP/1.1
-HOST: DeltaX.me
-
-GET表示访问服务器的类型, 也就是Method">
+最小值是第 $1$ 个顺序统计量 $i=1$.
+最大值是第 $n$ 个顺序统计量 $i=n$.
+中位数是所属集合的中点元素.
+当 $n$ 为偶数时, 存在两个中位数, 分别位于 $i=n/2$ 和 $i=n/2+1$.
+当 $n$ 为奇数时, 中位数是">
 
     
     <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
@@ -108,14 +96,14 @@ GET表示访问服务器的类型, 也就是Method">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/01/24/简单的HTTP协议/" title="简单的HTTP协议" itemprop="url">简单的HTTP协议</a>
+      <a href="/2015/03/27/中位数和顺序统计量/" title="中位数和顺序统计量" itemprop="url">中位数和顺序统计量</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
 		
   <p class="article-time">
-    <time datetime="2015-01-24T13:59:11.000Z" itemprop="datePublished"> 发表于 2015-01-24</time>
+    <time datetime="2015-03-27T10:34:48.000Z" itemprop="datePublished"> 发表于 2015-03-27</time>
     
   </p>
 </header>
@@ -124,54 +112,54 @@ GET表示访问服务器的类型, 也就是Method">
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP协议"><span class="toc-number">1.</span> <span class="toc-text">HTTP协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#请求报文"><span class="toc-number">2.</span> <span class="toc-text">请求报文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#响应报文"><span class="toc-number">3.</span> <span class="toc-text">响应报文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#无状态协议和Cookie"><span class="toc-number">4.</span> <span class="toc-text">无状态协议和Cookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#持久连接和管线化"><span class="toc-number">5.</span> <span class="toc-text">持久连接和管线化</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#顺序统计量"><span class="toc-number">1.</span> <span class="toc-text">顺序统计量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#选择问题"><span class="toc-number">2.</span> <span class="toc-text">选择问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#期望为线性时间的选择算法"><span class="toc-number">3.</span> <span class="toc-text">期望为线性时间的选择算法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#最坏情况为线性时间的选择算法"><span class="toc-number">4.</span> <span class="toc-text">最坏情况为线性时间的选择算法</span></a></li></ol>
 		
 		</div>
 		
-		<h2 id="HTTP协议">HTTP协议</h2><p><code>HTTP</code>协议主要用于客户端和服务端之间的通信, 应用HTTP协议时必须是一端担任客户端角色, 一端担任服务端角色</p>
+		<h1 id="顺序统计量">顺序统计量</h1><p>在一个由 $n$ 个元素组成的集合中, 第 $i$ 个顺序统计量 (order statistic) 是该集合中第 $i$ 小的元素.</p>
 <ul>
-<li>客户端发送HTTP请求</li>
-<li>服务端进行响应回复</li>
+<li><strong>最小值</strong>是第 $1$ 个顺序统计量 $i=1$.</li>
+<li><strong>最大值</strong>是第 $n$ 个顺序统计量 $i=n$.</li>
+<li><strong>中位数</strong>是所属集合的中点元素.<ul>
+<li>当 $n$ 为偶数时, 存在两个中位数, 分别位于 $i=n/2$ 和 $i=n/2+1$.</li>
+<li>当 $n$ 为奇数时, 中位数是唯一的, 位于 $i=(n+1)/2$.</li>
 </ul>
-<h2 id="请求报文">请求报文</h2><pre><code>请求报文 = 请求方法 + URI + 协议版本 + (请求首部) + (内容实体)
-
-GET <span class="regexp">/index.htm HTTP/</span><span class="number">1.1</span>
-<span class="string">HOST:</span> DeltaX.me
-</code></pre><ul>
-<li><code>GET</code>表示访问服务器的类型, 也就是<code>Method</code></li>
-<li><code>/index.htm</code>指明请求的资源对象, 也叫<code>URI</code></li>
-<li><code>HTTP/1.1</code>为<code>HTTP</code>的版本号</li>
-<li>这段请求的意思是访问HTTP服务器上的<code>/index.htm</code>资源</li>
+</li>
 </ul>
-<h2 id="响应报文">响应报文</h2><pre><code>请求报文 = 协议版本 + 状态码 + 原因短语 + (响应首部字段) + 实体主体
-
-HTTP/<span class="number">1.1</span> <span class="number">200</span> OK
-<span class="string">Date:</span> Sat, <span class="number">23</span> January <span class="number">2014</span> <span class="number">22</span>:<span class="number">07</span>:<span class="number">00</span> GMT
-Content-<span class="string">Length:</span> <span class="number">500</span>
-Content-<span class="string">Type:</span> text/html
-
-&lt;html&gt;.....
-</code></pre><ul>
-<li>状态码表示请求的处理结果</li>
-<li>原因短语用于解释状态码</li>
-</ul>
-<h2 id="无状态协议和Cookie">无状态协议和Cookie</h2><p><code>HTTP</code>协议自身不对请求和响应之间的通信状态进行保存, 对于发送过的请求和响应<strong>不做持久化处理</strong>. 由于不必保存状态, 自然可以减轻服务器的CPU以及内存资源的销号, 但是要解决状态的问题, 引入了<code>Cookie</code>技术.</p>
-<p>Cookie会根据从服务器端发送的响应豹纹的<code>Set-Cookie</code>的首部字段信息, 通知客户端保存<code>Cookie</code>. 当下次客户端向服务器发送通信时, 客户端后自动在请求报文中加入<code>Cookie</code>值后发送出去, 服务端接收<code>Cookie</code>值之后, 会对比服务器上的记录, 得到之前的状态信息.</p>
-<h2 id="持久连接和管线化">持久连接和管线化</h2><p>为了解决<code>TCP</code>连接的问题, <code>HTTP/1.1</code>和一部分<code>HTTP/1.0</code>实现了<em>持久连接</em>(HTTP keep-alive)方法</p>
+<h1 id="选择问题">选择问题</h1><p>我们将讨论从一个由 $n$ 个元素互异的集合中选择第 $i$ 个顺序统计量的问题, 把这一类问题形式化定义为如下的<strong>选择问题</strong>.</p>
+<blockquote>
+<p>输入: 一个包含 $n$ 个(互异的)数的集合 $A$ 和一个整数 $i$, 其中 $1 \leq i \leq n$<br>输出: 元素 $x \in A$, 且 $A$ 中恰好有 $i-1$个其它元素小于它.</p>
+</blockquote>
+<h1 id="期望为线性时间的选择算法">期望为线性时间的选择算法</h1><p>我们将介绍一种解决选择问题的算法, 渐进时间为 $\Theta (n)$. 与快速排序一样, 我们将输入数组进行递归划分. 但与快速排序不同的是, 我们只会处理划分的一边. 所以快速排序的期望运行复杂度为 $\Theta (n \lg n)$, 而在这里选择算法的期望运行时间为 $\Theta (n)$</p>
+<p><code>randomized_select</code> 利用了 <code>randomized_partition</code> 过程, 它也是一个随机算法.</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">#define EXCHANGE(a, b) tmp = a; a = b; b = tmp;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">randomized_select</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> p, <span class="keyword">int</span> r, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> q, k;</span><br><span class="line">    <span class="keyword">if</span> (p == r) &#123;</span><br><span class="line">        <span class="keyword">return</span> A[p];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    q = randomized_partition(A, p, r);</span><br><span class="line">    k = q - p + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (i == k) &#123;</span><br><span class="line">        <span class="keyword">return</span> A[q];</span><br><span class="line">    &#125; <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(i &lt; k)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">return</span> <span class="title">randomized_select</span><span class="params">(A, p, q - <span class="number">1</span>, i)</span></span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="function"><span class="keyword">return</span> <span class="title">randomized_select</span><span class="params">(A, q + <span class="number">1</span>, r, i - k)</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">randomized_partition</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> p, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = rand() % (r - p) + p,</span><br><span class="line">        tmp;</span><br><span class="line"></span><br><span class="line">    EXCHANGE(A[i], A[r - <span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">return</span> <span class="title">partition</span><span class="params">(A, p, r)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">partition</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> p, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x = A[r - <span class="number">1</span>],</span><br><span class="line">        i = p - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = p; j &lt; r; j++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (A[j] &lt;= x) &#123;</span><br><span class="line">            i++;</span><br><span class="line">            EXCHANGE(A[j], A[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    EXCHANGE(A[r], A[i + <span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">return</span> i + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>randomized_select</code> 的运行过程如下:</p>
 <ul>
-<li>只要任意一端没有明确提出断开连接, 则保持<code>TCP</code>连接状态</li>
-<li><code>HTTP/1.1</code>中所有的连接默认都是持久连接, 这样可以减轻服务器负担, 减少了<code>TCP</code>连接的重复建立和断开造成的额外开销.</li>
+<li><code>if (p == r)</code> 检查递归的基本情况, 即数组 $A[p..r]$ 中只包含一个元素.</li>
+<li><code>randomized_partition(A, p, r)</code> 将数组 $A[p..r]$ 划分为两个可能为空的子数组 $A[p..q - 1]$ 和  $A[q + 1..r]$, 使得前者中每个元素都小于 $A[p]$, 后者大于 $A[p]$, 其中  $A[q]$ 为主元.</li>
+<li><code>k = q - p + 1</code> 计算子数组 $A[p..q]$ 中的元素个数, 及处于划分的低区的元素的个数加 $1$, $1$ 为主元素..</li>
+<li><code>if (i == k)</code> 检查 $A[q]$ 是否是第 $i$ 小的元素, 如果是就返回 <code>randomized_select(A, p, q - 1, i)</code>, 如果是直接返回 $A[q]$, 否则返回 <code>randomized_select(A, q + 1, r, i - k)</code>, 其中 $i-k$ 为元素在高区的相对位置.</li>
 </ul>
-<p><em>管线化</em>及同时并行发送多个请求, 不需要依次等待相应.</p>
+<p><code>randomized_select</code> 的最坏情况的运行时间为 $\Theta (n^2)$. 这样的运行时间并不是我们需要的, 下面我们将介绍一种效率更高的选择算法.</p>
+<h1 id="最坏情况为线性时间的选择算法">最坏情况为线性时间的选择算法</h1><p>我们现在来介绍一个最坏情况的运行时间 $O(n)$ 的选择算法. 像 <code>randomized_select</code> 算法一样, <code>select</code> 算法通过对输入数组的递归划分来找出所需的元素. 它使用的也是来自快速排序的确定性划分算法, <code>partition</code>.</p>
+<p>通过执行一下步骤, 算法可以确定一个有 $n&gt;1$ 个不同元素的输入数组中第 $i$ 小的元素:</p>
+<ol>
+<li>将输入数组的 $n$ 个元素划分成 $\left \lceil{x/5}\right \rceil $</li>
+</ol>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/clrs/">clrs</a>
+</div>
+
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/HTTP/">HTTP</a>
+  <span></span> <a href="/tags/Algorithm/">Algorithm</a>
   </div>
 
 </div>
@@ -180,7 +168,7 @@ Content-<span class="string">Type:</span> text/html
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://deltax.me/2015/01/24/简单的HTTP协议/" data-title="简单的HTTP协议 | DeltaX" data-tsina="null" class="share clearfix">
+	  <div data-url="http://deltax.me/2015/03/27/中位数和顺序统计量/" data-title="中位数和顺序统计量 | DeltaX" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -193,19 +181,11 @@ Content-<span class="string">Type:</span> text/html
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/01/27/HTTP报文内的HTTP信息.md/" title="HTTP报文内的HTTP信息">
-  <strong>上一篇：</strong><br/>
-  <span>
-  HTTP报文内的HTTP信息</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/01/19/SICP-1-1/"  title="SICP 1.1 The Elements of Programming">
+<a href="/2015/03/26/Object-Oriented-Programming-and-Other-Programming-Paradigms/"  title="Object-Oriented-Programming and Other Programming Paradigms">
  <strong>下一篇：</strong><br/> 
- <span>SICP 1.1 The Elements of Programming
+ <span>Object-Oriented-Programming and Other Programming Paradigms
 </span>
 </a>
 </div>
@@ -214,7 +194,7 @@ Content-<span class="string">Type:</span> text/html
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/01/24/简单的HTTP协议/" data-title="简单的HTTP协议" data-url="http://deltax.me/2015/01/24/简单的HTTP协议/"></div>
+	<div class="ds-thread" data-thread-key="2015/03/27/中位数和顺序统计量/" data-title="中位数和顺序统计量" data-url="http://deltax.me/2015/03/27/中位数和顺序统计量/"></div>
 </section>
 
 
@@ -224,7 +204,7 @@ Content-<span class="string">Type:</span> text/html
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP协议"><span class="toc-number">1.</span> <span class="toc-text">HTTP协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#请求报文"><span class="toc-number">2.</span> <span class="toc-text">请求报文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#响应报文"><span class="toc-number">3.</span> <span class="toc-text">响应报文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#无状态协议和Cookie"><span class="toc-number">4.</span> <span class="toc-text">无状态协议和Cookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#持久连接和管线化"><span class="toc-number">5.</span> <span class="toc-text">持久连接和管线化</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#顺序统计量"><span class="toc-number">1.</span> <span class="toc-text">顺序统计量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#选择问题"><span class="toc-number">2.</span> <span class="toc-text">选择问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#期望为线性时间的选择算法"><span class="toc-number">3.</span> <span class="toc-text">期望为线性时间的选择算法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#最坏情况为线性时间的选择算法"><span class="toc-number">4.</span> <span class="toc-text">最坏情况为线性时间的选择算法</span></a></li></ol>
  
   </div>
 
