@@ -153,7 +153,8 @@
 <p>如果划分的主元素为 $x$, 至少有一半大于或等于中位数的中位数 $x$. 只要有一半的组中有 $3$ 个元素大于 $x$, 不算中间这个组, 大于 $x$ 的元素个数只要为:</p>
 <p>$$3(\left \lceil \frac{1}{2}\left \lceil{\frac{n}{5}}\right \rceil \right \rceil) \geq \frac{3n}{10}$$</p>
 <p>所以我们现在有一个递归式来推导 <code>select</code> 算法的最坏情况的运行时间 $T(n)$了.</p>
-<p>$$T(n) \leq \begin{cases}<br> &amp; O(1) &amp; \text{ if } n &lt; 140 \<br> &amp; T(\left \lceil{x/5}\right \rceil) + T(7n/10+6) + O(n) &amp; \text { if } n \geq 140<br>\end{cases}$$</p>
+<p>$$T(n) \leq \begin{cases}<br> &amp; O(1) &amp; \text{ if } n &lt; 140 \\<br> &amp; T(\left \lceil{x/5}\right \rceil) + T(7n/10+6) + O(n) &amp; \text { if } n \geq 140<br>\end{cases}$$</p>
+<p>所以, 可以得到 $T(n) = O(n)$.</p>
   
 	</div>
 		<footer class="article-footer clearfix">

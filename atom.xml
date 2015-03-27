@@ -4,7 +4,7 @@
   <subtitle><![CDATA[为了成为牛逼闪闪的工程师]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
-  <updated>2015-03-27T14:06:29.000Z</updated>
+  <updated>2015-03-27T14:07:28.000Z</updated>
   <id>http://deltax.me/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://deltax.me/2015/03/27/%E4%B8%AD%E4%BD%8D%E6%95%B0%E5%92%8C%E9%A1%BA%E5%BA%8F%E7%BB%9F%E8%AE%A1%E9%87%8F/"/>
     <id>http://deltax.me/2015/03/27/中位数和顺序统计量/</id>
     <published>2015-03-27T10:34:48.000Z</published>
-    <updated>2015-03-27T14:06:29.000Z</updated>
+    <updated>2015-03-27T14:07:28.000Z</updated>
     <content type="html"><![CDATA[<h1 id="顺序统计量">顺序统计量</h1><p>在一个由 $n$ 个元素组成的集合中, 第 $i$ 个顺序统计量 (order statistic) 是该集合中第 $i$ 小的元素.</p>
 <ul>
 <li><strong>最小值</strong>是第 $1$ 个顺序统计量 $i=1$.</li>
@@ -57,7 +57,8 @@
 <p>如果划分的主元素为 $x$, 至少有一半大于或等于中位数的中位数 $x$. 只要有一半的组中有 $3$ 个元素大于 $x$, 不算中间这个组, 大于 $x$ 的元素个数只要为:</p>
 <p>$$3(\left \lceil \frac{1}{2}\left \lceil{\frac{n}{5}}\right \rceil \right \rceil) \geq \frac{3n}{10}$$</p>
 <p>所以我们现在有一个递归式来推导 <code>select</code> 算法的最坏情况的运行时间 $T(n)$了.</p>
-<p>$$T(n) \leq \begin{cases}<br> &amp; O(1) &amp; \text{ if } n &lt; 140 \<br> &amp; T(\left \lceil{x/5}\right \rceil) + T(7n/10+6) + O(n) &amp; \text { if } n \geq 140<br>\end{cases}$$</p>
+<p>$$T(n) \leq \begin{cases}<br> &amp; O(1) &amp; \text{ if } n &lt; 140 \\<br> &amp; T(\left \lceil{x/5}\right \rceil) + T(7n/10+6) + O(n) &amp; \text { if } n \geq 140<br>\end{cases}$$</p>
+<p>所以, 可以得到 $T(n) = O(n)$.</p>
 ]]></content>
     <summary type="html">
     <![CDATA[<h1 id="顺序统计量">顺序统计量</h1><p>在一个由 $n$ 个元素组成的集合中, 第 $i$ 个顺序统计量 (order statistic) 是该集合中第 $i$ 小的元素.</p>
