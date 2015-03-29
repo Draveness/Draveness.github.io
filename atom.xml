@@ -1231,8 +1231,8 @@ local C={<span class="type">NewCell</span> <span class="number">0</span>} <span 
     <title><![CDATA[HTTP报文内的HTTP信息]]></title>
     <link href="http://deltax.me/2015/01/27/HTTP%E6%8A%A5%E6%96%87%E5%86%85%E7%9A%84HTTP%E4%BF%A1%E6%81%AF.md/"/>
     <id>http://deltax.me/2015/01/27/HTTP报文内的HTTP信息.md/</id>
-    <published>2015-01-27T04:17:20.000Z</published>
-    <updated>2015-03-24T10:52:56.000Z</updated>
+    <published>2015-01-27T04:17:21.000Z</published>
+    <updated>2015-03-29T09:04:35.000Z</updated>
     <content type="html"><![CDATA[<h2 id="HTTP报文">HTTP报文</h2><p><code>HTTP报文</code>是由多行数据构成的字符串文本, 大致可分为<strong>报文首部</strong>和<strong>报文主体</strong>两部分.</p>
 <pre><code><span class="code">------------------
 |     报文首部     |
