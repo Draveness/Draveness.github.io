@@ -4,7 +4,7 @@
   <subtitle><![CDATA[为了成为牛逼闪闪的工程师]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
-  <updated>2015-03-27T14:10:29.000Z</updated>
+  <updated>2015-03-30T16:36:54.000Z</updated>
   <id>http://deltax.me/</id>
   
   <author>
@@ -13,6 +13,72 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Shared-State Concurrency]]></title>
+    <link href="http://deltax.me/2015/03/30/Shared-State-Concurrency/"/>
+    <id>http://deltax.me/2015/03/30/Shared-State-Concurrency/</id>
+    <published>2015-03-30T06:54:21.000Z</published>
+    <updated>2015-03-30T16:36:54.000Z</updated>
+    <content type="html"><![CDATA[<p>After reading the chapter 8 in CTMCP, I wirte this post gives an alternative way to implement concurrency model by adding cells.</p>
+<h1 id="Programming_With_Concurrency">Programming With Concurrency</h1><p>By now, we have seen many different apporoach to write concurrent programs. And before introduce to <code>Shared-State Concurrency</code>. Let’s list all the approaches to implement concurrency.</p>
+<ul>
+<li>Sequential Programming</li>
+<li>Declarative Programming</li>
+<li>Message-Passing Concurrency</li>
+<li>Shared-State Concurrency</li>
+</ul>
+<h2 id="Sequential_Programming">Sequential Programming</h2><p>In a sequential model, there is a total order among all opertions. This is the strongest order invariant a program can have. And this variant model is deterministic.</p>
+<h2 id="Declarative_Concurrency">Declarative Concurrency</h2><p>This does not change the result of a calculation, but only changes the order in which the result is obtained.</p>
+<p>These models have nondeterminism in the implementation, since the system choose how to advance the threads.</p>
+<p>The demand-driven concurrent model, also known as lazy execution, is a form of declarative concurrency. It does not change the result of a calculation but only affects how much calculation is done to obtain the result.</p>
+<h2 id="Message-Passing_Concurrency">Message-Passing Concurrency</h2><p>Message passing is a basic programming style of stateful concurrent model. It extends the declarative model with a simple kind of communication channel, a port.</p>
+<h2 id="Shared-State_Concurrency">Shared-State Concurrency</h2><p>Shared state is another basic programming style of the stateful concurrent model. It consists of a set of threads accessing a set of shared passive object.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>After reading the chapter 8 in CTMCP, I wirte this post gives an alternative way to implement concurrency model by adding cells.</p>
+<h1 ]]>
+    </summary>
+    
+      <category term="CTMCP" scheme="http://deltax.me/tags/CTMCP/"/>
+    
+      <category term="Concurrency" scheme="http://deltax.me/tags/Concurrency/"/>
+    
+      <category term="Programming Paradigm" scheme="http://deltax.me/categories/Programming-Paradigm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Active Object]]></title>
+    <link href="http://deltax.me/2015/03/30/Active-Object/"/>
+    <id>http://deltax.me/2015/03/30/Active-Object/</id>
+    <published>2015-03-30T06:05:38.000Z</published>
+    <updated>2015-03-30T06:28:07.000Z</updated>
+    <content type="html"><![CDATA[<p>An active object is a port object whose behavior is defined by a class. It consists of a port, a thread that reads messages from the port’s stream, and an object that is a class inheritance.</p>
+<p>Active objects combine the abilities of OOP and the abilities of message-passing concurrency.</p>
+<p>With respect to active obejects, the other obejcts of this object are called <em>passive objects</em>, since they have an internal thread.</p>
+<h1 id="NewActive_Abstraction">NewActive Abstraction</h1><p>The behavior of avtive objects is defined with a class. Sending a message to an active object is the same as sending message to an object. And the invocation of the method is asynchronous. It returns immediately without waiting until the message has been handled.</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">fun &#123;<span class="type">NewActive</span> <span class="type">Class</span> <span class="type">Init</span>&#125;</span><br><span class="line">   <span class="type">Obj</span>=&#123;<span class="type">New</span> <span class="type">Class</span> <span class="type">Init</span>&#125;</span><br><span class="line">   P</span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">   thread S <span class="keyword">in</span></span><br><span class="line">      &#123;<span class="type">NewPort</span> S P&#125;</span><br><span class="line">      <span class="keyword">for</span> M <span class="keyword">in</span> S <span class="keyword">do</span> &#123;<span class="type">Obj</span> M&#125; <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">proc</span> &#123;$ M&#125; &#123;<span class="type">Send</span> P M&#125; <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>This makes defining active objects very intuitive.</p>
+<h1 id="Synchronous_Abstraction">Synchronous Abstraction</h1><p>A synchronous invocation <code>{Obj M}</code> does not return until the method corresponding to <code>M</code> is completely executed. Here is the definition of <code>NewSync</code>, which creates a synchronous active object.</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fun &#123;<span class="type">NewSync</span> <span class="type">Class</span> <span class="type">Init</span>&#125;</span><br><span class="line">P <span class="type">Obj</span>=&#123;<span class="type">New</span> <span class="type">Class</span> <span class="type">Init</span>&#125; <span class="keyword">in</span></span><br><span class="line">	thread S <span class="keyword">in</span></span><br><span class="line">		&#123;<span class="type">NewPort</span> S P&#125;</span><br><span class="line">		<span class="keyword">for</span> M<span class="comment">#X in S do &#123;Obj M&#125; X=unit end</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">proc</span> &#123;$ M&#125; X <span class="keyword">in</span> &#123;<span class="type">Send</span> P M<span class="comment">#X&#125; &#123;Wait X&#125; end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>Each message sent to the object contains a synchronization token <code>X</code>, which is bound only when the message is completely handled.</p>
+<h1 id="Active_Objects_with_Exception_Handling">Active Objects with Exception Handling</h1><p>Use exception handling means add <code>try catch</code> in the statement. The abstraction needs another argument whether or not an exception occurred.</p>
+<p>The extra argument is bound to <code>normal</code> if the invocation completes normally, and to <code>exception(E)</code> if the object raises the exception <code>E</code>.</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fun &#123;NewActiveExc Class Init&#125;</span><br><span class="line">P Obj=&#123;New Class Init&#125; <span class="operator">in</span></span><br><span class="line">	thread S <span class="operator">in</span></span><br><span class="line">		&#123;NewPort S P&#125;</span><br><span class="line">		<span class="keyword">for</span> M<span class="comment">#X in S do</span></span><br><span class="line">			<span class="keyword">try</span> &#123;Obj M&#125; X=<span class="keyword">normal</span></span><br><span class="line">			<span class="keyword">catch</span> E <span class="keyword">then</span> X=exception(E) <span class="function"><span class="keyword">end</span></span></span><br><span class="line">		<span class="function"><span class="keyword">end</span></span></span><br><span class="line">	<span class="function"><span class="keyword">end</span></span></span><br><span class="line">	proc &#123;$ M X&#125; &#123;Send P M<span class="comment">#X&#125; end</span></span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br></pre></td></tr></table></figure>]]></content>
+    <summary type="html">
+    <![CDATA[<p>An active object is a port object whose behavior is defined by a class. It consists of a port, a thread that reads messages from the port]]>
+    </summary>
+    
+      <category term="CTMCP" scheme="http://deltax.me/tags/CTMCP/"/>
+    
+      <category term="OOP" scheme="http://deltax.me/tags/OOP/"/>
+    
+      <category term="Oz" scheme="http://deltax.me/tags/Oz/"/>
+    
+      <category term="Programming Paradigm" scheme="http://deltax.me/categories/Programming-Paradigm/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[中位数和顺序统计量]]></title>
@@ -1374,77 +1440,6 @@ Content-<span class="string">Type:</span> text/html
       <category term="Scheme" scheme="http://deltax.me/tags/Scheme/"/>
     
       <category term="Functional Programming" scheme="http://deltax.me/categories/Functional-Programming/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Persistent Storage with levelDB]]></title>
-    <link href="http://deltax.me/2014/12/11/Persistent-Storage-with-levelDB/"/>
-    <id>http://deltax.me/2014/12/11/Persistent-Storage-with-levelDB/</id>
-    <published>2014-12-11T11:18:56.000Z</published>
-    <updated>2015-03-24T17:38:44.000Z</updated>
-    <content type="html"><![CDATA[<p><code>LevelDB</code> is a key-value pair database developing by google. Why I use this instead of <code>Core Data</code> which is so widely used.</p>
-<p><code>Core Data</code> is a framework deals with data in <code>Cocoa</code>. It is extremly important but compliated. There are many concepts and problems in it. And every time I use <code>Core Data</code> to fetch some datas, I have to write couple lines code.</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">UIAppdelegate</span> *appDelegate = [UIApplication sharedApplication].delegate;</span><br><span class="line"><span class="title">NSManagedObjectContext</span> *appDelegate = ApplicationDelegate.managedObjectContext;</span><br><span class="line"><span class="title">NSError</span> *<span class="built_in">error</span> = nil;</span><br><span class="line"><span class="title">NSFetchRequest</span> *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Item class])];</span><br><span class="line"><span class="title">NSArray</span> *items  = [manageContext executeFetchRequest:request <span class="built_in">error</span>:&amp;<span class="built_in">error</span>];</span><br></pre></td></tr></table></figure>
-<p>This is so complicated and not elegant. I prefer to use <code>key-value</code> storage instead of it in some situations. When data are not compliated and the relation between models are simple.</p>
-<p>I use <code>levelDB</code> this way:</p>
-<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UIAppdelegate *appDelegate = [UIApplication sharedApplication].delegate<span class="comment">;</span></span><br><span class="line">[]appDelegate<span class="preprocessor">.db</span> objectForKey:@<span class="string">"key"</span>]<span class="comment">;</span></span><br></pre></td></tr></table></figure>
-<p>Just like dictionary and incredible simple to deal with.</p>
-<p>Before using <code>LevelDB</code>, the first thing you need to do is downlod repo on github <a href="https://github.com/google/leveldb" target="_blank" rel="external"><code>google/LevelDB</code></a> or type this in terminal</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone <span class="string">https:</span><span class="comment">//github.com/google/leveldb.git</span></span><br></pre></td></tr></table></figure>
-<p>And then you need to compile it.</p>
-<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">CXXFLAGS=</span><span class="variable">-stdlib=</span>libstdc++ make <span class="variable">PLATFORM=</span>IOS</span><br></pre></td></tr></table></figure>
-<p>Download the wrapper on this <a href="http://www.tanhao.me/pieces/1397.html" target="_blank" rel="external">tanhao</a> Just drag this all in your project.</p>
-<p>The prepare work are all done.</p>
-<p>But when I you this <code>levelDB</code> to store data, I met some problems, if you want to store some data which is an object, you should make the <code>class</code> of that <code>object</code> to confirm <code>NSCoding</code> protocol.</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">- (id)<span class="string">initWithCoder:</span>(NSCoder *)decoder &#123;</span><br><span class="line">    self = [<span class="keyword">super</span> init];</span><br><span class="line">    <span class="keyword">if</span> (!self) &#123;</span><br><span class="line">        <span class="keyword">return</span> nil;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    self.avatar = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"avatar"</span>];</span><br><span class="line">    self.nickName = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"nickName"</span>];</span><br><span class="line">    self.userID = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"userID"</span>];</span><br><span class="line">    self.comments = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"comments"</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="typename">void</span>)<span class="string">encodeWithCoder:</span>(NSCoder *)encoder &#123;</span><br><span class="line">    [encoder <span class="string">encodeObject:</span>self.avatar <span class="string">forKey:</span>@<span class="string">"avatar"</span>];</span><br><span class="line">    [encoder <span class="string">encodeObject:</span>self.nickName <span class="string">forKey:</span>@<span class="string">"nickName"</span>];</span><br><span class="line">    [encoder <span class="string">encodeObject:</span>self.userID <span class="string">forKey:</span>@<span class="string">"userID"</span>];</span><br><span class="line">    [encoder <span class="string">encodeObject:</span>self.comments <span class="string">forKey:</span>@<span class="string">"comments"</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>You need to implement this two methods, if not when you fetch the object from the data base, the compiler do not know what in it and what is it. So you should <code>encode</code> the object propety before store them. And <code>decode</code> the object when you fetch them. Work similar as <code>NSKeyedArchiver</code>, if we have dozens of property, we have to write code for every property, after I find that I have to solve this problem in this approach. I think I want to write a <code>Meta Propgram</code> in <code>Ruby</code> to deal with this.</p>
-<p>And I will do it after my second App on line.</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p><code>LevelDB</code> is a key-value pair database developing by google. Why I use this instead of <code>Core Data</code> which is so wide]]>
-    </summary>
-    
-      <category term="Objective-C" scheme="http://deltax.me/tags/Objective-C/"/>
-    
-      <category term="iOS" scheme="http://deltax.me/tags/iOS/"/>
-    
-      <category term="iOS" scheme="http://deltax.me/categories/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[iOS Using AFNetworking <Bug03>]]></title>
-    <link href="http://deltax.me/2014/12/03/iOS%20Using%20AFNetworking%20%3CBug03%3E/"/>
-    <id>http://deltax.me/2014/12/03/iOS Using AFNetworking <Bug03>/</id>
-    <published>2014-12-02T16:56:49.000Z</published>
-    <updated>2015-03-24T17:28:43.000Z</updated>
-    <content type="html"><![CDATA[<p>During these days development, when I connect our iOS App to Python <code>back-end</code> using <code>AFNetworking</code>, I met an error. It is my first time to use the <code>AFNetworking</code> framework, I am used to use <code>MKNetworking</code> instead, but with some reasons. I planned to use <code>AFNetworking</code> instead. And then, as you see, I met a few problems. </p>
-<pre><code>Error: Error Domain=NSCocoaErrorDomain Code=3840 <span class="string">"The operation couldn’t be completed. (Cocoa error 3840.)"</span><span class="function"> (</span>JSON text did<span class="instruction"> not </span>start with<span class="instruction"> array </span>or object<span class="instruction"> and </span>option to allow fragments<span class="instruction"> not </span>set.<span class="function">)</span> UserInfo=0x17697430 {NSDebugDescription=JSON text did<span class="instruction"> not </span>start with<span class="instruction"> array </span>or object<span class="instruction"> and </span>option to allow fragments<span class="instruction"> not </span>set., NSUnderlyingError=0x176f9ec0 
-</code></pre><p>At first, I do not know, what it’s mean, but I ask my partner, he tells me, in order to beautify the <code>JSON</code> he use some method, to make them like this, I do not know exactly what he did, but <code>JSON</code> looks like this.</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">message</span>": <span class="value"><span class="string">"success"</span></span>, </span><br><span class="line">  "<span class="attribute">posts</span>": <span class="value">[]</span>, </span><br><span class="line">  "<span class="attribute">status</span>": <span class="value"><span class="number">0</span></span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
-<p>It is not like the <code>JSON</code> I used to deal with before, I think they should be this shape:</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; "<span class="attribute">message</span>": <span class="value"><span class="string">"success"</span></span>, "<span class="attribute">posts</span>": <span class="value">[]</span>,  "<span class="attribute">status</span>": <span class="value"><span class="number">0</span> </span>&#125;</span><br></pre></td></tr></table></figure>
-<p>But it’s not, at that time, he explains that if I could not deal with this, he could modify them back. For he can not change this immediately, so I tried to fix this problem.</p>
-<p>And then, I find this problem is cuz but my mistakes, I add one more <code>/</code> in the <code>URL</code>. After I fix this. I confidently run my App, and there is also an different error:</p>
-<pre><code><span class="setting">NSUnderlyingError=<span class="value"><span class="number">0</span>x156a3e80 <span class="string">"Request failed: unacceptable content-type: text/html"</span></span></span>
-</code></pre><p>I search this on google and stackoverflow, someone says add a <code>acceptableContentType</code> to <code>responseSerialzer</code>, someone says to <code>initialize</code> a <code>responseSerailize</code> and change it option to <code>AllowFragment</code>. When I tries them, I find the first solution is right.</p>
-<p>I add a <code>acceptableContentType</code> to the <code>responseSerializer</code>, and I fix this. But I think this quiet messy, everytime I use this framework, I had to add an <code>acceptableContentType</code>. I am too naive to realize this as a mistake. So I open an <code>issue</code> on <code>AFNetworking</code> and add this <code>type</code> <code>text/html</code> to the source code.</p>
-<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.acceptableContentTypes = [NSSet setWithObjects:<span class="variable">@"</span>application/json<span class="string">", @"</span><span class="keyword">text</span>/json<span class="string">", @"</span><span class="keyword">text</span>/javascript<span class="string">", @"</span><span class="keyword">text</span>/html<span class="string">", nil];</span></span><br></pre></td></tr></table></figure>
-<p>And soon, the author of <code>AFNetworking</code> reply me as follows:</p>
-<pre><code>The solution <span class="keyword">is</span> already built <span class="keyword">into</span> <span class="keyword">the</span> design <span class="keyword">of</span> <span class="keyword">the</span> framework. Patching <span class="keyword">it</span> <span class="keyword">is</span> unnecessary.
-</code></pre><p>A little disappointed, but I add this type to my source code, in order to not add this everytime initialize the <code>manager</code>.</p>
-<p>Hope this helps. </p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>During these days development, when I connect our iOS App to Python <code>back-end</code> using <code>AFNetworking</code>, I met an error]]>
-    </summary>
-    
-      <category term="Objective-C" scheme="http://deltax.me/tags/Objective-C/"/>
-    
-      <category term="iOS" scheme="http://deltax.me/tags/iOS/"/>
-    
-      <category term="iOS" scheme="http://deltax.me/categories/iOS/"/>
     
   </entry>
   

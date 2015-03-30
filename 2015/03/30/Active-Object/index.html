@@ -4,25 +4,25 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Persistent Storage with levelDB | DeltaX</title>
+    <title>Active Object | DeltaX</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Draven">
     
 
     
-    <meta name="description" content="LevelDB is a key-value pair database developing by google. Why I use this instead of Core Data which is so widely used.
-Core Data is a framework deals with data in Cocoa. It is extremly important but">
+    <meta name="description" content="An active object is a port object whose behavior is defined by a class. It consists of a port, a thread that reads messages from the port’s stream, and an object that is a class inheritance.
+Active ob">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Persistent Storage with levelDB">
-<meta property="og:url" content="http://deltax.me/2014/12/11/Persistent-Storage-with-levelDB/index.html">
+<meta property="og:title" content="Active Object">
+<meta property="og:url" content="http://deltax.me/2015/03/30/Active-Object/index.html">
 <meta property="og:site_name" content="DeltaX">
-<meta property="og:description" content="LevelDB is a key-value pair database developing by google. Why I use this instead of Core Data which is so widely used.
-Core Data is a framework deals with data in Cocoa. It is extremly important but">
+<meta property="og:description" content="An active object is a port object whose behavior is defined by a class. It consists of a port, a thread that reads messages from the port’s stream, and an object that is a class inheritance.
+Active ob">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Persistent Storage with levelDB">
-<meta name="twitter:description" content="LevelDB is a key-value pair database developing by google. Why I use this instead of Core Data which is so widely used.
-Core Data is a framework deals with data in Cocoa. It is extremly important but">
+<meta name="twitter:title" content="Active Object">
+<meta name="twitter:description" content="An active object is a port object whose behavior is defined by a class. It consists of a port, a thread that reads messages from the port’s stream, and an object that is a class inheritance.
+Active ob">
 
     
     <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
@@ -81,14 +81,14 @@ Core Data is a framework deals with data in Cocoa. It is extremly important but"
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/12/11/Persistent-Storage-with-levelDB/" title="Persistent Storage with levelDB" itemprop="url">Persistent Storage with levelDB</a>
+      <a href="/2015/03/30/Active-Object/" title="Active Object" itemprop="url">Active Object</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
 		
   <p class="article-time">
-    <time datetime="2014-12-11T11:18:56.000Z" itemprop="datePublished"> 发表于 2014-12-11</time>
+    <time datetime="2015-03-30T06:05:38.000Z" itemprop="datePublished"> 发表于 2015-03-30</time>
     
   </p>
 </header>
@@ -97,41 +97,35 @@ Core Data is a framework deals with data in Cocoa. It is extremly important but"
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#NewActive_Abstraction"><span class="toc-number">1.</span> <span class="toc-text">NewActive Abstraction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Synchronous_Abstraction"><span class="toc-number">2.</span> <span class="toc-text">Synchronous Abstraction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Active_Objects_with_Exception_Handling"><span class="toc-number">3.</span> <span class="toc-text">Active Objects with Exception Handling</span></a></li></ol>
 		
 		</div>
 		
-		<p><code>LevelDB</code> is a key-value pair database developing by google. Why I use this instead of <code>Core Data</code> which is so widely used.</p>
-<p><code>Core Data</code> is a framework deals with data in <code>Cocoa</code>. It is extremly important but compliated. There are many concepts and problems in it. And every time I use <code>Core Data</code> to fetch some datas, I have to write couple lines code.</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">UIAppdelegate</span> *appDelegate = [UIApplication sharedApplication].delegate;</span><br><span class="line"><span class="title">NSManagedObjectContext</span> *appDelegate = ApplicationDelegate.managedObjectContext;</span><br><span class="line"><span class="title">NSError</span> *<span class="built_in">error</span> = nil;</span><br><span class="line"><span class="title">NSFetchRequest</span> *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Item class])];</span><br><span class="line"><span class="title">NSArray</span> *items  = [manageContext executeFetchRequest:request <span class="built_in">error</span>:&amp;<span class="built_in">error</span>];</span><br></pre></td></tr></table></figure>
-<p>This is so complicated and not elegant. I prefer to use <code>key-value</code> storage instead of it in some situations. When data are not compliated and the relation between models are simple.</p>
-<p>I use <code>levelDB</code> this way:</p>
-<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UIAppdelegate *appDelegate = [UIApplication sharedApplication].delegate<span class="comment">;</span></span><br><span class="line">[]appDelegate<span class="preprocessor">.db</span> objectForKey:@<span class="string">"key"</span>]<span class="comment">;</span></span><br></pre></td></tr></table></figure>
-<p>Just like dictionary and incredible simple to deal with.</p>
-<p>Before using <code>LevelDB</code>, the first thing you need to do is downlod repo on github <a href="https://github.com/google/leveldb" target="_blank" rel="external"><code>google/LevelDB</code></a> or type this in terminal</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone <span class="string">https:</span><span class="comment">//github.com/google/leveldb.git</span></span><br></pre></td></tr></table></figure>
-<p>And then you need to compile it.</p>
-<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">CXXFLAGS=</span><span class="variable">-stdlib=</span>libstdc++ make <span class="variable">PLATFORM=</span>IOS</span><br></pre></td></tr></table></figure>
-<p>Download the wrapper on this <a href="http://www.tanhao.me/pieces/1397.html" target="_blank" rel="external">tanhao</a> Just drag this all in your project.</p>
-<p>The prepare work are all done.</p>
-<p>But when I you this <code>levelDB</code> to store data, I met some problems, if you want to store some data which is an object, you should make the <code>class</code> of that <code>object</code> to confirm <code>NSCoding</code> protocol.</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">- (id)<span class="string">initWithCoder:</span>(NSCoder *)decoder &#123;</span><br><span class="line">    self = [<span class="keyword">super</span> init];</span><br><span class="line">    <span class="keyword">if</span> (!self) &#123;</span><br><span class="line">        <span class="keyword">return</span> nil;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    self.avatar = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"avatar"</span>];</span><br><span class="line">    self.nickName = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"nickName"</span>];</span><br><span class="line">    self.userID = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"userID"</span>];</span><br><span class="line">    self.comments = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"comments"</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="typename">void</span>)<span class="string">encodeWithCoder:</span>(NSCoder *)encoder &#123;</span><br><span class="line">    [encoder <span class="string">encodeObject:</span>self.avatar <span class="string">forKey:</span>@<span class="string">"avatar"</span>];</span><br><span class="line">    [encoder <span class="string">encodeObject:</span>self.nickName <span class="string">forKey:</span>@<span class="string">"nickName"</span>];</span><br><span class="line">    [encoder <span class="string">encodeObject:</span>self.userID <span class="string">forKey:</span>@<span class="string">"userID"</span>];</span><br><span class="line">    [encoder <span class="string">encodeObject:</span>self.comments <span class="string">forKey:</span>@<span class="string">"comments"</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>You need to implement this two methods, if not when you fetch the object from the data base, the compiler do not know what in it and what is it. So you should <code>encode</code> the object propety before store them. And <code>decode</code> the object when you fetch them. Work similar as <code>NSKeyedArchiver</code>, if we have dozens of property, we have to write code for every property, after I find that I have to solve this problem in this approach. I think I want to write a <code>Meta Propgram</code> in <code>Ruby</code> to deal with this.</p>
-<p>And I will do it after my second App on line.</p>
-  
+		<p>An active object is a port object whose behavior is defined by a class. It consists of a port, a thread that reads messages from the port’s stream, and an object that is a class inheritance.</p>
+<p>Active objects combine the abilities of OOP and the abilities of message-passing concurrency.</p>
+<p>With respect to active obejects, the other obejcts of this object are called <em>passive objects</em>, since they have an internal thread.</p>
+<h1 id="NewActive_Abstraction">NewActive Abstraction</h1><p>The behavior of avtive objects is defined with a class. Sending a message to an active object is the same as sending message to an object. And the invocation of the method is asynchronous. It returns immediately without waiting until the message has been handled.</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">fun &#123;<span class="type">NewActive</span> <span class="type">Class</span> <span class="type">Init</span>&#125;</span><br><span class="line">   <span class="type">Obj</span>=&#123;<span class="type">New</span> <span class="type">Class</span> <span class="type">Init</span>&#125;</span><br><span class="line">   P</span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">   thread S <span class="keyword">in</span></span><br><span class="line">      &#123;<span class="type">NewPort</span> S P&#125;</span><br><span class="line">      <span class="keyword">for</span> M <span class="keyword">in</span> S <span class="keyword">do</span> &#123;<span class="type">Obj</span> M&#125; <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">proc</span> &#123;$ M&#125; &#123;<span class="type">Send</span> P M&#125; <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>This makes defining active objects very intuitive.</p>
+<h1 id="Synchronous_Abstraction">Synchronous Abstraction</h1><p>A synchronous invocation <code>{Obj M}</code> does not return until the method corresponding to <code>M</code> is completely executed. Here is the definition of <code>NewSync</code>, which creates a synchronous active object.</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fun &#123;<span class="type">NewSync</span> <span class="type">Class</span> <span class="type">Init</span>&#125;</span><br><span class="line">P <span class="type">Obj</span>=&#123;<span class="type">New</span> <span class="type">Class</span> <span class="type">Init</span>&#125; <span class="keyword">in</span></span><br><span class="line">	thread S <span class="keyword">in</span></span><br><span class="line">		&#123;<span class="type">NewPort</span> S P&#125;</span><br><span class="line">		<span class="keyword">for</span> M<span class="comment">#X in S do &#123;Obj M&#125; X=unit end</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">proc</span> &#123;$ M&#125; X <span class="keyword">in</span> &#123;<span class="type">Send</span> P M<span class="comment">#X&#125; &#123;Wait X&#125; end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>Each message sent to the object contains a synchronization token <code>X</code>, which is bound only when the message is completely handled.</p>
+<h1 id="Active_Objects_with_Exception_Handling">Active Objects with Exception Handling</h1><p>Use exception handling means add <code>try catch</code> in the statement. The abstraction needs another argument whether or not an exception occurred.</p>
+<p>The extra argument is bound to <code>normal</code> if the invocation completes normally, and to <code>exception(E)</code> if the object raises the exception <code>E</code>.</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fun &#123;NewActiveExc Class Init&#125;</span><br><span class="line">P Obj=&#123;New Class Init&#125; <span class="operator">in</span></span><br><span class="line">	thread S <span class="operator">in</span></span><br><span class="line">		&#123;NewPort S P&#125;</span><br><span class="line">		<span class="keyword">for</span> M<span class="comment">#X in S do</span></span><br><span class="line">			<span class="keyword">try</span> &#123;Obj M&#125; X=<span class="keyword">normal</span></span><br><span class="line">			<span class="keyword">catch</span> E <span class="keyword">then</span> X=exception(E) <span class="function"><span class="keyword">end</span></span></span><br><span class="line">		<span class="function"><span class="keyword">end</span></span></span><br><span class="line">	<span class="function"><span class="keyword">end</span></span></span><br><span class="line">	proc &#123;$ M X&#125; &#123;Send P M<span class="comment">#X&#125; end</span></span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br></pre></td></tr></table></figure>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/iOS/">iOS</a>
+  <a class="article-category-link" href="/categories/Programming-Paradigm/">Programming Paradigm</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Objective-C/">Objective-C</a><a href="/tags/iOS/">iOS</a>
+  <span></span> <a href="/tags/CTMCP/">CTMCP</a><a href="/tags/OOP/">OOP</a><a href="/tags/Oz/">Oz</a>
   </div>
 
 </div>
@@ -140,7 +134,7 @@ Core Data is a framework deals with data in Cocoa. It is extremly important but"
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://deltax.me/2014/12/11/Persistent-Storage-with-levelDB/" data-title="Persistent Storage with levelDB | DeltaX" data-tsina="null" class="share clearfix">
+	  <div data-url="http://deltax.me/2015/03/30/Active-Object/" data-title="Active Object | DeltaX" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -154,18 +148,18 @@ Core Data is a framework deals with data in Cocoa. It is extremly important but"
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/01/19/SICP-1-1/" title="SICP 1.1 The Elements of Programming">
+ <a href="/2015/03/30/Shared-State-Concurrency/" title="Shared-State Concurrency">
   <strong>上一篇：</strong><br/>
   <span>
-  SICP 1.1 The Elements of Programming</span>
+  Shared-State Concurrency</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2014/12/03/iOS Using AFNetworking <Bug03>/"  title="iOS Using AFNetworking &lt;Bug03&gt;">
+<a href="/2015/03/27/中位数和顺序统计量/"  title="中位数和顺序统计量">
  <strong>下一篇：</strong><br/> 
- <span>iOS Using AFNetworking &lt;Bug03&gt;
+ <span>中位数和顺序统计量
 </span>
 </a>
 </div>
@@ -174,7 +168,7 @@ Core Data is a framework deals with data in Cocoa. It is extremly important but"
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2014/12/11/Persistent-Storage-with-levelDB/" data-title="Persistent Storage with levelDB" data-url="http://deltax.me/2014/12/11/Persistent-Storage-with-levelDB/"></div>
+	<div class="ds-thread" data-thread-key="2015/03/30/Active-Object/" data-title="Active Object" data-url="http://deltax.me/2015/03/30/Active-Object/"></div>
 </section>
 
 
@@ -184,7 +178,7 @@ Core Data is a framework deals with data in Cocoa. It is extremly important but"
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#NewActive_Abstraction"><span class="toc-number">1.</span> <span class="toc-text">NewActive Abstraction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Synchronous_Abstraction"><span class="toc-number">2.</span> <span class="toc-text">Synchronous Abstraction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Active_Objects_with_Exception_Handling"><span class="toc-number">3.</span> <span class="toc-text">Active Objects with Exception Handling</span></a></li></ol>
  
   </div>
 

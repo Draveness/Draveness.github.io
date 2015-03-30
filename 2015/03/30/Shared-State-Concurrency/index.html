@@ -4,25 +4,25 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Persistent Storage with levelDB | DeltaX</title>
+    <title>Shared-State Concurrency | DeltaX</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Draven">
     
 
     
-    <meta name="description" content="LevelDB is a key-value pair database developing by google. Why I use this instead of Core Data which is so widely used.
-Core Data is a framework deals with data in Cocoa. It is extremly important but">
+    <meta name="description" content="After reading the chapter 8 in CTMCP, I wirte this post gives an alternative way to implement concurrency model by adding cells.
+Programming With ConcurrencyBy now, we have seen many different apporoa">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Persistent Storage with levelDB">
-<meta property="og:url" content="http://deltax.me/2014/12/11/Persistent-Storage-with-levelDB/index.html">
+<meta property="og:title" content="Shared-State Concurrency">
+<meta property="og:url" content="http://deltax.me/2015/03/30/Shared-State-Concurrency/index.html">
 <meta property="og:site_name" content="DeltaX">
-<meta property="og:description" content="LevelDB is a key-value pair database developing by google. Why I use this instead of Core Data which is so widely used.
-Core Data is a framework deals with data in Cocoa. It is extremly important but">
+<meta property="og:description" content="After reading the chapter 8 in CTMCP, I wirte this post gives an alternative way to implement concurrency model by adding cells.
+Programming With ConcurrencyBy now, we have seen many different apporoa">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Persistent Storage with levelDB">
-<meta name="twitter:description" content="LevelDB is a key-value pair database developing by google. Why I use this instead of Core Data which is so widely used.
-Core Data is a framework deals with data in Cocoa. It is extremly important but">
+<meta name="twitter:title" content="Shared-State Concurrency">
+<meta name="twitter:description" content="After reading the chapter 8 in CTMCP, I wirte this post gives an alternative way to implement concurrency model by adding cells.
+Programming With ConcurrencyBy now, we have seen many different apporoa">
 
     
     <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
@@ -81,14 +81,14 @@ Core Data is a framework deals with data in Cocoa. It is extremly important but"
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/12/11/Persistent-Storage-with-levelDB/" title="Persistent Storage with levelDB" itemprop="url">Persistent Storage with levelDB</a>
+      <a href="/2015/03/30/Shared-State-Concurrency/" title="Shared-State Concurrency" itemprop="url">Shared-State Concurrency</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
 		
   <p class="article-time">
-    <time datetime="2014-12-11T11:18:56.000Z" itemprop="datePublished"> 发表于 2014-12-11</time>
+    <time datetime="2015-03-30T06:54:21.000Z" itemprop="datePublished"> 发表于 2015-03-30</time>
     
   </p>
 </header>
@@ -97,27 +97,24 @@ Core Data is a framework deals with data in Cocoa. It is extremly important but"
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Programming_With_Concurrency"><span class="toc-number">1.</span> <span class="toc-text">Programming With Concurrency</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Sequential_Programming"><span class="toc-number">1.1.</span> <span class="toc-text">Sequential Programming</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Declarative_Concurrency"><span class="toc-number">1.2.</span> <span class="toc-text">Declarative Concurrency</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Message-Passing_Concurrency"><span class="toc-number">1.3.</span> <span class="toc-text">Message-Passing Concurrency</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shared-State_Concurrency"><span class="toc-number">1.4.</span> <span class="toc-text">Shared-State Concurrency</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		<p><code>LevelDB</code> is a key-value pair database developing by google. Why I use this instead of <code>Core Data</code> which is so widely used.</p>
-<p><code>Core Data</code> is a framework deals with data in <code>Cocoa</code>. It is extremly important but compliated. There are many concepts and problems in it. And every time I use <code>Core Data</code> to fetch some datas, I have to write couple lines code.</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">UIAppdelegate</span> *appDelegate = [UIApplication sharedApplication].delegate;</span><br><span class="line"><span class="title">NSManagedObjectContext</span> *appDelegate = ApplicationDelegate.managedObjectContext;</span><br><span class="line"><span class="title">NSError</span> *<span class="built_in">error</span> = nil;</span><br><span class="line"><span class="title">NSFetchRequest</span> *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Item class])];</span><br><span class="line"><span class="title">NSArray</span> *items  = [manageContext executeFetchRequest:request <span class="built_in">error</span>:&amp;<span class="built_in">error</span>];</span><br></pre></td></tr></table></figure>
-<p>This is so complicated and not elegant. I prefer to use <code>key-value</code> storage instead of it in some situations. When data are not compliated and the relation between models are simple.</p>
-<p>I use <code>levelDB</code> this way:</p>
-<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UIAppdelegate *appDelegate = [UIApplication sharedApplication].delegate<span class="comment">;</span></span><br><span class="line">[]appDelegate<span class="preprocessor">.db</span> objectForKey:@<span class="string">"key"</span>]<span class="comment">;</span></span><br></pre></td></tr></table></figure>
-<p>Just like dictionary and incredible simple to deal with.</p>
-<p>Before using <code>LevelDB</code>, the first thing you need to do is downlod repo on github <a href="https://github.com/google/leveldb" target="_blank" rel="external"><code>google/LevelDB</code></a> or type this in terminal</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone <span class="string">https:</span><span class="comment">//github.com/google/leveldb.git</span></span><br></pre></td></tr></table></figure>
-<p>And then you need to compile it.</p>
-<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">CXXFLAGS=</span><span class="variable">-stdlib=</span>libstdc++ make <span class="variable">PLATFORM=</span>IOS</span><br></pre></td></tr></table></figure>
-<p>Download the wrapper on this <a href="http://www.tanhao.me/pieces/1397.html" target="_blank" rel="external">tanhao</a> Just drag this all in your project.</p>
-<p>The prepare work are all done.</p>
-<p>But when I you this <code>levelDB</code> to store data, I met some problems, if you want to store some data which is an object, you should make the <code>class</code> of that <code>object</code> to confirm <code>NSCoding</code> protocol.</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">- (id)<span class="string">initWithCoder:</span>(NSCoder *)decoder &#123;</span><br><span class="line">    self = [<span class="keyword">super</span> init];</span><br><span class="line">    <span class="keyword">if</span> (!self) &#123;</span><br><span class="line">        <span class="keyword">return</span> nil;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    self.avatar = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"avatar"</span>];</span><br><span class="line">    self.nickName = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"nickName"</span>];</span><br><span class="line">    self.userID = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"userID"</span>];</span><br><span class="line">    self.comments = [decoder <span class="string">decodeObjectForKey:</span>@<span class="string">"comments"</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="typename">void</span>)<span class="string">encodeWithCoder:</span>(NSCoder *)encoder &#123;</span><br><span class="line">    [encoder <span class="string">encodeObject:</span>self.avatar <span class="string">forKey:</span>@<span class="string">"avatar"</span>];</span><br><span class="line">    [encoder <span class="string">encodeObject:</span>self.nickName <span class="string">forKey:</span>@<span class="string">"nickName"</span>];</span><br><span class="line">    [encoder <span class="string">encodeObject:</span>self.userID <span class="string">forKey:</span>@<span class="string">"userID"</span>];</span><br><span class="line">    [encoder <span class="string">encodeObject:</span>self.comments <span class="string">forKey:</span>@<span class="string">"comments"</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>You need to implement this two methods, if not when you fetch the object from the data base, the compiler do not know what in it and what is it. So you should <code>encode</code> the object propety before store them. And <code>decode</code> the object when you fetch them. Work similar as <code>NSKeyedArchiver</code>, if we have dozens of property, we have to write code for every property, after I find that I have to solve this problem in this approach. I think I want to write a <code>Meta Propgram</code> in <code>Ruby</code> to deal with this.</p>
-<p>And I will do it after my second App on line.</p>
+		<p>After reading the chapter 8 in CTMCP, I wirte this post gives an alternative way to implement concurrency model by adding cells.</p>
+<h1 id="Programming_With_Concurrency">Programming With Concurrency</h1><p>By now, we have seen many different apporoach to write concurrent programs. And before introduce to <code>Shared-State Concurrency</code>. Let’s list all the approaches to implement concurrency.</p>
+<ul>
+<li>Sequential Programming</li>
+<li>Declarative Programming</li>
+<li>Message-Passing Concurrency</li>
+<li>Shared-State Concurrency</li>
+</ul>
+<h2 id="Sequential_Programming">Sequential Programming</h2><p>In a sequential model, there is a total order among all opertions. This is the strongest order invariant a program can have. And this variant model is deterministic.</p>
+<h2 id="Declarative_Concurrency">Declarative Concurrency</h2><p>This does not change the result of a calculation, but only changes the order in which the result is obtained.</p>
+<p>These models have nondeterminism in the implementation, since the system choose how to advance the threads.</p>
+<p>The demand-driven concurrent model, also known as lazy execution, is a form of declarative concurrency. It does not change the result of a calculation but only affects how much calculation is done to obtain the result.</p>
+<h2 id="Message-Passing_Concurrency">Message-Passing Concurrency</h2><p>Message passing is a basic programming style of stateful concurrent model. It extends the declarative model with a simple kind of communication channel, a port.</p>
+<h2 id="Shared-State_Concurrency">Shared-State Concurrency</h2><p>Shared state is another basic programming style of the stateful concurrent model. It consists of a set of threads accessing a set of shared passive object.</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -125,13 +122,13 @@ Core Data is a framework deals with data in Cocoa. It is extremly important but"
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/iOS/">iOS</a>
+  <a class="article-category-link" href="/categories/Programming-Paradigm/">Programming Paradigm</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Objective-C/">Objective-C</a><a href="/tags/iOS/">iOS</a>
+  <span></span> <a href="/tags/CTMCP/">CTMCP</a><a href="/tags/Concurrency/">Concurrency</a>
   </div>
 
 </div>
@@ -140,7 +137,7 @@ Core Data is a framework deals with data in Cocoa. It is extremly important but"
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://deltax.me/2014/12/11/Persistent-Storage-with-levelDB/" data-title="Persistent Storage with levelDB | DeltaX" data-tsina="null" class="share clearfix">
+	  <div data-url="http://deltax.me/2015/03/30/Shared-State-Concurrency/" data-title="Shared-State Concurrency | DeltaX" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -153,19 +150,11 @@ Core Data is a framework deals with data in Cocoa. It is extremly important but"
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/01/19/SICP-1-1/" title="SICP 1.1 The Elements of Programming">
-  <strong>上一篇：</strong><br/>
-  <span>
-  SICP 1.1 The Elements of Programming</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2014/12/03/iOS Using AFNetworking <Bug03>/"  title="iOS Using AFNetworking &lt;Bug03&gt;">
+<a href="/2015/03/30/Active-Object/"  title="Active Object">
  <strong>下一篇：</strong><br/> 
- <span>iOS Using AFNetworking &lt;Bug03&gt;
+ <span>Active Object
 </span>
 </a>
 </div>
@@ -174,7 +163,7 @@ Core Data is a framework deals with data in Cocoa. It is extremly important but"
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2014/12/11/Persistent-Storage-with-levelDB/" data-title="Persistent Storage with levelDB" data-url="http://deltax.me/2014/12/11/Persistent-Storage-with-levelDB/"></div>
+	<div class="ds-thread" data-thread-key="2015/03/30/Shared-State-Concurrency/" data-title="Shared-State Concurrency" data-url="http://deltax.me/2015/03/30/Shared-State-Concurrency/"></div>
 </section>
 
 
@@ -184,7 +173,7 @@ Core Data is a framework deals with data in Cocoa. It is extremly important but"
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Programming_With_Concurrency"><span class="toc-number">1.</span> <span class="toc-text">Programming With Concurrency</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Sequential_Programming"><span class="toc-number">1.1.</span> <span class="toc-text">Sequential Programming</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Declarative_Concurrency"><span class="toc-number">1.2.</span> <span class="toc-text">Declarative Concurrency</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Message-Passing_Concurrency"><span class="toc-number">1.3.</span> <span class="toc-text">Message-Passing Concurrency</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shared-State_Concurrency"><span class="toc-number">1.4.</span> <span class="toc-text">Shared-State Concurrency</span></a></li></ol></li></ol>
  
   </div>
 
