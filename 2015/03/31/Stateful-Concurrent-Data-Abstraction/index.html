@@ -1,0 +1,600 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Stateful Concurrent Data Abstraction | DeltaX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Draven">
+    
+
+    
+    <meta name="description" content="LockIt often happens when threads wish to access a shared resource, but the resource can only be accessed by one thread at a time. This always called race condition and may causes unexcepted error dur">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Stateful Concurrent Data Abstraction">
+<meta property="og:url" content="http://deltax.me/2015/03/31/Stateful-Concurrent-Data-Abstraction/index.html">
+<meta property="og:site_name" content="DeltaX">
+<meta property="og:description" content="LockIt often happens when threads wish to access a shared resource, but the resource can only be accessed by one thread at a time. This always called race condition and may causes unexcepted error dur">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Stateful Concurrent Data Abstraction">
+<meta name="twitter:description" content="LockIt often happens when threads wish to access a shared resource, but the resource can only be accessed by one thread at a time. This always called race condition and may causes unexcepted error dur">
+
+    
+    <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="DeltaX" title="DeltaX"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="DeltaX">DeltaX</a></h1>
+				<h2 class="blog-motto">我们来填坑吧</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:deltax.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/31/Stateful-Concurrent-Data-Abstraction/" title="Stateful Concurrent Data Abstraction" itemprop="url">Stateful Concurrent Data Abstraction</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-31T08:56:39.000Z" itemprop="datePublished"> 发表于 2015-03-31</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Lock"><span class="toc-number">1.</span> <span class="toc-text">Lock</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Declarative_Version"><span class="toc-number">1.1.</span> <span class="toc-text">Declarative Version</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sequential_Stateful_Version"><span class="toc-number">1.2.</span> <span class="toc-text">Sequential Stateful Version</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Concurrent_Stateful_Version_with_Lock"><span class="toc-number">1.3.</span> <span class="toc-text">Concurrent Stateful Version with Lock</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Concurrent_Object-Oriented_Version_with_Lock"><span class="toc-number">1.4.</span> <span class="toc-text">Concurrent Object-Oriented Version with Lock</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Concurrent_Stateful_Version_with_Exchange"><span class="toc-number">1.5.</span> <span class="toc-text">Concurrent Stateful Version with Exchange</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Monitors"><span class="toc-number">2.</span> <span class="toc-text">Monitors</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Definition"><span class="toc-number">2.1.</span> <span class="toc-text">Definition</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bounded_Buffer"><span class="toc-number">2.2.</span> <span class="toc-text">Bounded Buffer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Partial_Definition_of_Monitor_Version"><span class="toc-number">2.2.1.</span> <span class="toc-text">Partial Definition of Monitor Version</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Monitor_Version"><span class="toc-number">2.2.2.</span> <span class="toc-text">Monitor Version</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Programming_with_Monitors"><span class="toc-number">2.3.</span> <span class="toc-text">Programming with Monitors</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Implementing_Monitors"><span class="toc-number">2.4.</span> <span class="toc-text">Implementing Monitors</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Extended_Concurrent_Stateful_Version_Queue"><span class="toc-number">2.4.1.</span> <span class="toc-text">Extended Concurrent Stateful Version Queue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reentrant_Get-release_Version_Lock"><span class="toc-number">2.4.2.</span> <span class="toc-text">Reentrant Get-release Version Lock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Monitor_Implementation"><span class="toc-number">2.4.3.</span> <span class="toc-text">Monitor Implementation</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="Lock">Lock</h1><p>It often happens when threads wish to access a shared resource, but the resource can only be accessed by one thread at a time. This always called race condition and may causes unexcepted error during execution.</p>
+<p>To manage this situation, we introduce a language concept called lock, to help control access to resource.</p>
+<p>A lock dynamicically controls access to part of the program, called a critical region. If the shared resource is only accessed from within the critical region, then the lock can be used to control access to the resource.</p>
+<p>We are ready to program stateful concurrent data abstractions and give a systematic way to transform a declrative data abstraction to become stateful concurrent data abstraction.</p>
+<p>We illustrate the different techniques by means of simple example, a queue.</p>
+<h2 id="Declarative_Version">Declarative Version</h2><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fun <span class="string">&#123;NewQueue&#125;</span></span><br><span class="line">X in</span><br><span class="line">	<span class="string">q(0 X X)</span></span><br><span class="line">end</span><br><span class="line">fun &#123;Insert <span class="string">q(N S E)</span> X&#125;</span><br><span class="line">E1 in</span><br><span class="line">	E=X|E1 <span class="string">q(N+1 S E1)</span></span><br><span class="line">end</span><br><span class="line">fun &#123;Delete <span class="string">q(N S E)</span> X&#125;</span><br><span class="line">S1 in</span><br><span class="line">	S=X|S1 <span class="string">q(N-1 S1 E)</span></span><br></pre></td></tr></table></figure>
+<p>This is essentially the declarative queue. The order of the queue operations is explicitly determined by the program.</p>
+<h2 id="Sequential_Stateful_Version">Sequential Stateful Version</h2><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">fun <span class="string">&#123;NewQueue&#125;</span></span><br><span class="line">	X C=&#123;NewCell <span class="string">q(0 X X)</span>&#125;</span><br><span class="line">	proc &#123;Insert X&#125;</span><br><span class="line">	N E E1 in</span><br><span class="line">		<span class="string">q(N S X|E1)</span>=<span class="variable">@C</span></span><br><span class="line">		C:=<span class="string">q(N+1 S E1)</span></span><br><span class="line">	end</span><br><span class="line">	fun <span class="string">&#123;Delete&#125;</span></span><br><span class="line">	N S1 E X in</span><br><span class="line">		<span class="string">q(N X|S1 E)</span>=<span class="variable">@C</span></span><br><span class="line">		C:=<span class="string">q(N-1 S1 E)</span></span><br><span class="line">		X</span><br><span class="line">	end</span><br><span class="line">in</span><br><span class="line">	queue(insert:Insert <span class="keyword">delete</span>:Delete)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>This show the same queue in a stateful version encapsulated the queue’s data. But this version cannot be used in concurrency. Because the <code>@</code> operation and <code>:=</code> operation. If two threads each do an insert operation, this may causes interleaving, which may gets incorrect answer.</p>
+<h2 id="Concurrent_Stateful_Version_with_Lock">Concurrent Stateful Version with Lock</h2><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">fun <span class="string">&#123;NewQueue&#125;</span></span><br><span class="line">	X C=&#123;NewCell <span class="string">q(0 X X)</span>&#125;</span><br><span class="line">	L=<span class="string">&#123;NewLock&#125;</span></span><br><span class="line">	proc &#123;Insert X&#125;</span><br><span class="line">	N E E1 in</span><br><span class="line">		lock L then</span><br><span class="line">			<span class="string">q(N S X|E1)</span>=<span class="variable">@C</span></span><br><span class="line">			C:=<span class="string">q(N+1 S E1)</span></span><br><span class="line">	end</span><br><span class="line">	end</span><br><span class="line">	fun <span class="string">&#123;Delete&#125;</span></span><br><span class="line">	N S1 E X in</span><br><span class="line">		lock L then</span><br><span class="line">			<span class="string">q(N X|S1 E)</span>=<span class="variable">@C</span></span><br><span class="line">			C:=<span class="string">q(N-1 S1 E)</span></span><br><span class="line">		end</span><br><span class="line">		X</span><br><span class="line">	end</span><br><span class="line">in</span><br><span class="line">	queue(insert:Insert <span class="keyword">delete</span>:Delete)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>This version shows a concurrent version of stateful queue, using a lock to ensure atomicity of the read-operation-write sequence. Doing this version in different threads will not impose any synchronization between the threads. This property is a consequence of using state.</p>
+<h2 id="Concurrent_Object-Oriented_Version_with_Lock">Concurrent Object-Oriented Version with Lock</h2><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class Queue</span><br><span class="line">	attr queue</span><br><span class="line">	prop locking</span><br><span class="line">	</span><br><span class="line">	meth init</span><br><span class="line">		queue:=<span class="string">q(0 X X)</span></span><br><span class="line">	end</span><br><span class="line">	</span><br><span class="line">	meth insert(X)</span><br><span class="line">		lock N S E1 in</span><br><span class="line">			<span class="string">q(N S X|E1)</span>=<span class="variable">@queue</span></span><br><span class="line">			queue:=<span class="string">q(N+1 S E1)</span></span><br><span class="line">		end</span><br><span class="line">	end</span><br><span class="line">	</span><br><span class="line">	meth <span class="keyword">delete</span>(X)</span><br><span class="line">		lock N S1 E in</span><br><span class="line">			<span class="string">q(N X|S1 E)</span>=<span class="variable">@queue</span></span><br><span class="line">			queue:=<span class="string">q(N-1 S1 E)</span></span><br><span class="line">		end</span><br><span class="line">	end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>This version is rewrittern with object-oriented syntax. The cell is replaced by the attribute <code>queue</code> and the lock is implicitly defined by the <code>locking</code> property.</p>
+<h2 id="Concurrent_Stateful_Version_with_Exchange">Concurrent Stateful Version with Exchange</h2><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">fun <span class="string">&#123;NewQueue&#125;</span></span><br><span class="line">	X C=&#123;NewCell <span class="string">q(0 X X)</span>&#125;</span><br><span class="line">	proc &#123;Insert X&#125;</span><br><span class="line">	N S E1 N1 in</span><br><span class="line">		&#123;Exchange C <span class="string">q(N S X|E1)</span>	 <span class="string">q(N1 S E1)</span>&#125;</span><br><span class="line">		N1=N+<span class="number">1</span></span><br><span class="line">	end</span><br><span class="line">	fun <span class="string">&#123;Delete&#125;</span></span><br><span class="line">	N S1 E N1 X in</span><br><span class="line">		&#123;Exchange C <span class="string">q(N X|S1 S)</span>	 <span class="string">q(N1 S1 E)</span>&#125;</span><br><span class="line">		N1=N-<span class="number">1</span></span><br><span class="line">		X</span><br><span class="line">	end</span><br><span class="line">in</span><br><span class="line">	queue(insert:Insert <span class="keyword">delete</span>:Delete)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>This version is made by <code>Exchange</code> operation, because this is single state operation, so no locks are needed.</p>
+<h1 id="Monitors">Monitors</h1><p>Locks are an important tool for building abstraction in a stateful model, but they are not sufficient. </p>
+<p>The standard way of coordinating threads in a stateful model is by monitor. A monitor is a lock extended with program control over how waiting threads enter and exit the lock.</p>
+<p>The monitors adds a <code>wait</code> and <code>notify</code> operation to the lock entry and exit operations. </p>
+<ul>
+<li>When inside a monitor, a thread can explicitly do a <code>wait</code>; suspend the thread, and entered into the monitor wait set, and release the monitor lock.</li>
+<li>When a thread does a <code>notify</code>, it lets one thread in the wait set continue. This thread attempts to get the monitor lock again.</li>
+</ul>
+<h2 id="Definition">Definition</h2><p>A monitor is always part of an object. It is an object with an internal lock and wait set. Object methoded can be protected by the lock by annotating them as <code>synchronized</code>. There are three  operations to manage the lock: <code>wait</code>, <code>notify</code>, and <code>notifyAll</code>.</p>
+<ul>
+<li>The <code>wait</code> operation<ul>
+<li>The current thread is suspended.</li>
+<li>The thread is placed in the object’s internal wait set.</li>
+<li>The lock for the object is released.</li>
+</ul>
+</li>
+<li>The <code>notify</code> operation<ul>
+<li>If one exists, an arbitrary thread <code>T</code> is removed from the object’s internal wait set.</li>
+<li><code>T</code> proceeds to get the lock, just as any other thread. This means that <code>T</code> will always suspend for a short time, until the notifying releases the lock.</li>
+<li><code>T</code> resumes execution at the point it was suspended.</li>
+</ul>
+</li>
+<li>The <code>notify</code> operation<ul>
+<li>Similar to <code>notify</code> except does above steps for all threads. The wait set is emptied.</li>
+</ul>
+</li>
+</ul>
+<p>Monitors are disigned for building concurrent data abstractions based on shared state.</p>
+<h2 id="Bounded_Buffer">Bounded Buffer</h2><p>The bounded buffer is an object with three operations.</p>
+<ul>
+<li><code>B={New Buffer init(N)}</code>: create a new bouned buffer <code>B</code> of size <code>N</code>.</li>
+<li><code>B={Put (X)}</code>: put the element <code>X</code> in buffer. If the buffer is fill, this will block until the buffer has room for the element.</li>
+<li><code>B={Get (X)}</code>: remove the element <code>X</code> from the buffer. If the buffer is empty this will block until there is at least one element.</li>
+</ul>
+<h3 id="Partial_Definition_of_Monitor_Version">Partial Definition of Monitor Version</h3><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class Buffer</span><br><span class="line">   attr</span><br><span class="line">      buf <span class="keyword">first</span> <span class="keyword">last</span> n i</span><br><span class="line"></span><br><span class="line">   meth init(N)</span><br><span class="line">      buf:=&#123;NewArray <span class="number">0</span> N-<span class="number">1</span> <span class="constant">null</span>&#125;</span><br><span class="line">      <span class="keyword">first</span>:=<span class="number">0</span></span><br><span class="line">      <span class="keyword">last</span>:=<span class="number">0</span></span><br><span class="line">      n:=N</span><br><span class="line">      i:=<span class="number">0</span></span><br><span class="line">   <span class="function"><span class="keyword">end</span></span></span><br><span class="line"></span><br><span class="line">   meth <span class="built_in">put</span>(X)</span><br><span class="line">      @buf.@<span class="keyword">last</span>:=X</span><br><span class="line">      <span class="keyword">last</span>:=(@<span class="keyword">last</span>+<span class="number">1</span>) <span class="operator">mod</span> @n</span><br><span class="line">      i:=@i+<span class="number">1</span></span><br><span class="line">   <span class="function"><span class="keyword">end</span></span></span><br><span class="line"></span><br><span class="line">   meth <span class="built_in">get</span>(X)</span><br><span class="line">      X=@buf.@<span class="keyword">first</span></span><br><span class="line">      <span class="keyword">first</span>:=(@<span class="keyword">first</span>+<span class="number">1</span>) <span class="operator">mod</span> @n</span><br><span class="line">      i:=@i-<span class="number">1</span></span><br><span class="line">   <span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br></pre></td></tr></table></figure>
+<p>The partial definition of the monitor does not check the bounded of the monitor. And then we will use monitor to implement this.</p>
+<h3 id="Monitor_Version">Monitor Version</h3><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">class Buffer</span><br><span class="line">   attr m buf <span class="keyword">first</span> <span class="keyword">last</span> n i</span><br><span class="line"></span><br><span class="line">   meth init(N)</span><br><span class="line">      m:=&#123;NewMonitor&#125;</span><br><span class="line">      buf:=&#123;NewArray <span class="number">0</span> N-<span class="number">1</span> <span class="constant">null</span>&#125;</span><br><span class="line">      n:=N i:= <span class="number">0</span> <span class="keyword">first</span>:=<span class="number">0</span> <span class="keyword">last</span>:=<span class="number">0</span></span><br><span class="line">   <span class="function"><span class="keyword">end</span></span></span><br><span class="line">   </span><br><span class="line">   meth <span class="built_in">put</span>(X)</span><br><span class="line">      &#123;@m.<span class="string">'lock'</span> proc &#123;$&#125;</span><br><span class="line">		    <span class="keyword">if</span> @i&gt;@n <span class="keyword">then</span> &#123;@m.<span class="built_in">wait</span>&#125; &#123;self <span class="built_in">put</span>(X)&#125;</span><br><span class="line">		    <span class="keyword">else</span></span><br><span class="line">		       @buf.@<span class="keyword">last</span>:=X</span><br><span class="line">		       <span class="keyword">last</span>:=(@<span class="keyword">last</span>+<span class="number">1</span>) <span class="operator">mod</span> @n</span><br><span class="line">		       i:=@i+<span class="number">1</span></span><br><span class="line">		       &#123;@m.notifyAll&#125;</span><br><span class="line">		    <span class="function"><span class="keyword">end</span></span></span><br><span class="line">		 <span class="function"><span class="keyword">end</span>&#125;</span></span><br><span class="line">   <span class="function"><span class="keyword">end</span></span></span><br><span class="line"></span><br><span class="line">   meth <span class="built_in">get</span>(X)</span><br><span class="line">      &#123;M.<span class="string">'lock'</span> proc &#123;$&#125;</span><br><span class="line">		   <span class="keyword">if</span> @i==<span class="number">0</span> <span class="keyword">then</span> &#123;@m.<span class="built_in">wait</span>&#125; &#123;self <span class="built_in">get</span>(X)&#125;</span><br><span class="line">		   <span class="keyword">else</span></span><br><span class="line">		      X=@buf.@<span class="keyword">first</span></span><br><span class="line">		      <span class="keyword">first</span>:=(@<span class="keyword">first</span>+<span class="number">1</span>) <span class="operator">mod</span> n</span><br><span class="line">		      i:=i-<span class="number">1</span></span><br><span class="line">		      &#123;@m.notifyAll&#125;</span><br><span class="line">		   <span class="function"><span class="keyword">end</span></span></span><br><span class="line">		<span class="function"><span class="keyword">end</span>&#125;</span></span><br><span class="line">   <span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br></pre></td></tr></table></figure>
+<p>If the buffer is full, then <code>{M.wait}</code> simply waits until it is no longer full. When <code>get(X)</code> removes an element, it calls <code>{M.notifyAll}</code>, which wakes up the waiting thread.</p>
+<h2 id="Programming_with_Monitors">Programming with Monitors</h2><p>The idea of monitors is guarded. Guarded methods are implemented using the <code>wait</code> and <code>notifyAll</code> operations.</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">meth methHead</span><br><span class="line">	lock</span><br><span class="line">		<span class="keyword">while</span> <span class="keyword">not</span> &lt;expr&gt; <span class="keyword">do</span> wait;</span><br><span class="line">		&lt;stmt&gt;</span><br><span class="line">		notifyAll;</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>In this example, <code>&lt;expr&gt;</code> is the guard and <code>&lt;stmt&gt;</code> is the guarded body. When the method is called, the thread enters the lock and waits for conition in a <code>while</code> loop. If the <code>&lt;expr&gt;</code> is true, this executes the body and notify all the other threads. If not, threads wait until other notify them.</p>
+<h2 id="Implementing_Monitors">Implementing Monitors</h2><p>Now let us impelement monitors in the shared-state concurrent model. This is thread-reentrant and correctly handles exceptions.</p>
+<h3 id="Extended_Concurrent_Stateful_Version_Queue">Extended Concurrent Stateful Version Queue</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">fun &#123;NewQueue&#125;</span><br><span class="line">	......</span><br><span class="line">   fun &#123;Size&#125;</span><br><span class="line">      <span class="operator"><span class="keyword">lock</span> L <span class="keyword">then</span> @C<span class="number">.1</span> <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line">   fun &#123;DeleteAll&#125;</span><br><span class="line">      <span class="keyword">lock</span> L <span class="keyword">then</span></span><br><span class="line">	 		X q(_ S E)=@C <span class="keyword">in</span></span><br><span class="line">	 		C:=q(<span class="number">0</span> X X)</span><br><span class="line">	 		E=nil S</span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line">   fun &#123;DeleteNonBlock&#125;</span><br><span class="line">      <span class="keyword">lock</span> L <span class="keyword">then</span></span><br><span class="line">	 		<span class="keyword">if</span> &#123;<span class="keyword">Size</span>&#125;&gt;<span class="number">0</span> <span class="keyword">then</span> [&#123;<span class="keyword">Delete</span>&#125;] <span class="keyword">else</span> nil <span class="keyword">end</span></span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">   queue(<span class="keyword">insert</span>:<span class="keyword">Insert</span> <span class="keyword">delete</span>:<span class="keyword">Delete</span> <span class="keyword">size</span>:<span class="keyword">Size</span> deleteAll:DeleteAll deleteNonBlock:DeleteNonBlock)</span><br><span class="line"><span class="keyword">end</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="Reentrant_Get-release_Version_Lock">Reentrant Get-release Version Lock</h3><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">fun &#123;<span class="type">NewGRLock</span>&#125;</span><br><span class="line">	<span class="type">Token1</span>=&#123;<span class="type">NewCell</span> unit&#125;</span><br><span class="line">	<span class="type">Token2</span>=&#123;<span class="type">NewCell</span> unit&#125;</span><br><span class="line">	<span class="type">CurThr</span>=&#123;<span class="type">NewCell</span> unit&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">proc</span> &#123;<span class="type">GetLock</span>&#125;</span><br><span class="line">		<span class="keyword">if</span> &#123;<span class="type">Thread</span>.this&#125;\=@<span class="type">CurThr</span> then <span class="type">Old</span> <span class="type">New</span> <span class="keyword">in</span></span><br><span class="line">			&#123;<span class="type">Exchange</span> <span class="type">Token1</span> <span class="type">Old</span> <span class="type">New</span>&#125;</span><br><span class="line">			&#123;<span class="type">Wait</span> <span class="type">Old</span>&#125;</span><br><span class="line">			<span class="type">Token2</span>:=<span class="type">New</span></span><br><span class="line">			<span class="type">CurThr</span>:=&#123;<span class="type">Thread</span>.this&#125;</span><br><span class="line">		<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">proc</span> &#123;<span class="type">ReleaseLock</span>&#125;</span><br><span class="line">		<span class="type">CurThr</span>:=unit</span><br><span class="line">		unit=@<span class="type">Token2</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">	'lock'(get:<span class="type">GetLock</span> release:<span class="type">ReleaseLock</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h3 id="Monitor_Implementation">Monitor Implementation</h3><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">fun &#123;<span class="type">NewMonitor</span>&#125;</span><br><span class="line">   Q=&#123;<span class="type">NewQueue</span>&#125;</span><br><span class="line">   L=&#123;<span class="type">NewGRLock</span>&#125;</span><br><span class="line">   <span class="keyword">proc</span> &#123;<span class="type">LockM</span> P&#125;</span><br><span class="line">      &#123;L.get&#125; <span class="keyword">try</span> &#123;P&#125; <span class="keyword">finally</span> &#123;L.release&#125; <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">proc</span> &#123;<span class="type">WaitM</span>&#125; X <span class="keyword">in</span></span><br><span class="line">      &#123;Q.insert X&#125; &#123;L.release&#125; &#123;<span class="type">Wait</span> X&#125; &#123;L.get&#125;</span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">proc</span> &#123;<span class="type">NotifyM</span>&#125; U=&#123;Q.deleteNonBlock&#125; <span class="keyword">in</span></span><br><span class="line">      <span class="keyword">case</span> U <span class="keyword">of</span> [X] then X=unit <span class="keyword">else</span> skip <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">proc</span> &#123;<span class="type">NotifyAllM</span>&#125; L=&#123;Q.deleteAll&#125; <span class="keyword">in</span></span><br><span class="line">      <span class="keyword">for</span> X <span class="keyword">in</span> L <span class="keyword">do</span> X=unit <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">   monitor('lock':<span class="type">LockM</span> wait:<span class="type">WaitM</span> notify:<span class="type">NotifyM</span></span><br><span class="line">	   notifyAll:<span class="type">NotifyAllM</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Programming-Paradigm/">Programming Paradigm</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/CTMCP/">CTMCP</a><a href="/tags/Concurrency/">Concurrency</a><a href="/tags/Oz/">Oz</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://deltax.me/2015/03/31/Stateful-Concurrent-Data-Abstraction/" data-title="Stateful Concurrent Data Abstraction | DeltaX" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/03/30/Shared-State-Concurrency/"  title="Shared-State Concurrency">
+ <strong>下一篇：</strong><br/> 
+ <span>Shared-State Concurrency
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/03/31/Stateful-Concurrent-Data-Abstraction/" data-title="Stateful Concurrent Data Abstraction" data-url="http://deltax.me/2015/03/31/Stateful-Concurrent-Data-Abstraction/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Lock"><span class="toc-number">1.</span> <span class="toc-text">Lock</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Declarative_Version"><span class="toc-number">1.1.</span> <span class="toc-text">Declarative Version</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sequential_Stateful_Version"><span class="toc-number">1.2.</span> <span class="toc-text">Sequential Stateful Version</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Concurrent_Stateful_Version_with_Lock"><span class="toc-number">1.3.</span> <span class="toc-text">Concurrent Stateful Version with Lock</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Concurrent_Object-Oriented_Version_with_Lock"><span class="toc-number">1.4.</span> <span class="toc-text">Concurrent Object-Oriented Version with Lock</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Concurrent_Stateful_Version_with_Exchange"><span class="toc-number">1.5.</span> <span class="toc-text">Concurrent Stateful Version with Exchange</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Monitors"><span class="toc-number">2.</span> <span class="toc-text">Monitors</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Definition"><span class="toc-number">2.1.</span> <span class="toc-text">Definition</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bounded_Buffer"><span class="toc-number">2.2.</span> <span class="toc-text">Bounded Buffer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Partial_Definition_of_Monitor_Version"><span class="toc-number">2.2.1.</span> <span class="toc-text">Partial Definition of Monitor Version</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Monitor_Version"><span class="toc-number">2.2.2.</span> <span class="toc-text">Monitor Version</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Programming_with_Monitors"><span class="toc-number">2.3.</span> <span class="toc-text">Programming with Monitors</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Implementing_Monitors"><span class="toc-number">2.4.</span> <span class="toc-text">Implementing Monitors</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Extended_Concurrent_Stateful_Version_Queue"><span class="toc-number">2.4.1.</span> <span class="toc-text">Extended Concurrent Stateful Version Queue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reentrant_Get-release_Version_Lock"><span class="toc-number">2.4.2.</span> <span class="toc-text">Reentrant Get-release Version Lock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Monitor_Implementation"><span class="toc-number">2.4.3.</span> <span class="toc-text">Monitor Implementation</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/clrs/Algorithm/" title="Algorithm">Algorithm<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/clrs/Algorithm/" title="Algorithm">Algorithm<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/clrs/Algorithm/" title="Algorithm">Algorithm<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Functional-Programming/" title="Functional Programming">Functional Programming<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Programming-Paradigm/" title="Programming Paradigm">Programming Paradigm<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/clrs/" title="clrs">clrs<sup>5</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/iOS/" title="iOS">iOS<sup>8</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Oz/" title="Oz">Oz<sup>11</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CTMCP/" title="CTMCP">CTMCP<sup>11</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/iOS/" title="iOS">iOS<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Objective-C/" title="Objective-C">Objective-C<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/OOP/" title="OOP">OOP<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Algorithm/" title="Algorithm">Algorithm<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Concurrency/" title="Concurrency">Concurrency<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Scheme/" title="Scheme">Scheme<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Functional-Programming/" title="Functional Programming">Functional Programming<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ML/" title="ML">ML<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SICP/" title="SICP">SICP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Haskell/" title="Haskell">Haskell<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Draven. <br/>
+			This is my blog, believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/https://github.com/Draveness" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:stark.draven@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="http://deltax.me/about" target="_blank" title="Draven">Draven</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+  
+    c.click();
+    
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"DeltaX"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-56898419-1', 'deltax.me');  
+ga('send', 'pageview');
+</script>
+
+
+
+
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254626833'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s23.cnzz.com/z_stat.php%3Fid%3D1254626833' type='text/javascript'%3E%3C/script%3E"));</script>
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
