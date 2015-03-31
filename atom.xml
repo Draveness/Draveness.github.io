@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title><![CDATA[DeltaX]]></title>
-  <subtitle><![CDATA[为了成为牛逼闪闪的工程师]]></subtitle>
+  <subtitle><![CDATA[我们来填坑吧]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
   <updated>2015-03-30T16:36:54.000Z</updated>
