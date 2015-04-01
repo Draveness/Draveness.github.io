@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我们来填坑吧]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
-  <updated>2015-04-01T07:13:06.000Z</updated>
+  <updated>2015-04-01T11:45:13.000Z</updated>
   <id>http://deltax.me/</id>
   
   <author>
@@ -13,6 +13,54 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Relational Programming]]></title>
+    <link href="http://deltax.me/2015/04/01/Relational-Programming/"/>
+    <id>http://deltax.me/2015/04/01/Relational-Programming/</id>
+    <published>2015-04-01T07:15:09.000Z</published>
+    <updated>2015-04-01T11:45:13.000Z</updated>
+    <content type="html"><![CDATA[<p>A relational procedure is more flexible than a functional procedure in two ways. </p>
+<ul>
+<li>First, there can be any number of results to a call. </li>
+<li>Second, which arguments are inputs and which are outputs can be different for each call.</li>
+</ul>
+<p>These features make relational programming well-suited for databases and parsers. And it extends declarative programming with a new kind of statement called a “choice”. And <code>Prolog</code> language uses a choice operation as the heart of its execution model.</p>
+<p>The flexibility of relational programming has a reverse side. It can easily lead to inefficient programs. Relational programming is practical in these areas:</p>
+<ul>
+<li>When the search space is small.</li>
+<li>As an exploratory tool.</li>
+</ul>
+<h1 id="The_Relational_Computational_Model">The Relational Computational Model</h1><p>The relational computational model extends the declrative model with two new statements, <code>choice</code> and <code>fail</code>.</p>
+<ul>
+<li>The <code>choice</code> statement group together a set of alternative statements.</li>
+<li>The <code>fail</code> statement indicates that the current alternative is wrong.</li>
+</ul>
+<h2 id="Search_Tree">Search Tree</h2><p>A relational program is executed sequentially. The <code>choice</code> statements are executed in the order that they are encountered during execution.</p>
+<p>When a <code>choice</code> is first executed, its first alternativeis picked. When  <code>fail</code> is executed, execution “backs up” to the most recent <code>choice</code> statement.</p>
+<p>This execution stategy can be illustrated with a tree called the search tree.</p>
+<p><img src="http://deltax.qiniudn.com/Search-Tree.png?attname=&e=1427974813&token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:O2ESA3L4RlojzLV7kuJE2QxJrVk" style="display:block;margin:auto"></p>
+<h2 id="The_Solve_Function">The <code>Solve</code> Function</h2><p>We provide encapsulated search by adding one function, <code>Solve</code> to the computation model. The call <code>{Solve F}</code> is given a zero-argument function <code>F</code> that returns a solution to a relational program. This returns a lazy list of all solutions with <code>DFS</code>.</p>
+<p>We just look the first element with this function:</p>
+<figure class="highlight sml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fun</span> &#123;<span class="type">SolveOne</span> <span class="type">F</span>&#125;</span><br><span class="line">   <span class="type">L</span>=&#123;<span class="type">Solve</span> <span class="type">F</span>&#125;</span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">   <span class="keyword">if</span> <span class="type">L</span>==<span class="literal">nil</span> <span class="keyword">then</span> <span class="literal">nil</span> <span class="keyword">else</span> [<span class="type">L</span>.<span class="number">1</span>] <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>To get all-solution search, we look at the whole list:</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">fun &#123;<span class="type">SolveAll</span> F&#125;</span><br><span class="line">   L=&#123;<span class="type">Solve</span> F&#125;</span><br><span class="line">   <span class="keyword">proc</span> &#123;<span class="type">TouchAll</span> L&#125;</span><br><span class="line">      <span class="keyword">if</span> L==<span class="keyword">nil</span> then skip <span class="keyword">else</span> &#123;<span class="type">TouchAll</span> L.<span class="number">2</span>&#125; <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">   &#123;<span class="type">TouchAll</span> L&#125;</span><br><span class="line">   L</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>A relational procedure is more flexible than a functional procedure in two ways. </p>
+<ul>
+<li>First, there can be any number of results ]]>
+    </summary>
+    
+      <category term="CTMCP" scheme="http://deltax.me/tags/CTMCP/"/>
+    
+      <category term="Oz" scheme="http://deltax.me/tags/Oz/"/>
+    
+      <category term="Relational Programming" scheme="http://deltax.me/tags/Relational-Programming/"/>
+    
+      <category term="Programming Paradigm" scheme="http://deltax.me/categories/Programming-Paradigm/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Transactions]]></title>
@@ -1441,46 +1489,6 @@ local C={<span class="type">NewCell</span> <span class="number">0</span>} <span 
       <category term="clrs" scheme="http://deltax.me/categories/clrs/"/>
     
       <category term="Algorithm" scheme="http://deltax.me/categories/clrs/Algorithm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[HTTP报文内的HTTP信息]]></title>
-    <link href="http://deltax.me/2015/01/27/HTTP%E6%8A%A5%E6%96%87%E5%86%85%E7%9A%84HTTP%E4%BF%A1%E6%81%AF.md/"/>
-    <id>http://deltax.me/2015/01/27/HTTP报文内的HTTP信息.md/</id>
-    <published>2015-01-27T04:17:21.000Z</published>
-    <updated>2015-03-29T09:04:35.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="HTTP报文">HTTP报文</h2><p><code>HTTP报文</code>是由多行数据构成的字符串文本, 大致可分为<strong>报文首部</strong>和<strong>报文主体</strong>两部分.</p>
-<pre><code><span class="code">------------------
-|     报文首部     |
-------------------</span>
-<span class="header">|  空行(CR + LF)  |
-------------------</span>
-|                |
-|     报文主体    |
-<span class="header">|                | 
-------------------</span>
-</code></pre><p>请求报文和响应报文的主要区别在于<strong>请求行</strong>和<strong>状态行</strong>的不同.</p>
-<pre><code><span class="attribute">请求报文首部 </span>=<span class="string"> 请求行 + 请求首部字段 + 通用首部字段 + 实体首部字段 + 其他
-响应报文首部 = 响应行 + 响应首部字段 + 响应首部字段 + 实体首部字段 + 其他</span>
-</code></pre><p>可以通过<code>Range</code>字段获取部分内容的范围请求</p>
-<pre><code><span class="attribute">Range</span>: <span class="string">bytes=5001-10000</span>
-<span class="attribute">Range</span>: <span class="string">bytes=5001-</span>
-<span class="attribute">Range</span>: <span class="string">bytes=-3000, 5000-7000</span>
-</code></pre><p>当Web界面有多份相同的内容时, 根据浏览器的默认语言会返回不同的界面, 例如中文版或者英文版, 这样的机制就叫做<strong>内容协商</strong>.</p>
-<p><strong>内容协商</strong>就是客户端和服务端对响应的资源内容进行交涉, 返回合适的内容, 具体有以下三种类型.</p>
-<ul>
-<li>服务端驱动协商(Server-driven Negotiation)</li>
-<li>客户端驱动协商(Client-driven Negotiation)</li>
-<li>透明协商(Transparent Negotiation)</li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="HTTP报文">HTTP报文</h2><p><code>HTTP报文</code>是由多行数据构成的字符串文本, 大致可分为<strong>报文首部</strong>和<strong>报文主体</strong>两部分.</p>
-<pre><code><span c]]>
-    </summary>
-    
-      <category term="HTTP" scheme="http://deltax.me/tags/HTTP/"/>
     
   </entry>
   

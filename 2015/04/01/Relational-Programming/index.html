@@ -4,52 +4,32 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>简单的HTTP协议 | DeltaX</title>
+    <title>Relational Programming | DeltaX</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Draven">
     
 
     
-    <meta name="description" content="HTTP协议HTTP协议主要用于客户端和服务端之间的通信, 应用HTTP协议时必须是一端担任客户端角色, 一端担任服务端角色
+    <meta name="description" content="A relational procedure is more flexible than a functional procedure in two ways. 
 
-客户端发送HTTP请求
-服务端进行响应回复
-
-请求报文请求报文 = 请求方法 + URI + 协议版本 + (请求首部) + (内容实体)
-
-GET /index.htm HTTP/1.1
-HOST: DeltaX.me
-
-GET表示访问服务器的类型, 也就是Method">
+First, there can be any number of results to a call. 
+Second, which arguments are inputs and which are outputs can be">
 <meta property="og:type" content="article">
-<meta property="og:title" content="简单的HTTP协议">
-<meta property="og:url" content="http://deltax.me/2015/01/24/简单的HTTP协议/index.html">
+<meta property="og:title" content="Relational Programming">
+<meta property="og:url" content="http://deltax.me/2015/04/01/Relational-Programming/index.html">
 <meta property="og:site_name" content="DeltaX">
-<meta property="og:description" content="HTTP协议HTTP协议主要用于客户端和服务端之间的通信, 应用HTTP协议时必须是一端担任客户端角色, 一端担任服务端角色
+<meta property="og:description" content="A relational procedure is more flexible than a functional procedure in two ways. 
 
-客户端发送HTTP请求
-服务端进行响应回复
-
-请求报文请求报文 = 请求方法 + URI + 协议版本 + (请求首部) + (内容实体)
-
-GET /index.htm HTTP/1.1
-HOST: DeltaX.me
-
-GET表示访问服务器的类型, 也就是Method">
+First, there can be any number of results to a call. 
+Second, which arguments are inputs and which are outputs can be">
+<meta property="og:image" content="http://deltax.qiniudn.com/Search-Tree.png?attname=&e=1427974813&token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:O2ESA3L4RlojzLV7kuJE2QxJrVk">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="简单的HTTP协议">
-<meta name="twitter:description" content="HTTP协议HTTP协议主要用于客户端和服务端之间的通信, 应用HTTP协议时必须是一端担任客户端角色, 一端担任服务端角色
+<meta name="twitter:title" content="Relational Programming">
+<meta name="twitter:description" content="A relational procedure is more flexible than a functional procedure in two ways. 
 
-客户端发送HTTP请求
-服务端进行响应回复
-
-请求报文请求报文 = 请求方法 + URI + 协议版本 + (请求首部) + (内容实体)
-
-GET /index.htm HTTP/1.1
-HOST: DeltaX.me
-
-GET表示访问服务器的类型, 也就是Method">
+First, there can be any number of results to a call. 
+Second, which arguments are inputs and which are outputs can be">
 
     
     <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
@@ -108,14 +88,14 @@ GET表示访问服务器的类型, 也就是Method">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/01/24/简单的HTTP协议/" title="简单的HTTP协议" itemprop="url">简单的HTTP协议</a>
+      <a href="/2015/04/01/Relational-Programming/" title="Relational Programming" itemprop="url">Relational Programming</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
 		
   <p class="article-time">
-    <time datetime="2015-01-24T13:59:11.000Z" itemprop="datePublished"> 发表于 2015-01-24</time>
+    <time datetime="2015-04-01T07:15:09.000Z" itemprop="datePublished"> 发表于 2015-04-01</time>
     
   </p>
 </header>
@@ -124,54 +104,49 @@ GET表示访问服务器的类型, 也就是Method">
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP协议"><span class="toc-number">1.</span> <span class="toc-text">HTTP协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#请求报文"><span class="toc-number">2.</span> <span class="toc-text">请求报文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#响应报文"><span class="toc-number">3.</span> <span class="toc-text">响应报文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#无状态协议和Cookie"><span class="toc-number">4.</span> <span class="toc-text">无状态协议和Cookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#持久连接和管线化"><span class="toc-number">5.</span> <span class="toc-text">持久连接和管线化</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#The_Relational_Computational_Model"><span class="toc-number">1.</span> <span class="toc-text">The Relational Computational Model</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Search_Tree"><span class="toc-number">1.1.</span> <span class="toc-text">Search Tree</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The_Solve_Function"><span class="toc-number">1.2.</span> <span class="toc-text">The Solve Function</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		<h2 id="HTTP协议">HTTP协议</h2><p><code>HTTP</code>协议主要用于客户端和服务端之间的通信, 应用HTTP协议时必须是一端担任客户端角色, 一端担任服务端角色</p>
+		<p>A relational procedure is more flexible than a functional procedure in two ways. </p>
 <ul>
-<li>客户端发送HTTP请求</li>
-<li>服务端进行响应回复</li>
+<li>First, there can be any number of results to a call. </li>
+<li>Second, which arguments are inputs and which are outputs can be different for each call.</li>
 </ul>
-<h2 id="请求报文">请求报文</h2><pre><code>请求报文 = 请求方法 + URI + 协议版本 + (请求首部) + (内容实体)
-
-GET <span class="regexp">/index.htm HTTP/</span><span class="number">1.1</span>
-<span class="string">HOST:</span> DeltaX.me
-</code></pre><ul>
-<li><code>GET</code>表示访问服务器的类型, 也就是<code>Method</code></li>
-<li><code>/index.htm</code>指明请求的资源对象, 也叫<code>URI</code></li>
-<li><code>HTTP/1.1</code>为<code>HTTP</code>的版本号</li>
-<li>这段请求的意思是访问HTTP服务器上的<code>/index.htm</code>资源</li>
-</ul>
-<h2 id="响应报文">响应报文</h2><pre><code>请求报文 = 协议版本 + 状态码 + 原因短语 + (响应首部字段) + 实体主体
-
-HTTP/<span class="number">1.1</span> <span class="number">200</span> OK
-<span class="string">Date:</span> Sat, <span class="number">23</span> January <span class="number">2014</span> <span class="number">22</span>:<span class="number">07</span>:<span class="number">00</span> GMT
-Content-<span class="string">Length:</span> <span class="number">500</span>
-Content-<span class="string">Type:</span> text/html
-
-&lt;html&gt;.....
-</code></pre><ul>
-<li>状态码表示请求的处理结果</li>
-<li>原因短语用于解释状态码</li>
-</ul>
-<h2 id="无状态协议和Cookie">无状态协议和Cookie</h2><p><code>HTTP</code>协议自身不对请求和响应之间的通信状态进行保存, 对于发送过的请求和响应<strong>不做持久化处理</strong>. 由于不必保存状态, 自然可以减轻服务器的CPU以及内存资源的销号, 但是要解决状态的问题, 引入了<code>Cookie</code>技术.</p>
-<p>Cookie会根据从服务器端发送的响应豹纹的<code>Set-Cookie</code>的首部字段信息, 通知客户端保存<code>Cookie</code>. 当下次客户端向服务器发送通信时, 客户端后自动在请求报文中加入<code>Cookie</code>值后发送出去, 服务端接收<code>Cookie</code>值之后, 会对比服务器上的记录, 得到之前的状态信息.</p>
-<h2 id="持久连接和管线化">持久连接和管线化</h2><p>为了解决<code>TCP</code>连接的问题, <code>HTTP/1.1</code>和一部分<code>HTTP/1.0</code>实现了<em>持久连接</em>(HTTP keep-alive)方法</p>
+<p>These features make relational programming well-suited for databases and parsers. And it extends declarative programming with a new kind of statement called a “choice”. And <code>Prolog</code> language uses a choice operation as the heart of its execution model.</p>
+<p>The flexibility of relational programming has a reverse side. It can easily lead to inefficient programs. Relational programming is practical in these areas:</p>
 <ul>
-<li>只要任意一端没有明确提出断开连接, 则保持<code>TCP</code>连接状态</li>
-<li><code>HTTP/1.1</code>中所有的连接默认都是持久连接, 这样可以减轻服务器负担, 减少了<code>TCP</code>连接的重复建立和断开造成的额外开销.</li>
+<li>When the search space is small.</li>
+<li>As an exploratory tool.</li>
 </ul>
-<p><em>管线化</em>及同时并行发送多个请求, 不需要依次等待相应.</p>
+<h1 id="The_Relational_Computational_Model">The Relational Computational Model</h1><p>The relational computational model extends the declrative model with two new statements, <code>choice</code> and <code>fail</code>.</p>
+<ul>
+<li>The <code>choice</code> statement group together a set of alternative statements.</li>
+<li>The <code>fail</code> statement indicates that the current alternative is wrong.</li>
+</ul>
+<h2 id="Search_Tree">Search Tree</h2><p>A relational program is executed sequentially. The <code>choice</code> statements are executed in the order that they are encountered during execution.</p>
+<p>When a <code>choice</code> is first executed, its first alternativeis picked. When  <code>fail</code> is executed, execution “backs up” to the most recent <code>choice</code> statement.</p>
+<p>This execution stategy can be illustrated with a tree called the search tree.</p>
+<p><img src="http://deltax.qiniudn.com/Search-Tree.png?attname=&e=1427974813&token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:O2ESA3L4RlojzLV7kuJE2QxJrVk" style="display:block;margin:auto"></p>
+<h2 id="The_Solve_Function">The <code>Solve</code> Function</h2><p>We provide encapsulated search by adding one function, <code>Solve</code> to the computation model. The call <code>{Solve F}</code> is given a zero-argument function <code>F</code> that returns a solution to a relational program. This returns a lazy list of all solutions with <code>DFS</code>.</p>
+<p>We just look the first element with this function:</p>
+<figure class="highlight sml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fun</span> &#123;<span class="type">SolveOne</span> <span class="type">F</span>&#125;</span><br><span class="line">   <span class="type">L</span>=&#123;<span class="type">Solve</span> <span class="type">F</span>&#125;</span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">   <span class="keyword">if</span> <span class="type">L</span>==<span class="literal">nil</span> <span class="keyword">then</span> <span class="literal">nil</span> <span class="keyword">else</span> [<span class="type">L</span>.<span class="number">1</span>] <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>To get all-solution search, we look at the whole list:</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">fun &#123;<span class="type">SolveAll</span> F&#125;</span><br><span class="line">   L=&#123;<span class="type">Solve</span> F&#125;</span><br><span class="line">   <span class="keyword">proc</span> &#123;<span class="type">TouchAll</span> L&#125;</span><br><span class="line">      <span class="keyword">if</span> L==<span class="keyword">nil</span> then skip <span class="keyword">else</span> &#123;<span class="type">TouchAll</span> L.<span class="number">2</span>&#125; <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">   &#123;<span class="type">TouchAll</span> L&#125;</span><br><span class="line">   L</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Programming-Paradigm/">Programming Paradigm</a>
+</div>
+
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/HTTP/">HTTP</a>
+  <span></span> <a href="/tags/CTMCP/">CTMCP</a><a href="/tags/Oz/">Oz</a><a href="/tags/Relational-Programming/">Relational Programming</a>
   </div>
 
 </div>
@@ -180,7 +155,7 @@ Content-<span class="string">Type:</span> text/html
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://deltax.me/2015/01/24/简单的HTTP协议/" data-title="简单的HTTP协议 | DeltaX" data-tsina="null" class="share clearfix">
+	  <div data-url="http://deltax.me/2015/04/01/Relational-Programming/" data-title="Relational Programming | DeltaX" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -193,19 +168,11 @@ Content-<span class="string">Type:</span> text/html
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/01/27/HTTP报文内的HTTP信息.md/" title="HTTP报文内的HTTP信息">
-  <strong>上一篇：</strong><br/>
-  <span>
-  HTTP报文内的HTTP信息</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/01/19/SICP-1-1/"  title="SICP 1.1 The Elements of Programming">
+<a href="/2015/04/01/Transactions/"  title="Transactions">
  <strong>下一篇：</strong><br/> 
- <span>SICP 1.1 The Elements of Programming
+ <span>Transactions
 </span>
 </a>
 </div>
@@ -214,7 +181,7 @@ Content-<span class="string">Type:</span> text/html
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/01/24/简单的HTTP协议/" data-title="简单的HTTP协议" data-url="http://deltax.me/2015/01/24/简单的HTTP协议/"></div>
+	<div class="ds-thread" data-thread-key="2015/04/01/Relational-Programming/" data-title="Relational Programming" data-url="http://deltax.me/2015/04/01/Relational-Programming/"></div>
 </section>
 
 
@@ -224,7 +191,7 @@ Content-<span class="string">Type:</span> text/html
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP协议"><span class="toc-number">1.</span> <span class="toc-text">HTTP协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#请求报文"><span class="toc-number">2.</span> <span class="toc-text">请求报文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#响应报文"><span class="toc-number">3.</span> <span class="toc-text">响应报文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#无状态协议和Cookie"><span class="toc-number">4.</span> <span class="toc-text">无状态协议和Cookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#持久连接和管线化"><span class="toc-number">5.</span> <span class="toc-text">持久连接和管线化</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#The_Relational_Computational_Model"><span class="toc-number">1.</span> <span class="toc-text">The Relational Computational Model</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Search_Tree"><span class="toc-number">1.1.</span> <span class="toc-text">Search Tree</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The_Solve_Function"><span class="toc-number">1.2.</span> <span class="toc-text">The Solve Function</span></a></li></ol></li></ol>
  
   </div>
 
