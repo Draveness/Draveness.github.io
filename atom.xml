@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我们来填坑吧]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
-  <updated>2015-04-01T03:11:18.000Z</updated>
+  <updated>2015-04-01T07:13:06.000Z</updated>
   <id>http://deltax.me/</id>
   
   <author>
@@ -13,6 +13,75 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Transactions]]></title>
+    <link href="http://deltax.me/2015/04/01/Transactions/"/>
+    <id>http://deltax.me/2015/04/01/Transactions/</id>
+    <published>2015-04-01T03:50:46.000Z</published>
+    <updated>2015-04-01T07:13:06.000Z</updated>
+    <content type="html"><![CDATA[<p>Transactions were introduced as a basic concept for the management of larget shared database.</p>
+<p>The term “transaction” has acquired a fairly meaning, it is any operation satisfies the four <code>ACID</code> properties which is an acronym.</p>
+<ul>
+<li>A stands for <strong>atmoic</strong><ul>
+<li>No intermediate states of a transaction’s execution are observable.</li>
+</ul>
+</li>
+<li>C stands for <strong>consistent</strong><ul>
+<li>Observable state changes respect the system invariants. Consistentcy is closely related to atomicity. The difference is the consistency is responsibility for programmer, whereas atmoicity is the responsibility of the implemenation of the trasaction system.</li>
+</ul>
+</li>
+<li>I stands for <strong>isolation</strong><ul>
+<li>Several transactions can execute concurrently without interfering with each other. They execute as if they were sequential.</li>
+</ul>
+</li>
+<li>D stands for <strong>durabulity</strong><ul>
+<li>Observable state changes survive across system shutdowns. This is often called persistence.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Movivations">Movivations</h2><ul>
+<li>One motivation for transactions was to increase the throughtput of concurrent accesses to a database.</li>
+<li>A second motivation is concurrent programming with exceptions. Most routines has two way to exit, either they exit normally or they raise an exception. And there are two solutions when an exception raised.<ul>
+<li>The caller can clean up the called routine’s mess.</li>
+<li>The routine can be inside a transaction. Raising an exception corresponds to aborting the transaction.</li>
+</ul>
+</li>
+<li>A third motivation is fault tolerance. A fault tolerance application has to take three steps:<ol>
+<li>Detect the fault.</li>
+<li>Contain the fault in a limited part of the application</li>
+<li>Repair any problems caused by the fault.</li>
+</ol>
+</li>
+<li>A fourth motivation is resource management.</li>
+</ul>
+<h2 id="Concurrency_Control">Concurrency Control</h2><p>Consider a large database by many clients at the same time. They are concurrent yet still satisfy serializability. The implementation should allow concurrent transaction and yet it has to make sure that they are still serializable.</p>
+<p>Concurrency control is the set of techniques used to build and program concurrent sysmtems with transactional properties. Our algorithm is interesting because it is both practical and simple.</p>
+<h3 id="Locks_and_Timestamps">Locks and Timestamps</h3><p>The two most widely used approaches to concurrency control are locks and timestamps:</p>
+<ul>
+<li>Lock-based concurrency control<ul>
+<li>Each stateful entity has a lock that controls access to the entity Locks always restricting the system’s behavior so that it is safe.</li>
+</ul>
+</li>
+<li>Timestamp-based concurrency control<ul>
+<li>Each transaction is given a timestamp that gives it a priority. Timestamps are important to ensure that execution makes progress.</li>
+</ul>
+</li>
+</ul>
+<p>Safety and liveness propeties describe how a system hahaves as a function of time.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Transactions were introduced as a basic concept for the management of larget shared database.</p>
+<p>The term “transaction” has acquired ]]>
+    </summary>
+    
+      <category term="CTMCP" scheme="http://deltax.me/tags/CTMCP/"/>
+    
+      <category term="Oz" scheme="http://deltax.me/tags/Oz/"/>
+    
+      <category term="Programming Paradigm" scheme="http://deltax.me/categories/Programming-Paradigm/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Stateful Concurrent Data Abstraction]]></title>
@@ -1409,59 +1478,6 @@ local C={<span class="type">NewCell</span> <span class="number">0</span>} <span 
     <summary type="html">
     <![CDATA[<h2 id="HTTP报文">HTTP报文</h2><p><code>HTTP报文</code>是由多行数据构成的字符串文本, 大致可分为<strong>报文首部</strong>和<strong>报文主体</strong>两部分.</p>
 <pre><code><span c]]>
-    </summary>
-    
-      <category term="HTTP" scheme="http://deltax.me/tags/HTTP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[简单的HTTP协议]]></title>
-    <link href="http://deltax.me/2015/01/24/%E7%AE%80%E5%8D%95%E7%9A%84HTTP%E5%8D%8F%E8%AE%AE/"/>
-    <id>http://deltax.me/2015/01/24/简单的HTTP协议/</id>
-    <published>2015-01-24T13:59:11.000Z</published>
-    <updated>2015-01-24T14:19:36.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="HTTP协议">HTTP协议</h2><p><code>HTTP</code>协议主要用于客户端和服务端之间的通信, 应用HTTP协议时必须是一端担任客户端角色, 一端担任服务端角色</p>
-<ul>
-<li>客户端发送HTTP请求</li>
-<li>服务端进行响应回复</li>
-</ul>
-<h2 id="请求报文">请求报文</h2><pre><code>请求报文 = 请求方法 + URI + 协议版本 + (请求首部) + (内容实体)
-
-GET <span class="regexp">/index.htm HTTP/</span><span class="number">1.1</span>
-<span class="string">HOST:</span> DeltaX.me
-</code></pre><ul>
-<li><code>GET</code>表示访问服务器的类型, 也就是<code>Method</code></li>
-<li><code>/index.htm</code>指明请求的资源对象, 也叫<code>URI</code></li>
-<li><code>HTTP/1.1</code>为<code>HTTP</code>的版本号</li>
-<li>这段请求的意思是访问HTTP服务器上的<code>/index.htm</code>资源</li>
-</ul>
-<h2 id="响应报文">响应报文</h2><pre><code>请求报文 = 协议版本 + 状态码 + 原因短语 + (响应首部字段) + 实体主体
-
-HTTP/<span class="number">1.1</span> <span class="number">200</span> OK
-<span class="string">Date:</span> Sat, <span class="number">23</span> January <span class="number">2014</span> <span class="number">22</span>:<span class="number">07</span>:<span class="number">00</span> GMT
-Content-<span class="string">Length:</span> <span class="number">500</span>
-Content-<span class="string">Type:</span> text/html
-
-&lt;html&gt;.....
-</code></pre><ul>
-<li>状态码表示请求的处理结果</li>
-<li>原因短语用于解释状态码</li>
-</ul>
-<h2 id="无状态协议和Cookie">无状态协议和Cookie</h2><p><code>HTTP</code>协议自身不对请求和响应之间的通信状态进行保存, 对于发送过的请求和响应<strong>不做持久化处理</strong>. 由于不必保存状态, 自然可以减轻服务器的CPU以及内存资源的销号, 但是要解决状态的问题, 引入了<code>Cookie</code>技术.</p>
-<p>Cookie会根据从服务器端发送的响应豹纹的<code>Set-Cookie</code>的首部字段信息, 通知客户端保存<code>Cookie</code>. 当下次客户端向服务器发送通信时, 客户端后自动在请求报文中加入<code>Cookie</code>值后发送出去, 服务端接收<code>Cookie</code>值之后, 会对比服务器上的记录, 得到之前的状态信息.</p>
-<h2 id="持久连接和管线化">持久连接和管线化</h2><p>为了解决<code>TCP</code>连接的问题, <code>HTTP/1.1</code>和一部分<code>HTTP/1.0</code>实现了<em>持久连接</em>(HTTP keep-alive)方法</p>
-<ul>
-<li>只要任意一端没有明确提出断开连接, 则保持<code>TCP</code>连接状态</li>
-<li><code>HTTP/1.1</code>中所有的连接默认都是持久连接, 这样可以减轻服务器负担, 减少了<code>TCP</code>连接的重复建立和断开造成的额外开销.</li>
-</ul>
-<p><em>管线化</em>及同时并行发送多个请求, 不需要依次等待相应.</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="HTTP协议">HTTP协议</h2><p><code>HTTP</code>协议主要用于客户端和服务端之间的通信, 应用HTTP协议时必须是一端担任客户端角色, 一端担任服务端角色</p>
-<ul>
-<li>客户端发送HTTP请求</li>
-<li>服务端进行响]]>
     </summary>
     
       <category term="HTTP" scheme="http://deltax.me/tags/HTTP/"/>

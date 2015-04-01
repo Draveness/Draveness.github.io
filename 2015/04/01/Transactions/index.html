@@ -4,25 +4,25 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Parameter Passing Mechanisms | DeltaX</title>
+    <title>Transactions | DeltaX</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Draven">
     
 
     
-    <meta name="description" content="The operation of a data abstraction can have arguments and results. Many different mechanisms have been divised to pass the arguments and results between a calling program and an abstraction.
-Call by">
+    <meta name="description" content="Transactions were introduced as a basic concept for the management of larget shared database.
+The term “transaction” has acquired a fairly meaning, it is any operation satisfies the four ACID properti">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Parameter Passing Mechanisms">
-<meta property="og:url" content="http://deltax.me/2015/03/18/Parameter-Passing-Mechanisms/index.html">
+<meta property="og:title" content="Transactions">
+<meta property="og:url" content="http://deltax.me/2015/04/01/Transactions/index.html">
 <meta property="og:site_name" content="DeltaX">
-<meta property="og:description" content="The operation of a data abstraction can have arguments and results. Many different mechanisms have been divised to pass the arguments and results between a calling program and an abstraction.
-Call by">
+<meta property="og:description" content="Transactions were introduced as a basic concept for the management of larget shared database.
+The term “transaction” has acquired a fairly meaning, it is any operation satisfies the four ACID properti">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Parameter Passing Mechanisms">
-<meta name="twitter:description" content="The operation of a data abstraction can have arguments and results. Many different mechanisms have been divised to pass the arguments and results between a calling program and an abstraction.
-Call by">
+<meta name="twitter:title" content="Transactions">
+<meta name="twitter:description" content="Transactions were introduced as a basic concept for the management of larget shared database.
+The term “transaction” has acquired a fairly meaning, it is any operation satisfies the four ACID properti">
 
     
     <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
@@ -81,14 +81,14 @@ Call by">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/18/Parameter-Passing-Mechanisms/" title="Parameter Passing Mechanisms" itemprop="url">Parameter Passing Mechanisms</a>
+      <a href="/2015/04/01/Transactions/" title="Transactions" itemprop="url">Transactions</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
 		
   <p class="article-time">
-    <time datetime="2015-03-18T08:47:50.000Z" itemprop="datePublished"> 发表于 2015-03-18</time>
+    <time datetime="2015-04-01T03:50:46.000Z" itemprop="datePublished"> 发表于 2015-04-01</time>
     
   </p>
 </header>
@@ -97,40 +97,68 @@ Call by">
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Reference"><span class="toc-number">1.</span> <span class="toc-text">Call by Reference</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Variable"><span class="toc-number">2.</span> <span class="toc-text">Call by Variable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Value"><span class="toc-number">3.</span> <span class="toc-text">Call by Value</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Value-result"><span class="toc-number">4.</span> <span class="toc-text">Call by Value-result</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Name"><span class="toc-number">5.</span> <span class="toc-text">Call by Name</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Need"><span class="toc-number">6.</span> <span class="toc-text">Call by Need</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Movivations"><span class="toc-number">1.</span> <span class="toc-text">Movivations</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Concurrency_Control"><span class="toc-number">2.</span> <span class="toc-text">Concurrency Control</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Locks_and_Timestamps"><span class="toc-number">2.1.</span> <span class="toc-text">Locks and Timestamps</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		<p>The operation of a data abstraction can have arguments and results. Many different mechanisms have been divised to pass the arguments and results between a calling program and an abstraction.</p>
-<h3 id="Call_by_Reference">Call by Reference</h3><p>The identity of a <strong>language entity is passed to the procedure</strong>. The procedure can then use this language entity freely. This is the primitive mechanism used by the computation models of the book for all language entities including dataflow variables and cells.</p>
-<h3 id="Call_by_Variable">Call by Variable</h3><p>This is a special case of call by reference. <strong>The identity of a cell is passed to the procedure</strong>.</p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span> &#123;<span class="type">Sqr</span> A&#125;</span><br><span class="line">	A:=@A*@A</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">local</span><br><span class="line">	C=&#123;<span class="type">NewCell</span> <span class="number">0</span>&#125;</span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">	C:=<span class="number">25</span></span><br><span class="line">	&#123;<span class="type">Sqr</span> C&#125;</span><br><span class="line">	&#123;<span class="type">Browse</span> @C&#125;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h3 id="Call_by_Value">Call by Value</h3><p>A value is passed to the procedure and put into a cell local to the procedure.</p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span> &#123;<span class="type">Sqr</span> D&#125;</span><br><span class="line">	A=&#123;<span class="type">NewCell</span> D&#125;</span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">	A:=@A+<span class="number">1</span></span><br><span class="line">	&#123;<span class="type">Browse</span> @A*@A&#125;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">&#123;<span class="type">Sqrt</span> <span class="number">25</span>&#125;</span><br></pre></td></tr></table></figure>
-<p>The cell a is initialized with the arguement of <code>Sqr</code>.</p>
-<h3 id="Call_by_Value-result">Call by Value-result</h3><p>This is a modification of call by variable. When the procedure is called, the content of a cell is put into another mutable variable local to the procedure. When the procedure returns, the content of the latter cell is put into the former cell.</p>
-<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">proc <span class="list">&#123;Sqr A&#125;</span></span><br><span class="line">	<span class="keyword">D</span>=<span class="list">&#123;NewCell @A&#125;</span></span><br><span class="line">in</span><br><span class="line">	<span class="keyword">D</span>:=@<span class="keyword">D</span>*@<span class="keyword">D</span></span><br><span class="line">	A:=@<span class="keyword">D</span></span><br><span class="line">end</span><br><span class="line">local</span><br><span class="line">	<span class="keyword">C</span>=<span class="list">&#123;NewCell 0&#125;</span></span><br><span class="line">in</span><br><span class="line">	<span class="keyword">C</span>:=<span class="number">25</span></span><br><span class="line">	<span class="list">&#123;Sqr C&#125;</span></span><br><span class="line">	<span class="list">&#123;Browse @C&#125;</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-<p>When entering the <code>Sqr</code>, <code>D</code> is assigned to the content of <code>A</code>. After computation, assigned the content of <code>D</code> back to the <code>C</code>. And we can reference <code>C</code> from outside.</p>
-<h3 id="Call_by_Name">Call by Name</h3><p>This mechanism creates a function to wrap each argument which is called thunk. And each time argument is needed, call it as a function, and this returns an unwrapped argument.</p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span> &#123;<span class="type">Sqr</span> A&#125;</span><br><span class="line">	&#123;A&#125;:=@&#123;A&#125;*@&#123;A&#125;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">local C=&#123;<span class="type">NewCell</span> <span class="number">0</span>&#125; <span class="keyword">in</span></span><br><span class="line">	C:=<span class="number">25</span></span><br><span class="line">	&#123;<span class="type">Sqr</span> fun &#123;$&#125; C <span class="keyword">end</span>&#125;</span><br><span class="line">	&#123;<span class="type">Browse</span> @C&#125;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>The function wrapped in thunk is called each time, the argument is needed.</p>
-<h3 id="Call_by_Need">Call by Need</h3><p>This is a modification and improve of call by name, which the function is called at most once. When the function is first called, its result stored and used for subsequent evaluations.</p>
-<pre><code><span class="keyword">proc</span> {<span class="type">Sqr</span> A}
-    B={A}
-<span class="keyword">in</span>
-    B:=@B*@B
-<span class="keyword">end</span>
-local C={<span class="type">NewCell</span> <span class="number">0</span>} <span class="keyword">in</span>
-    C:=<span class="number">25</span>
-    {<span class="type">Sqr</span> fun {$} C <span class="keyword">end</span>}
-    {<span class="type">Browse</span> @C}
-<span class="keyword">end</span>
-</code></pre><p>The argument <code>A</code> is evaluated when it is needed, and after first evaluate, it stored in the variable <code>B</code>, and then every time <code>A</code> is needed, just use <code>B</code> instead.</p>
-<p>This approach is exactly the same concept as lazy evalution.</p>
+		<p>Transactions were introduced as a basic concept for the management of larget shared database.</p>
+<p>The term “transaction” has acquired a fairly meaning, it is any operation satisfies the four <code>ACID</code> properties which is an acronym.</p>
+<ul>
+<li>A stands for <strong>atmoic</strong><ul>
+<li>No intermediate states of a transaction’s execution are observable.</li>
+</ul>
+</li>
+<li>C stands for <strong>consistent</strong><ul>
+<li>Observable state changes respect the system invariants. Consistentcy is closely related to atomicity. The difference is the consistency is responsibility for programmer, whereas atmoicity is the responsibility of the implemenation of the trasaction system.</li>
+</ul>
+</li>
+<li>I stands for <strong>isolation</strong><ul>
+<li>Several transactions can execute concurrently without interfering with each other. They execute as if they were sequential.</li>
+</ul>
+</li>
+<li>D stands for <strong>durabulity</strong><ul>
+<li>Observable state changes survive across system shutdowns. This is often called persistence.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Movivations">Movivations</h2><ul>
+<li>One motivation for transactions was to increase the throughtput of concurrent accesses to a database.</li>
+<li>A second motivation is concurrent programming with exceptions. Most routines has two way to exit, either they exit normally or they raise an exception. And there are two solutions when an exception raised.<ul>
+<li>The caller can clean up the called routine’s mess.</li>
+<li>The routine can be inside a transaction. Raising an exception corresponds to aborting the transaction.</li>
+</ul>
+</li>
+<li>A third motivation is fault tolerance. A fault tolerance application has to take three steps:<ol>
+<li>Detect the fault.</li>
+<li>Contain the fault in a limited part of the application</li>
+<li>Repair any problems caused by the fault.</li>
+</ol>
+</li>
+<li>A fourth motivation is resource management.</li>
+</ul>
+<h2 id="Concurrency_Control">Concurrency Control</h2><p>Consider a large database by many clients at the same time. They are concurrent yet still satisfy serializability. The implementation should allow concurrent transaction and yet it has to make sure that they are still serializable.</p>
+<p>Concurrency control is the set of techniques used to build and program concurrent sysmtems with transactional properties. Our algorithm is interesting because it is both practical and simple.</p>
+<h3 id="Locks_and_Timestamps">Locks and Timestamps</h3><p>The two most widely used approaches to concurrency control are locks and timestamps:</p>
+<ul>
+<li>Lock-based concurrency control<ul>
+<li>Each stateful entity has a lock that controls access to the entity Locks always restricting the system’s behavior so that it is safe.</li>
+</ul>
+</li>
+<li>Timestamp-based concurrency control<ul>
+<li>Each transaction is given a timestamp that gives it a priority. Timestamps are important to ensure that execution makes progress.</li>
+</ul>
+</li>
+</ul>
+<p>Safety and liveness propeties describe how a system hahaves as a function of time.</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Programming-Paradigm/">Programming Paradigm</a>
+</div>
 
 
   <div class="article-tags">
@@ -144,7 +172,7 @@ local C={<span class="type">NewCell</span> <span class="number">0</span>} <span 
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://deltax.me/2015/03/18/Parameter-Passing-Mechanisms/" data-title="Parameter Passing Mechanisms | DeltaX" data-tsina="null" class="share clearfix">
+	  <div data-url="http://deltax.me/2015/04/01/Transactions/" data-title="Transactions | DeltaX" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -157,19 +185,11 @@ local C={<span class="type">NewCell</span> <span class="number">0</span>} <span 
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/03/19/堆排序/" title="堆排序">
-  <strong>上一篇：</strong><br/>
-  <span>
-  堆排序</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/03/18/Explicit-State/"  title="Explicit State">
+<a href="/2015/03/31/Stateful-Concurrent-Data-Abstraction/"  title="Stateful Concurrent Data Abstraction">
  <strong>下一篇：</strong><br/> 
- <span>Explicit State
+ <span>Stateful Concurrent Data Abstraction
 </span>
 </a>
 </div>
@@ -178,7 +198,7 @@ local C={<span class="type">NewCell</span> <span class="number">0</span>} <span 
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/03/18/Parameter-Passing-Mechanisms/" data-title="Parameter Passing Mechanisms" data-url="http://deltax.me/2015/03/18/Parameter-Passing-Mechanisms/"></div>
+	<div class="ds-thread" data-thread-key="2015/04/01/Transactions/" data-title="Transactions" data-url="http://deltax.me/2015/04/01/Transactions/"></div>
 </section>
 
 
@@ -188,7 +208,7 @@ local C={<span class="type">NewCell</span> <span class="number">0</span>} <span 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Reference"><span class="toc-number">1.</span> <span class="toc-text">Call by Reference</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Variable"><span class="toc-number">2.</span> <span class="toc-text">Call by Variable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Value"><span class="toc-number">3.</span> <span class="toc-text">Call by Value</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Value-result"><span class="toc-number">4.</span> <span class="toc-text">Call by Value-result</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Name"><span class="toc-number">5.</span> <span class="toc-text">Call by Name</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Call_by_Need"><span class="toc-number">6.</span> <span class="toc-text">Call by Need</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Movivations"><span class="toc-number">1.</span> <span class="toc-text">Movivations</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Concurrency_Control"><span class="toc-number">2.</span> <span class="toc-text">Concurrency Control</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Locks_and_Timestamps"><span class="toc-number">2.1.</span> <span class="toc-text">Locks and Timestamps</span></a></li></ol></li></ol>
  
   </div>
 
