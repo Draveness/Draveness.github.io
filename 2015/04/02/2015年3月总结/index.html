@@ -4,22 +4,25 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Graphical User Interface Programming | DeltaX</title>
+    <title>2015年3月总结 | DeltaX</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Draven">
     
 
     
-    <meta name="description" content="This post will show a particularly simple and powerful way to do graphical user inteerface programming. We combine the declarative model together with the shared-state concurrent model. First, we will">
+    <meta name="description" content="CTMCP这一个月的前半部分时间利用率并不是特别的高, 后半个月基本上没两天看一章算法导论, 和一部分的 CTCMP, 到今天为止 CTMCP 终于看完了.
+看这本书的过程中虽然有些收获, 不过并没有阅读 SICP 收获来得大, 而且这本书也并没有 SICP 有趣, 能颠覆我对编程的理解和认识, 不过我还是了解了一些非常非常好玩的语言, 也对一些编程范式, 编程语言有了更深层次地理解. 以后也可以">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Graphical User Interface Programming">
-<meta property="og:url" content="http://deltax.me/2015/04/02/Graphical-User-Interface-Programming/index.html">
+<meta property="og:title" content="2015年3月总结">
+<meta property="og:url" content="http://deltax.me/2015/04/02/2015年3月总结/index.html">
 <meta property="og:site_name" content="DeltaX">
-<meta property="og:description" content="This post will show a particularly simple and powerful way to do graphical user inteerface programming. We combine the declarative model together with the shared-state concurrent model. First, we will">
+<meta property="og:description" content="CTMCP这一个月的前半部分时间利用率并不是特别的高, 后半个月基本上没两天看一章算法导论, 和一部分的 CTCMP, 到今天为止 CTMCP 终于看完了.
+看这本书的过程中虽然有些收获, 不过并没有阅读 SICP 收获来得大, 而且这本书也并没有 SICP 有趣, 能颠覆我对编程的理解和认识, 不过我还是了解了一些非常非常好玩的语言, 也对一些编程范式, 编程语言有了更深层次地理解. 以后也可以">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Graphical User Interface Programming">
-<meta name="twitter:description" content="This post will show a particularly simple and powerful way to do graphical user inteerface programming. We combine the declarative model together with the shared-state concurrent model. First, we will">
+<meta name="twitter:title" content="2015年3月总结">
+<meta name="twitter:description" content="CTMCP这一个月的前半部分时间利用率并不是特别的高, 后半个月基本上没两天看一章算法导论, 和一部分的 CTCMP, 到今天为止 CTMCP 终于看完了.
+看这本书的过程中虽然有些收获, 不过并没有阅读 SICP 收获来得大, 而且这本书也并没有 SICP 有趣, 能颠覆我对编程的理解和认识, 不过我还是了解了一些非常非常好玩的语言, 也对一些编程范式, 编程语言有了更深层次地理解. 以后也可以">
 
     
     <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
@@ -78,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/04/02/Graphical-User-Interface-Programming/" title="Graphical User Interface Programming" itemprop="url">Graphical User Interface Programming</a>
+      <a href="/2015/04/02/2015年3月总结/" title="2015年3月总结" itemprop="url">2015年3月总结</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
 		
   <p class="article-time">
-    <time datetime="2015-04-02T05:03:18.000Z" itemprop="datePublished"> 发表于 2015-04-02</time>
+    <time datetime="2015-04-02T14:49:23.000Z" itemprop="datePublished"> 发表于 2015-04-02</time>
     
   </p>
 </header>
@@ -94,39 +97,27 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#The_Declarative/Procedural_Approach"><span class="toc-number">1.</span> <span class="toc-text">The Declarative/Procedural Approach</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CTMCP"><span class="toc-number">1.</span> <span class="toc-text">CTMCP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prolog_Smalltalk_Scheme"><span class="toc-number">2.</span> <span class="toc-text">Prolog Smalltalk Scheme</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sinatra"><span class="toc-number">3.</span> <span class="toc-text">Sinatra</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算法导论"><span class="toc-number">4.</span> <span class="toc-text">算法导论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设计师"><span class="toc-number">5.</span> <span class="toc-text">设计师</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进度"><span class="toc-number">6.</span> <span class="toc-text">进度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目标"><span class="toc-number">7.</span> <span class="toc-text">目标</span></a></li></ol>
 		
 		</div>
 		
-		<p>This post will show a particularly simple and powerful way to do graphical user inteerface programming. We combine the declarative model together with the shared-state concurrent model. First, we will summarize the existing approaches.</p>
-<ul>
-<li>Purely procedurel<ul>
-<li>The user interface is constructed by a sequence of graphics commands. These commands can be purely imperative or even functional. The object-oriented or functional style is preferable to an imperative style.</li>
-</ul>
-</li>
-<li>Purely declarative<ul>
-<li>The user interface is constructed by choosing from a set of predefined possibilities. This is an example of descriptive declarativeness.</li>
-</ul>
-</li>
-<li>Using an interface builder<ul>
-<li>The user interface is constructed manully by the developer, using a direct manipulation interface.</li>
-</ul>
-</li>
-</ul>
-<p>The procedural approach is expressive but is complex to use.<br>The declarative approach is easy to use but lacks expressiveness.<br>The interface builder is easy to use and gives immediate feedback on the interface but it lacks expressiveness and the interface is haard to change at run time.</p>
-<h2 id="The_Declarative/Procedural_Approach">The Declarative/Procedural Approach</h2><p>What are the relative merits of the declarative and procedural approaches to specifying user interfaces? The trade-off is between expressiveness and manipulability:</p>
-<ul>
-<li>The declrative approach defines a set of possibilities for different attributes. The developer chooses among this set and defines a data structure that describes the interface. <ul>
-<li>The pure declarative approach makes it easy to formally manipulate the user definitions. But the expressiveness is limited bacause it is only possible to express what the designers initially thought of.</li>
-</ul>
-</li>
-<li>The procedural approach gives a set of primitive operations and the ability to write programs to them. These programs construct the interface. <ul>
-<li>A purely procedural approach has no limits on its expressiveness. However, this makes harder to do formal manipulations on the user interface definitions.</li>
-</ul>
-</li>
-</ul>
-<p>The trade-off is not a temporary state of affairs. It is a deep property of computational models. As a language becomes more expressive, its programs become less amenable to formal manipulation.</p>
-<p>It is still possible to define a model that is both manipulate and expressive. We can do it by combing the declarative and procedural approaches.</p>
+		<h2 id="CTMCP">CTMCP</h2><p>这一个月的前半部分时间利用率并不是特别的高, 后半个月基本上没两天看一章算法导论, 和一部分的 CTCMP, 到今天为止 CTMCP 终于看完了.</p>
+<p>看这本书的过程中虽然有些收获, 不过并没有阅读 SICP 收获来得大, 而且这本书也并没有 SICP 有趣, 能颠覆我对编程的理解和认识, 不过我还是了解了一些非常非常好玩的语言, 也对一些编程范式, 编程语言有了更深层次地理解. 以后也可以从另一个角度来看待各种各样的编程语言了. </p>
+<p>不过书籍的最后一部分实在是无法阅读下去, 也只得放弃, 不过估计以后也不会再回头来看了. 书的网站对于这本书的支持也并不够, 我找到了这本书的官方社区, 发现社区 3 年只有 20 个左右的帖子. 书中的好多代码也是无法运行的, 尤其是逻辑式编程地部分, 严重地影响了读书的体验.</p>
+<h2 id="Prolog_Smalltalk_Scheme">Prolog Smalltalk Scheme</h2><p>阅读这本书之后, 我对 Scheme Smalltalk 和 Prolog 有着非常浓厚地兴趣, 我会在下一个阶段的学习中学习它们, 我预计先学习 Prolog, 因为 Prolog 相对于 Smalltalk 的资源还是比较充足一些的. 而 Scheme 由于之前看过 SICP 所以只打算复习一下, 而 Smalltalk 近期还没有学习的打算.</p>
+<h2 id="Sinatra">Sinatra</h2><p>在这个月我还接触到了 Ruby 的 Sinatra 框架感觉也是一个非常简介的框架, 再加上 Ruby 是一门非常优雅的语言. 我写起来还是非常爽的. 我会在下个月深入学习一下 Sinatra 的使用和部署, 争取完成一个使用 sinatra 的小项目.</p>
+<h2 id="算法导论">算法导论</h2><p>算法导论这本书还是很有意思的, 不过一些数学方面的证明对于我来说还是很吃力的. 不过对于我以后不会去做算法工程师的定位, 我准备还是略微读一下这本算法界的经典, 提升一下自己的算法能力, 也能为面试做下准备. 不过对于一些习题我还是打算跳过的. 只完成一些基础方面的东西, 对算法有一些基本的理解.</p>
+<h2 id="设计师">设计师</h2><p>关于设计方面, 我目前还是很头疼的, 因为我身边比较缺少这样的人, 我也一直在找, 另外我也在尝试做一些简单的设计, 虽然不能达到优秀的水平, 不过也能勉强作为一个应用的界面.</p>
+<h2 id="进度">进度</h2><ol>
+<li>完成 CTMCP</li>
+<li>算法导论前 10 章.</li>
+<li>了解 Sinatra</li>
+</ol>
+<h2 id="目标">目标</h2><ol>
+<li>学习 Prolog</li>
+<li>阅读 4 章操作系统</li>
+<li>阅读 10 章算法导论</li>
+</ol>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -134,14 +125,9 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/Programming-Paradigm/">Programming Paradigm</a>
+  <a class="article-category-link" href="/categories/Conclusion/">Conclusion</a>
 </div>
 
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/CTMCP/">CTMCP</a><a href="/tags/GUI-Programming/">GUI Programming</a>
-  </div>
 
 </div>
 
@@ -149,7 +135,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://deltax.me/2015/04/02/Graphical-User-Interface-Programming/" data-title="Graphical User Interface Programming | DeltaX" data-tsina="null" class="share clearfix">
+	  <div data-url="http://deltax.me/2015/04/02/2015年3月总结/" data-title="2015年3月总结 | DeltaX" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -162,19 +148,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/04/02/2015年3月总结/" title="2015年3月总结">
-  <strong>上一篇：</strong><br/>
-  <span>
-  2015年3月总结</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/04/01/Relational-Programming/"  title="Relational Programming">
+<a href="/2015/04/02/Graphical-User-Interface-Programming/"  title="Graphical User Interface Programming">
  <strong>下一篇：</strong><br/> 
- <span>Relational Programming
+ <span>Graphical User Interface Programming
 </span>
 </a>
 </div>
@@ -183,7 +161,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/04/02/Graphical-User-Interface-Programming/" data-title="Graphical User Interface Programming" data-url="http://deltax.me/2015/04/02/Graphical-User-Interface-Programming/"></div>
+	<div class="ds-thread" data-thread-key="2015/04/02/2015年3月总结/" data-title="2015年3月总结" data-url="http://deltax.me/2015/04/02/2015年3月总结/"></div>
 </section>
 
 
@@ -193,7 +171,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#The_Declarative/Procedural_Approach"><span class="toc-number">1.</span> <span class="toc-text">The Declarative/Procedural Approach</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CTMCP"><span class="toc-number">1.</span> <span class="toc-text">CTMCP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prolog_Smalltalk_Scheme"><span class="toc-number">2.</span> <span class="toc-text">Prolog Smalltalk Scheme</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sinatra"><span class="toc-number">3.</span> <span class="toc-text">Sinatra</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算法导论"><span class="toc-number">4.</span> <span class="toc-text">算法导论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设计师"><span class="toc-number">5.</span> <span class="toc-text">设计师</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进度"><span class="toc-number">6.</span> <span class="toc-text">进度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目标"><span class="toc-number">7.</span> <span class="toc-text">目标</span></a></li></ol>
  
   </div>
 
