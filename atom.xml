@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我们来填坑吧]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
-  <updated>2015-04-01T11:45:13.000Z</updated>
+  <updated>2015-04-02T07:44:04.000Z</updated>
   <id>http://deltax.me/</id>
   
   <author>
@@ -15,11 +15,80 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[Distributed Programming]]></title>
+    <link href="http://deltax.me/2015/04/02/Distributed-Programming/"/>
+    <id>http://deltax.me/2015/04/02/Distributed-Programming/</id>
+    <published>2015-04-02T07:04:06.000Z</published>
+    <updated>2015-04-02T07:44:04.000Z</updated>
+    <content type="html"></content>
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="CTMCP" scheme="http://deltax.me/tags/CTMCP/"/>
+    
+      <category term="Distributed Programming" scheme="http://deltax.me/tags/Distributed-Programming/"/>
+    
+      <category term="Oz" scheme="http://deltax.me/tags/Oz/"/>
+    
+      <category term="Programming Paradigm" scheme="http://deltax.me/categories/Programming-Paradigm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Graphical User Interface Programming]]></title>
+    <link href="http://deltax.me/2015/04/02/Graphical-User-Interface-Programming/"/>
+    <id>http://deltax.me/2015/04/02/Graphical-User-Interface-Programming/</id>
+    <published>2015-04-02T05:03:18.000Z</published>
+    <updated>2015-04-02T07:44:52.000Z</updated>
+    <content type="html"><![CDATA[<p>This post will show a particularly simple and powerful way to do graphical user inteerface programming. We combine the declarative model together with the shared-state concurrent model. First, we will summarize the existing approaches.</p>
+<ul>
+<li>Purely procedurel<ul>
+<li>The user interface is constructed by a sequence of graphics commands. These commands can be purely imperative or even functional. The object-oriented or functional style is preferable to an imperative style.</li>
+</ul>
+</li>
+<li>Purely declarative<ul>
+<li>The user interface is constructed by choosing from a set of predefined possibilities. This is an example of descriptive declarativeness.</li>
+</ul>
+</li>
+<li>Using an interface builder<ul>
+<li>The user interface is constructed manully by the developer, using a direct manipulation interface.</li>
+</ul>
+</li>
+</ul>
+<p>The procedural approach is expressive but is complex to use.<br>The declarative approach is easy to use but lacks expressiveness.<br>The interface builder is easy to use and gives immediate feedback on the interface but it lacks expressiveness and the interface is haard to change at run time.</p>
+<h2 id="The_Declarative/Procedural_Approach">The Declarative/Procedural Approach</h2><p>What are the relative merits of the declarative and procedural approaches to specifying user interfaces? The trade-off is between expressiveness and manipulability:</p>
+<ul>
+<li>The declrative approach defines a set of possibilities for different attributes. The developer chooses among this set and defines a data structure that describes the interface. <ul>
+<li>The pure declarative approach makes it easy to formally manipulate the user definitions. But the expressiveness is limited bacause it is only possible to express what the designers initially thought of.</li>
+</ul>
+</li>
+<li>The procedural approach gives a set of primitive operations and the ability to write programs to them. These programs construct the interface. <ul>
+<li>A purely procedural approach has no limits on its expressiveness. However, this makes harder to do formal manipulations on the user interface definitions.</li>
+</ul>
+</li>
+</ul>
+<p>The trade-off is not a temporary state of affairs. It is a deep property of computational models. As a language becomes more expressive, its programs become less amenable to formal manipulation.</p>
+<p>It is still possible to define a model that is both manipulate and expressive. We can do it by combing the declarative and procedural approaches.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>This post will show a particularly simple and powerful way to do graphical user inteerface programming. We combine the declarative model ]]>
+    </summary>
+    
+      <category term="CTMCP" scheme="http://deltax.me/tags/CTMCP/"/>
+    
+      <category term="GUI Programming" scheme="http://deltax.me/tags/GUI-Programming/"/>
+    
+      <category term="Programming Paradigm" scheme="http://deltax.me/categories/Programming-Paradigm/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[Relational Programming]]></title>
     <link href="http://deltax.me/2015/04/01/Relational-Programming/"/>
     <id>http://deltax.me/2015/04/01/Relational-Programming/</id>
     <published>2015-04-01T07:15:09.000Z</published>
-    <updated>2015-04-01T11:45:13.000Z</updated>
+    <updated>2015-04-01T13:47:27.000Z</updated>
     <content type="html"><![CDATA[<p>A relational procedure is more flexible than a functional procedure in two ways. </p>
 <ul>
 <li>First, there can be any number of results to a call. </li>
@@ -1377,118 +1446,6 @@ local C={<span class="type">NewCell</span> <span class="number">0</span>} <span 
       <category term="Oz" scheme="http://deltax.me/tags/Oz/"/>
     
       <category term="Programming Paradigm" scheme="http://deltax.me/categories/Programming-Paradigm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Message-Passing Concurrency]]></title>
-    <link href="http://deltax.me/2015/03/16/Message-Passing-Concurrency/"/>
-    <id>http://deltax.me/2015/03/16/Message-Passing-Concurrency/</id>
-    <published>2015-03-15T17:13:25.000Z</published>
-    <updated>2015-03-24T17:36:39.000Z</updated>
-    <content type="html"><![CDATA[<p><code>Message-passing</code> is a programming style in which a program consists of independent entities that interact by sending each other messages asynchronously.</p>
-<h2 id="Why_Message-passing_important?">Why Message-passing important?</h2><ul>
-<li>It is the basic framework for <strong>multi-agent</strong> systems.</li>
-<li>It is the natural stype for a <strong>distributed</strong> system.</li>
-<li>It lends itself well to building highly reliable systems.</li>
-</ul>
-<h2 id="Message-passing_concurrent_model">Message-passing concurrent model</h2><p>The message-passing concurrent model extends the declarative concurrent model by adding ports. We add two operions to manipulate ports.</p>
-<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;NewPort &lt;y&gt; &lt;x&gt;&#125;  Port creation: <span class="built_in">create</span> <span class="operator">a</span> <span class="built_in">new</span> port <span class="operator">with</span> entry point &lt;x&gt; <span class="operator">and</span> stream &lt;y&gt;</span><br><span class="line">&#123;Send &lt;x&gt; &lt;y&gt;&#125;     Port <span class="built_in">send</span>: append &lt;y&gt; <span class="built_in">to</span> he stream corresponding <span class="built_in">to</span> <span class="operator">the</span> entry point &lt;x&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="Port_Objects">Port Objects</h2><p>A <code>port object</code> is a combination of one or more ports and a stream object. This extends stream objects in two ways.</p>
-<ol>
-<li><strong>Many-to-one communication</strong> is possible, many threads can reference a given port object and send message to it independently.</li>
-<li>Port objects can be <strong>embedded inside data structures</strong>.</li>
-</ol>
-<p>In message-passing model, a program consists of a set of port objects sending and receiving messages. </p>
-<ul>
-<li>Port objects can create new port objects. </li>
-<li>Port objects can send messages containing references to other port objects.</li>
-</ul>
-<h3 id="NewPortObject_abstraction">NewPortObject abstraction</h3><p>We can define an abstraction to make it easier to program with port objects.</p>
-<figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">fun &#123;NewPortObject Init Fun&#125;</span><br><span class="line"><span class="built_in">Sin</span> Sout <span class="keyword">in</span></span><br><span class="line">	thread &#123;FoldL <span class="built_in">Sin</span> FUn Init Sout&#125; <span class="keyword">end</span></span><br><span class="line">	&#123;NewPort <span class="built_in">Sin</span>&#125;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">fun &#123;NewPortObject2 Proc&#125;</span><br><span class="line"><span class="built_in">Sin</span> <span class="keyword">in</span></span><br><span class="line">	thread <span class="keyword">for</span> Msg <span class="keyword">in</span> <span class="built_in">Sin</span> <span class="keyword">do</span> &#123;Proc Msg&#125; <span class="keyword">end</span> <span class="keyword">end</span></span><br><span class="line">	&#123;NewPort <span class="built_in">Sin</span>&#125;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h2 id="Message_Protocol">Message Protocol</h2><p>We can use message-passing paradigm to model simple message protocol.</p>
-<h3 id="RMI">RMI</h3><p><code>RMI</code> is the most popular of the simple protocols. It allows to call another object in a different operating system process.</p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span> &#123;<span class="type">ServerProc</span> <span class="type">Msg</span>&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="type">Msg</span></span><br><span class="line">	<span class="keyword">of</span> calc(X Y) then</span><br><span class="line">		Y=X*X+<span class="number">2</span>.<span class="number">0</span>*X+<span class="number">2</span>.<span class="number">0</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="type">Server</span>=&#123;<span class="type">NewPortObject2</span> <span class="type">ServerProc</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">proc</span> &#123;<span class="type">ClientProc</span> <span class="type">Msg</span>&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="type">Msg</span></span><br><span class="line">	<span class="keyword">of</span> work(Y) then <span class="type">Y1</span> <span class="type">Y2</span> <span class="keyword">in</span></span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">1</span>.<span class="number">0</span> <span class="type">Y1</span>)&#125;</span><br><span class="line">		&#123;<span class="type">Wait</span> <span class="type">Y1</span>&#125;</span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">2</span>.<span class="number">0</span> <span class="type">Y1</span>)&#125;</span><br><span class="line">		&#123;<span class="type">Wait</span> <span class="type">Y2</span>&#125;</span><br><span class="line">		Y=<span class="type">Y1</span>+<span class="type">Y2</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="type">Client</span>=&#123;<span class="type">NewPortObject2</span> <span class="type">ClientProc</span>&#125;</span><br><span class="line">&#123;<span class="type">Browse</span> &#123;<span class="type">Send</span> <span class="type">Client</span> work($)&#125;&#125;</span><br><span class="line"></span><br><span class="line">// <span class="number">15</span></span><br></pre></td></tr></table></figure>
-<h3 id="Asynchronous_RMI">Asynchronous RMI</h3><p>This protocol is similar to <code>RMI</code>, except that the client continues immediately after sending the request. The client is informed when the reply arrives. Multiple requests can be handled in rapid succession.</p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span> &#123;<span class="type">ClientProc</span> <span class="type">Msg</span>&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="type">Msg</span></span><br><span class="line">	<span class="keyword">of</span> work(?Y) then <span class="type">Y1</span> <span class="type">Y2</span> <span class="keyword">in</span></span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">1</span>.<span class="number">0</span> <span class="type">Y1</span>)&#125;</span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">2</span>.<span class="number">0</span> <span class="type">Y1</span>)&#125;</span><br><span class="line">		Y=<span class="type">Y1</span>+<span class="type">Y2</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="type">Client</span>=&#123;<span class="type">NewPortObject2</span> <span class="type">ClientProc</span>&#125;</span><br><span class="line">&#123;<span class="type">Browse</span> &#123;<span class="type">Send</span> <span class="type">Client</span> work($)&#125;&#125;</span><br><span class="line">// <span class="number">15</span></span><br></pre></td></tr></table></figure>
-<p>Requests are handled by the server the same order as they are sent and replies arrive in that order as well.</p>
-<h3 id="RMI_with_callback">RMI with callback</h3><p>Here is a server that does a callback to find the value of a special value <code>delta</code> only known by the client.</p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span> &#123;<span class="type">ServerProc</span> <span class="type">Msg</span>&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="type">Msg</span></span><br><span class="line">	<span class="keyword">of</span> calc(X ?Y <span class="type">Client</span>) then <span class="type">X1</span> D <span class="keyword">in</span></span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Client</span> delta(D)&#125;</span><br><span class="line">		<span class="type">X1</span>=X+D</span><br><span class="line">		Y=<span class="type">X1</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="type">Server</span>=&#123;<span class="type">NewPortObject2</span> <span class="type">ServerProc</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">proc</span> &#123;<span class="type">ClientProc</span> <span class="type">Msg</span>&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="type">Msg</span></span><br><span class="line">	<span class="keyword">of</span> work(?Z) then Y <span class="keyword">in</span></span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">10</span>.<span class="number">0</span> Y <span class="type">Client</span>)&#125;</span><br><span class="line">		Z=Y+<span class="number">100</span>.<span class="number">0</span></span><br><span class="line">	[] delta(?D) then</span><br><span class="line">		D=<span class="number">1</span>.<span class="number">0</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="type">Client</span>=&#123;<span class="type">NewPortObject2</span> <span class="type">ClientProc</span>&#125;</span><br><span class="line">&#123;<span class="type">Browse</span> &#123;<span class="type">Send</span> <span class="type">Client</span> work($)&#125;&#125;</span><br><span class="line">	</span><br><span class="line">// _</span><br></pre></td></tr></table></figure>
-<p>This solution not work, because the client suspends when it calls th server, so that the server cannot call the client.</p>
-<h4 id="Using_thread">Using thread</h4><p>First, we use concurrency to solve this problem.</p>
-<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">proc &#123;ClientProc Msg&#125;</span><br><span class="line">	<span class="keyword">case</span> Msg</span><br><span class="line">	<span class="operator">of</span> work(?Z) <span class="keyword">then</span> Y <span class="operator">in</span></span><br><span class="line">		&#123;Send Server calc(<span class="number">10.0</span> Y Client)&#125;</span><br><span class="line">		thread Z=Y+<span class="number">100.0</span> <span class="function"><span class="keyword">end</span></span></span><br><span class="line">	[] delta(?D) <span class="keyword">then</span></span><br><span class="line">		D=<span class="number">1.0</span></span><br><span class="line">	<span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="comment"></span><br><span class="line">// 245.0</span></span><br></pre></td></tr></table></figure>
-<p>After the client sent a message to the server, it does not suspend, because the <code>thread</code> creates a new thread and execute it on it.</p>
-<h4 id="Using_record_continuation">Using record continuation</h4><p>Instead of using thread, we can use record to solve this issue. In this way, the client never waits and deadlock is avoiding.</p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span> &#123;<span class="type">ServerProc</span> <span class="type">Msg</span>&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="type">Msg</span></span><br><span class="line">	<span class="keyword">of</span> calc(X <span class="type">Client</span> <span class="type">Cont</span>) then <span class="type">X1</span> D Y <span class="keyword">in</span></span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Client</span> delta(D)&#125;</span><br><span class="line">		<span class="type">X1</span>=X+D</span><br><span class="line">		Y=<span class="type">X1</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span></span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Client</span> <span class="type">Cont</span><span class="comment">#Y&#125;</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="type">Server</span>=&#123;<span class="type">NewPortObject2</span> <span class="type">ServerProc</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">proc</span> &#123;<span class="type">ClientProc</span> <span class="type">Msg</span>&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="type">Msg</span></span><br><span class="line">	<span class="keyword">of</span> work(?Z) then Y <span class="keyword">in</span></span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">10</span>.<span class="number">0</span> <span class="type">Client</span> cont(Z))&#125;</span><br><span class="line">	[] cont(Z)<span class="comment">#Y then</span></span><br><span class="line">		Z=Y+<span class="number">100</span>.<span class="number">0</span></span><br><span class="line">	[] delta(?D) then</span><br><span class="line">		D=<span class="number">1</span>.<span class="number">0</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="type">Client</span>=&#123;<span class="type">NewPortObject2</span> <span class="type">ClientProc</span>&#125;</span><br><span class="line">&#123;<span class="type">Browse</span> &#123;<span class="type">Send</span> <span class="type">Client</span> work($)&#125;&#125;</span><br><span class="line"></span><br><span class="line">// <span class="number">245</span>.<span class="number">0</span></span><br></pre></td></tr></table></figure>
-<p>When we pass <code>work</code> message to <code>client</code> it immediately send <code>server</code> message <code>calc</code>. After the server execute <code>calc</code>, it pass back <code>Cont#Y</code> back to the client, then client finishes the calculation.</p>
-<h4 id="Using_procedure_continuation">Using procedure continuation</h4><p>The previous example can be generalized in a powerful way by passing a precedure instead of a record.</p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span> &#123;<span class="type">ClientProc</span> <span class="type">Msg</span>&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="type">Msg</span></span><br><span class="line">	<span class="keyword">of</span> work(?Z) then</span><br><span class="line">		C=<span class="keyword">proc</span> &#123;$ Y&#125; Z=Y+<span class="number">100</span>.<span class="number">0</span> <span class="keyword">end</span></span><br><span class="line">	<span class="keyword">in</span></span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">10</span>.<span class="number">0</span> <span class="type">Client</span> cont(C))&#125;</span><br><span class="line">	[] cont(C)<span class="comment">#Y then</span></span><br><span class="line">		&#123;C Y&#125;</span><br><span class="line">	[] delta(?D) then</span><br><span class="line">		D=<span class="number">1</span>.<span class="number">0</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>The continuation contains the work that the client has to do after the server returns. Since the continuation is a procedure value, it is self-contained, it can be executed by anyone without knowing anything inside it.    </p>
-<h4 id="Asynchronous_RMI_with_callback">Asynchronous RMI with callback</h4><p>We might want to do two asynchronous RMIs where each <code>RMI</code> does a callback.</p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span> &#123;<span class="type">ServerProc</span> <span class="type">Msg</span>&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="type">Msg</span></span><br><span class="line">	<span class="keyword">of</span> calc(X ?Y <span class="type">Client</span>) then <span class="type">X1</span> D <span class="keyword">in</span></span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Client</span> delta(D)&#125;</span><br><span class="line">		thread </span><br><span class="line">			<span class="type">X1</span>=X+D</span><br><span class="line">			Y=<span class="type">X1</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span>*<span class="type">X1</span>+<span class="number">2</span>.<span class="number">0</span></span><br><span class="line">		<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">proc</span> &#123;<span class="type">ClientProc</span> <span class="type">Msg</span>&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="type">Msg</span></span><br><span class="line">	<span class="keyword">of</span> work(?Z) then <span class="type">Y1</span> <span class="type">Y2</span> <span class="keyword">in</span></span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">10</span>.<span class="number">0</span> <span class="type">Y1</span> <span class="type">Client</span>)&#125;</span><br><span class="line">		&#123;<span class="type">Send</span> <span class="type">Server</span> calc(<span class="number">20</span>.<span class="number">0</span> <span class="type">Y2</span> <span class="type">Client</span>)&#125;</span><br><span class="line">		thread Y=<span class="type">Y1</span>+<span class="type">Y2</span> <span class="keyword">end</span></span><br><span class="line">	[] delta(?D) then</span><br><span class="line">		D=<span class="number">1</span>.<span class="number">0</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h4 id="Double_callback">Double callback</h4><p>When the server does a first callback to client, and which itself calls a second callback to the server. To handle this, both the client and the server should response immediately and not wait until the result come back.</p>
-<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">proc &#123;ServerProc Msg&#125;</span><br><span class="line">	<span class="keyword">case</span> Msg</span><br><span class="line">	<span class="operator">of</span> calc(X ?Y Client) <span class="keyword">then</span> X1 D <span class="operator">in</span></span><br><span class="line">		&#123;Send Client delta(D)&#125;</span><br><span class="line">		thread </span><br><span class="line">			X1=X+D</span><br><span class="line">			Y=X1*X1+<span class="number">2.0</span>*X1+<span class="number">2.0</span></span><br><span class="line">		<span class="function"><span class="keyword">end</span></span></span><br><span class="line">	<span class="function"><span class="keyword">end</span></span></span><br><span class="line">	[] serverdelta(?S) <span class="keyword">then</span></span><br><span class="line">		S=<span class="number">0.01</span></span><br><span class="line">	<span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br><span class="line"></span><br><span class="line">proc &#123;ClientProc Msg&#125;</span><br><span class="line">	<span class="keyword">case</span> Msg</span><br><span class="line">	<span class="operator">of</span> work(?Z) <span class="keyword">then</span> Y <span class="operator">in</span></span><br><span class="line">		&#123;Send Server calc(<span class="number">10.0</span> Y Client)&#125;</span><br><span class="line">		thread Z=Y+<span class="number">100.0</span> <span class="function"><span class="keyword">end</span></span></span><br><span class="line">	[] delta(?D) <span class="keyword">then</span> S <span class="operator">in</span></span><br><span class="line">		&#123;Send Server serverdelta(S)&#125;</span><br><span class="line">		thread D=<span class="number">1.0</span>+S <span class="function"><span class="keyword">end</span></span></span><br><span class="line">	<span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br></pre></td></tr></table></figure>
-<p>Calling <code>{Send Client work(Z)}</code> calls the server, which calls the client method <code>delta(D)</code>, which iteself calls the server method <code>serverdelta(?S)</code>.</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p><code>Message-passing</code> is a programming style in which a program consists of independent entities that interact by sending each oth]]>
-    </summary>
-    
-      <category term="CTMCP" scheme="http://deltax.me/tags/CTMCP/"/>
-    
-      <category term="Concurrency" scheme="http://deltax.me/tags/Concurrency/"/>
-    
-      <category term="Oz" scheme="http://deltax.me/tags/Oz/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[分治策略]]></title>
-    <link href="http://deltax.me/2015/03/15/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/"/>
-    <id>http://deltax.me/2015/03/15/分治策略/</id>
-    <published>2015-03-15T07:14:54.000Z</published>
-    <updated>2015-03-24T17:41:03.000Z</updated>
-    <content type="html"><![CDATA[<blockquote>
-<p>在计算机科学中, <a href="http://zh.wikipedia.org/wiki/%E5%88%86%E6%B2%BB%E6%B3%95" target="_blank" rel="external">分治法</a>是基于多项分支递归的一种很重要的算法范式. 字面上的解释是”分而治之”, 就是把一个复杂的问题分成两个或更多的相同或相似的子问题, 知道最后子问题可以简单的直接求解, 原问题的解就是子问题的解的合并.</p>
-</blockquote>
-<h2 id="分治法的步骤">分治法的步骤</h2><ol>
-<li>分解: 将问题划分为一些子问题, 子问题的形式与原问题相同, <strong>只是规模更小</strong>.</li>
-<li>解决: <strong>递归</strong>地求解出子问题. </li>
-<li>合并: 将子问题的解<strong>合并</strong>.</li>
-</ol>
-<h2 id="求解递归式的方法">求解递归式的方法</h2><ol>
-<li>代入法</li>
-<li>递归树法</li>
-<li>主方法</li>
-</ol>
-<p>在这里我们不对前两种方法进行说明, 仅仅讨论一下主方法的使用, 以及适用的情况.</p>
-<h3 id="主方法">主方法</h3><p>主方法<code>(Master Method)</code>可以求解一下形式的递归式的边界.</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">T</span><span class="params">(n)</span></span> = <span class="function"><span class="title">aT</span><span class="params">(n/b)</span></span> + <span class="function"><span class="title">f</span><span class="params">(n)</span></span></span><br></pre></td></tr></table></figure>
-<p>其中 <code>a &gt;= 1</code> <code>b &gt; 1</code> <code>f(n)</code> 是一个给定的函数. 这个递归式刻画了一个如下的分治算法:</p>
-<blockquote>
-<p>生成 <code>a</code> 个子问题, 每个子问题的规模是原问题规模的 <code>1/b</code> , 分解和合并步骤总共消耗 <code>f(n)</code> 的时间.</p>
-</blockquote>
-<h4 id="使用">使用</h4><ol>
-<li>求出 <code>c = log(b,a)</code> </li>
-<li>比较 <code>n^c</code> 与 <code>f(n)</code> 的大小<ul>
-<li>如果前者<strong>多项式</strong>的小于后者, 那么该递归式的边界为 <code>Θ(f(n))</code>.</li>
-<li>如果前者<strong>多项式</strong>的大于后者, 那么该递归式的边界为 <code>Θ(n^log(b,a))</code>.</li>
-<li>如果两者<strong>多项式</strong>意义上的相等, 那么只需要乘上一个对数因子 <code>lgn</code>, ex, <code>T(n) = T(n/2) + 1 =&gt; Θ(lgn)</code></li>
-</ul>
-</li>
-</ol>
-<h4 id="总结">总结</h4><p>恰当运用主方法可以解决大多数的递归式边界问题, 但是当两项非多项式意义上的小于或者大于, 那么就不能使用主方法求解, ex, <code>T(n)=2T(n/2)+n/lgn</code></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<blockquote>
-<p>在计算机科学中, <a href="http://zh.wikipedia.org/wiki/%E5%88%86%E6%B2%BB%E6%B3%95" target="_blank" rel="external">分治法</a>是基于多项分支递归的]]>
-    </summary>
-    
-      <category term="Algorithm" scheme="http://deltax.me/tags/Algorithm/"/>
-    
-      <category term="clrs" scheme="http://deltax.me/categories/clrs/"/>
-    
-      <category term="Algorithm" scheme="http://deltax.me/categories/clrs/Algorithm/"/>
     
   </entry>
   

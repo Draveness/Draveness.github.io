@@ -4,43 +4,22 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>分治策略 | DeltaX</title>
+    <title>Graphical User Interface Programming | DeltaX</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Draven">
     
 
     
-    <meta name="description" content="在计算机科学中, 分治法是基于多项分支递归的一种很重要的算法范式. 字面上的解释是”分而治之”, 就是把一个复杂的问题分成两个或更多的相同或相似的子问题, 知道最后子问题可以简单的直接求解, 原问题的解就是子问题的解的合并.
-
-分治法的步骤
-分解: 将问题划分为一些子问题, 子问题的形式与原问题相同, 只是规模更小.
-解决: 递归地求解出子问题. 
-合并: 将子问题的解合并.
-
-求解递归式的方法">
+    <meta name="description" content="This post will show a particularly simple and powerful way to do graphical user inteerface programming. We combine the declarative model together with the shared-state concurrent model. First, we will">
 <meta property="og:type" content="article">
-<meta property="og:title" content="分治策略">
-<meta property="og:url" content="http://deltax.me/2015/03/15/分治策略/index.html">
+<meta property="og:title" content="Graphical User Interface Programming">
+<meta property="og:url" content="http://deltax.me/2015/04/02/Graphical-User-Interface-Programming/index.html">
 <meta property="og:site_name" content="DeltaX">
-<meta property="og:description" content="在计算机科学中, 分治法是基于多项分支递归的一种很重要的算法范式. 字面上的解释是”分而治之”, 就是把一个复杂的问题分成两个或更多的相同或相似的子问题, 知道最后子问题可以简单的直接求解, 原问题的解就是子问题的解的合并.
-
-分治法的步骤
-分解: 将问题划分为一些子问题, 子问题的形式与原问题相同, 只是规模更小.
-解决: 递归地求解出子问题. 
-合并: 将子问题的解合并.
-
-求解递归式的方法">
+<meta property="og:description" content="This post will show a particularly simple and powerful way to do graphical user inteerface programming. We combine the declarative model together with the shared-state concurrent model. First, we will">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分治策略">
-<meta name="twitter:description" content="在计算机科学中, 分治法是基于多项分支递归的一种很重要的算法范式. 字面上的解释是”分而治之”, 就是把一个复杂的问题分成两个或更多的相同或相似的子问题, 知道最后子问题可以简单的直接求解, 原问题的解就是子问题的解的合并.
-
-分治法的步骤
-分解: 将问题划分为一些子问题, 子问题的形式与原问题相同, 只是规模更小.
-解决: 递归地求解出子问题. 
-合并: 将子问题的解合并.
-
-求解递归式的方法">
+<meta name="twitter:title" content="Graphical User Interface Programming">
+<meta name="twitter:description" content="This post will show a particularly simple and powerful way to do graphical user inteerface programming. We combine the declarative model together with the shared-state concurrent model. First, we will">
 
     
     <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
@@ -99,14 +78,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/15/分治策略/" title="分治策略" itemprop="url">分治策略</a>
+      <a href="/2015/04/02/Graphical-User-Interface-Programming/" title="Graphical User Interface Programming" itemprop="url">Graphical User Interface Programming</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
 		
   <p class="article-time">
-    <time datetime="2015-03-15T07:14:54.000Z" itemprop="datePublished"> 发表于 2015-03-15</time>
+    <time datetime="2015-04-02T05:03:18.000Z" itemprop="datePublished"> 发表于 2015-04-02</time>
     
   </p>
 </header>
@@ -115,40 +94,39 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#分治法的步骤"><span class="toc-number">1.</span> <span class="toc-text">分治法的步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#求解递归式的方法"><span class="toc-number">2.</span> <span class="toc-text">求解递归式的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#主方法"><span class="toc-number">2.1.</span> <span class="toc-text">主方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用"><span class="toc-number">2.1.1.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#总结"><span class="toc-number">2.1.2.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#The_Declarative/Procedural_Approach"><span class="toc-number">1.</span> <span class="toc-text">The Declarative/Procedural Approach</span></a></li></ol>
 		
 		</div>
 		
-		<blockquote>
-<p>在计算机科学中, <a href="http://zh.wikipedia.org/wiki/%E5%88%86%E6%B2%BB%E6%B3%95" target="_blank" rel="external">分治法</a>是基于多项分支递归的一种很重要的算法范式. 字面上的解释是”分而治之”, 就是把一个复杂的问题分成两个或更多的相同或相似的子问题, 知道最后子问题可以简单的直接求解, 原问题的解就是子问题的解的合并.</p>
-</blockquote>
-<h2 id="分治法的步骤">分治法的步骤</h2><ol>
-<li>分解: 将问题划分为一些子问题, 子问题的形式与原问题相同, <strong>只是规模更小</strong>.</li>
-<li>解决: <strong>递归</strong>地求解出子问题. </li>
-<li>合并: 将子问题的解<strong>合并</strong>.</li>
-</ol>
-<h2 id="求解递归式的方法">求解递归式的方法</h2><ol>
-<li>代入法</li>
-<li>递归树法</li>
-<li>主方法</li>
-</ol>
-<p>在这里我们不对前两种方法进行说明, 仅仅讨论一下主方法的使用, 以及适用的情况.</p>
-<h3 id="主方法">主方法</h3><p>主方法<code>(Master Method)</code>可以求解一下形式的递归式的边界.</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">T</span><span class="params">(n)</span></span> = <span class="function"><span class="title">aT</span><span class="params">(n/b)</span></span> + <span class="function"><span class="title">f</span><span class="params">(n)</span></span></span><br></pre></td></tr></table></figure>
-<p>其中 <code>a &gt;= 1</code> <code>b &gt; 1</code> <code>f(n)</code> 是一个给定的函数. 这个递归式刻画了一个如下的分治算法:</p>
-<blockquote>
-<p>生成 <code>a</code> 个子问题, 每个子问题的规模是原问题规模的 <code>1/b</code> , 分解和合并步骤总共消耗 <code>f(n)</code> 的时间.</p>
-</blockquote>
-<h4 id="使用">使用</h4><ol>
-<li>求出 <code>c = log(b,a)</code> </li>
-<li>比较 <code>n^c</code> 与 <code>f(n)</code> 的大小<ul>
-<li>如果前者<strong>多项式</strong>的小于后者, 那么该递归式的边界为 <code>Θ(f(n))</code>.</li>
-<li>如果前者<strong>多项式</strong>的大于后者, 那么该递归式的边界为 <code>Θ(n^log(b,a))</code>.</li>
-<li>如果两者<strong>多项式</strong>意义上的相等, 那么只需要乘上一个对数因子 <code>lgn</code>, ex, <code>T(n) = T(n/2) + 1 =&gt; Θ(lgn)</code></li>
+		<p>This post will show a particularly simple and powerful way to do graphical user inteerface programming. We combine the declarative model together with the shared-state concurrent model. First, we will summarize the existing approaches.</p>
+<ul>
+<li>Purely procedurel<ul>
+<li>The user interface is constructed by a sequence of graphics commands. These commands can be purely imperative or even functional. The object-oriented or functional style is preferable to an imperative style.</li>
 </ul>
 </li>
-</ol>
-<h4 id="总结">总结</h4><p>恰当运用主方法可以解决大多数的递归式边界问题, 但是当两项非多项式意义上的小于或者大于, 那么就不能使用主方法求解, ex, <code>T(n)=2T(n/2)+n/lgn</code></p>
+<li>Purely declarative<ul>
+<li>The user interface is constructed by choosing from a set of predefined possibilities. This is an example of descriptive declarativeness.</li>
+</ul>
+</li>
+<li>Using an interface builder<ul>
+<li>The user interface is constructed manully by the developer, using a direct manipulation interface.</li>
+</ul>
+</li>
+</ul>
+<p>The procedural approach is expressive but is complex to use.<br>The declarative approach is easy to use but lacks expressiveness.<br>The interface builder is easy to use and gives immediate feedback on the interface but it lacks expressiveness and the interface is haard to change at run time.</p>
+<h2 id="The_Declarative/Procedural_Approach">The Declarative/Procedural Approach</h2><p>What are the relative merits of the declarative and procedural approaches to specifying user interfaces? The trade-off is between expressiveness and manipulability:</p>
+<ul>
+<li>The declrative approach defines a set of possibilities for different attributes. The developer chooses among this set and defines a data structure that describes the interface. <ul>
+<li>The pure declarative approach makes it easy to formally manipulate the user definitions. But the expressiveness is limited bacause it is only possible to express what the designers initially thought of.</li>
+</ul>
+</li>
+<li>The procedural approach gives a set of primitive operations and the ability to write programs to them. These programs construct the interface. <ul>
+<li>A purely procedural approach has no limits on its expressiveness. However, this makes harder to do formal manipulations on the user interface definitions.</li>
+</ul>
+</li>
+</ul>
+<p>The trade-off is not a temporary state of affairs. It is a deep property of computational models. As a language becomes more expressive, its programs become less amenable to formal manipulation.</p>
+<p>It is still possible to define a model that is both manipulate and expressive. We can do it by combing the declarative and procedural approaches.</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -156,13 +134,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/clrs/">clrs</a>►<a class="article-category-link" href="/categories/clrs/Algorithm/">Algorithm</a>
+  <a class="article-category-link" href="/categories/Programming-Paradigm/">Programming Paradigm</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Algorithm/">Algorithm</a>
+  <span></span> <a href="/tags/CTMCP/">CTMCP</a><a href="/tags/GUI-Programming/">GUI Programming</a>
   </div>
 
 </div>
@@ -171,7 +149,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://deltax.me/2015/03/15/分治策略/" data-title="分治策略 | DeltaX" data-tsina="null" class="share clearfix">
+	  <div data-url="http://deltax.me/2015/04/02/Graphical-User-Interface-Programming/" data-title="Graphical User Interface Programming | DeltaX" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -185,18 +163,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/03/16/Message-Passing-Concurrency/" title="Message-Passing Concurrency">
+ <a href="/2015/04/02/Distributed-Programming/" title="Distributed Programming">
   <strong>上一篇：</strong><br/>
   <span>
-  Message-Passing Concurrency</span>
+  Distributed Programming</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2015/01/27/HTTP报文内的HTTP信息.md/"  title="HTTP报文内的HTTP信息">
+<a href="/2015/04/01/Relational-Programming/"  title="Relational Programming">
  <strong>下一篇：</strong><br/> 
- <span>HTTP报文内的HTTP信息
+ <span>Relational Programming
 </span>
 </a>
 </div>
@@ -205,7 +183,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/03/15/分治策略/" data-title="分治策略" data-url="http://deltax.me/2015/03/15/分治策略/"></div>
+	<div class="ds-thread" data-thread-key="2015/04/02/Graphical-User-Interface-Programming/" data-title="Graphical User Interface Programming" data-url="http://deltax.me/2015/04/02/Graphical-User-Interface-Programming/"></div>
 </section>
 
 
@@ -215,7 +193,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#分治法的步骤"><span class="toc-number">1.</span> <span class="toc-text">分治法的步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#求解递归式的方法"><span class="toc-number">2.</span> <span class="toc-text">求解递归式的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#主方法"><span class="toc-number">2.1.</span> <span class="toc-text">主方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用"><span class="toc-number">2.1.1.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#总结"><span class="toc-number">2.1.2.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#The_Declarative/Procedural_Approach"><span class="toc-number">1.</span> <span class="toc-text">The Declarative/Procedural Approach</span></a></li></ol>
  
   </div>
 
