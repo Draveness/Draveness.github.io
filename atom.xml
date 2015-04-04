@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我们来填坑吧]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
-  <updated>2015-04-04T12:12:36.000Z</updated>
+  <updated>2015-04-04T12:13:22.000Z</updated>
   <id>http://deltax.me/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://deltax.me/2015/04/04/%E6%95%A3%E5%88%97%E8%A1%A8/"/>
     <id>http://deltax.me/2015/04/04/散列表/</id>
     <published>2015-04-04T08:33:49.000Z</published>
-    <updated>2015-04-04T12:12:36.000Z</updated>
+    <updated>2015-04-04T12:13:22.000Z</updated>
     <content type="html"><![CDATA[<p>散列表(hash table)是实现字典操作的一种有效的数据结构. 尽管在最坏情况下, 散列表中查找一个元素的时间与链表中查找的时间相同, 达到了 $\Theta(n)$. 然而在实际的应用中, 散列表的性能是极好的, 查找元素的平均时间是 $O(1)$.</p>
 <h2 id="直接寻址表">直接寻址表</h2><p>当关键字的全域 $U$ 比较小的时候, 直接寻址是一种简单有效的技术. 为表示动态集合, 我们用一个数组, 或称为<strong>直接寻址表</strong>, 记为 $T[0..m-1]$ 其中每个位置称为<strong>槽</strong>(slot).</p>
 <p><img src="http://deltax.qiniudn.com/direct-address.png?attname=&e=1428235532&token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:a-JMUZtykWnrKYcgnea7KzRKDlo" style="display:block;margin:auto"></p>
@@ -30,7 +30,7 @@
 <h2 id="散列表">散列表</h2><p>直接寻址技术的缺点是及其明显的, 如果全域 $U$ 很大, 那么存储大小为 $\left|U \right|$ 的一张表 $T$ 也许不太实际. 实际存储的关键字集合 $K$ 相对 $U$ 来说可能很小, 使得分配地空间会被浪费掉.</p>
 <p>在直接寻址方式下, 具有关键字 $k$ 的元素被存放在槽 $k$ 中. 在散列方式下, 该元素存放在槽 $h(k)$ 中. 使用散列函数 $h$, 通过关键字 $k$ 计算出槽的位置. </p>
 <p>函数 $h$ 将关键字的全域 $U$ 映射到<strong>散列表</strong> $T[0..m-1]$ 中的槽上:</p>
-<p>$$h:U\rightarrow \big{ 0,1,…,m-1 \big}$$</p>
+<p>$h:U\rightarrow \big{ 0,1,…,m-1 \big}$</p>
 <p><img src="http://deltax.qiniudn.com/hash.png?attname=&e=1428235532&token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:TAG52iH7Yp7YJhMG0aEyMH3_M1A" style="display:block;margin:auto"></p>
 ]]></content>
     <summary type="html">
