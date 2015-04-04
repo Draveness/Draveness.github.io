@@ -36,7 +36,7 @@
     <link href="http://deltax.me/2015/04/03/%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
     <id>http://deltax.me/2015/04/03/基本数据结构/</id>
     <published>2015-04-03T07:20:07.000Z</published>
-    <updated>2015-04-03T17:10:41.000Z</updated>
+    <updated>2015-04-04T08:58:04.000Z</updated>
     <content type="html"><![CDATA[<p>在这一次的 post 中, 我们将要介绍一些简单的数据结构: 栈, 队列, 链表和树.</p>
 <h1 id="栈和队列">栈和队列</h1><p>栈和队列都是动态集合, 在这两种数据结构上进行 <code>DELETE</code> 操作所移除的元素都是预先设定的. 它们是两种最常用的数据结构.</p>
 <h2 id="栈">栈</h2><p>在栈中, 被删除的元素是<strong>最近插入</strong>的元素. 它实现的是一种<strong>后进先出</strong>(last-in, first-out, LIFO)的策略. </p>
@@ -74,11 +74,11 @@
 <h1 id="栈和队列">栈和队列</h1><p>栈和队列都是动态集合, 在这两种数据结构上进行 <code>DELETE</code> 操作所移除的元素都是预先设定的. 它们]]>
     </summary>
     
+      <category term="Algorithm" scheme="http://deltax.me/tags/Algorithm/"/>
+    
       <category term="Ruby" scheme="http://deltax.me/tags/Ruby/"/>
     
-      <category term="clrs" scheme="http://deltax.me/tags/clrs/"/>
-    
-      <category term="Algorithm" scheme="http://deltax.me/categories/Algorithm/"/>
+      <category term="clrs" scheme="http://deltax.me/categories/clrs/"/>
     
   </entry>
   
