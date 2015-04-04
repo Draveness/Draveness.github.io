@@ -113,7 +113,7 @@
 <h2 id="散列表">散列表</h2><p>直接寻址技术的缺点是及其明显的, 如果全域 $U$ 很大, 那么存储大小为 $\left|U \right|$ 的一张表 $T$ 也许不太实际. 实际存储的关键字集合 $K$ 相对 $U$ 来说可能很小, 使得分配地空间会被浪费掉.</p>
 <p>在直接寻址方式下, 具有关键字 $k$ 的元素被存放在槽 $k$ 中. 在散列方式下, 该元素存放在槽 $h(k)$ 中. 使用散列函数 $h$, 通过关键字 $k$ 计算出槽的位置. </p>
 <p>函数 $h$ 将关键字的全域 $U$ 映射到<strong>散列表</strong> $T[0..m-1]$ 中的槽上:</p>
-<p>$h:U\rightarrow \big{ 0,1,…,m-1 \big}$</p>
+<p>$$h:U\rightarrow \big\{0,1,…,m-1 \big\}$$</p>
 <p><img src="http://deltax.qiniudn.com/hash.png?attname=&e=1428235532&token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:TAG52iH7Yp7YJhMG0aEyMH3_M1A" style="display:block;margin:auto"></p>
   
 	</div>
