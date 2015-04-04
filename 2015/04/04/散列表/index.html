@@ -11,15 +11,20 @@
     
 
     
-    <meta name="description">
+    <meta name="description" content="散列表(hash table)是实现字典操作的一种有效的数据结构. 尽管在最坏情况下, 散列表中查找一个元素的时间与链表中查找的时间相同, 达到了 $\Theta(n)$. 然而在实际的应用中, 散列表的性能是极好的, 查找元素的平均时间是 $O(1)$.
+直接寻址表当关键字的全域 $U$ 比较小的时候, 直接寻址是一种简单有效的技术. 为表示动态集合, 我们用一个数组, 或称为直接寻址表, 记为">
 <meta property="og:type" content="article">
 <meta property="og:title" content="散列表">
 <meta property="og:url" content="http://deltax.me/2015/04/04/散列表/index.html">
 <meta property="og:site_name" content="DeltaX">
-<meta property="og:description">
+<meta property="og:description" content="散列表(hash table)是实现字典操作的一种有效的数据结构. 尽管在最坏情况下, 散列表中查找一个元素的时间与链表中查找的时间相同, 达到了 $\Theta(n)$. 然而在实际的应用中, 散列表的性能是极好的, 查找元素的平均时间是 $O(1)$.
+直接寻址表当关键字的全域 $U$ 比较小的时候, 直接寻址是一种简单有效的技术. 为表示动态集合, 我们用一个数组, 或称为直接寻址表, 记为">
+<meta property="og:image" content="http://deltax.qiniudn.com/direct-address.png?attname=&e=1428235532&token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:a-JMUZtykWnrKYcgnea7KzRKDlo">
+<meta property="og:image" content="http://deltax.qiniudn.com/hash.png?attname=&e=1428235532&token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:TAG52iH7Yp7YJhMG0aEyMH3_M1A">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="散列表">
-<meta name="twitter:description">
+<meta name="twitter:description" content="散列表(hash table)是实现字典操作的一种有效的数据结构. 尽管在最坏情况下, 散列表中查找一个元素的时间与链表中查找的时间相同, 达到了 $\Theta(n)$. 然而在实际的应用中, 散列表的性能是极好的, 查找元素的平均时间是 $O(1)$.
+直接寻址表当关键字的全域 $U$ 比较小的时候, 直接寻址是一种简单有效的技术. 为表示动态集合, 我们用一个数组, 或称为直接寻址表, 记为">
 
     
     <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
@@ -94,11 +99,23 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#直接寻址表"><span class="toc-number">1.</span> <span class="toc-text">直接寻址表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#散列表"><span class="toc-number">2.</span> <span class="toc-text">散列表</span></a></li></ol>
 		
 		</div>
 		
-		  
+		<p>散列表(hash table)是实现字典操作的一种有效的数据结构. 尽管在最坏情况下, 散列表中查找一个元素的时间与链表中查找的时间相同, 达到了 $\Theta(n)$. 然而在实际的应用中, 散列表的性能是极好的, 查找元素的平均时间是 $O(1)$.</p>
+<h2 id="直接寻址表">直接寻址表</h2><p>当关键字的全域 $U$ 比较小的时候, 直接寻址是一种简单有效的技术. 为表示动态集合, 我们用一个数组, 或称为<strong>直接寻址表</strong>, 记为 $T[0..m-1]$ 其中每个位置称为<strong>槽</strong>(slot).</p>
+<p><img src="http://deltax.qiniudn.com/direct-address.png?attname=&e=1428235532&token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:a-JMUZtykWnrKYcgnea7KzRKDlo" style="display:block;margin:auto"></p>
+<p>如果该集合中没有关键字为 $k$ 的元素, 那么 $T[k]=nil$.</p>
+<p>我们使用 Ruby 来实现我们直接寻址表的操作.</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DirectAddressTable</span></span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> </span>initialize</span><br><span class="line">		<span class="variable">@table</span> = []</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> </span>search(k)</span><br><span class="line">		<span class="variable">@table</span>[k]</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> </span>insert(x)</span><br><span class="line">		<span class="variable">@table</span>[x] = x</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> </span>delete(x)</span><br><span class="line">		<span class="variable">@table</span>[x] = <span class="keyword">nil</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>直接寻址表本身就存放动态集合中的元素. 我们直接把对象存放在表的槽中, 节省了空间. 使用对象内的一个特殊关键字 <code>nil</code> 来表明槽为空. 因此我们如果知道一个对象在表中的下标就可以得到它的关键字. 因此如果不使用关键字, 我们就需要有一种方法来确定某个槽是否为空.</p>
+<h2 id="散列表">散列表</h2><p>直接寻址技术的缺点是及其明显的, 如果全域 $U$ 很大, 那么存储大小为 $\left|U \right|$ 的一张表 $T$ 也许不太实际. 实际存储的关键字集合 $K$ 相对 $U$ 来说可能很小, 使得分配地空间会被浪费掉.</p>
+<p>在直接寻址方式下, 具有关键字 $k$ 的元素被存放在槽 $k$ 中. 在散列方式下, 该元素存放在槽 $h(k)$ 中. 使用散列函数 $h$, 通过关键字 $k$ 计算出槽的位置. </p>
+<p>函数 $h$ 将关键字的全域 $U$ 映射到<strong>散列表</strong> $T[0..m-1]$ 中的槽上:</p>
+<p>$$h:U\rightarrow \big{ 0,1,…,m-1 \big}$$</p>
+<p><img src="http://deltax.qiniudn.com/hash.png?attname=&e=1428235532&token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:TAG52iH7Yp7YJhMG0aEyMH3_M1A" style="display:block;margin:auto"></p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -111,7 +128,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Algorithm/">Algorithm</a>
+  <span></span> <a href="/tags/Algorithm/">Algorithm</a><a href="/tags/Ruby/">Ruby</a>
   </div>
 
 </div>
@@ -156,7 +173,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#直接寻址表"><span class="toc-number">1.</span> <span class="toc-text">直接寻址表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#散列表"><span class="toc-number">2.</span> <span class="toc-text">散列表</span></a></li></ol>
  
   </div>
 
@@ -243,11 +260,19 @@
 			
 		
 			
+				<li><a href="/tags/Functional-Programming/" title="Functional Programming">Functional Programming<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Ruby/" title="Ruby">Ruby<sup>2</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Functional-Programming/" title="Functional Programming">Functional Programming<sup>2</sup></a></li>
+				<li><a href="/tags/Relational-Programming/" title="Relational Programming">Relational Programming<sup>1</sup></a></li>
 			
 		
 			
@@ -255,11 +280,7 @@
 			
 		
 			
-				<li><a href="/tags/Ruby/" title="Ruby">Ruby<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Relational-Programming/" title="Relational Programming">Relational Programming<sup>1</sup></a></li>
+				<li><a href="/tags/GUI-Programming/" title="GUI Programming">GUI Programming<sup>1</sup></a></li>
 			
 		
 			
@@ -270,8 +291,6 @@
 				<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
 			
 		
-			
-				<li><a href="/tags/GUI-Programming/" title="GUI Programming">GUI Programming<sup>1</sup></a></li>
 			
 		
 			
