@@ -1,0 +1,617 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Prolog 基础&lt;1&gt; | DeltaX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Draven">
+    
+
+    
+    <meta name="description" content="为什么学习 Prolog?Prolog 是种逻辑式的编程语言. 我第一次见到这个名字的时候大约实在我学习 SICP 的过程中, 实现了一个简单的逻辑式语言的解释器. 之后我又在 CTMCP 一书中的 Relational Programming 和 Logical Programming 中多次见到 Prolog 的身影, 加上我本身对于各种编程语言非常地感兴趣, 所以我选择学习这门语言, 在这里">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Prolog 基础<1>">
+<meta property="og:url" content="http://deltax.me/2015/04/05/Prolog-基础-1/index.html">
+<meta property="og:site_name" content="DeltaX">
+<meta property="og:description" content="为什么学习 Prolog?Prolog 是种逻辑式的编程语言. 我第一次见到这个名字的时候大约实在我学习 SICP 的过程中, 实现了一个简单的逻辑式语言的解释器. 之后我又在 CTMCP 一书中的 Relational Programming 和 Logical Programming 中多次见到 Prolog 的身影, 加上我本身对于各种编程语言非常地感兴趣, 所以我选择学习这门语言, 在这里">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Prolog 基础<1>">
+<meta name="twitter:description" content="为什么学习 Prolog?Prolog 是种逻辑式的编程语言. 我第一次见到这个名字的时候大约实在我学习 SICP 的过程中, 实现了一个简单的逻辑式语言的解释器. 之后我又在 CTMCP 一书中的 Relational Programming 和 Logical Programming 中多次见到 Prolog 的身影, 加上我本身对于各种编程语言非常地感兴趣, 所以我选择学习这门语言, 在这里">
+
+    
+    <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="DeltaX" title="DeltaX"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="DeltaX">DeltaX</a></h1>
+				<h2 class="blog-motto">我们来填坑吧</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:deltax.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/04/05/Prolog-基础-1/" title="Prolog 基础&lt;1&gt;" itemprop="url">Prolog 基础&lt;1&gt;</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
+		
+  <p class="article-time">
+    <time datetime="2015-04-05T03:45:30.000Z" itemprop="datePublished"> 发表于 2015-04-05</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么学习_Prolog?"><span class="toc-number">1.</span> <span class="toc-text">为什么学习 Prolog?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#书籍的选择"><span class="toc-number">2.</span> <span class="toc-text">书籍的选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开发环境的搭建"><span class="toc-number">3.</span> <span class="toc-text">开发环境的搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prolog_基础"><span class="toc-number">4.</span> <span class="toc-text">Prolog 基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Facts"><span class="toc-number">4.1.</span> <span class="toc-text">Facts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rules"><span class="toc-number">4.2.</span> <span class="toc-text">Rules</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Queries"><span class="toc-number">4.3.</span> <span class="toc-text">Queries</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prolog_语法"><span class="toc-number">5.</span> <span class="toc-text">Prolog 语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Atom"><span class="toc-number">5.1.</span> <span class="toc-text">Atom</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Numbers"><span class="toc-number">5.2.</span> <span class="toc-text">Numbers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Variables"><span class="toc-number">5.3.</span> <span class="toc-text">Variables</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Complex_Terms"><span class="toc-number">5.4.</span> <span class="toc-text">Complex Terms</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="为什么学习_Prolog?">为什么学习 Prolog?</h2><p><a href="http://zh.wikipedia.org/zh/Prolog" target="_blank" rel="external">Prolog</a> 是种逻辑式的编程语言. 我第一次见到这个名字的时候大约实在我学习 SICP 的过程中, 实现了一个简单的逻辑式语言的解释器. 之后我又在 CTMCP 一书中的 Relational Programming 和 Logical Programming 中多次见到 Prolog 的身影, 加上我本身对于各种编程语言非常地感兴趣, 所以我选择学习这门语言, 在这里记录一下我的学习的进度和经历, 也希望能为别人学习 Prolog 提供一下微不足道的帮助吧.</p>
+<h2 id="书籍的选择">书籍的选择</h2><p>在选择学习一门新的编程语言之后, 第一件事情是上网查询一些资料因为 Prolog 的使用者极少, 所以资料也非常的难以查找, 我一开始想要使用的是 Prolog by Example, 但是因为很难找到所以就选择了 Learn Prolog Now.</p>
+<h2 id="开发环境的搭建">开发环境的搭建</h2><p>怎样才能快速的搭建 Prolog 的开发环境呢, 如果你是用的 Mac. 在命令行中输入</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew cask <span class="keyword">install</span> swi-prolog</span><br></pre></td></tr></table></figure>
+<p>如果没有装 brew 或者 cask, 可以在 google 上轻松找到这两个命令行工具的安装方法. 在这里我也就不在多说了.</p>
+<p>我是用的编辑器是 Emacs, 使用的插件可以点<a href="http://bruda.ca/emacs/prolog_mode_for_emacs" target="_blank" rel="external">这里</a>. 安装好之后, 我们就可以开始 Prolog 之旅了.</p>
+<h2 id="Prolog_基础">Prolog 基础</h2><p>Prolog 有三种非常基本结构:</p>
+<ul>
+<li>事实(facts)</li>
+<li>规则(rules)</li>
+<li>查询(queries)</li>
+</ul>
+<p>事实和规则被叫做 knowledge base 或者叫 database, Prolog 的编程其实就是写 knowledge base, 这些 knowledge base 就定义和保存了我们感兴趣的全部知识. 我们如何使用一个 Prolog 程序呢? 就是发起查询, 就是通过向 knowledge base 中存储的数据提出问题, 然后获取回答. 这与我们平时的使用 Objective-C Java 等命令式编程有着极大的不同.</p>
+<h3 id="Facts">Facts</h3><p>首先我们先写下几个 Prolog 中的 facts, 需要打开一个文件, 后缀是 <code>.pl</code>.</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">programmer</span><span class="params">(linux)</span></span>.</span><br><span class="line"><span class="function"><span class="title">programmer</span><span class="params">(bill)</span></span>.</span><br><span class="line"><span class="function"><span class="title">designer</span><span class="params">(jonathan)</span></span>.</span><br></pre></td></tr></table></figure>
+<p>这个文件 <code>facts.pl</code> 就是一些 facts 的集合, 注意, 在这里的每一个 fact 都是以 <code>.</code> 结尾的. 我们怎么使用呢, 在命令行中切换到 <code>facts.pl</code> 的目录下, 然后输入 <code>swipl</code>.</p>
+<figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Welcome <span class="keyword">to</span> SWI-Prolog (Multi-threaded, <span class="number">64</span> bits, Version <span class="number">6.6</span><span class="number">.6</span>)</span><br><span class="line">Copyright (c) <span class="number">1990</span>-<span class="number">2013</span> University <span class="keyword">of</span> Amsterdam, VU Amsterdam</span><br><span class="line">SWI-Prolog comes <span class="keyword">with</span> ABSOLUTELY NO WARRANTY. This <span class="keyword">is</span> free software,</span><br><span class="line"><span class="keyword">and</span> you are welcome <span class="keyword">to</span> redistribute it under certain conditions.</span><br><span class="line">Please visit http://www.swi-prolog.org <span class="keyword">for</span> details.</span><br><span class="line"></span><br><span class="line"><span class="keyword">For</span> help, <span class="keyword">use</span> ?- help(Topic). <span class="keyword">or</span> ?- apropos(Word).</span><br><span class="line"></span><br><span class="line">?-</span><br></pre></td></tr></table></figure>
+<p>然后会出现这些信息, 使用 <code>consult(&#39;fact.pl&#39;).</code> 加载你的 Prolog 代码. 输入: programmer(linux).</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?- programmer(linux).</span><br><span class="line"><span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>Prolog 会返回 <code>true</code>. 如果你输入: programmer(jonathan).</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?- programmer(jonathan).</span><br><span class="line"><span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<p>它就会返回 <code>false</code>. 很简单吧.</p>
+<p>当然 facts 也可以是向下面这样有多个参数</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">loves</span><span class="params">(i,u)</span></span>.</span><br><span class="line"><span class="function"><span class="title">loves</span><span class="params">(he,u)</span></span>.</span><br></pre></td></tr></table></figure>
+<p>如果你输入一个不存在过程, 它就会告诉你 <code>Undefined procedure</code>.</p>
+<h3 id="Rules">Rules</h3><p>接下来我们介绍一下什么是规则 rules, 规则我们理解起来非常的容易, 在 Prolog 中如何实现一些规则呢, 我们使用 <code>:-</code>.</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">sunny</span><span class="params">(today)</span></span>.</span><br><span class="line"><span class="function"><span class="title">happy</span><span class="params">(tom)</span></span>.</span><br><span class="line"><span class="function"><span class="title">football</span><span class="params">(tom)</span></span> :- <span class="function"><span class="title">sunny</span><span class="params">(today)</span></span>,<span class="function"><span class="title">happy</span><span class="params">(tom)</span></span>.</span><br></pre></td></tr></table></figure>
+<p>接下来我们加载我们的代码, 询问 <code>football(tom)</code>. Prolog 会返回 <code>true</code>, 规则是什么呢, 规则的前半部分也就是 <code>football(tom)</code> 是规则的头部(head), 规则的后半部分 <code>sunny(today),happy(tom)</code> 是规则的目标(goals). 当规则的 goals 成立时, head 就会成立也就是:</p>
+<p><strong>如果今天的天气很好, tom 也很开心, 那么他就会去踢足球.</strong></p>
+<p>Prolog 使用 <code>,</code> 来表示 <strong>和</strong>, 使用 <code>;</code> 来表示 <strong>或</strong>. 所以在这里, 后面的两个条件都需要成立. 这样 Prolog 就能推出 <code>football(tom)</code>.</p>
+<p>我们可以在 Rules 中添加变量增强我们的表达能力, 比如这样:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">father</span><span class="params">(tom,john)</span></span>.</span><br><span class="line"><span class="function"><span class="title">father</span><span class="params">(john,ive)</span></span>.</span><br><span class="line"><span class="function"><span class="title">grandfather</span><span class="params">(X,Z)</span></span>:-<span class="function"><span class="title">father</span><span class="params">(X,Y)</span></span>,<span class="function"><span class="title">father</span><span class="params">(Y,Z)</span></span>.</span><br></pre></td></tr></table></figure>
+<p>我相信这对于我们是非常容易理解的, 在这里也不过多说明了.</p>
+<h3 id="Queries">Queries</h3><p>什么是 queries, 其实我们在上边输入的 <code>football(tom).</code>, <code>programmer(jonathan).</code> 都是一种查询. 只是查询是否成立, 接下来我们就需要在查询中引入变量(variable)了.</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">programmer</span><span class="params">(linux)</span></span>.</span><br><span class="line"><span class="function"><span class="title">programmer</span><span class="params">(bill)</span></span>.</span><br><span class="line"><span class="function"><span class="title">designer</span><span class="params">(jonathan)</span></span>.</span><br></pre></td></tr></table></figure>
+<p>还是这一段代码, 我们可以通过询问 Prolog:</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?- programmer(<span class="variable">X</span>).</span><br></pre></td></tr></table></figure>
+<p>然后就会出现</p>
+<figure class="highlight fix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">X </span>=<span class="string"> linux</span></span><br></pre></td></tr></table></figure>
+<p>Prolog 每次只会出现最先符合条件的结果, 若果你想看其他的结果, 可以输入 <code>;</code> 也就是或, 来查看是否有其他的输入, 我们输入 <code>;</code> 之后, 会出现:</p>
+<figure class="highlight fix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">X </span>=<span class="string"> bill</span></span><br></pre></td></tr></table></figure>
+<p>再次输入之后, 就会返回 <code>false</code> 了, 因为没有符合条件的结果了.</p>
+<h2 id="Prolog_语法">Prolog 语法</h2><p>介绍了 Prolog 中的基本元素之后, 我们想要知道, Prolog 中的基本元素到底是由什么来构建的呢, 现在来看一下 Prolog 中的基本语法.</p>
+<p>Prolog 中的基本元素都是 term(<em>不知道该怎么翻译</em>)构建而来的. 而在 Prolog 中有 4 种不同的 term</p>
+<ul>
+<li>atom</li>
+<li>number</li>
+<li>variable</li>
+<li>complex term</li>
+</ul>
+<h3 id="Atom">Atom</h3><p>符合下列条件之一的就是 Prolog 中的 atom:</p>
+<ol>
+<li>由大写字母, 小写字符, 数字和下划线组成的并且<strong>以小写字母开头</strong>的字符串, 例如: <code>john</code> <code>tom</code> <code>big_big</code> <code>a_bc</code>.</li>
+<li>任意的包装在单引号 <code>&#39;</code> 中的字符床. 例如: <code>&#39;dsada&#39;</code> <code>*((&amp;@!MBAS))</code> <code>Fjdh_da</code>.</li>
+<li>特殊的字符串, 比如 <code>:-</code> <code>;</code> <code>@=</code>.</li>
+</ol>
+<h3 id="Numbers">Numbers</h3><p>数字在 Prolog 中并不是非常的重要, 不过 Prolog 支持大多数的数字的表示和特殊的值.</p>
+<h3 id="Variables">Variables</h3><p>变量是由由大写字母, 小写字符, 数字和下划线组成的并且<strong>以大写字母或者下划线开头</strong>的字符串, 比如 <code>X</code> <code>Variable</code> <code>_dsal</code>. </p>
+<p>变量 <code>_</code> 在 Prolog 中非常的特殊被称为匿名变量.</p>
+<h3 id="Complex_Terms">Complex Terms</h3><p>Complex terms 实际上就是一种结构, 而我们之前见到的</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">programmer</span><span class="params">(linux)</span></span>.</span><br><span class="line"><span class="function"><span class="title">programmer</span><span class="params">(bill)</span></span>.</span><br><span class="line"><span class="function"><span class="title">designer</span><span class="params">(jonathan)</span></span>.</span><br></pre></td></tr></table></figure>
+<p>这些都是 complex terms, 而且我们也可以定义出更加复杂的结构</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">father</span>(<span class="function">father</span>(<span class="function">fahter</span>(john))).</span><br></pre></td></tr></table></figure>
+<p>complex term 拥有的参数的数量叫做 arity, arity 在 complex term 中及其的重要, <code>progammer(linux)</code> 中的 <code>arity = 1</code>, <code>love(i,u)</code> 中的 <code>arity = 2</code>.</p>
+<p>在 Prolog 中可以定义两个名字相同, 而 arity 不同的 predicate.</p>
+<p>当我们讨论到 predicate 时, 我们经常使用 <code>/</code> 后面跟着 <code>arity</code> 的数量来表示 predicate.</p>
+<p>例如:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">happy/1</span><br><span class="line">love/2</span><br></pre></td></tr></table></figure>
+<h2 id="总结">总结</h2><p>到目前为止, 我们已经对 Prolog 有着一个大体的了解, 也能感觉到它与其他编程语言的与众不同, 而这种不同就是驱使我学习它的最大因素.</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Logical-Programming/">Logical Programming</a><a href="/tags/Prolog/">Prolog</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://deltax.me/2015/04/05/Prolog-基础-1/" data-title="Prolog 基础&lt;1&gt; | DeltaX" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/04/04/散列表/"  title="散列表">
+ <strong>下一篇：</strong><br/> 
+ <span>散列表
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/04/05/Prolog-基础-1/" data-title="Prolog 基础<1>" data-url="http://deltax.me/2015/04/05/Prolog-基础-1/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么学习_Prolog?"><span class="toc-number">1.</span> <span class="toc-text">为什么学习 Prolog?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#书籍的选择"><span class="toc-number">2.</span> <span class="toc-text">书籍的选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开发环境的搭建"><span class="toc-number">3.</span> <span class="toc-text">开发环境的搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prolog_基础"><span class="toc-number">4.</span> <span class="toc-text">Prolog 基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Facts"><span class="toc-number">4.1.</span> <span class="toc-text">Facts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rules"><span class="toc-number">4.2.</span> <span class="toc-text">Rules</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Queries"><span class="toc-number">4.3.</span> <span class="toc-text">Queries</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prolog_语法"><span class="toc-number">5.</span> <span class="toc-text">Prolog 语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Atom"><span class="toc-number">5.1.</span> <span class="toc-text">Atom</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Numbers"><span class="toc-number">5.2.</span> <span class="toc-text">Numbers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Variables"><span class="toc-number">5.3.</span> <span class="toc-text">Variables</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Complex_Terms"><span class="toc-number">5.4.</span> <span class="toc-text">Complex Terms</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/Conclusion/" title="Conclusion">Conclusion<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Functional-Programming/" title="Functional Programming">Functional Programming<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Programming-Paradigm/" title="Programming Paradigm">Programming Paradigm<sup>15</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/clrs/" title="clrs">clrs<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/iOS/" title="iOS">iOS<sup>8</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/CTMCP/" title="CTMCP">CTMCP<sup>14</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Oz/" title="Oz">Oz<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/iOS/" title="iOS">iOS<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Objective-C/" title="Objective-C">Objective-C<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Algorithm/" title="Algorithm">Algorithm<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/OOP/" title="OOP">OOP<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Concurrency/" title="Concurrency">Concurrency<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Scheme/" title="Scheme">Scheme<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Ruby/" title="Ruby">Ruby<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ML/" title="ML">ML<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Functional-Programming/" title="Functional Programming">Functional Programming<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Relational-Programming/" title="Relational Programming">Relational Programming<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Prolog/" title="Prolog">Prolog<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Logical-Programming/" title="Logical Programming">Logical Programming<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SICP/" title="SICP">SICP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Haskell/" title="Haskell">Haskell<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GUI-Programming/" title="GUI Programming">GUI Programming<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Draven. <br/>
+			This is my blog, believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/https://github.com/Draveness" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:stark.draven@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="http://deltax.me/about" target="_blank" title="Draven">Draven</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+  
+    c.click();
+    
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"DeltaX"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-56898419-1', 'deltax.me');  
+ga('send', 'pageview');
+</script>
+
+
+
+
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254626833'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s23.cnzz.com/z_stat.php%3Fid%3D1254626833' type='text/javascript'%3E%3C/script%3E"));</script>
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
