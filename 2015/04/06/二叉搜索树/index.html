@@ -1,0 +1,612 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>二叉搜索树 | DeltaX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Draven">
+    
+
+    
+    <meta name="description" content="二叉搜索树是以一棵二叉树来组织的, 其中每一个结点都是一个对象, 每个结点都包含属性 left right 和 p, 它们分别指向结点的 left child, right child 和 parent. 如果某个 child 结点不存在, 那么相应的属性就为 nil.
+二叉搜索树中的关键字的总是以满足二叉树性质的方式来存储:
+
+其中对于任何一个结点, left child 中存储的数据都不会大于">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二叉搜索树">
+<meta property="og:url" content="http://deltax.me/2015/04/06/二叉搜索树/index.html">
+<meta property="og:site_name" content="DeltaX">
+<meta property="og:description" content="二叉搜索树是以一棵二叉树来组织的, 其中每一个结点都是一个对象, 每个结点都包含属性 left right 和 p, 它们分别指向结点的 left child, right child 和 parent. 如果某个 child 结点不存在, 那么相应的属性就为 nil.
+二叉搜索树中的关键字的总是以满足二叉树性质的方式来存储:
+
+其中对于任何一个结点, left child 中存储的数据都不会大于">
+<meta property="og:image" content="http://deltax.qiniudn.com/search-tree.png?attname=&e=1428393319&token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:azaCzptdMV5SJJ7lsDzPvSzTCI0">
+<meta property="og:image" content="http://deltax.qiniudn.com/delete-binary-tree.png?attname=&e=1428419679&token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:uJFRzAVs3zXywADKNRUrZmfItl4">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="二叉搜索树">
+<meta name="twitter:description" content="二叉搜索树是以一棵二叉树来组织的, 其中每一个结点都是一个对象, 每个结点都包含属性 left right 和 p, 它们分别指向结点的 left child, right child 和 parent. 如果某个 child 结点不存在, 那么相应的属性就为 nil.
+二叉搜索树中的关键字的总是以满足二叉树性质的方式来存储:
+
+其中对于任何一个结点, left child 中存储的数据都不会大于">
+
+    
+    <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="DeltaX" title="DeltaX"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="DeltaX">DeltaX</a></h1>
+				<h2 class="blog-motto">我们来填坑吧</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:deltax.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/04/06/二叉搜索树/" title="二叉搜索树" itemprop="url">二叉搜索树</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
+		
+  <p class="article-time">
+    <time datetime="2015-04-06T07:46:57.000Z" itemprop="datePublished"> 发表于 2015-04-06</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Traverse"><span class="toc-number">1.</span> <span class="toc-text">Traverse</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Query"><span class="toc-number">2.</span> <span class="toc-text">Query</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Search"><span class="toc-number">2.1.</span> <span class="toc-text">Search</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Minimum_Maximum"><span class="toc-number">2.2.</span> <span class="toc-text">Minimum Maximum</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Successor_Predecessor"><span class="toc-number">2.3.</span> <span class="toc-text">Successor Predecessor</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Insert_and_Delete"><span class="toc-number">3.</span> <span class="toc-text">Insert and Delete</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Insert"><span class="toc-number">3.1.</span> <span class="toc-text">Insert</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Delete"><span class="toc-number">3.2.</span> <span class="toc-text">Delete</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<p>二叉搜索树是以一棵二叉树来组织的, 其中每一个结点都是一个对象, 每个结点都包含属性 <code>left</code> <code>right</code> 和 <code>p</code>, 它们分别指向结点的 left child, right child 和 parent. 如果某个 child 结点不存在, 那么相应的属性就为 <code>nil</code>.</p>
+<p>二叉搜索树中的关键字的总是以满足二叉树性质的方式来存储:</p>
+<blockquote>
+<p>其中对于任何一个结点, left child 中存储的数据都不会大于 parent, right child 中存储的数据都不会小于 parent.</p>
+</blockquote>
+<p><img src="http://deltax.qiniudn.com/search-tree.png?attname=&e=1428393319&token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:azaCzptdMV5SJJ7lsDzPvSzTCI0" style="display:block;margin:auto"></p>
+<p>我们先来实现一下树的数据结构:</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tree</span></span></span><br><span class="line">	<span class="keyword">attr_accessor</span> <span class="symbol">:root</span>, <span class="symbol">:left</span>, <span class="symbol">:right</span>, <span class="symbol">:parent</span>, <span class="symbol">:key</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> </span>initialize</span><br><span class="line">		<span class="variable">@left</span> = <span class="keyword">nil</span></span><br><span class="line">		<span class="variable">@right</span> = <span class="keyword">nil</span></span><br><span class="line">		<span class="variable">@parent</span> = <span class="keyword">nil</span></span><br><span class="line">		<span class="variable">@key</span> = <span class="keyword">nil</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2 id="Traverse">Traverse</h2><p>二叉搜索树性质允许我们通过一个简单的递归算法来按序输出二叉搜索树中的所有关键字, 这种算法称为<strong>中序遍历</strong>, 这样的命名是因为输出的 root 的关键字位于其 left child 和 right child 之间. 类似地, 我们有<strong>先序遍历</strong>和<strong>后序遍历</strong>.</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">def inorder_tree_walk(<span class="built_in">tree</span>)</span><br><span class="line">	<span class="flow">if</span> <span class="built_in">tree</span> != nil</span><br><span class="line">		inorder_tree_walk(<span class="built_in">tree</span>.left)</span><br><span class="line">		puts <span class="built_in">tree</span>.key</span><br><span class="line">		inorder_tree_walk(<span class="built_in">tree</span>.right)</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">def preorder_tree_walk(<span class="built_in">tree</span>)</span><br><span class="line">	<span class="flow">if</span> <span class="built_in">tree</span> != nil</span><br><span class="line">		puts <span class="built_in">tree</span>.key</span><br><span class="line">		preorder_tree_walk(<span class="built_in">tree</span>.left)</span><br><span class="line">		preorder_tree_walk(<span class="built_in">tree</span>.right)</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">def postorder_tree_walk(<span class="built_in">tree</span>)</span><br><span class="line">	<span class="flow">if</span> <span class="built_in">tree</span> != nil</span><br><span class="line">		postorder_tree_walk(<span class="built_in">tree</span>.left)</span><br><span class="line">		postorder_tree_walk(<span class="built_in">tree</span>.right)</span><br><span class="line">		puts <span class="built_in">tree</span>.key</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>遍历一棵 $n$ 个结点的二叉搜索树, 需要耗费 $\Theta(n)$ 的时间, 因为在第一次调用之后, 每个结点还要调用自己两次, 分别是 left 和 right child.</p>
+<h2 id="Query">Query</h2><p>我们经常需要查找存在二叉搜索树中的关键字. 我们不仅需要支持 <code>SEARCH</code> 操作之外, 二叉搜索树还能支持还能支持诸如 <code>MINIMUM</code> <code>MAXIMUM</code> <code>SUCCESSOR</code> <code>PREDECESSOR</code> 的查询操作. 并且这些操作都能在 $O(h)$ 时间内完成.</p>
+<h3 id="Search">Search</h3><p>查找操作非常的简单, 我们接下来用 Ruby 实现查找操作.</p>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">def tree_search(tree, <span class="keyword">key</span>)</span><br><span class="line">	<span class="keyword">if</span> tree == nil <span class="keyword">or</span> <span class="keyword">key</span> == tree.<span class="keyword">key</span></span><br><span class="line">		<span class="keyword">return</span> tree</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">key</span> &lt; tree.<span class="keyword">key</span></span><br><span class="line">		<span class="keyword">return</span> tree_search(tree.left, <span class="keyword">key</span>)</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> tree_search(tree.right, <span class="keyword">key</span>)</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>这个过程从 root 开始查找, 并沿着树中的一条简单的路径向下进行. 不断与 tree.key 比较, 选择最合适的路径.</p>
+<p>我们也可以使用循环来解决我们的问题, 不过在这里我们不在演示了.</p>
+<h3 id="Minimum_Maximum">Minimum Maximum</h3><p>二叉搜索树的最大关键字和最小关键字的查找十分的简单, 我们这里直接给出 Ruby 的实现代码.</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">def tree_minimum(<span class="built_in">tree</span>)</span><br><span class="line">	<span class="flow">if</span> <span class="built_in">tree</span>.left != nil</span><br><span class="line">		tree_minimum(<span class="built_in">tree</span>.left)</span><br><span class="line">	<span class="flow">else</span></span><br><span class="line">		<span class="built_in">tree</span></span><br><span class="line">	end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">def tree_maximum(<span class="built_in">tree</span>)</span><br><span class="line">	<span class="flow">if</span> <span class="built_in">tree</span>.left != nil</span><br><span class="line">		tree_maximum(<span class="built_in">tree</span>.left)</span><br><span class="line">	<span class="flow">else</span></span><br><span class="line">		<span class="built_in">tree</span></span><br><span class="line">	end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>这两个过程在一棵高度为 $h$ 的树上均能在 $O(h)$ 时间内执行玩, 所遇到的结点均形成了一条从 root 向下的简单路径.</p>
+<h3 id="Successor_Predecessor">Successor Predecessor</h3><p>给定一棵二叉搜索树中的一个结点, 有时候需要按照中序遍历的次序查找它的后继:</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def tree_successor(tree)</span><br><span class="line">	<span class="keyword">return</span> tree_successor <span class="keyword">if</span> tree<span class="built_in">.</span>right <span class="subst">!=</span> nil</span><br><span class="line">	<span class="keyword">parent</span> <span class="subst">=</span> tree<span class="built_in">.</span><span class="keyword">parent</span></span><br><span class="line">	whlie <span class="keyword">parent</span> <span class="subst">!=</span> nil <span class="literal">and</span> tree <span class="subst">==</span> <span class="keyword">parent</span><span class="built_in">.</span>right</span><br><span class="line">		tree <span class="subst">=</span> <span class="keyword">parent</span></span><br><span class="line">		<span class="keyword">parent</span> <span class="subst">=</span> <span class="keyword">parent</span><span class="built_in">.</span><span class="keyword">parent</span></span><br><span class="line">	end</span><br><span class="line">	<span class="keyword">parent</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>我们把 <code>tree_successor</code> 的伪代码分成两个部分</p>
+<ul>
+<li>如果结点的 right child 非空, 那么结点的 successor 就是结点 right child 中的最左结点.</li>
+<li>如果结点的 right child 为空, 那么它的后继就是该结点最底层的 parent.</li>
+</ul>
+<p>同理, 查找树的 predecessor 的代码如下:</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def tree_predecessor(tree)</span><br><span class="line">	<span class="keyword">return</span> tree_predecessor <span class="keyword">if</span> tree<span class="built_in">.</span>left <span class="subst">!=</span> nil</span><br><span class="line">	<span class="keyword">parent</span> <span class="subst">=</span> tree<span class="built_in">.</span><span class="keyword">parent</span></span><br><span class="line">	whlie <span class="keyword">parent</span> <span class="subst">!=</span> nil <span class="literal">and</span> tree <span class="subst">==</span> <span class="keyword">parent</span><span class="built_in">.</span>left</span><br><span class="line">		tree <span class="subst">=</span> <span class="keyword">parent</span></span><br><span class="line">		<span class="keyword">parent</span> <span class="subst">=</span> <span class="keyword">parent</span><span class="built_in">.</span><span class="keyword">parent</span></span><br><span class="line">	end</span><br><span class="line">	<span class="keyword">parent</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h2 id="Insert_and_Delete">Insert and Delete</h2><p>插入和删除的操作会导致二叉搜索树表示的动态集合的变化, 一定要修改数据结构来反映这个变化, 但修改要保持二叉搜索树性质的成立.</p>
+<h3 id="Insert">Insert</h3><p>要将一个新的值 $v$ 插入到一棵二叉搜索树 $T$ 中, 需要调用一下过程 <code>tree-insert</code>. </p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">def tree_insert(tree,z)</span><br><span class="line">	y = nil</span><br><span class="line">	x = tree</span><br><span class="line">	<span class="keyword">while</span> tree != nil</span><br><span class="line">		y = tree</span><br><span class="line">		<span class="keyword">if</span> tree.key &lt; x.key</span><br><span class="line">			tree = tree.left</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			tree = tree.<span class="constant">right</span></span><br><span class="line">		<span class="function"><span class="keyword">end</span></span></span><br><span class="line">	<span class="function"><span class="keyword">end</span></span></span><br><span class="line">	z.parent = y</span><br><span class="line">	<span class="keyword">if</span> y == nil</span><br><span class="line">		tree = z</span><br><span class="line">	elsif z.key &lt; y.key</span><br><span class="line">		y.left = z</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		y.<span class="constant">right</span> = z</span><br><span class="line">	<span class="function"><span class="keyword">end</span></span></span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br></pre></td></tr></table></figure>
+<p>该过程在高度为 $h$ 的二叉搜索树上的运行时间为 $O(h)$.</p>
+<h3 id="Delete">Delete</h3><p>从一个二叉搜索树 $T$ 中删除一个结点 $z$ 的整个策略分为三中基本情况</p>
+<ul>
+<li>如果 $z$ 没有子节点, 那么只是简单地将它删除, 并将它的父结点置为 <code>nil</code>.</li>
+<li>如果 $z$ 只有一个子节点, 那么直接将子节点提升到 $z$ 的位置, 并修改 $z$ 的父结点, 用子节点来代替.</li>
+<li>如果 $z$ 有两个子节点, 那么找 $z$ 的后继 $y$, 并让 $y$ 占据树中 $z$ 的位置. $z$. $z$ 的原右子树部分成为 $y$ 的新的右子树, $z$ 的原左子树部分成为 $y$ 的新的左子树.<ul>
+<li>如果 $y$ 是 $z$ 的 right child, 那么直接用 $y$ 替换 $z$, 并留下 $y$ 的 right child.</li>
+<li>否则, $y$ 位于右子树中, 但并不是 $z$ 的 right child, 先用 $y$ 的 right child 替换 $y$, 然后再用 $y$ 替换 $z$.</li>
+</ul>
+</li>
+</ul>
+<p><img src="http://deltax.qiniudn.com/delete-binary-tree.png?attname=&e=1428419679&token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:uJFRzAVs3zXywADKNRUrZmfItl4" style="display:block;margin:auto"></p>
+<p>为了在二叉搜索树内移动子树, 定义了一个子过程 <code>tranplant</code>, 它用另一棵子树替换一棵子树并成为其双亲的子节点.</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> </span>transplant(tree, u, v)</span><br><span class="line">	<span class="keyword">if</span> u.parent == <span class="keyword">nil</span></span><br><span class="line">		tree.root = v</span><br><span class="line">	<span class="keyword">elsif</span> u == u.parent.left</span><br><span class="line">		u.parent.left = v</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		u.parent.right = v</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">if</span> v != <span class="keyword">nil</span></span><br><span class="line">		v.parent = u.parent</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>利用线程的 <code>transplant</code> 过程, 下面是从二叉树中删除结点 $z$ 的删除过程.</p>
+<figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">def tree_delete(tree,z)</span><br><span class="line">	<span class="keyword">if</span> z.<span class="built_in">left</span> = nil</span><br><span class="line">		transplant(tree, z, z.<span class="built_in">right</span>)</span><br><span class="line">	elsif z.<span class="built_in">right</span> = nil</span><br><span class="line">		transplant(tree, z, z.<span class="built_in">left</span>)</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		y = tree_minimum(z.<span class="built_in">right</span>)</span><br><span class="line">		<span class="keyword">if</span> y.parent != z</span><br><span class="line">			transplant(tree, y, y.<span class="built_in">right</span>)</span><br><span class="line">			y.<span class="built_in">right</span> = z.<span class="built_in">right</span></span><br><span class="line">			y.<span class="built_in">right</span>.parent = y</span><br><span class="line">		<span class="keyword">end</span></span><br><span class="line">		transplant(tree, z, y)</span><br><span class="line">		y.<span class="built_in">left</span> = z.<span class="built_in">left</span></span><br><span class="line">		y.<span class="built_in">left</span>.parent = y</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>在一棵高度为 $h$ 的树上, 事项动态集合操作 <code>INSERT</code> 和 <code>DELETE</code> 的运行时间均为 $O(h)$.</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/clrs/">clrs</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithm/">Algorithm</a><a href="/tags/Ruby/">Ruby</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://deltax.me/2015/04/06/二叉搜索树/" data-title="二叉搜索树 | DeltaX" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/04/05/Prolog-基础-1/"  title="Prolog 基础 &lt;1&gt;">
+ <strong>下一篇：</strong><br/> 
+ <span>Prolog 基础 &lt;1&gt;
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/04/06/二叉搜索树/" data-title="二叉搜索树" data-url="http://deltax.me/2015/04/06/二叉搜索树/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Traverse"><span class="toc-number">1.</span> <span class="toc-text">Traverse</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Query"><span class="toc-number">2.</span> <span class="toc-text">Query</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Search"><span class="toc-number">2.1.</span> <span class="toc-text">Search</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Minimum_Maximum"><span class="toc-number">2.2.</span> <span class="toc-text">Minimum Maximum</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Successor_Predecessor"><span class="toc-number">2.3.</span> <span class="toc-text">Successor Predecessor</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Insert_and_Delete"><span class="toc-number">3.</span> <span class="toc-text">Insert and Delete</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Insert"><span class="toc-number">3.1.</span> <span class="toc-text">Insert</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Delete"><span class="toc-number">3.2.</span> <span class="toc-text">Delete</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/Conclusion/" title="Conclusion">Conclusion<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Functional-Programming/" title="Functional Programming">Functional Programming<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Programming-Paradigm/" title="Programming Paradigm">Programming Paradigm<sup>15</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/clrs/" title="clrs">clrs<sup>8</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/iOS/" title="iOS">iOS<sup>8</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/CTMCP/" title="CTMCP">CTMCP<sup>14</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Oz/" title="Oz">Oz<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Algorithm/" title="Algorithm">Algorithm<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/iOS/" title="iOS">iOS<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Objective-C/" title="Objective-C">Objective-C<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/OOP/" title="OOP">OOP<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Ruby/" title="Ruby">Ruby<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Concurrency/" title="Concurrency">Concurrency<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Scheme/" title="Scheme">Scheme<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ML/" title="ML">ML<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Functional-Programming/" title="Functional Programming">Functional Programming<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Relational-Programming/" title="Relational Programming">Relational Programming<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Prolog/" title="Prolog">Prolog<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Logical-Programming/" title="Logical Programming">Logical Programming<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SICP/" title="SICP">SICP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Haskell/" title="Haskell">Haskell<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GUI-Programming/" title="GUI Programming">GUI Programming<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Draven. <br/>
+			This is my blog, believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/https://github.com/Draveness" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:stark.draven@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="http://deltax.me/about" target="_blank" title="Draven">Draven</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+  
+    c.click();
+    
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"DeltaX"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-56898419-1', 'deltax.me');  
+ga('send', 'pageview');
+</script>
+
+
+
+
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254626833'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s23.cnzz.com/z_stat.php%3Fid%3D1254626833' type='text/javascript'%3E%3C/script%3E"));</script>
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
