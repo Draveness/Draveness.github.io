@@ -4,49 +4,22 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>HTTP报文内的HTTP信息 | DeltaX</title>
+    <title>红黑树 | DeltaX</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Draven">
     
 
     
-    <meta name="description" content="HTTP报文HTTP报文是由多行数据构成的字符串文本, 大致可分为报文首部和报文主体两部分.
-------------------
-|     报文首部     |
-------------------
-|  空行(CR + LF)  |
-------------------
-|                |
-|     报文主体    |
-|                | 
-------">
+    <meta name="description">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HTTP报文内的HTTP信息">
-<meta property="og:url" content="http://deltax.me/2015/01/27/HTTP报文内的HTTP信息.md/index.html">
+<meta property="og:title" content="红黑树">
+<meta property="og:url" content="http://deltax.me/2015/04/07/红黑树/index.html">
 <meta property="og:site_name" content="DeltaX">
-<meta property="og:description" content="HTTP报文HTTP报文是由多行数据构成的字符串文本, 大致可分为报文首部和报文主体两部分.
-------------------
-|     报文首部     |
-------------------
-|  空行(CR + LF)  |
-------------------
-|                |
-|     报文主体    |
-|                | 
-------">
+<meta property="og:description">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HTTP报文内的HTTP信息">
-<meta name="twitter:description" content="HTTP报文HTTP报文是由多行数据构成的字符串文本, 大致可分为报文首部和报文主体两部分.
-------------------
-|     报文首部     |
-------------------
-|  空行(CR + LF)  |
-------------------
-|                |
-|     报文主体    |
-|                | 
-------">
+<meta name="twitter:title" content="红黑树">
+<meta name="twitter:description">
 
     
     <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
@@ -105,14 +78,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/01/27/HTTP报文内的HTTP信息.md/" title="HTTP报文内的HTTP信息" itemprop="url">HTTP报文内的HTTP信息</a>
+      <a href="/2015/04/07/红黑树/" title="红黑树" itemprop="url">红黑树</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
 		
   <p class="article-time">
-    <time datetime="2015-01-27T04:17:21.000Z" itemprop="datePublished"> 发表于 2015-01-27</time>
+    <time datetime="2015-04-07T02:02:48.000Z" itemprop="datePublished"> 发表于 2015-04-07</time>
     
   </p>
 </header>
@@ -121,43 +94,24 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP报文"><span class="toc-number">1.</span> <span class="toc-text">HTTP报文</span></a></li></ol>
+			
 		
 		</div>
 		
-		<h2 id="HTTP报文">HTTP报文</h2><p><code>HTTP报文</code>是由多行数据构成的字符串文本, 大致可分为<strong>报文首部</strong>和<strong>报文主体</strong>两部分.</p>
-<pre><code><span class="code">------------------
-|     报文首部     |
-------------------</span>
-<span class="header">|  空行(CR + LF)  |
-------------------</span>
-|                |
-|     报文主体    |
-<span class="header">|                | 
-------------------</span>
-</code></pre><p>请求报文和响应报文的主要区别在于<strong>请求行</strong>和<strong>状态行</strong>的不同.</p>
-<pre><code><span class="attribute">请求报文首部 </span>=<span class="string"> 请求行 + 请求首部字段 + 通用首部字段 + 实体首部字段 + 其他
-响应报文首部 = 响应行 + 响应首部字段 + 响应首部字段 + 实体首部字段 + 其他</span>
-</code></pre><p>可以通过<code>Range</code>字段获取部分内容的范围请求</p>
-<pre><code><span class="attribute">Range</span>: <span class="string">bytes=5001-10000</span>
-<span class="attribute">Range</span>: <span class="string">bytes=5001-</span>
-<span class="attribute">Range</span>: <span class="string">bytes=-3000, 5000-7000</span>
-</code></pre><p>当Web界面有多份相同的内容时, 根据浏览器的默认语言会返回不同的界面, 例如中文版或者英文版, 这样的机制就叫做<strong>内容协商</strong>.</p>
-<p><strong>内容协商</strong>就是客户端和服务端对响应的资源内容进行交涉, 返回合适的内容, 具体有以下三种类型.</p>
-<ul>
-<li>服务端驱动协商(Server-driven Negotiation)</li>
-<li>客户端驱动协商(Client-driven Negotiation)</li>
-<li>透明协商(Transparent Negotiation)</li>
-</ul>
-  
+		  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/clrs/">clrs</a>
+</div>
+
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/HTTP/">HTTP</a>
+  <span></span> <a href="/tags/Algorithm/">Algorithm</a><a href="/tags/C/">C</a>
   </div>
 
 </div>
@@ -166,7 +120,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://deltax.me/2015/01/27/HTTP报文内的HTTP信息.md/" data-title="HTTP报文内的HTTP信息 | DeltaX" data-tsina="null" class="share clearfix">
+	  <div data-url="http://deltax.me/2015/04/07/红黑树/" data-title="红黑树 | DeltaX" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -180,18 +134,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/03/15/分治策略/" title="分治策略">
+ <a href="/2015/04/07/Prolog-匹配-2/" title="Prolog 匹配 &lt;2&gt;">
   <strong>上一篇：</strong><br/>
   <span>
-  分治策略</span>
+  Prolog 匹配 &lt;2&gt;</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2015/01/24/简单的HTTP协议/"  title="简单的HTTP协议">
+<a href="/2015/04/06/二叉搜索树/"  title="二叉搜索树">
  <strong>下一篇：</strong><br/> 
- <span>简单的HTTP协议
+ <span>二叉搜索树
 </span>
 </a>
 </div>
@@ -200,7 +154,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/01/27/HTTP报文内的HTTP信息.md/" data-title="HTTP报文内的HTTP信息" data-url="http://deltax.me/2015/01/27/HTTP报文内的HTTP信息.md/"></div>
+	<div class="ds-thread" data-thread-key="2015/04/07/红黑树/" data-title="红黑树" data-url="http://deltax.me/2015/04/07/红黑树/"></div>
 </section>
 
 
@@ -210,7 +164,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP报文"><span class="toc-number">1.</span> <span class="toc-text">HTTP报文</span></a></li></ol>
+ 
  
   </div>
 

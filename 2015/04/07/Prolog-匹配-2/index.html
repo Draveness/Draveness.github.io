@@ -4,49 +4,46 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>HTTP报文内的HTTP信息 | DeltaX</title>
+    <title>Prolog 匹配 &lt;2&gt; | DeltaX</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Draven">
     
 
     
-    <meta name="description" content="HTTP报文HTTP报文是由多行数据构成的字符串文本, 大致可分为报文首部和报文主体两部分.
-------------------
-|     报文首部     |
-------------------
-|  空行(CR + LF)  |
-------------------
-|                |
-|     报文主体    |
-|                | 
-------">
+    <meta name="description" content="这篇 post 有两个主要的目的:
+
+讨论 Prolog 中的匹配, 解释匹配(match)与相等的不同.
+使用 Prolog 搜索的机制解决一些问题.
+
+MatchingProlog 中有三种不同的 term, 分别的 constants, variables 和 complex terms.
+接下来我们解释一下两个 terms 是如何匹配的.
+
+当两个 term 含有相等, 或者两个 term">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HTTP报文内的HTTP信息">
-<meta property="og:url" content="http://deltax.me/2015/01/27/HTTP报文内的HTTP信息.md/index.html">
+<meta property="og:title" content="Prolog 匹配 <2>">
+<meta property="og:url" content="http://deltax.me/2015/04/07/Prolog-匹配-2/index.html">
 <meta property="og:site_name" content="DeltaX">
-<meta property="og:description" content="HTTP报文HTTP报文是由多行数据构成的字符串文本, 大致可分为报文首部和报文主体两部分.
-------------------
-|     报文首部     |
-------------------
-|  空行(CR + LF)  |
-------------------
-|                |
-|     报文主体    |
-|                | 
-------">
+<meta property="og:description" content="这篇 post 有两个主要的目的:
+
+讨论 Prolog 中的匹配, 解释匹配(match)与相等的不同.
+使用 Prolog 搜索的机制解决一些问题.
+
+MatchingProlog 中有三种不同的 term, 分别的 constants, variables 和 complex terms.
+接下来我们解释一下两个 terms 是如何匹配的.
+
+当两个 term 含有相等, 或者两个 term">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HTTP报文内的HTTP信息">
-<meta name="twitter:description" content="HTTP报文HTTP报文是由多行数据构成的字符串文本, 大致可分为报文首部和报文主体两部分.
-------------------
-|     报文首部     |
-------------------
-|  空行(CR + LF)  |
-------------------
-|                |
-|     报文主体    |
-|                | 
-------">
+<meta name="twitter:title" content="Prolog 匹配 <2>">
+<meta name="twitter:description" content="这篇 post 有两个主要的目的:
+
+讨论 Prolog 中的匹配, 解释匹配(match)与相等的不同.
+使用 Prolog 搜索的机制解决一些问题.
+
+MatchingProlog 中有三种不同的 term, 分别的 constants, variables 和 complex terms.
+接下来我们解释一下两个 terms 是如何匹配的.
+
+当两个 term 含有相等, 或者两个 term">
 
     
     <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
@@ -105,14 +102,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/01/27/HTTP报文内的HTTP信息.md/" title="HTTP报文内的HTTP信息" itemprop="url">HTTP报文内的HTTP信息</a>
+      <a href="/2015/04/07/Prolog-匹配-2/" title="Prolog 匹配 &lt;2&gt;" itemprop="url">Prolog 匹配 &lt;2&gt;</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
 		
   <p class="article-time">
-    <time datetime="2015-01-27T04:17:21.000Z" itemprop="datePublished"> 发表于 2015-01-27</time>
+    <time datetime="2015-04-07T02:45:48.000Z" itemprop="datePublished"> 发表于 2015-04-07</time>
     
   </p>
 </header>
@@ -121,34 +118,54 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP报文"><span class="toc-number">1.</span> <span class="toc-text">HTTP报文</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Matching"><span class="toc-number">1.</span> <span class="toc-text">Matching</span></a></li></ol>
 		
 		</div>
 		
-		<h2 id="HTTP报文">HTTP报文</h2><p><code>HTTP报文</code>是由多行数据构成的字符串文本, 大致可分为<strong>报文首部</strong>和<strong>报文主体</strong>两部分.</p>
-<pre><code><span class="code">------------------
-|     报文首部     |
-------------------</span>
-<span class="header">|  空行(CR + LF)  |
-------------------</span>
-|                |
-|     报文主体    |
-<span class="header">|                | 
-------------------</span>
-</code></pre><p>请求报文和响应报文的主要区别在于<strong>请求行</strong>和<strong>状态行</strong>的不同.</p>
-<pre><code><span class="attribute">请求报文首部 </span>=<span class="string"> 请求行 + 请求首部字段 + 通用首部字段 + 实体首部字段 + 其他
-响应报文首部 = 响应行 + 响应首部字段 + 响应首部字段 + 实体首部字段 + 其他</span>
-</code></pre><p>可以通过<code>Range</code>字段获取部分内容的范围请求</p>
-<pre><code><span class="attribute">Range</span>: <span class="string">bytes=5001-10000</span>
-<span class="attribute">Range</span>: <span class="string">bytes=5001-</span>
-<span class="attribute">Range</span>: <span class="string">bytes=-3000, 5000-7000</span>
-</code></pre><p>当Web界面有多份相同的内容时, 根据浏览器的默认语言会返回不同的界面, 例如中文版或者英文版, 这样的机制就叫做<strong>内容协商</strong>.</p>
-<p><strong>内容协商</strong>就是客户端和服务端对响应的资源内容进行交涉, 返回合适的内容, 具体有以下三种类型.</p>
+		<p>这篇 post 有两个主要的目的:</p>
+<ol>
+<li>讨论 Prolog 中的匹配, 解释匹配(match)与相等的不同.</li>
+<li>使用 Prolog 搜索的机制解决一些问题.</li>
+</ol>
+<h2 id="Matching">Matching</h2><p>Prolog 中有三种不同的 term, 分别的 <code>constants</code>, <code>variables</code> 和 <code>complex terms</code>.</p>
+<p>接下来我们解释一下两个 terms 是如何匹配的.</p>
+<blockquote>
+<p>当两个 term 含有相等, 或者两个 term 中的变量在被绑定为指定值之后, 两个 term 相等时, 两个 term 匹配.</p>
+</blockquote>
+<p>也就是说, 以下的 term 都会匹配:</p>
 <ul>
-<li>服务端驱动协商(Server-driven Negotiation)</li>
-<li>客户端驱动协商(Client-driven Negotiation)</li>
-<li>透明协商(Transparent Negotiation)</li>
+<li>mia = mia.</li>
+<li>42 = 42.</li>
+<li>mia = X.</li>
+<li>X = Y.</li>
+<li>friends(john,X) = friends(Y,tom).</li>
 </ul>
+<p>接下来我们对匹配进行更精确的定义:</p>
+<ol>
+<li>如果 term1 和 term2 都是常量, 那么只有当两者是相同的原子或者相同的数字, term1 term2 匹配.</li>
+<li>如果 term1 是变量, term2 是任意类型的 term, 那么 term1 和 term2 匹配, term1 会被绑定为 term2.</li>
+<li>如果 term1 term2 是 complex term, 那么在下面情况下, 它们会匹配<ul>
+<li>它们含有相同的名字和参数数量.</li>
+<li>它们对应的参数匹配.</li>
+<li>变量的绑定是兼容的, 同一个变量不会同时绑定为两个值.</li>
+</ul>
+</li>
+<li>两个 terms 只有在上述 3 个条件之一成立时, 才会匹配.</li>
+</ol>
+<p>匹配有什么作用呢? 我们可以使用匹配来为我们提供更强大的抽象能力:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">vertical</span><span class="params">(line(point(X,Y)</span></span>,<span class="function"><span class="title">point</span><span class="params">(X,Z)</span></span>)).</span><br><span class="line"><span class="function"><span class="title">horizontal</span><span class="params">(line(point(X,Y)</span></span>,<span class="function"><span class="title">point</span><span class="params">(Z,Y)</span></span>)).</span><br></pre></td></tr></table></figure>
+<p>这两行 Prolog 代码并不是规则, 而是事实, 我们可以使用匹配的能力, 写出这两个规则, 这样我们就可以轻易地判断一条直线是否是垂直的或是水平的.</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?- vertical(<span class="built_in">line</span>(<span class="built_in">point</span>(<span class="number">1</span>,<span class="number">1</span>),<span class="built_in">point</span>(<span class="number">1</span>,<span class="number">3</span>))).</span><br><span class="line"><span class="keyword">true</span></span><br></pre></td></tr></table></figure>
+<p>同样我们也可以利用匹配来寻找与某一点构成垂线的点.</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?- vertical(<span class="built_in">line</span>(<span class="built_in">point</span>(<span class="number">1</span>,<span class="number">1</span>),<span class="built_in">point</span>(X,<span class="number">4</span>))).</span><br><span class="line">X = <span class="number">1.</span></span><br></pre></td></tr></table></figure>
+<p>同样我们也可以利用 Prolog 的匹配解决更加复杂更加困难的问题.</p>
+<p>现在我们又 6 个单词, 我们需要将它们填入下面的拼图里:</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">word</span>(abalone,a,b,a,<span class="keyword">l</span>,o,<span class="keyword">n</span>,<span class="keyword">e</span>). <span class="literal">word</span>(abandon,a,b,a,<span class="keyword">n</span>,<span class="keyword">d</span>,o,<span class="keyword">n</span>). </span><br><span class="line"><span class="literal">word</span>(enhance,<span class="keyword">e</span>,<span class="keyword">n</span>,<span class="keyword">h</span>,a,<span class="keyword">n</span>,c,<span class="keyword">e</span>). </span><br><span class="line"><span class="literal">word</span>(anagram,a,<span class="keyword">n</span>,a,<span class="keyword">g</span>,r,a,<span class="keyword">m</span>). </span><br><span class="line"><span class="literal">word</span>(connect,c,o,<span class="keyword">n</span>,<span class="keyword">n</span>,<span class="keyword">e</span>,c,t). </span><br><span class="line"><span class="literal">word</span>(elegant,<span class="keyword">e</span>,<span class="keyword">l</span>,<span class="keyword">e</span>,<span class="keyword">g</span>,a,<span class="keyword">n</span>,t).</span><br></pre></td></tr></table></figure>
+<p>我们可以通过 Prolog 得出答案, 只需要将需要满足的条件写在 predicate 里:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">crosswd</span><span class="params">(V1,V2,V3,H1,H2,H3)</span></span>:-</span><br><span class="line">    <span class="function"><span class="title">word</span><span class="params">(V1,_,A,_,B,_,C,_)</span></span>,</span><br><span class="line">    <span class="function"><span class="title">word</span><span class="params">(V2,_,D,_,E,_,F,_)</span></span>,</span><br><span class="line">    <span class="function"><span class="title">word</span><span class="params">(V3,_,G,_,H,_,I,_)</span></span>,</span><br><span class="line">    <span class="function"><span class="title">word</span><span class="params">(H1,_,A,_,D,_,G,_)</span></span>,</span><br><span class="line">    <span class="function"><span class="title">word</span><span class="params">(H2,_,B,_,E,_,H,_)</span></span>,</span><br><span class="line">    <span class="function"><span class="title">word</span><span class="params">(H3,_,C,_,F,_,I,_)</span></span>,</span><br></pre></td></tr></table></figure>
+<p>这样我们就可以得到结果:</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">?- crosswd(H1,H2,H3,V1,V2,V3).</span><br><span class="line"><span class="variable">H1 =</span> abalone,</span><br><span class="line"><span class="variable">H2 =</span> anagram,</span><br><span class="line"><span class="variable">H3 =</span> connect,</span><br><span class="line"><span class="variable">V1 =</span> abandon,</span><br><span class="line"><span class="variable">V2 =</span> elegant,</span><br><span class="line"><span class="variable">V3 =</span> enhance ;</span><br><span class="line"><span class="variable">H1 =</span> abandon,</span><br><span class="line"><span class="variable">H2 =</span> elegant,</span><br><span class="line"><span class="variable">H3 =</span> enhance,</span><br><span class="line"><span class="variable">V1 =</span> abalone,</span><br><span class="line"><span class="variable">V2 =</span> anagram,</span><br><span class="line"><span class="variable">V3 =</span> connect ;</span><br><span class="line"><span class="constant">false</span>.</span><br></pre></td></tr></table></figure>
+<p>Prolog 中匹配的能力非常强大, 其实它就是对已经有的条件和数据进行搜索, 尝试所有的答案, 最后给出满足条件的所有结果, 能够极大的降低我们的计算量.</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -157,7 +174,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/HTTP/">HTTP</a>
+  <span></span> <a href="/tags/Logical-Programming/">Logical Programming</a><a href="/tags/Prolog/">Prolog</a>
   </div>
 
 </div>
@@ -166,7 +183,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://deltax.me/2015/01/27/HTTP报文内的HTTP信息.md/" data-title="HTTP报文内的HTTP信息 | DeltaX" data-tsina="null" class="share clearfix">
+	  <div data-url="http://deltax.me/2015/04/07/Prolog-匹配-2/" data-title="Prolog 匹配 &lt;2&gt; | DeltaX" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -179,19 +196,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/03/15/分治策略/" title="分治策略">
-  <strong>上一篇：</strong><br/>
-  <span>
-  分治策略</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/01/24/简单的HTTP协议/"  title="简单的HTTP协议">
+<a href="/2015/04/07/红黑树/"  title="红黑树">
  <strong>下一篇：</strong><br/> 
- <span>简单的HTTP协议
+ <span>红黑树
 </span>
 </a>
 </div>
@@ -200,7 +209,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/01/27/HTTP报文内的HTTP信息.md/" data-title="HTTP报文内的HTTP信息" data-url="http://deltax.me/2015/01/27/HTTP报文内的HTTP信息.md/"></div>
+	<div class="ds-thread" data-thread-key="2015/04/07/Prolog-匹配-2/" data-title="Prolog 匹配 <2>" data-url="http://deltax.me/2015/04/07/Prolog-匹配-2/"></div>
 </section>
 
 
@@ -210,7 +219,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP报文"><span class="toc-number">1.</span> <span class="toc-text">HTTP报文</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Matching"><span class="toc-number">1.</span> <span class="toc-text">Matching</span></a></li></ol>
  
   </div>
 

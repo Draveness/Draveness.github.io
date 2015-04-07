@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我们来填坑吧]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
-  <updated>2015-04-06T15:31:45.000Z</updated>
+  <updated>2015-04-07T03:11:12.000Z</updated>
   <id>http://deltax.me/</id>
   
   <author>
@@ -13,6 +13,91 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Prolog 匹配 <2>]]></title>
+    <link href="http://deltax.me/2015/04/07/Prolog-%E5%8C%B9%E9%85%8D-2/"/>
+    <id>http://deltax.me/2015/04/07/Prolog-匹配-2/</id>
+    <published>2015-04-07T02:45:48.000Z</published>
+    <updated>2015-04-07T03:11:12.000Z</updated>
+    <content type="html"><![CDATA[<p>这篇 post 有两个主要的目的:</p>
+<ol>
+<li>讨论 Prolog 中的匹配, 解释匹配(match)与相等的不同.</li>
+<li>使用 Prolog 搜索的机制解决一些问题.</li>
+</ol>
+<h2 id="Matching">Matching</h2><p>Prolog 中有三种不同的 term, 分别的 <code>constants</code>, <code>variables</code> 和 <code>complex terms</code>.</p>
+<p>接下来我们解释一下两个 terms 是如何匹配的.</p>
+<blockquote>
+<p>当两个 term 含有相等, 或者两个 term 中的变量在被绑定为指定值之后, 两个 term 相等时, 两个 term 匹配.</p>
+</blockquote>
+<p>也就是说, 以下的 term 都会匹配:</p>
+<ul>
+<li>mia = mia.</li>
+<li>42 = 42.</li>
+<li>mia = X.</li>
+<li>X = Y.</li>
+<li>friends(john,X) = friends(Y,tom).</li>
+</ul>
+<p>接下来我们对匹配进行更精确的定义:</p>
+<ol>
+<li>如果 term1 和 term2 都是常量, 那么只有当两者是相同的原子或者相同的数字, term1 term2 匹配.</li>
+<li>如果 term1 是变量, term2 是任意类型的 term, 那么 term1 和 term2 匹配, term1 会被绑定为 term2.</li>
+<li>如果 term1 term2 是 complex term, 那么在下面情况下, 它们会匹配<ul>
+<li>它们含有相同的名字和参数数量.</li>
+<li>它们对应的参数匹配.</li>
+<li>变量的绑定是兼容的, 同一个变量不会同时绑定为两个值.</li>
+</ul>
+</li>
+<li>两个 terms 只有在上述 3 个条件之一成立时, 才会匹配.</li>
+</ol>
+<p>匹配有什么作用呢? 我们可以使用匹配来为我们提供更强大的抽象能力:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">vertical</span><span class="params">(line(point(X,Y)</span></span>,<span class="function"><span class="title">point</span><span class="params">(X,Z)</span></span>)).</span><br><span class="line"><span class="function"><span class="title">horizontal</span><span class="params">(line(point(X,Y)</span></span>,<span class="function"><span class="title">point</span><span class="params">(Z,Y)</span></span>)).</span><br></pre></td></tr></table></figure>
+<p>这两行 Prolog 代码并不是规则, 而是事实, 我们可以使用匹配的能力, 写出这两个规则, 这样我们就可以轻易地判断一条直线是否是垂直的或是水平的.</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?- vertical(<span class="built_in">line</span>(<span class="built_in">point</span>(<span class="number">1</span>,<span class="number">1</span>),<span class="built_in">point</span>(<span class="number">1</span>,<span class="number">3</span>))).</span><br><span class="line"><span class="keyword">true</span></span><br></pre></td></tr></table></figure>
+<p>同样我们也可以利用匹配来寻找与某一点构成垂线的点.</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?- vertical(<span class="built_in">line</span>(<span class="built_in">point</span>(<span class="number">1</span>,<span class="number">1</span>),<span class="built_in">point</span>(X,<span class="number">4</span>))).</span><br><span class="line">X = <span class="number">1.</span></span><br></pre></td></tr></table></figure>
+<p>同样我们也可以利用 Prolog 的匹配解决更加复杂更加困难的问题.</p>
+<p>现在我们又 6 个单词, 我们需要将它们填入下面的拼图里:</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">word</span>(abalone,a,b,a,<span class="keyword">l</span>,o,<span class="keyword">n</span>,<span class="keyword">e</span>). <span class="literal">word</span>(abandon,a,b,a,<span class="keyword">n</span>,<span class="keyword">d</span>,o,<span class="keyword">n</span>). </span><br><span class="line"><span class="literal">word</span>(enhance,<span class="keyword">e</span>,<span class="keyword">n</span>,<span class="keyword">h</span>,a,<span class="keyword">n</span>,c,<span class="keyword">e</span>). </span><br><span class="line"><span class="literal">word</span>(anagram,a,<span class="keyword">n</span>,a,<span class="keyword">g</span>,r,a,<span class="keyword">m</span>). </span><br><span class="line"><span class="literal">word</span>(connect,c,o,<span class="keyword">n</span>,<span class="keyword">n</span>,<span class="keyword">e</span>,c,t). </span><br><span class="line"><span class="literal">word</span>(elegant,<span class="keyword">e</span>,<span class="keyword">l</span>,<span class="keyword">e</span>,<span class="keyword">g</span>,a,<span class="keyword">n</span>,t).</span><br></pre></td></tr></table></figure>
+<p>我们可以通过 Prolog 得出答案, 只需要将需要满足的条件写在 predicate 里:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">crosswd</span><span class="params">(V1,V2,V3,H1,H2,H3)</span></span>:-</span><br><span class="line">    <span class="function"><span class="title">word</span><span class="params">(V1,_,A,_,B,_,C,_)</span></span>,</span><br><span class="line">    <span class="function"><span class="title">word</span><span class="params">(V2,_,D,_,E,_,F,_)</span></span>,</span><br><span class="line">    <span class="function"><span class="title">word</span><span class="params">(V3,_,G,_,H,_,I,_)</span></span>,</span><br><span class="line">    <span class="function"><span class="title">word</span><span class="params">(H1,_,A,_,D,_,G,_)</span></span>,</span><br><span class="line">    <span class="function"><span class="title">word</span><span class="params">(H2,_,B,_,E,_,H,_)</span></span>,</span><br><span class="line">    <span class="function"><span class="title">word</span><span class="params">(H3,_,C,_,F,_,I,_)</span></span>,</span><br></pre></td></tr></table></figure>
+<p>这样我们就可以得到结果:</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">?- crosswd(H1,H2,H3,V1,V2,V3).</span><br><span class="line"><span class="variable">H1 =</span> abalone,</span><br><span class="line"><span class="variable">H2 =</span> anagram,</span><br><span class="line"><span class="variable">H3 =</span> connect,</span><br><span class="line"><span class="variable">V1 =</span> abandon,</span><br><span class="line"><span class="variable">V2 =</span> elegant,</span><br><span class="line"><span class="variable">V3 =</span> enhance ;</span><br><span class="line"><span class="variable">H1 =</span> abandon,</span><br><span class="line"><span class="variable">H2 =</span> elegant,</span><br><span class="line"><span class="variable">H3 =</span> enhance,</span><br><span class="line"><span class="variable">V1 =</span> abalone,</span><br><span class="line"><span class="variable">V2 =</span> anagram,</span><br><span class="line"><span class="variable">V3 =</span> connect ;</span><br><span class="line"><span class="constant">false</span>.</span><br></pre></td></tr></table></figure>
+<p>Prolog 中匹配的能力非常强大, 其实它就是对已经有的条件和数据进行搜索, 尝试所有的答案, 最后给出满足条件的所有结果, 能够极大的降低我们的计算量.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>这篇 post 有两个主要的目的:</p>
+<ol>
+<li>讨论 Prolog 中的匹配, 解释匹配(match)与相等的不同.</li>
+<li>使用 Prolog 搜索的机制解决一些问题.</li>
+</ol>
+<h2 id="Matching">Matching</]]>
+    </summary>
+    
+      <category term="Logical Programming" scheme="http://deltax.me/tags/Logical-Programming/"/>
+    
+      <category term="Prolog" scheme="http://deltax.me/tags/Prolog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[红黑树]]></title>
+    <link href="http://deltax.me/2015/04/07/%E7%BA%A2%E9%BB%91%E6%A0%91/"/>
+    <id>http://deltax.me/2015/04/07/红黑树/</id>
+    <published>2015-04-07T02:02:48.000Z</published>
+    <updated>2015-04-07T02:04:15.000Z</updated>
+    <content type="html"></content>
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="Algorithm" scheme="http://deltax.me/tags/Algorithm/"/>
+    
+      <category term="C" scheme="http://deltax.me/tags/C/"/>
+    
+      <category term="clrs" scheme="http://deltax.me/categories/clrs/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[二叉搜索树]]></title>
@@ -1193,171 +1278,6 @@
       <category term="OOP" scheme="http://deltax.me/tags/OOP/"/>
     
       <category term="Oz" scheme="http://deltax.me/tags/Oz/"/>
-    
-      <category term="Programming Paradigm" scheme="http://deltax.me/categories/Programming-Paradigm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[快速排序]]></title>
-    <link href="http://deltax.me/2015/03/22/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/"/>
-    <id>http://deltax.me/2015/03/22/快速排序/</id>
-    <published>2015-03-22T05:06:38.000Z</published>
-    <updated>2015-04-04T08:57:10.000Z</updated>
-    <content type="html"><![CDATA[<p><a href="http://zh.wikipedia.org/wiki/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F" target="_blank" rel="external">快速排序</a>使用分治法策略把一个数组分成两个子数组, 并对两个子数组递归排序.</p>
-<p>快速排序的分治过程有三步:</p>
-<ul>
-<li>分解<ul>
-<li>数组 <code>A[p..r]</code> 被分解为两个可能为空的子数组 <code>A[p..q-1]</code> 和 <code>A[q+1..r]</code>, 使 <code>A[p..q-1]</code> 中的所有元素都小于或等于 <code>A[q]</code>, <code>A[q+1..r]</code> 中的所有元素都大于或等于 <code>A[q]</code>.</li>
-</ul>
-</li>
-<li>解决<ul>
-<li>地柜地调用快速排序, 对子数组 <code>A[p..q-1]</code> 和 <code>A[q+1..r]</code> 进行排序.</li>
-</ul>
-</li>
-<li>合并<ul>
-<li>不需要合并操作, 数组 <code>A[p..r]</code> 已经有序.</li>
-</ul>
-</li>
-</ul>
-<h2 id="快速排序的实现">快速排序的实现</h2><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">quicksort</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> p, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (p &lt; r - <span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">int</span> q = partition(A, p, r);</span><br><span class="line">		quicksort(A, p, q - <span class="number">1</span>);</span><br><span class="line">		quicksort(A, q + <span class="number">1</span>, r);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>为了排序一个数组, 我们需要调用 `quicksort(A, 0, A.length - 1)</p>
-<h2 id="数组的划分(partition)">数组的划分(partition)</h2><p>快速排序最关键的部分就是数组的划分, 也就是过程 <code>partition</code>, 它实现了对数组的重新排序.</p>
-<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#define EXCHANGE(a, b) tmp = a; a = b; b = tmp;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> partition(<span class="keyword">int</span> A[], <span class="keyword">int</span> p, <span class="keyword">int</span> r) &#123;</span><br><span class="line">	<span class="keyword">int</span> <span class="keyword">x</span> = A[r],</span><br><span class="line">		 i = p - <span class="number">1</span>;</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = p; j &lt; r; j++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (A[j] &lt;= <span class="keyword">x</span>) &#123;</span><br><span class="line">			i++;</span><br><span class="line">			EXCHANGE(A[i], A[j]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	EXCHANGE(A[r], A[i + <span class="number">1</span>]);</span><br><span class="line">	<span class="keyword">return</span> i + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>每一轮迭代开始时, 对于任意数组下标 <code>k</code>, 有:</p>
-<ol>
-<li><code>p &lt;= k &lt;= i, A[k] &lt;= x</code></li>
-<li><code>i + 1 &lt;= k &lt;= j - 1, A[k] &gt; x</code></li>
-<li><code>k = r, A[k] = x</code></li>
-</ol>
-<h2 id="性能">性能</h2><p>快速排序的性能依赖于数组是否被平衡的划分, 如果平衡, 那么快速排序的划分是<strong>平衡</strong>的. 那么快速排序的性能与归并排序相同, 否则, 划分是<strong>不平衡</strong>的, 快速排序的性能就接近于插入排序.</p>
-<h3 id="最坏情况下的性能">最坏情况下的性能</h3><p>当快速排序在最坏情况下时, 我们获得一个递归式:</p>
-<blockquote>
-<p>T(n) = T(n-1) + Θ(n)</p>
-</blockquote>
-<p>得到最坏情况下的时间复杂度仍然为 <code>Θ(n^2)</code>, 而插入排序在最坏情况下时间复杂度也为 <code>Θ(n^2)</code>, 而在几乎有序的情况下快速排序的时间复杂度也为 <code>Θ(n^2)</code>, 插入排序则为 <code>Θ(n)</code>.</p>
-<h3 id="最好情况下性能">最好情况下性能</h3><p>在最好的情况下, 每次划分都是平均的, 递归式为:</p>
-<blockquote>
-<p>T(n) = 2T(n/2) + Θ(n)</p>
-</blockquote>
-<p>最好的情况下的时间复杂度为 <code>Θ(nlgn)</code>, 我们得到了一个渐进时间最快的算法.</p>
-<h3 id="平衡的划分">平衡的划分</h3><p>假设划分算法总是产生 9:1 的划分, 那么递归式为:</p>
-<blockquote>
-<p> T(n) = T(n/10) + T(9n/10) + cn</p>
-</blockquote>
-<p>我们在这里求得快速排序的总时间代价依然为 <code>Ο(nlgn)</code>, 由此可以发现, 任何一种<strong>常数</strong>比例的划分都会产生时间复杂度为 <code>Ο(nlgn)</code> 的算法.</p>
-<h3 id="随机版本的快速排序">随机版本的快速排序</h3><p>因为快速排序的时间复杂度取决于数组的划分, 有时, 我们希望引入随机性来改善算法的性能. 在这里我们可以采用一种随机抽样的方式选择数组的主元, 达到随机的目的.</p>
-<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">randomized_partition</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> p, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = i = rand() % (r - p) + p;</span><br><span class="line">	EXCHANGE(A[r], A[i])	;</span><br><span class="line">	<span class="function"><span class="keyword">return</span> <span class="title">partition</span><span class="params">(A, p, r)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">randomized_quicksort</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> p, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (p &lt; r - <span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">int</span> q = randomized_partition(A, p, r);</span><br><span class="line">		randomized_quicksort(A, p, q - <span class="number">1</span>);</span><br><span class="line">		randomized_quicksort(A, q + <span class="number">1</span>, r);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>我们只需要在调用 <code>partition</code> 之前随机选择一个 pivot 然后与 <code>A[r]</code> 交换即可.</p>
-<h3 id="Hoare版本的快速排序">Hoare版本的快速排序</h3><p>我们在之前使用的 <code>partition</code> 并不是快速排序算法最初的版本, 下面给出的是快速排序最初的版本.</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">hoare_partition</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> p, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> x = A[p],</span><br><span class="line">		 i = p - <span class="number">1</span>,</span><br><span class="line">		 j = r + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">		<span class="keyword">do</span> &#123; j--; &#125; <span class="keyword">while</span> (!(A[i] &lt;= x));</span><br><span class="line">		<span class="keyword">do</span> &#123; i++; &#125; <span class="keyword">while</span> (!(A[j] &gt;= x));</span><br><span class="line">		<span class="keyword">if</span> (i &lt; j) &#123;</span><br><span class="line">			EXCHANGE(A[i], A[j]);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> k;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">hoare_quicksort</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> p, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (p &lt; r - <span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">int</span> q = hoare_partition(A, p, r);</span><br><span class="line">		hoare_quicksort(A, p, q - <span class="number">1</span>);</span><br><span class="line">		hoare_quicksort(A, q + <span class="number">1</span>, r);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="针对相同元素的快速排序">针对相同元素的快速排序</h3><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    <span class="type">int</span> q;</span><br><span class="line">    <span class="type">int</span> t;</span><br><span class="line">&#125; pivot_t;</span><br><span class="line"></span><br><span class="line">pivot_t partition(<span class="type">int</span> A[], <span class="type">int</span> p, <span class="type">int</span> r) &#123;</span><br><span class="line">    <span class="type">int</span> x = A[r - <span class="number">1</span>],</span><br><span class="line">        q = p,</span><br><span class="line">        t,</span><br><span class="line">        tmp;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = p; i &lt; r - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (A[i] &lt; x) &#123;</span><br><span class="line">            <span class="type">EXCHANGE</span>(A[q], A[i]);</span><br><span class="line">            q++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (t = q; t &lt; r &amp;&amp; A[t] == x; t++);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = r - <span class="number">1</span>; i &gt;= t; i--) &#123;</span><br><span class="line">        <span class="keyword">if</span> (A[i] == x) &#123;</span><br><span class="line">            <span class="type">EXCHANGE</span>(A[t], A[i]);</span><br><span class="line">            t++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    pivot_t <span class="literal">result</span> = &#123;q, t&#125;;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>partition</code> 过程在这一版本中, 返回 <code>q</code> 和 <code>t</code>, 使得 </p>
-<ul>
-<li><code>A[p..q-1]</code> 中的每个元素都小于 <code>A[q]</code>.</li>
-<li><code>A[q..t]</code> 中的每个元素都等于 <code>A[q]</code>.</li>
-<li><code>A[t+1..r]</code> 中的每个元素都大于 <code>A[q]</code>.</li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p><a href="http://zh.wikipedia.org/wiki/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F" target="_blank" rel="external">快速排序</a>使用分治法策略把一个数组分成两个子数组, 并]]>
-    </summary>
-    
-      <category term="Algorithm" scheme="http://deltax.me/tags/Algorithm/"/>
-    
-      <category term="clrs" scheme="http://deltax.me/categories/clrs/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Stateful Collections]]></title>
-    <link href="http://deltax.me/2015/03/20/Stateful-Collections/"/>
-    <id>http://deltax.me/2015/03/20/Stateful-Collections/</id>
-    <published>2015-03-20T15:51:23.000Z</published>
-    <updated>2015-03-24T17:39:45.000Z</updated>
-    <content type="html"><![CDATA[<p>There are different kinds of collection depending on what operations are provided. We discuss in two axises about collections.</p>
-<ol>
-<li>Indexed collections and unindexed collections, depending on whether or not thereis rapid access to individual elements.</li>
-<li>Extensible or inextensible collections, depending on whether the number of elements is variable or fixed.</li>
-</ol>
-<h2 id="Indexed_Collections">Indexed Collections</h2><p>The stateful versions of <strong>tuples</strong> and <strong>records</strong> are <strong>arrays</strong> and <strong>dictionaries</strong>. And now, we have four different kinds of indexed collections.</p>
-<p><img src="http://deltax.qiniudn.com/Stateful%20Collections1.png?attname=&amp;e=1426994526&amp;token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:UnC-uFe4--jbxOxg76kR83rvZB4" alt="Indexes Collections"></p>
-<h3 id="Arrays">Arrays</h3><p>An array is a mapping from integers to partial values. </p>
-<ul>
-<li>The domain is a set of consecutive integers from lower bound to an upper bound.</li>
-<li>The domain is givenwhen the array is declared and cannot be changed afterward.</li>
-<li>The range of the mapping can be changed.</li>
-<li>Both accessing and changing an array element are done in constant time.</li>
-</ul>
-<p>There is a strong relationship between tuples and arrays, each of them are mapping from integers to partial values. <strong>But tuples are stateless and arrays are stateful.</strong> And the content of arrays can be changed but tuples can not.</p>
-<h3 id="Dictionaries">Dictionaries</h3><p>A dictionary is a mapping from simple constants to partial values. </p>
-<ul>
-<li>Both the domain and the range of the range of mapping can be changes.</li>
-<li>Accessing and changing are done in constant time and adding/removal are done in amortized constant time.</li>
-<li>There are no limits to the number of fields in the mapping.</li>
-</ul>
-<p>There is a close relationship between records and dictionaries. Each of them maps simple contants to partial values. <strong>But records and stateless and dictionaries and stateful.</strong> A records has a fixed set of field but dictionary not.</p>
-<h3 id="Choosing_Indexed_Collections">Choosing Indexed Collections</h3><p>The different has different trade-offs in possible operations, memory use, and execution time.</p>
-<p>Let us compare the four collections mention above:</p>
-<ul>
-<li>Tuples<ul>
-<li>Most restrictive</li>
-<li>Fastest</li>
-<li>Require less memory</li>
-<li>Stored consecutively</li>
-<li>Indexed by number</li>
-</ul>
-</li>
-<li>Records<ul>
-<li>More flexible then tuples</li>
-<li>Indecies can te literal</li>
-<li>Efficient</li>
-<li>Stored consecutively</li>
-</ul>
-</li>
-<li>Arrays<ul>
-<li>Field can be changed</li>
-<li>Bounds can not be changes</li>
-<li>Stored consecutively</li>
-<li>Efficient</li>
-<li>Indexed by number</li>
-</ul>
-</li>
-<li>Dictionaries<ul>
-<li>Most general</li>
-<li>Indecies can te literal</li>
-<li>Created empty</li>
-<li>Efficient</li>
-<li>More memory and alower access (by a constant factor)</li>
-</ul>
-</li>
-</ul>
-<p>We can choose the proper collection type when we use.</p>
-<h2 id="Unindexed_Collections">Unindexed Collections</h2><p>Indexed collection are not always the best choice. Sometimes it is better to use unindexed collections, such as lists and streams.</p>
-<p>Both of them are declrative data types that collect elements in a linear sqeuence can be traversed from front to back. Any number of traversals can beb done simulataneously on the same list or stream.</p>
-<h3 id="Lists">Lists</h3><p>Lists are of finite, fixed length. They are one of the most important data struture in functional programming language. It is really an elegant data struture. And we use <code>map</code> <code>filter</code> <code>fold</code> and many powerful operation to deal with it.</p>
-<h3 id="Streams">Streams</h3><p>Streams are also called incomplete lists or partial lists. Their tail are unbound variables. </p>
-<ul>
-<li>Stream is one of the most efficient extensible collections.</li>
-<li>Stream is useful for representing orered sequences of message.</li>
-</ul>
-<h2 id="Extensible_Collections">Extensible Collections</h2><p>Final, I will introduce some extensible collections, streams, dictionaries and extensible arrays.</p>
-<h3 id="Extensible_Arrays">Extensible Arrays</h3><p>As we mentioned above, array is a bounded data structure. How do extensible array work? </p>
-<ul>
-<li>When the array is full, we create a new array with double size of the older one. And copy all the elements from old one to new one. </li>
-<li>When the array is quarter full, we create a new array with half size of the older one. And copy the elements.</li>
-</ul>
-<p>This data structure take constant time to the cost of resize operation. The most important thing is to ensure that the index must always remain in bound.</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>There are different kinds of collection depending on what operations are provided. We discuss in two axises about collections.</p>
-<ol>
-<]]>
-    </summary>
-    
-      <category term="CTMCP" scheme="http://deltax.me/tags/CTMCP/"/>
-    
-      <category term="Functional Programming" scheme="http://deltax.me/tags/Functional-Programming/"/>
     
       <category term="Programming Paradigm" scheme="http://deltax.me/categories/Programming-Paradigm/"/>
     
