@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我们来填坑吧]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://deltax.me/"/>
-  <updated>2015-04-07T03:11:12.000Z</updated>
+  <updated>2015-04-07T04:50:12.000Z</updated>
   <id>http://deltax.me/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://deltax.me/2015/04/07/Prolog-%E5%8C%B9%E9%85%8D-2/"/>
     <id>http://deltax.me/2015/04/07/Prolog-匹配-2/</id>
     <published>2015-04-07T02:45:48.000Z</published>
-    <updated>2015-04-07T03:11:12.000Z</updated>
+    <updated>2015-04-07T04:50:12.000Z</updated>
     <content type="html"><![CDATA[<p>这篇 post 有两个主要的目的:</p>
 <ol>
 <li>讨论 Prolog 中的匹配, 解释匹配(match)与相等的不同.</li>
@@ -57,8 +57,9 @@
 <p>同样我们也可以利用匹配来寻找与某一点构成垂线的点.</p>
 <figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?- vertical(<span class="built_in">line</span>(<span class="built_in">point</span>(<span class="number">1</span>,<span class="number">1</span>),<span class="built_in">point</span>(X,<span class="number">4</span>))).</span><br><span class="line">X = <span class="number">1.</span></span><br></pre></td></tr></table></figure>
 <p>同样我们也可以利用 Prolog 的匹配解决更加复杂更加困难的问题.</p>
-<p>现在我们又 6 个单词, 我们需要将它们填入下面的拼图里:</p>
+<p>现在我们有 6 个单词, 我们需要将它们填入下面的拼图里:</p>
 <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">word</span>(abalone,a,b,a,<span class="keyword">l</span>,o,<span class="keyword">n</span>,<span class="keyword">e</span>). <span class="literal">word</span>(abandon,a,b,a,<span class="keyword">n</span>,<span class="keyword">d</span>,o,<span class="keyword">n</span>). </span><br><span class="line"><span class="literal">word</span>(enhance,<span class="keyword">e</span>,<span class="keyword">n</span>,<span class="keyword">h</span>,a,<span class="keyword">n</span>,c,<span class="keyword">e</span>). </span><br><span class="line"><span class="literal">word</span>(anagram,a,<span class="keyword">n</span>,a,<span class="keyword">g</span>,r,a,<span class="keyword">m</span>). </span><br><span class="line"><span class="literal">word</span>(connect,c,o,<span class="keyword">n</span>,<span class="keyword">n</span>,<span class="keyword">e</span>,c,t). </span><br><span class="line"><span class="literal">word</span>(elegant,<span class="keyword">e</span>,<span class="keyword">l</span>,<span class="keyword">e</span>,<span class="keyword">g</span>,a,<span class="keyword">n</span>,t).</span><br></pre></td></tr></table></figure>
+<p><img src="http://deltax.qiniudn.com/grid.png?attname=&e=1428468444&token=YJb_IPQrTSw1ox9LenQDH1HRcgHii9w_bp9ddmcz:HRx3nHoQ3qkHtLdWoQI0-Q6LUUA" style="display:block;margin:auto"></p>
 <p>我们可以通过 Prolog 得出答案, 只需要将需要满足的条件写在 predicate 里:</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">crosswd</span><span class="params">(V1,V2,V3,H1,H2,H3)</span></span>:-</span><br><span class="line">    <span class="function"><span class="title">word</span><span class="params">(V1,_,A,_,B,_,C,_)</span></span>,</span><br><span class="line">    <span class="function"><span class="title">word</span><span class="params">(V2,_,D,_,E,_,F,_)</span></span>,</span><br><span class="line">    <span class="function"><span class="title">word</span><span class="params">(V3,_,G,_,H,_,I,_)</span></span>,</span><br><span class="line">    <span class="function"><span class="title">word</span><span class="params">(H1,_,A,_,D,_,G,_)</span></span>,</span><br><span class="line">    <span class="function"><span class="title">word</span><span class="params">(H2,_,B,_,E,_,H,_)</span></span>,</span><br><span class="line">    <span class="function"><span class="title">word</span><span class="params">(H3,_,C,_,F,_,I,_)</span></span>,</span><br></pre></td></tr></table></figure>
 <p>这样我们就可以得到结果:</p>
