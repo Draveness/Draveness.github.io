@@ -119,10 +119,7 @@ tabBarController.viewControllers = <span class="comment">@[firstViewController, 
 </li>
 <li><p>(BOOL)application:(UIApplication <em>)application didFinishLaunchingWithOptions:(NSDictionary </em>)launchOptions {<br>  // Override point for customization after application launch.<br>  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];</p>
 <p>  UIViewController <em>firstViewController = [[UIViewController alloc] init];<br>  UIViewController </em>secondViewController = [[UIViewController alloc] init];<br>  UIViewController *thirdViewController = [[UIViewController alloc] init];</p>
-<pre><code>UITabBarController <span class="keyword">*</span>tabBarController = [[UITabBarController alloc] init];        
-tabBarController.viewControllers = <span class="comment">@[firstViewController, secondViewController, thirdViewController];</span>
-UINavigationController <span class="keyword">*</span>navigationController = [[UINavigationControlle alloc] initWithRootViewController:tabBarController];
-</code></pre><p>  self.window.rootViewController = tabBarController;<br>  [self.window makeKeyAndVisible];<br>  [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];<br>  return YES;<br>}</p>
+<p>  UITabBarController <em>tabBarController = [[UITabBarController alloc] init];<br>  tabBarController.viewControllers = @[firstViewController, secondViewController, thirdViewController];<br>  UINavigationController </em>navigationController = [[UINavigationControlle alloc] initWithRootViewController:tabBarController];<br>  self.window.rootViewController = tabBarController;<br>  [self.window makeKeyAndVisible];<br>  [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];<br>  return YES;<br>}</p>
 <figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">When I did <span class="keyword">this</span>, I <span class="keyword">do</span> <span class="keyword">not</span> consider about other thing, because the apple developer <span class="built_in">document</span> use <span class="keyword">this</span> <span class="attribute">approach</span>:</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
