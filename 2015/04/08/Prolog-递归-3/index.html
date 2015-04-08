@@ -4,28 +4,28 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>iOS关联引用为分类添加属性 | DeltaX</title>
+    <title>Prolog 递归 &lt;3&gt; | DeltaX</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Draven">
     
 
     
-    <meta name="description" content="iOS关联引用为分类添加属性开发者可以使用关联引用为任何对象附着键值数据.
-使用关联引用为分类添加属性, 首先, 我们新建一个Person类, Person.h的文件如下
-1234567891011121314151617//Person.h#import &amp;lt;Foundation/Foundation.h&amp;gt;@interface Person : NSObject@property (c">
+    <meta name="description" content="在这一次的 post 中, 我们将要介绍 Prolog 中的递归定义, 也就是说, 一个 predicate 如果它定义了一个或多个引用自己的规则, 那么这个 predicate 就是递归的.
+递归的定义非常地简单:
+1234567is_digesting(X,Y):-just_ate(X,Y).is_digesting(X,Y):-    just_ate(X,Z),    is_digesti">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS关联引用为分类添加属性">
-<meta property="og:url" content="http://deltax.me/2014/11/18/iOS关联引用为分类添加属性/index.html">
+<meta property="og:title" content="Prolog 递归 <3>">
+<meta property="og:url" content="http://deltax.me/2015/04/08/Prolog-递归-3/index.html">
 <meta property="og:site_name" content="DeltaX">
-<meta property="og:description" content="iOS关联引用为分类添加属性开发者可以使用关联引用为任何对象附着键值数据.
-使用关联引用为分类添加属性, 首先, 我们新建一个Person类, Person.h的文件如下
-1234567891011121314151617//Person.h#import &amp;lt;Foundation/Foundation.h&amp;gt;@interface Person : NSObject@property (c">
+<meta property="og:description" content="在这一次的 post 中, 我们将要介绍 Prolog 中的递归定义, 也就是说, 一个 predicate 如果它定义了一个或多个引用自己的规则, 那么这个 predicate 就是递归的.
+递归的定义非常地简单:
+1234567is_digesting(X,Y):-just_ate(X,Y).is_digesting(X,Y):-    just_ate(X,Z),    is_digesti">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS关联引用为分类添加属性">
-<meta name="twitter:description" content="iOS关联引用为分类添加属性开发者可以使用关联引用为任何对象附着键值数据.
-使用关联引用为分类添加属性, 首先, 我们新建一个Person类, Person.h的文件如下
-1234567891011121314151617//Person.h#import &amp;lt;Foundation/Foundation.h&amp;gt;@interface Person : NSObject@property (c">
+<meta name="twitter:title" content="Prolog 递归 <3>">
+<meta name="twitter:description" content="在这一次的 post 中, 我们将要介绍 Prolog 中的递归定义, 也就是说, 一个 predicate 如果它定义了一个或多个引用自己的规则, 那么这个 predicate 就是递归的.
+递归的定义非常地简单:
+1234567is_digesting(X,Y):-just_ate(X,Y).is_digesting(X,Y):-    just_ate(X,Z),    is_digesti">
 
     
     <link rel="alternative" href="/atom.xml" title="DeltaX" type="application/atom+xml">
@@ -84,14 +84,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/11/18/iOS关联引用为分类添加属性/" title="iOS关联引用为分类添加属性" itemprop="url">iOS关联引用为分类添加属性</a>
+      <a href="/2015/04/08/Prolog-递归-3/" title="Prolog 递归 &lt;3&gt;" itemprop="url">Prolog 递归 &lt;3&gt;</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://deltax.me/about" title="Draven" target="_blank" itemprop="author">Draven</a>
 		
   <p class="article-time">
-    <time datetime="2014-11-17T16:00:00.000Z" itemprop="datePublished"> 发表于 2014-11-18</time>
+    <time datetime="2015-04-08T10:22:14.000Z" itemprop="datePublished"> 发表于 2015-04-08</time>
     
   </p>
 </header>
@@ -100,41 +100,31 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#iOS关联引用为分类添加属性"><span class="toc-number">1.</span> <span class="toc-text">iOS关联引用为分类添加属性</span></a></li></ol>
+			
 		
 		</div>
 		
-		<h1 id="iOS关联引用为分类添加属性">iOS关联引用为分类添加属性</h1><p>开发者可以使用关联引用为任何对象附着键值数据.</p>
-<p>使用关联引用为分类添加属性, 首先, 我们新建一个<code>Person</code>类, <code>Person.h</code>的文件如下</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Person.h</span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;Foundation/Foundation.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> : <span class="title">NSObject</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> *name;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line">`Person`类的实现文件如下:</span><br><span class="line"></span><br><span class="line"><span class="comment">//Person.m</span></span><br><span class="line"><span class="preprocessor">#import <span class="title">"Person.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Person</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
-<p>现在, 我们在<code>Person</code>的分类中添加新的属性<code>emailAddress</code>, 现在头文件中使用<code>@property</code>声明这个属性.</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Person+EmailAddress.h	</span></span><br><span class="line"><span class="preprocessor">#import <span class="title">"Person.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> (<span class="title">EmailAddress</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> *emailAddress;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
-<p>当我们只在分类的<code>.h</code>文件中加入属性的时候, 会产生如下的警告.</p>
-<pre><code><span class="type">Property</span> 'emailAddress' requires <span class="keyword">method</span> 'setEmailAddress:' to be defined - use @dynamic <span class="keyword">or</span> provide a <span class="keyword">method</span> implementation <span class="keyword">in</span> this category.
-</code></pre><p>这时, 我们使用<code>objc/Runtime</code>库中的动态方法为生成获取和设置属性的方法.</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">id</span> objc_getAssociatedObject(<span class="keyword">id</span> object, <span class="keyword">void</span> *key)</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> objc_setAssociatedObject(<span class="keyword">id</span> object, <span class="keyword">void</span> *key, <span class="keyword">id</span> value, objc_AssociationPolicy policy)</span><br></pre></td></tr></table></figure>
-<p><code>Person+emailAddress.m</code>方法的实现代码如下</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">"Person+EmailAddress.h"</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;objc/runtime.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Person</span> (<span class="title">EmailAddress</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">char</span> emailAddressKey;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSString</span> *)emailAddress &#123;</span><br><span class="line">    <span class="keyword">return</span> objc_getAssociatedObject(<span class="keyword">self</span>, &amp;emailAddressKey);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setEmailAddress:(<span class="built_in">NSString</span> *)emailAddress &#123;</span><br><span class="line">    objc_setAssociatedObject(<span class="keyword">self</span>, &amp;emailAddressKey,</span><br><span class="line">                             emailAddress, OBJC_ASSOCIATION_COPY);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
-<p>注意:</p>
-<ol>
-<li><code>emailAddressKey</code>的声明方法, 使用<code>static char</code>.</li>
-<li><code>emailAddressKey</code>这个名字并不重要, 它与我们实际使用的属性<code>emailAddress</code>的名字无关,这里加入后缀<code>Key</code>仅仅为了<code>code</code>的整洁</li>
-<li>我们使用<code>OBJC_ASSOCIATION_COPY</code>等参数作为语义管理,正确处理<code>copy</code>, <code>assign</code>, <code>retain</code>等语义.</li>
-</ol>
+		<p>在这一次的 post 中, 我们将要介绍 Prolog 中的递归定义, 也就是说, 一个 predicate 如果它定义了一个或多个引用自己的规则, 那么这个 predicate 就是递归的.</p>
+<p>递归的定义非常地简单:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">is_digesting</span><span class="params">(X,Y)</span></span>:-<span class="function"><span class="title">just_ate</span><span class="params">(X,Y)</span></span>.</span><br><span class="line"><span class="function"><span class="title">is_digesting</span><span class="params">(X,Y)</span></span>:-</span><br><span class="line">    <span class="function"><span class="title">just_ate</span><span class="params">(X,Z)</span></span>,</span><br><span class="line">    <span class="function"><span class="title">is_digesting</span><span class="params">(Z,Y)</span></span>.</span><br><span class="line"><span class="function"><span class="title">just_ate</span><span class="params">(mosquito,blood(john)</span></span>).</span><br><span class="line"><span class="function"><span class="title">just_ate</span><span class="params">(frog,mosquito)</span></span>.</span><br><span class="line"><span class="function"><span class="title">just_ate</span><span class="params">(stork,frog)</span></span>.</span><br></pre></td></tr></table></figure>
+<p><code>is_digesting</code> 就是一个递归地 predicate, 在这个 knowledge base 上, 我们就可以询问 Prolog.</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?- just_ate(stork,blood(john)).</span><br><span class="line"><span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>虽然我们并没有直接定义这个事实, 不过 Prolog 根绝递归定义地 <code>is_digesting</code> 推出了这个结果.</p>
+<p>递归是一种非常强大的定义方式, 但是, 我们也能遇到一切错误, 如果, 你是用下面的这种定义方式, 就会出现无限递归.</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">is_digesting</span><span class="params">(X,Y)</span></span>:-<span class="function"><span class="title">is_digesting</span><span class="params">(X,Y)</span></span>.</span><br></pre></td></tr></table></figure>
+<p>这个无限递归是非常明显的.</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">is_digesting</span><span class="params">(X,Y)</span></span>:-</span><br><span class="line">    <span class="function"><span class="title">is_digesting</span><span class="params">(Z,Y)</span></span>,</span><br><span class="line">    <span class="function"><span class="title">just_ate</span><span class="params">(X,Z)</span></span>.</span><br></pre></td></tr></table></figure>
+<p>上面的定义初看是正确的, 不过 Prolog 会不断地调用 <code>is_digesting</code> 导致无限递归, 所以这也是错误的.</p>
+<p>我们需要正确是使用递归, 使用递归定义式, 要在定义最后添加自己的引用而不是在定义的前面.</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/iOS/">iOS</a>
-</div>
-
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Objective-C/">Objective-C</a><a href="/tags/iOS/">iOS</a>
+  <span></span> <a href="/tags/Logical-Programming/">Logical Programming</a><a href="/tags/Prolog/">Prolog</a>
   </div>
 
 </div>
@@ -143,7 +133,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://deltax.me/2014/11/18/iOS关联引用为分类添加属性/" data-title="iOS关联引用为分类添加属性 | DeltaX" data-tsina="null" class="share clearfix">
+	  <div data-url="http://deltax.me/2015/04/08/Prolog-递归-3/" data-title="Prolog 递归 &lt;3&gt; | DeltaX" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -156,20 +146,20 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/11/19/iOS使用联线自定义切换/" title="iOS使用联线自定义切换">
-  <strong>上一篇：</strong><br/>
-  <span>
-  iOS使用联线自定义切换</span>
+
+<div class="next">
+<a href="/2015/04/07/Prolog-匹配-2/"  title="Prolog 匹配 &lt;2&gt;">
+ <strong>下一篇：</strong><br/> 
+ <span>Prolog 匹配 &lt;2&gt;
+</span>
 </a>
 </div>
-
 
 </nav>
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2014/11/18/iOS关联引用为分类添加属性/" data-title="iOS关联引用为分类添加属性" data-url="http://deltax.me/2014/11/18/iOS关联引用为分类添加属性/"></div>
+	<div class="ds-thread" data-thread-key="2015/04/08/Prolog-递归-3/" data-title="Prolog 递归 <3>" data-url="http://deltax.me/2015/04/08/Prolog-递归-3/"></div>
 </section>
 
 
@@ -179,7 +169,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#iOS关联引用为分类添加属性"><span class="toc-number">1.</span> <span class="toc-text">iOS关联引用为分类添加属性</span></a></li></ol>
+ 
  
   </div>
 
